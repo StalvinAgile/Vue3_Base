@@ -1,6 +1,6 @@
 <template>
 <div>
-    <span class="text-label"> Coming soon </span>
+    <span class="text-label"> {{$t('coming_soon')}} </span>
 </div>
 </template>
 <style scoped>

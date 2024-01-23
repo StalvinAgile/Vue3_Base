@@ -6,29 +6,29 @@
         <div class="background">
           <div class="login-box-custom">
             <div>
-                  <!-- <img src="../../assets/images/TradieSafe_logo.png" /> -->
+              <!-- <img src="../../assets/images/TradieSafe_logo.png" /> -->
               <div class="w-100 d-flex" style="flex-direction: column">
                 <h4 class="mb-0">{{ $t("welcome_msg") }}</h4>
                 <div class="font-login">
-                   <div v-if="app_image_url">
-                  <span>
-                    <img
-                      class="custom-logo"
-                      v-bind:src="app_image_url"
-                      style="width: 130px;"
-                    />
-                  </span>
-                </div>
-                <div v-else-if="app_image_url == ''">
-                  <span class="font-base-app text-center">
-                    {{ application_name }}
-                  </span>
-                </div>
-                <div v-else>
-                  <span class="font-base-app text-center">
-                    {{ application_name }}
-                  </span>
-                </div>
+                  <div v-if="app_image_url">
+                    <span>
+                      <img
+                        class="custom-logo"
+                        v-bind:src="app_image_url"
+                        style="width: 130px"
+                      />
+                    </span>
+                  </div>
+                  <div v-else-if="app_image_url == ''">
+                    <span class="font-base-app text-center">
+                      {{ application_name }}
+                    </span>
+                  </div>
+                  <div v-else>
+                    <span class="font-base-app text-center">
+                      {{ application_name }}
+                    </span>
+                  </div>
                 </div>
                 <span class="font-sign-in-msg">{{ $t("sign_in_msg") }}</span>
               </div>
@@ -121,7 +121,7 @@
                   </v-row>
 
                   <div class="divider" />
-                  <div class="d-flex align-items-center mt-10">
+                  <div class="d-flex align-items-center mt-5">
                     <div>
                       <h6 class="mb-0">
                         {{ $t("no_account") }}
@@ -133,6 +133,23 @@
                           {{ $t("register_here") }}
                         </router-link>
                       </h6>
+                    </div>
+                  </div>
+                  <div class="divider" />
+                  <div class="d-flex">
+                    <div
+                      v-bind:class="[this.sel_lang == 'en' ? 'selected' : '']"
+                      class="lang_option"
+                      @click="setUserLang('en')"
+                    >
+                      {{ $t("english") }}
+                    </div>
+                    <div
+                      v-bind:class="[this.sel_lang == 'ar' ? 'selected' : '']"
+                      class="lang_option"
+                      @click="setUserLang('ar')"
+                    >
+                      {{ $t("arabic") }}
                     </div>
                   </div>
                 </v-container>
@@ -148,7 +165,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import localStorageWrapper from "../../localStorageWrapper.js";
-import { getToken,getMessaging } from "firebase/messaging";
+import { getToken, getMessaging } from "firebase/messaging";
 
 export default {
   name: "LoginPage",
@@ -156,9 +173,9 @@ export default {
     userdata: {
       email: "",
       password: "",
-      token_id : '',
+      token_id: "",
     },
-    firebase_vapid : process.env.VUE_APP_FIREBASE_VAPID_KEY,
+    firebase_vapid: process.env.VUE_APP_FIREBASE_VAPID_KEY,
     valid: false,
     show1: false,
     user: "",
@@ -170,6 +187,7 @@ export default {
     app_name: "",
     error_message: "",
     show_error: false,
+    sel_lang: "en",
   }),
   computed: {
     ...mapState({
@@ -192,33 +210,58 @@ export default {
   },
 
   mounted() {
-   this.fetchAppImageUrl();
+    this.fetchAppImageUrl();
+    this.selectedLang();
   },
 
   created() {
     if (window.location.protocol === "https:") {
-    const messaging = getMessaging();
-          getToken(messaging, { vapidKey: this.firebase_vapid }).then((currentToken) => {
-            if (currentToken) {
-              console.log('token id' , currentToken);
-           this.userdata.token_id = currentToken;
-            } else {
-              console.log('No registration token available. Request permission to generate one.');
-            }
-          }).catch((err) => {
-            console.log('An error occurred while retrieving token. ', err);
-          });
-           }
+      const messaging = getMessaging();
+      getToken(messaging, { vapidKey: this.firebase_vapid })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log("token id", currentToken);
+            this.userdata.token_id = currentToken;
+          } else {
+            console.log(
+              "No registration token available. Request permission to generate one."
+            );
+          }
+        })
+        .catch((err) => {
+          console.log("An error occurred while retrieving token. ", err);
+        });
+    }
   },
 
   methods: {
-        fetchAppImageUrl() {
+    setUserLang(lang) {
+      localStorage.setItem("pref_lang", lang);
+      this.$i18n.locale = lang;
+      let newRoute = {
+        name: this.$route.name,
+        params: { ...this.$route.params, lang: lang },
+      };
+      this.$router.push(newRoute);
+      this.selectedLang();
+    },
+    selectedLang() {
+      if (localStorage.getItem("pref_lang")) {
+        this.sel_lang = localStorage.getItem("pref_lang");
+      } else {
+        this.sel_lang = "en";
+      }
+    },
+    fetchAppImageUrl() {
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_image_url", {})
         .then((res) => {
           this.app_image_url = res.data.parameter_image;
           this.application_name = res.data.application_name;
-          localStorageWrapper.setItem("Application_Name", this.application_name);
+          localStorageWrapper.setItem(
+            "Application_Name",
+            this.application_name
+          );
 
           if (this.app_image_url != null) {
             localStorageWrapper.setItem(
@@ -246,9 +289,13 @@ export default {
       await this.loginRequest(this.userdata)
         .then(() => {
           this.btnloading = true;
-          this.$router.push({
-            name: "dashboard",
-          });
+          const lang = localStorage.getItem("pref_lang");
+          this.$i18n.locale = lang;
+          let newRoute = {
+            name: 'dashboard',
+            params: { ...this.$route.params, lang: lang },
+          };
+          this.$router.push(newRoute);
           this.loader = false;
         })
         .catch((err) => {
@@ -292,5 +339,20 @@ export default {
 .error_message {
   color: red;
   font-style: italic;
+}
+.lang_option {
+  font-size: 14px;
+  margin: 10px 10px;
+  color: grey;
+}
+.lang_option:hover {
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.1s;
+  color: black;
+}
+.selected {
+  font-weight: bold;
+  color: black;
 }
 </style>

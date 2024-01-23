@@ -416,7 +416,21 @@ input::placeholder {
   border-radius: 7px;
 }
 
-/* Define the bounce animation keyframes */
+.switch-lang {
+  display: inline-block; 
+  transition: all 0.2s ease;
+}
+
+.switch-lang:hover {
+  animation: bounceAnimation 0.2s;
+  cursor: pointer;
+}
+
+
+//animations end
+
+//keyframes start
+
 @keyframes bounceAnimation {
 
   0%,
@@ -425,13 +439,19 @@ input::placeholder {
   }
 
   50% {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
   }
 }
 
-//animations end
 
-//keyframes start
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px); /* Adjust the height of the bounce */
+  }
+}
 
 @keyframes shakeError {
   0% {

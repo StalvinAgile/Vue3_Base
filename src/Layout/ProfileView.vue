@@ -89,9 +89,7 @@ import { apptheme } from "../store/apptheme.js";
                     >Role: {{ user.role.role_display_name }}</span
                   >
                   <div>
-                    <div
-                      class="mt-2 d-flex justify-content-between rounded"
-                    >
+                    <div class="mt-2 d-flex justify-content-between rounded">
                       <v-tooltip :text="$t('my_profile')" location="bottom">
                         <template v-slot:activator="{ props }">
                           <router-link
@@ -110,22 +108,18 @@ import { apptheme } from "../store/apptheme.js";
                         </template>
                       </v-tooltip>
                     </div>
-                    <div
-                      class="mt-2 d-flex justify-content-between rounded"
-                    >
+                    <div class="mt-2 d-flex justify-content-between rounded">
                       <v-tooltip :text="$t('reset_password')" location="bottom">
                         <template v-slot:activator="{ props }">
-                          <router-link :to="{ name: 'reset_password' }">
+                          <div @click="resetPasswordRedirect()">
                             <a class="w-100 ml-2 list-menus" v-bind="props">
                               {{ $t("reset_password") }}
                             </a>
-                          </router-link>
+                          </div>
                         </template>
                       </v-tooltip>
                     </div>
-                    <div
-                      class="mt-2 d-flex justify-content-between rounded"
-                    >
+                    <div class="mt-2 d-flex justify-content-between rounded">
                       <v-tooltip :text="$t('logout')" location="bottom">
                         <template v-slot:activator="{ props }">
                           <span>
@@ -185,6 +179,11 @@ export default {
     });
   },
   methods: {
+    resetPasswordRedirect() {
+      this.$router.push({
+        name: "reset_password",
+      });
+    },
     fetchUserData() {
       this.user = JSON.parse(localStorage.getItem("user_data"));
     },
@@ -193,7 +192,6 @@ export default {
       console.log("inside ");
       localStorage.clear();
       this.$router.push("/");
-      // window.location.reload();
     },
     // async login() {
     //   await this.loginRequest(this.userdata).then(() => {

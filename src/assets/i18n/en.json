@@ -269,5 +269,8 @@
   "view_all": "View All",
   "form_not_submitted": "Form not Submitted",
   "awaiting": "Awaiting",
-  "status": "Status"
+  "status": "Status",
+  "english":"English",
+  "arabic":"عربي",
+  "coming_soon":"Coming Soon"
 }

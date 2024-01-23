@@ -195,6 +195,21 @@ import { apptheme } from "./store/apptheme.js";
               </v-card>
             </v-menu>
           </div>
+          <div class="d-flex switch-lang">
+            <v-icon style="font-size: 20px; margin-top: 2px"
+              >mdi mdi-translate</v-icon
+            >
+            <div
+              v-if="sel_lang == 'en'"
+              class="mx-2"
+              @click="setUserLang('ar')"
+            >
+              {{ $t("arabic") }}
+            </div>
+            <div v-else class="mx-2" @click="setUserLang('en')">
+              {{ $t("english") }}
+            </div>
+          </div>
           <!-- </v-tooltip> -->
           <!-- <v-btn icon>
             <v-icon>mdi-magnify</v-icon>
@@ -220,7 +235,7 @@ import { apptheme } from "./store/apptheme.js";
 
         <v-main style="min-height: 100vh; background-color: #fffffffc">
           <!-- <transition name="scale" mode="out-in"> -->
-            <router-view></router-view>
+          <router-view></router-view>
           <!-- </transition> -->
         </v-main>
       </v-layout>
@@ -272,6 +287,7 @@ export default {
       loader: false,
       currentIndex: 0,
       itemsPerPage: 5,
+      sel_lang: "",
     };
   },
   computed: {
@@ -289,7 +305,9 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    this.selectedLang();
+  },
   created() {
     this.emitter.on("app_image_update", () => {
       this.getAppImage();
@@ -310,9 +328,38 @@ export default {
         }
       },
     },
+    "$route.params.lang"(newLang) {
+      if (newLang == "en" || newLang == "ar") {
+        this.$i18n.locale = newLang;
+        if (newLang) {
+          localStorage.setItem("pref_lang", newLang);
+        } else {
+          localStorage.setItem("pref_lang", "en");
+        }
+      } else {
+        localStorage.setItem("pref_lang", "en");
+      }
+    },
   },
 
   methods: {
+    setUserLang(lang) {
+      localStorage.setItem("pref_lang", lang);
+      this.$i18n.locale = lang;
+      let newRoute = {
+        name: this.$route.name,
+        params: { ...this.$route.params, lang: lang },
+      };
+      this.$router.push(newRoute);
+      this.selectedLang();
+    },
+    selectedLang() {
+      if (localStorage.getItem("pref_lang")) {
+        this.sel_lang = localStorage.getItem("pref_lang");
+      } else {
+        this.sel_lang = "en";
+      }
+    },
     fetchUserdetails(getuserdetails) {
       this.user = getuserdetails;
       this.user_id = getuserdetails.id;
@@ -486,4 +533,5 @@ nav a.router-link-exact-active {
 .notifcationmaincardscroll::-webkit-scrollbar {
   display: none; /* for Chrome, Safari, and Opera */
 }
+
 </style>
