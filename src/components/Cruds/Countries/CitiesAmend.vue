@@ -10,59 +10,130 @@
       </div>
       <div class="card-body">
         <content-loader v-if="loader"></content-loader>
-        <v-form ref="form" v-model="valid">
-          <v-row class="mx-auto mt-2" max-width="344">
-            <v-col cols="12" md="6">
-              <v-tooltip :text="this.$t('country')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-text-field
-                    v-on="on"
-                    readonly="isReadOnly"
-                    v-model="country.name"
-                    v-bind:label="$t('country')"
-                    v-bind="props"
-                    variant="outlined"
-                    density="compact"
-                  ></v-text-field>
-                </template>
-              </v-tooltip>
-            </v-col>
-            <v-col cols="12" md="6">
-              <v-tooltip :text="this.$t('state')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-text-field
-                    v-on="on"
-                    v-model="state.name"
-                    readonly="isReadOnly"
-                    v-bind:label="$t('state')"
-                    v-bind="props"
-                    variant="outlined"
-                    density="compact"
-                  ></v-text-field>
-                </template>
-              </v-tooltip>
-            </v-col>
-          </v-row>
-          <v-row class="mx-auto mt-2" max-width="344">
-            <v-col cols="12" md="6">
-              <v-tooltip :text="this.$t('city')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-text-field
-                    v-on="on"
-                    v-model="city.name"
-                    :rules="fieldRules"
-                    v-bind:label="$t('city')"
-                    required
-                    v-bind="props"
-                    class="required_field"
-                    variant="outlined"
-                    density="compact"
-                  ></v-text-field>
-                </template>
-              </v-tooltip>
-            </v-col>
-          </v-row>
-        </v-form>
+        <v-tabs v-model="tabs" color="blue">
+          <v-tab :value="1" @click="checkUploadImage">
+            <span>{{ $t("english") }}</span>
+          </v-tab>
+          <v-tab :value="2" @click="checkUploadImage">
+            <span>{{ $t("arabic") }}</span>
+          </v-tab>
+        </v-tabs>
+        <v-window v-model="tabs">
+          <!-- ENGLISH TAB STARTS -->
+          <v-window-item :value="1">
+            <v-form ref="form" v-model="valid">
+              <v-row class="mx-auto mt-2" max-width="344">
+                <v-col cols="12" md="6">
+                  <v-tooltip :text="this.$t('country')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        readonly="isReadOnly"
+                        v-model="country.name"
+                        v-bind:label="$t('country')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-tooltip :text="this.$t('state')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        v-model="state.name"
+                        readonly="isReadOnly"
+                        v-bind:label="$t('state')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
+              <v-row class="mx-auto mt-2" max-width="344">
+                <v-col cols="12" md="6">
+                  <v-tooltip :text="this.$t('city')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        v-model="city.name"
+                        :rules="fieldRules"
+                        v-bind:label="$t('city')"
+                        required
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-window-item>
+          <!-- ENGLISH TAB STOPS -->
+          <!-- ARABIC TAB STARTS -->
+          <v-window-item :value="2">
+            <v-form ref="form" v-model="valid">
+              <v-row class="mx-auto mt-2" max-width="344">
+                <v-col cols="12" md="6">
+                  <v-tooltip :text="this.$t('country')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        readonly="isReadOnly"
+                        v-model="country.name_ar"
+                        v-bind:label="$t('country')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <v-tooltip :text="this.$t('state')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        v-model="state.name_ar"
+                        readonly="isReadOnly"
+                        v-bind:label="$t('state')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
+              <v-row class="mx-auto mt-2" max-width="344">
+                <v-col cols="12" md="6">
+                  <v-tooltip :text="this.$t('city')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        v-model="city.name_ar"
+                        :rules="fieldRules"
+                        v-bind:label="$t('city')"
+                        required
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-window-item>
+        </v-window>
+        <!--  ARABIC TAB ENDS-->
       </div>
       <div class="d-block mr-4 mt-3 pb-3 text-right">
         <v-tooltip :text="this.$t('cancel')" location="bottom">
@@ -124,9 +195,11 @@ export default {
     showupload: "",
     isDisabled: false,
     checkbox_value: false,
+    tabs: 1,
     city: {
       id: 0,
       name: "",
+      name_ar: "",
       country_id: 0,
       state_id: 0,
     },

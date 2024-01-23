@@ -10,27 +10,66 @@
       </div>
       <div class="card-body">
         <content-loader v-if="loader"></content-loader>
-        <v-form ref="form" v-model="valid">
-          <v-row class="mx-auto mt-2" max-width="344">
-            <v-col md="6">
-              <v-tooltip :text="this.$t('name')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-text-field
-                    v-on="on"
-                    v-model="country.name"
-                    :rules="fieldRules"
-                    v-bind:label="$t('name')"
-                    required
-                    v-bind="props"
-                    class="required_field"
-                    variant="outlined"
-                    density="compact"
-                  ></v-text-field>
-                </template>
-              </v-tooltip>
-            </v-col>
-          </v-row>
-        </v-form>
+        <v-tabs v-model="tabs" color="blue">
+          <v-tab :value="1" @click="checkUploadImage">
+            <span>{{ $t("english") }}</span>
+          </v-tab>
+          <v-tab :value="2" @click="checkUploadImage">
+            <span>{{ $t("arabic") }}</span>
+          </v-tab>
+        </v-tabs>
+        <v-window v-model="tabs">
+          <!-- ENGLISH TAB STARTS -->
+          <v-window-item :value="1">
+            <v-form ref="form" v-model="valid">
+              <v-row class="mx-auto mt-2" max-width="344">
+                <v-col md="6">
+                  <v-tooltip :text="this.$t('name')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        v-model="country.name"
+                        :rules="fieldRules"
+                        v-bind:label="$t('name')"
+                        required
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-window-item>
+          <!-- ENGLISH TAB STOPS -->
+          <!-- ARABIC TAB STARTS -->
+          <v-window-item :value="2">
+            <v-form ref="form" v-model="valid">
+              <v-row class="mx-auto mt-2" max-width="344">
+                <v-col md="6">
+                  <v-tooltip :text="this.$t('name')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        v-model="country.name_ar"
+                        :rules="fieldRules"
+                        v-bind:label="$t('name')"
+                        required
+                        v-bind="props"
+                        class="required_field rtl"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-window-item>
+        </v-window>
+        <!--  ARABIC TAB ENDS-->
       </div>
 
       <div class="d-block mr-4 mt-3 pb-3 text-right">
@@ -87,6 +126,7 @@ export default {
     },
     envPath: process.env.VUE_APP_IMAGE_DOWNLOAD_URL,
     valid: true,
+    tabs: 1,
     loader: false,
     file: "",
     isBtnLoading: false,
@@ -96,6 +136,7 @@ export default {
     country: {
       id: 0,
       name: "",
+      name_ar: "",
     },
     noimagepreview: "",
     items: [],
