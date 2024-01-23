@@ -71,11 +71,11 @@ export default {
 
     DateFormatted() {
       if (this.array_index != null) {
-        console.log('inside if');
+        // console.log('inside if');
         this.$emit("formatted_date", this.show_date, this.array_index);
         return this.formatDate(this.show_date);
       } else {
-        console.log('inside else');
+        // console.log('inside else');
         if (this.list_index >= 0) {
           this.$emit("formatted_date_index", this.show_date, this.list_index);
           return this.formatDate(this.show_date);

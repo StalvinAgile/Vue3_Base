@@ -189,7 +189,7 @@ export default {
     },
     ...mapActions("auth", ["logoutRequest"]),
     logoutUser() {
-      console.log("inside ");
+      // console.log("inside ");
       localStorage.clear();
       this.$router.push("/");
     },
