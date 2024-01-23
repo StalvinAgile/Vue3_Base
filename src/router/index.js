@@ -60,7 +60,7 @@ const routes = [
     component: () => import("../components/Cruds/Roles/IndexPage.vue"),
   },
   {
-    path: "/:lang?/roles_amend",
+    path: "/:lang?/roles_amend/:slug?",
     name: "roles_amend",
     component: () => import("../components/Cruds/Roles/RolesAmend.vue"),
   },
@@ -246,41 +246,27 @@ const router = createRouter({
 
 var isAuthenticated = store.getters["auth/authentication"];
 
-// router.beforeEach((to, from, next) => {
-//   const isAuthenticated = store.getters["auth/authentication"];
-//   const lang = localStorage.getItem("pref_lang") || "en";
-
- 
-//   if (!to.params.lang) {
-//     if (isAuthenticated) {
-//       next({
-//         name: to.name,
-//         params: { ...to.params, lang: lang },
-//         query: to.query,
-//       });
-//     } else {
-//       next({ path: '/' });
-//     }
-//   } else {
-//     next();
-//   }
-// });
-
 router.beforeEach((to, from, next) => {
-  const lang = localStorage.getItem('pref_lang') || 'en';
+  const lang = localStorage.getItem("pref_lang") || "en";
   const isAuthenticated = store.getters["auth/authentication"];
-
   if (!to.params.lang) {
-    if (isAuthenticated || to.name === 'login') {
-      next({ path: `/${lang}${to.path}` });
+    if (isAuthenticated || to.name === "login") {
+      if (!to.redirectedFrom) {
+        const redirectpath = "/" + lang + to.path;
+        next({
+          path: redirectpath,
+          query: to.query,
+        });
+      } else {
+        next({ path: `/${lang}${to.fullPath}` });
+      }
     } else {
-      next({ path: '/en/login' });
+      next({ path: "/en/login" });
     }
   } else {
     next();
   }
 });
-
 
 function guardMyroute(to, from, next) {
   if (isAuthenticated) {
