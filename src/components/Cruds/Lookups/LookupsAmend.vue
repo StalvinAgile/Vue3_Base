@@ -10,12 +10,11 @@
     <div class="card-body">
       <content-loader v-if="loader"></content-loader>
       <v-tabs v-model="tabs" color="blue">
-        <v-tab :value="1">
-          <span>English</span>
+        <v-tab :value="1" @click="checkUploadImage">
+          <span>{{ $t("english") }}</span>
         </v-tab>
-
-        <v-tab :value="2">
-          <span>Arabic</span>
+        <v-tab :value="2" @click="checkUploadImage">
+          <span>{{ $t("arabic") }}</span>
         </v-tab>
       </v-tabs>
       <v-window v-model="tabs">
@@ -84,6 +83,56 @@
                 </v-col>
               </v-row>
             </v-layout>
+            <v-row class="mx-auto mt-2" max-width="344">
+              <v-col md="6" v-if="enable_upload_image == 1">
+                <div>
+                  <div class="image-container">
+                    <v-hover v-slot="{ isHovering, props }">
+                      <div style="position: relative" v-bind="props">
+                        <img
+                          v-bind:style="
+                            isHovering == true ? 'filter: blur(1px);' : ''
+                          "
+                          v-if="lookup.icon != ''"
+                          :src="envImagePath + lookup.icon"
+                          width="100"
+                          height="65
+                          "
+                          alt
+                        />
+                        <img
+                          v-bind:style="
+                            isHovering == true ? 'filter: blur(1px);' : ''
+                          "
+                          v-else
+                          src="@/assets/images/upload_image_default.png"
+                          width="100"
+                        />
+                        <div v-show="isHovering" class="camera-icon">
+                          <v-icon @click="uploadFile">mdi-camera</v-icon>
+                        </div>
+                      </div>
+                    </v-hover>
+                  </div>
+                  <a
+                    class="text-center pointer"
+                    @click="downloadImage(lookup.icon)"
+                  >
+                    <span v-if="lookup.icon" class="download_btn_color">{{
+                      $t("download")
+                    }}</span>
+                  </a>
+                </div>
+                <br />
+                <Imageupload
+                  :folder="'lookups'"
+                  :resizewidth="0.4"
+                  :resizeheight="0.1"
+                  @uploaded_image="uploaded_image"
+                  :upload_profile="uploadfile"
+                />
+              </v-col>
+            </v-row>
           </v-form>
         </v-window-item>
         <!-- ENGLISH TAB STOPS -->
@@ -119,7 +168,7 @@
                       v-bind:label="$t('longname')"
                       v-bind="props"
                       required
-                      class="required_field"
+                      class="required_field rtl"
                       variant="outlined"
                       density="compact"
                       maxlength="500"
@@ -142,7 +191,7 @@
                         v-bind="props"
                         v-bind:label="$t('description')"
                         required
-                        class="required_field"
+                        class="required_field rtl"
                         variant="outlined"
                         counter="true"
                       ></v-textarea>
@@ -152,9 +201,60 @@
                 </v-col>
               </v-row>
             </v-layout>
+            <v-row class="mx-auto mt-2" max-width="344">
+              <v-col md="6">
+                <div>
+                  <div class="image-container">
+                    <v-hover v-slot="{ isHovering, props }">
+                      <div style="position: relative" v-bind="props">
+                        <img
+                          v-bind:style="
+                            isHovering == true ? 'filter: blur(1px);' : ''
+                          "
+                          v-if="lookup.icon_ar != ''"
+                          :src="envImagePath + lookup.icon_ar"
+                          width="100"
+                          height="65
+                          "
+                          alt
+                        />
+                        <img
+                          v-bind:style="
+                            isHovering == true ? 'filter: blur(1px);' : ''
+                          "
+                          v-else
+                          src="@/assets/images/upload_image_default.png"
+                          width="100"
+                        />
+                        <div v-show="isHovering" class="camera-icon">
+                          <v-icon @click="uploadFile_ar">mdi-camera</v-icon>
+                        </div>
+                      </div>
+                    </v-hover>
+                  </div>
+                  <a
+                    class="text-center pointer"
+                    @click="downloadImage(lookup.icon_ar)"
+                  >
+                    <span v-if="lookup.icon_ar" class="download_btn_color">{{
+                      $t("download")
+                    }}</span>
+                  </a>
+                </div>
+                <br />
+                <Imageupload
+                  :folder="'lookups'"
+                  :resizewidth="0.4"
+                  :resizeheight="0.1"
+                  @uploaded_image="uploaded_image_ar"
+                  :upload_profile="uploadfile_ar"
+                />
+              </v-col>
+            </v-row>
           </v-form>
         </v-window-item>
       </v-window>
+      <!--  ARABIC TAB ENDS-->
     </div>
     <div class="d-block mr-4 mt-3 pb-3 text-right">
       <v-tooltip :text="this.$t('cancel')" location="bottom">
@@ -200,7 +300,9 @@
 </template>
 
 <script>
+import Imageupload from "../../CustomComponents/ImageUpload.vue";
 export default {
+  components: { Imageupload },
   data: () => ({
     google_icon: {
       icon_name: "edit_note",
@@ -216,6 +318,8 @@ export default {
     showupload: "",
     isDisabled: false,
     checkbox_value: false,
+    envImagePath: process.env.VUE_APP_IMAGE_PATH,
+    enable_upload_image: 1,
     lookup: {
       id: 0,
       shortname: "",
@@ -224,8 +328,12 @@ export default {
       shortname_ar: "",
       longname_ar: "",
       description_ar: "",
+      icon: "",
+      icon_ar: "",
     },
     noimagepreview: "",
+    uploadfile: false,
+    uploadfile_ar: false,
     items: [],
   }),
 
@@ -264,6 +372,40 @@ export default {
     },
   },
   methods: {
+    checkUploadImage() {
+      this.enable_upload_image = this.tabs;
+      // alert(this.enable_upload_image);
+    },
+    uploaded_image(img_src) {
+      this.lookup.icon = img_src;
+    },
+    uploaded_image_ar(img_src_ar) {
+      this.lookup.icon_ar = img_src_ar;
+    },
+    uploadFile() {
+      if (this.uploadfile == false) {
+        this.uploadfile = true;
+      } else {
+        this.uploadfile = false;
+      }
+    },
+    uploadFile_ar() {
+      if (this.uploadfile_ar == false) {
+        this.uploadfile_ar = true;
+      } else {
+        this.uploadfile_ar = false;
+      }
+    },
+    updateFile(filepath) {
+      this.lookup.icon = filepath;
+    },
+    updateFile_ar(filepath_ar) {
+      this.lookup.icon_ar = filepath_ar;
+    },
+
+    downloadImage(image_url) {
+      window.open(this.envImagePath + image_url, "_blank");
+    },
     onFileChanged(e) {
       this.selectedFile = e.target.files[0];
 
@@ -317,19 +459,6 @@ export default {
 input.larger {
   width: 20px;
   height: 20px;
-}
-.upload_doc {
-  margin-top: -14px;
-}
-.upload_image {
-  margin-bottom: 3px;
-}
-.download_btn_color {
-  color: blue;
-}
-.image-width {
-  border: 2px solid black;
-  padding: 1px;
 }
 .rtl :deep() input {
   text-align: right;

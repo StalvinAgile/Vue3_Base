@@ -42,12 +42,11 @@
       </div>
     </div>
     <v-tabs v-model="tabs" color="blue">
-      <v-tab :value="1">
-        <span>English</span>
+      <v-tab :value="1" @click="checkUploadImage">
+        <span>{{ $t("english") }}</span>
       </v-tab>
-
-      <v-tab :value="2">
-        <span>Arabic</span>
+      <v-tab :value="2" @click="checkUploadImage">
+        <span>{{ $t("arabic") }}</span>
       </v-tab>
     </v-tabs>
     <v-window v-model="tabs">
@@ -63,12 +62,20 @@
             <tr class="vdatatable_tbody">
               <td>
                 <div class="text-truncate" style="max-width: 160px">
-                  {{ props.item.selectable.shortname }}
+                  {{
+                    props.item.selectable.shortname
+                      ? props.item.selectable.shortname
+                      : "N/A"
+                  }}
                 </div>
               </td>
               <td>
                 <div class="text-truncate" style="max-width: 160px">
-                  {{ props.item.selectable.longname }}
+                  {{
+                    props.item.selectable.longname
+                      ? props.item.selectable.longname
+                      : "N/A"
+                  }}
                 </div>
               </td>
               <td>
@@ -172,12 +179,20 @@
             <tr class="vdatatable_tbody">
               <td>
                 <div class="text-truncate" style="max-width: 160px">
-                  {{ props.item.selectable.shortname_ar }}
+                  {{
+                    props.item.selectable.shortname_ar
+                      ? props.item.selectable.shortname_ar
+                      : "N/A"
+                  }}
                 </div>
               </td>
               <td>
                 <div class="text-truncate" style="max-width: 160px">
-                  {{ props.item.selectable.longname_ar }}
+                  {{
+                    props.item.selectable.longname_ar
+                      ? props.item.selectable.longname_ar
+                      : "N/A"
+                  }}
                 </div>
               </td>
               <td>
@@ -304,34 +319,6 @@ export default {
     status_id: null,
     isDisabled: false,
     tabs: 1,
-
-    // headers: [
-    //   {
-    //     title: "shortname",
-    //     align: "left",
-    //     sortable: true,
-    //     key: "shortname",
-    //   },
-    //   {
-    //     title: "Longname",
-    //     align: "left",
-    //     sortable: false,
-    //     key: "longname",
-    //   },
-    //   {
-    //     title: "Status",
-    //     align: "left",
-    //     sortable: false,
-    //     key: "status",
-    //   },
-    //   {
-    //     title: "Actions",
-    //     key: "name",
-    //     align: "center",
-    //     sortable: false,
-    //   },
-    // ],
-
     google_icon: {
       icon_name: "settings_suggest",
       color: "google_icon_gradient",
@@ -372,19 +359,19 @@ export default {
           key: this.tabs == 1 ? "shortname" : "shortname_ar",
         },
         {
-          title: "Longname",
+          title: this.$t("longname"),
           align: "left",
           sortable: false,
           key: "longname",
         },
         {
-          title: "Status",
+          title: this.$t("status"),
           align: "left",
           sortable: false,
           key: "status",
         },
         {
-          title: "Actions",
+          title: this.$t("actions"),
           key: "name",
           align: "center",
           sortable: false,

@@ -69,85 +69,182 @@
     <div class="ml-4">
       <h4>{{ $t("lookup_name") }} : {{ this.$route.query.parentname }}</h4>
     </div>
-    <v-data-table
-      :headers="headers"
-      :items="lookup"
-      :search="search"
-      :loading="initval"
-    >
-      <template v-slot:item="props">
-        <tr class="vdatatable_tbody">
-          <td>
-            <div class="text-truncate" style="max-width: 160px">
-              {{ props.item.shortname }}
-            </div>
-          </td>
-          <td>
-            <div class="text-truncate" style="max-width: 160px">
-              {{ props.item.longname }}
-            </div>
-          </td>
-          <td>
-            <v-btn
-              class="hover_shine btn mr-2"
-              :disabled="isDisabled"
-              @click="updateLookupsStatus(props.item.id)"
-              size="small"
-              v-bind:color="[
-                props.item.status == 1 ? 'success' : 'warning',
-              ]"
-            >
-              <span
-                v-if="props.item.status == 1"
-                class="spanactivesize"
-                >{{ $t("active") }}</span
-              >
-              <span
-                v-if="props.item.status == 0"
-                class="spanactivesize"
-                >{{ $t("inactive") }}</span
-              >
-            </v-btn>
-          </td>
-          <td class="text-center px-0">
-            <router-link
-              small
-              :to="{
-                name: 'child_lookups_amend',
-                query: { slug: props.item.slug },
-              }"
-            >
-              <v-tooltip :text="this.$t('add_new')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    small
-                    class="mr-2 edit_btn icon_size"
-                    v-on="on"
-                    v-bind="props"
-                    >mdi-pencil-outline</v-icon
+    <v-tabs v-model="tabs" color="blue">
+      <v-tab :value="1" @click="checkUploadImage">
+        <span>{{ $t("english") }}</span>
+      </v-tab>
+      <v-tab :value="2" @click="checkUploadImage">
+        <span>{{ $t("arabic") }}</span>
+      </v-tab>
+    </v-tabs>
+    <v-window v-model="tabs">
+      <!-- ENGLISH TAB STARTS -->
+      <v-window-item :value="1">
+        <v-data-table
+          :headers="headers"
+          :items="lookup"
+          :search="search"
+          :loading="initval"
+        >
+          <template v-slot:item="props">
+            <tr class="vdatatable_tbody">
+              <td>
+                <div class="text-truncate" style="max-width: 160px">
+                  {{ props.item.selectable.shortname }}
+                </div>
+              </td>
+              <td>
+                <div class="text-truncate" style="max-width: 160px">
+                  {{ props.item.selectable.longname }}
+                </div>
+              </td>
+              <td>
+                <v-btn
+                  class="hover_shine btn mr-2"
+                  :disabled="isDisabled"
+                  @click="updateLookupsStatus(props.item.id)"
+                  size="small"
+                  v-bind:color="[
+                    props.item.selectable.status == 1 ? 'success' : 'warning',
+                  ]"
+                >
+                  <span
+                    v-if="props.item.selectable.status == 1"
+                    class="spanactivesize"
+                    >{{ $t("active") }}</span
                   >
-                </template>
-                <span>{{ $t("edit") }}</span>
-              </v-tooltip>
-            </router-link>
-            <span @click="deleteItem(props.item.id)">
-              <v-tooltip :text="this.$t('delete')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    class="delete_btn icon_size"
-                    v-on="on"
-                    small
-                    v-bind="props"
-                    type="button"
-                    >mdi-trash-can-outline</v-icon
+                  <span
+                    v-if="props.item.selectable.status == 0"
+                    class="spanactivesize"
+                    >{{ $t("inactive") }}</span
                   >
-                </template>
-              </v-tooltip>
-            </span>
-          </td>
-        </tr>
-      </template>
-    </v-data-table>
+                </v-btn>
+              </td>
+              <td class="text-center px-0">
+                <router-link
+                  small
+                  :to="{
+                    name: 'child_lookups_amend',
+                    query: { slug: props.item.selectable.slug },
+                  }"
+                >
+                  <v-tooltip :text="this.$t('add_new')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-icon
+                        small
+                        class="mr-2 edit_btn icon_size"
+                        v-on="on"
+                        v-bind="props"
+                        >mdi-pencil-outline</v-icon
+                      >
+                    </template>
+                    <span>{{ $t("edit") }}</span>
+                  </v-tooltip>
+                </router-link>
+                <span @click="deleteItem(props.item.selectable.id)">
+                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-icon
+                        class="delete_btn icon_size"
+                        v-on="on"
+                        small
+                        v-bind="props"
+                        type="button"
+                        >mdi-trash-can-outline</v-icon
+                      >
+                    </template>
+                  </v-tooltip>
+                </span>
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-window-item>
+      <!-- ENGLISH TAB STOPS -->
+      <!-- ARABIC TAB STARTS -->
+      <v-window-item :value="2">
+        <v-data-table
+          :headers="headers"
+          :items="lookup"
+          :search="search"
+          :loading="initval"
+        >
+          <template v-slot:item="props">
+            <tr class="vdatatable_tbody">
+              <td>
+                <div class="text-truncate" style="max-width: 160px">
+                  {{ props.item.selectable.shortname_ar }}
+                </div>
+              </td>
+              <td>
+                <div class="text-truncate" style="max-width: 160px">
+                  {{ props.item.selectable.longname_ar }}
+                </div>
+              </td>
+              <td>
+                <v-btn
+                  class="hover_shine btn mr-2"
+                  :disabled="isDisabled"
+                  @click="updateLookupsStatus(props.item.id)"
+                  size="small"
+                  v-bind:color="[
+                    props.item.selectable.status == 1 ? 'success' : 'warning',
+                  ]"
+                >
+                  <span
+                    v-if="props.item.selectable.status == 1"
+                    class="spanactivesize"
+                    >{{ $t("active") }}</span
+                  >
+                  <span
+                    v-if="props.item.selectable.status == 0"
+                    class="spanactivesize"
+                    >{{ $t("inactive") }}</span
+                  >
+                </v-btn>
+              </td>
+              <td class="text-center px-0">
+                <router-link
+                  small
+                  :to="{
+                    name: 'child_lookups_amend',
+                    query: { slug: props.item.selectable.slug },
+                  }"
+                >
+                  <v-tooltip :text="this.$t('add_new')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-icon
+                        small
+                        class="mr-2 edit_btn icon_size"
+                        v-on="on"
+                        v-bind="props"
+                        >mdi-pencil-outline</v-icon
+                      >
+                    </template>
+                    <span>{{ $t("edit") }}</span>
+                  </v-tooltip>
+                </router-link>
+                <span @click="deleteItem(props.item.selectable.id)">
+                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-icon
+                        class="delete_btn icon_size"
+                        v-on="on"
+                        small
+                        v-bind="props"
+                        type="button"
+                        >mdi-trash-can-outline</v-icon
+                      >
+                    </template>
+                  </v-tooltip>
+                </span>
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-window-item>
+    </v-window>
+    <!--  ARABIC TAB ENDS-->
     <ConfirmDialog
       :show="showStatusDialog"
       :cancel="cancelStatus"
@@ -175,37 +272,12 @@ export default {
   },
   data: () => ({
     lookup: [],
+    tabs: 1,
     showdeleteDialog: false,
     showStatusDialog: false,
     delete_id: null,
     status_id: null,
     isDisabled: false,
-    headers: [
-      {
-        title: "Shortname",
-        align: "left",
-        sortable: true,
-        key: "shortname",
-      },
-      {
-        title: "Longname",
-        align: "left",
-        sortable: false,
-        key: "longname",
-      },
-      {
-        title: "Status",
-        align: "left",
-        sortable: false,
-        key: "status",
-      },
-      {
-        title: "Actions",
-        key: "name",
-        align: "center",
-        sortable: false,
-      },
-    ],
     google_icon: {
       icon_name: "settings_suggest",
       color: "google_icon_gradient",
@@ -233,6 +305,36 @@ export default {
       },
     ],
   }),
+  computed: {
+    headers() {
+      return [
+        {
+          title: this.$t("shortname"),
+          align: "left",
+          sortable: true,
+          key: this.tabs == 1 ? "shortname" : "shortname_ar",
+        },
+        {
+          title: this.$t("longname"),
+          align: "left",
+          sortable: false,
+          key: "longname",
+        },
+        {
+          title: this.$t("status"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: this.$t("actions"),
+          key: "name",
+          align: "center",
+          sortable: false,
+        },
+      ];
+    },
+  },
   watch: {
     "$route.query.slug": {
       immediate: true,
