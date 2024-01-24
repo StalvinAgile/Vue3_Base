@@ -1,5 +1,5 @@
 <template>
-  <div class="main-20">
+  <div class="main-20 position-relative">
     <div flat color="white" class="row py-5 pl-5 align-items-center">
       <page-title
         class="col-md-3"
@@ -68,7 +68,7 @@
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
-              <td>{{ props.item.selectable.titel }}</td>
+              <td>{{ props.item.selectable.title }}</td>
               <td>{{ props.item.selectable.description }}</td>
               <td>
                 <v-btn
@@ -96,7 +96,7 @@
                 <router-link
                   small
                   :to="{
-                    name: 'mall-timings-amend',
+                    name: 'e-magazine-amend',
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
@@ -170,7 +170,7 @@
                 <router-link
                   small
                   :to="{
-                    name: 'mall-timings-amend',
+                    name: 'e-magazine-amend',
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
@@ -250,8 +250,8 @@ export default {
     headers() {
       return [
         {
-          title: this.$t("titel"),
-          key: "titel",
+          title: this.$t("title"),
+          key: "title",
         },
         {
           title: this.$t("description"),
@@ -334,7 +334,7 @@ export default {
     deleteConfirm(time_id) {
       this.$axios
         .post(
-          process.env.VUE_APP_API_URL_ADMIN + "delete-mall-timing/" + time_id
+          process.env.VUE_APP_API_URL_ADMIN + "delete-e-magazine/" + time_id
         )
         .then((res) => {
           if (Array.isArray(res.data.message)) {
@@ -378,7 +378,7 @@ export default {
       this.loader = true;
       this.$axios
         .post(
-          process.env.VUE_APP_API_URL_ADMIN + "update-mall-timings-status",
+          process.env.VUE_APP_API_URL_ADMIN + "update-e-magazine-status",
           {
             id: this.status_id,
           }

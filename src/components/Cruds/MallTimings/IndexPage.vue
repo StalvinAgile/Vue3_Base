@@ -1,5 +1,5 @@
 <template>
-  <div class="main-20">
+  <div class="main-20 position-relative">
     <div flat color="white" class="row py-5 pl-5 align-items-center">
       <page-title
         class="col-md-3"

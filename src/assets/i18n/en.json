@@ -278,7 +278,6 @@
   "meta_description": "Meta Description",
   "mall_timings": "Mall Timings",
   "mall_timing_categories": "Mall Timing Categories",
-  "mall_timing_categories_ar": "فئات توقيت مول",
   "from_day": "From Day",
   "to_day": "To Day",
   "from_time": "From Timing",
@@ -300,5 +299,6 @@
   "description_ar": "وصف",
   "title_ar": "عنوان",
   "meta_description_ar": "ميتا الوصف",
+  "mall_timing_categories_ar": "فئات توقيت مول",
   "meta_title_ar": "عنوان الفوقية"
 }

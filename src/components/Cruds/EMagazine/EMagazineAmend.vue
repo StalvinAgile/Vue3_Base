@@ -25,7 +25,7 @@
             <v-form ref="form" v-model="valid">
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="12" sm="12" md="12">
+                  <v-col cols="6" sm="6" md="6">
                     <v-tooltip :text="$t('title')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
@@ -34,6 +34,22 @@
                           :rules="fieldRules"
                           maxlength="100"
                           v-bind:label="$t('title')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="6" sm="6" md="6">
+                    <v-tooltip :text="$t('meta_title')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="fieldItem.meta_title"
+                          :rules="fieldRules"
+                          maxlength="100"
+                          v-bind:label="$t('meta_title')"
                           required
                           variant="outlined"
                           density="compact"
@@ -64,6 +80,143 @@
                       </template>
                     </v-tooltip>
                   </v-col>
+                  <v-col md="12">
+                    <v-tooltip
+                      :text="this.$t('meta_description')"
+                      location="bottom"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <v-textarea
+                          v-on="on"
+                          rows="2"
+                          v-model="fieldItem.meta_description"
+                          v-bind="props"
+                          :rules="descriptionRules"
+                          v-bind:label="$t('meta_description')"
+                          required
+                          class="required_field"
+                          variant="outlined"
+                          maxlength="100"
+                          counter="true"
+                        ></v-textarea>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                </v-row>
+              </v-layout>
+              <v-layout>
+                <v-row class="px-6 mt-2">
+                  <v-col cols="6" sm="6" md="6">
+                    <v-tooltip
+                      :text="this.$t('show_file')"
+                      location="bottom"
+                      v-if="fieldItem.file_upload"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <div class="col-md-1">
+                          <a
+                            :href="envImagePath + fieldItem.file_upload"
+                            download
+                            ><v-icon v-bind="props">mdi mdi-file</v-icon></a
+                          >
+                        </div>
+                        <div class="col-md-9">
+                          <a
+                            :href="envImagePath + fieldItem.file_upload"
+                            download
+                          >
+                            <v-chip size="small" v-bind="props">{{
+                              fieldItem.file_upload
+                            }}</v-chip>
+                          </a>
+                        </div>
+                      </template>
+                    </v-tooltip>
+                    <v-tooltip :text="this.$t('upload_file')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-file-input
+                          :disabled="is_disabled"
+                          v-bind="props"
+                          show-size
+                          :label="$t('file_input')"
+                          outlined
+                          :rules="fileRules"
+                          :error="errorUpload"
+                          :error-messages="errorUploadMessage"
+                          @input="clearUploadErrors"
+                          prepend-icon=""
+                          append-inner-icon="mdi mdi-file-document-plus"
+                          accept="*"
+                          required
+                          class="required_field"
+                          variant="outlined"
+                          density="compact"
+                          @click="updateFileIndex(index)"
+                          @change="onFileChange"
+                          ><template v-slot:selection="{ fileNames }">
+                            <template
+                              v-for="fileName in fileNames"
+                              :key="fileName"
+                            >
+                              <v-chip size="small" label class="me-2">
+                                {{ fileName }}
+                              </v-chip>
+                            </template>
+                          </template>
+                        </v-file-input>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="6" sm="6" md="6">
+                    <div>
+                      <div class="image-container">
+                        <v-hover v-slot="{ isHovering, props }">
+                          <div style="position: relative" v-bind="props">
+                            <img
+                              v-bind:style="
+                                isHovering == true ? 'filter: blur(1px);' : ''
+                              "
+                              v-if="fieldItem.image_path != null"
+                              :src="envImagePath + fieldItem.image_path"
+                              width="100"
+                              height="65
+                          "
+                              alt
+                            />
+                            <img
+                              v-bind:style="
+                                isHovering == true ? 'filter: blur(1px);' : ''
+                              "
+                              v-else
+                              src="@/assets/images/upload_image_default.png"
+                              width="100"
+                            />
+                            <div v-show="isHovering" class="camera-icon">
+                              <v-icon @click="uploadFile">mdi-camera</v-icon>
+                            </div>
+                          </div>
+                        </v-hover>
+                      </div>
+                      <a
+                        class="text-center pointer"
+                        @click="downloadImage(fieldItem.image_path)"
+                      >
+                        <span
+                          v-if="fieldItem.image_path"
+                          class="download_btn_color"
+                          >{{ $t("download") }}</span
+                        >
+                      </a>
+                    </div>
+                    <br />
+                    <Imageupload
+                      :folder="'e_magazine'"
+                      :resizewidth="0.4"
+                      :resizeheight="0.1"
+                      @uploaded_image="uploaded_image"
+                      :upload_profile="uploadfile"
+                    />
+                  </v-col>
                 </v-row>
               </v-layout>
             </v-form>
@@ -74,12 +227,28 @@
             <v-form ref="form" v-model="valid">
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="12" sm="12" md="12">
+                  <v-col cols="6" sm="6" md="6">
                     <v-tooltip :text="$t('title_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
                           v-model="fieldItem.title_ar"
+                          :rules="fieldRules"
+                          maxlength="100"
+                          v-bind:label="$t('title_ar')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="6" sm="6" md="6">
+                    <v-tooltip :text="$t('meta_title_ar')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="fieldItem.meta_title_ar"
                           :rules="fieldRules"
                           maxlength="100"
                           v-bind:label="$t('title_ar')"
@@ -115,6 +284,143 @@
                         ></v-textarea>
                       </template>
                     </v-tooltip>
+                  </v-col>
+                  <v-col md="12">
+                    <v-tooltip
+                      :text="this.$t('meta_description_ar')"
+                      location="bottom"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <v-textarea
+                          v-on="on"
+                          rows="2"
+                          v-model="fieldItem.meta_description_ar"
+                          v-bind="props"
+                          :rules="descriptionRules"
+                          v-bind:label="$t('meta_description_ar')"
+                          required
+                          class="required_field"
+                          variant="outlined"
+                          maxlength="100"
+                          counter="true"
+                        ></v-textarea>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                </v-row>
+              </v-layout>
+              <v-layout>
+                <v-row class="px-6 mt-2">
+                  <v-col cols="6" sm="6" md="6">
+                    <v-tooltip
+                      :text="this.$t('show_file')"
+                      location="bottom"
+                      v-if="fieldItem.file_upload_ar"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <div class="col-md-1">
+                          <a
+                            :href="envImagePath + fieldItem.file_upload_ar"
+                            download
+                            ><v-icon v-bind="props">mdi mdi-file</v-icon></a
+                          >
+                        </div>
+                        <div class="col-md-9">
+                          <a
+                            :href="envImagePath + fieldItem.file_upload_ar"
+                            download
+                          >
+                            <v-chip size="small" v-bind="props">{{
+                              fieldItem.file_upload_ar
+                            }}</v-chip>
+                          </a>
+                        </div>
+                      </template>
+                    </v-tooltip>
+                    <v-tooltip :text="this.$t('upload_file')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-file-input
+                          :disabled="is_disabled"
+                          v-bind="props"
+                          show-size
+                          :label="$t('file_input')"
+                          outlined
+                          :rules="fileRules"
+                          :error="errorUpload"
+                          :error-messages="errorUploadMessage"
+                          @input="clearUploadErrors"
+                          prepend-icon=""
+                          append-inner-icon="mdi mdi-file-document-plus"
+                          accept="*"
+                          required
+                          class="required_field"
+                          variant="outlined"
+                          density="compact"
+                          @click="updateFileIndex(index)"
+                          @change="onFileChange"
+                          ><template v-slot:selection="{ fileNames }">
+                            <template
+                              v-for="fileName in fileNames"
+                              :key="fileName"
+                            >
+                              <v-chip size="small" label class="me-2">
+                                {{ fileName }}
+                              </v-chip>
+                            </template>
+                          </template>
+                        </v-file-input>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="4" sm="4" md="4">
+                    <div>
+                      <div class="image-container">
+                        <v-hover v-slot="{ isHovering, props }">
+                          <div style="position: relative" v-bind="props">
+                            <img
+                              v-bind:style="
+                                isHovering == true ? 'filter: blur(1px);' : ''
+                              "
+                              v-if="fieldItem.image_path_ar != null"
+                              :src="envImagePath + fieldItem.image_path_ar"
+                              width="100"
+                              height="65
+                          "
+                              alt
+                            />
+                            <img
+                              v-bind:style="
+                                isHovering == true ? 'filter: blur(1px);' : ''
+                              "
+                              v-else
+                              src="@/assets/images/upload_image_default.png"
+                              width="100"
+                            />
+                            <div v-show="isHovering" class="camera-icon">
+                              <v-icon @click="uploadFileAr">mdi-camera</v-icon>
+                            </div>
+                          </div>
+                        </v-hover>
+                      </div>
+                      <a
+                        class="text-center pointer"
+                        @click="downloadImage(fieldItem.image_path_ar)"
+                      >
+                        <span
+                          v-if="fieldItem.image_path_ar"
+                          class="download_btn_color"
+                          >{{ $t("download") }}</span
+                        >
+                      </a>
+                    </div>
+                    <br />
+                    <Imageupload
+                      :folder="'e_magazine'"
+                      :resizewidth="0.4"
+                      :resizeheight="0.1"
+                      @uploaded_image="uploaded_image_ar"
+                      :upload_profile="uploadfilear"
+                    />
                   </v-col>
                 </v-row>
               </v-layout>
@@ -168,10 +474,12 @@
 </template>
     
   <script>
+import Imageupload from "../../CustomComponents/ImageUpload.vue";
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 export default {
   components: {
     PageTitle,
+    Imageupload,
   },
   data: () => ({
     google_icon: {
@@ -191,7 +499,20 @@ export default {
     tabs: 1,
     fieldItem: {
       id: 0,
+      image_path_ar: "",
+      image_path: "",
     },
+    envImagePath: process.env.VUE_APP_IMAGE_PATH,
+    uploadfile: false,
+    uploadfilear: false,
+    is_arabic_image: false,
+    sel_file_index: null,
+    errorNameMessage: "",
+    errorUploadMessage: "",
+    file_name: "",
+    fileurl: "",
+    folder: "e_magazin_file_upload",
+    is_disabled: false,
   }),
 
   computed: {
@@ -201,6 +522,9 @@ export default {
 
     descriptionRules() {
       return [(v) => !!v || this.$t("description_required")];
+    },
+    fileRules() {
+      return [(v) => v.length > 0 || this.$t("field_required")];
     },
   },
 
@@ -215,7 +539,7 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-                "edit-mall-timings/" +
+                "edit-e-magazine/" +
                 this.$route.query.slug
             )
             .then((res) => {
@@ -225,7 +549,7 @@ export default {
                 this.array_data = res.data.message;
               }
               if (res.data.status == "S") {
-                this.fieldItem = res.data.mall_timings;
+                this.fieldItem = res.data.e_magazine;
                 this.loader = false;
               } else {
                 this.$toast.error(this.$t("something_went_wrong"));
@@ -243,6 +567,111 @@ export default {
   },
 
   methods: {
+    // Uploading a image
+    uploaded_image(img_src) {
+      if (this.is_arabic_image) {
+        this.fieldItem.image_path_ar = img_src;
+      } else {
+        this.fieldItem.image_path = img_src;
+      }
+    },
+    uploadFile() {
+      if (this.uploadfile == false) {
+        this.is_arabic_image = false;
+        this.uploadfile = true;
+      } else {
+        this.uploadfile = false;
+      }
+    },
+    uploadFileAr() {
+      if (this.uploadfilear == false) {
+        this.is_arabic_image = true;
+        this.uploadfilear = true;
+      } else {
+        this.uploadfilear = false;
+      }
+    },
+    downloadImage(image_url) {
+      window.open(this.envImagePath + image_url, "_blank");
+    },
+    //---Upload file----
+    updateFileIndex(index) {
+      this.sel_file_index = index;
+    },
+    onFileChange(e) {
+      console.log("evnrnt target", this.sel_file_index);
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+      this.createImage(files[0]);
+      const filename = event.target.files[0].name;
+      const lastDot = filename.lastIndexOf(".");
+      const fileNameWithoutExt = filename.substring(0, lastDot);
+      const ext = filename.substring(lastDot + 1);
+      console.log("FileName => " + fileNameWithoutExt);
+      this.filename = fileNameWithoutExt;
+      console.log("Extension => " + ext);
+      this.extension = ext;
+    },
+    createImage(file) {
+      this.emitData();
+      //var imagex = new Image();
+      var reader = new FileReader();
+      this.progress = 0;
+      reader.onload = (e) => {
+        this.$emit("updateImage", e.target.result);
+        this.upload(e.target.result);
+      };
+      reader.readAsDataURL(file);
+      //this.upload(this.image);
+    },
+    emitData() {
+      var index_path = {
+        index1: this.section_index,
+        index2: this.question_index,
+      };
+      console.log("index path will be ", index_path);
+      this.$emit("update-data", this.documents, index_path);
+    },
+    upload(imagedata) {
+      this.loader = true;
+      if (!imagedata) {
+        this.message = "Please select a file!";
+        return;
+      }
+      this.message = "";
+      return this.$axios
+        .post(process.env.VUE_APP_API_URL_ADMIN + "file_upload", {
+          image: imagedata,
+          folder: this.folder,
+          filename: this.filename,
+          extension: this.extension,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.status == "S") {
+            this.message = res.data.message;
+            this.fileurl = res.data.filepath;
+            this.file_name = this.fileurl.replace(/^.*[/]/, "");
+            if(this.tabs == 1){
+              this.fieldItem.file_upload = res.data.filepath;
+            }else{
+              this.fieldItem.file_upload_ar = res.data.filepath;
+            }
+            for (let index in this.documents) {
+              if (this.sel_file_index == index) {
+                this.documents[index].doc_url = this.fileurl;
+              }
+            }
+            this.loader = false;
+          }
+        })
+        .catch((err) => {
+          alert("Unable to upload file, try later");
+          console.log("this error -> " + err);
+        });
+    },
+
+    //---submit---
     submit() {
       if (this.$refs.form.validate()) {
         this.isDisabled = true;
@@ -250,7 +679,7 @@ export default {
         // Form is valid, process
         this.$axios
           .post(
-            process.env.VUE_APP_API_URL_ADMIN + "save-mall-timings",
+            process.env.VUE_APP_API_URL_ADMIN + "save-e-magazine",
             this.fieldItem
           )
           .then((res) => {
@@ -264,7 +693,7 @@ export default {
               this.$toast.success(this.array_data);
               this.message = res.data.message;
               this.$router.push({
-                name: "mall-timings",
+                name: "e-magazine",
               });
             } else {
               this.$toast.error(this.array_data);
@@ -286,5 +715,37 @@ export default {
   },
 };
 </script>
-  <style scoped></style>
+  <style scoped>
+input.larger {
+  width: 20px;
+  height: 20px;
+}
+.image-container {
+  max-width: 110px;
+  border: 5px double black;
+  border-radius: 3px;
+}
+.camera-icon {
+  position: absolute;
+  bottom: 35px;
+  left: 35px;
+  animation: fadeInUp 0.5s forwards;
+}
+.upload_doc {
+  margin-top: -14px;
+}
+.pointer {
+  cursor: pointer;
+}
+.upload_image {
+  margin-bottom: 3px;
+}
+.download_btn_color {
+  color: blue;
+}
+.image-width {
+  border: 3px solid black;
+  padding: 1px;
+}
+</style>
     
