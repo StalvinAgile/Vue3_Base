@@ -292,5 +292,9 @@
   "create_ammend_mall_timing": "Create/Ammend Mall Timing",
   "create_ammend_e_magazine": "Create/Ammend E Magazine",
   "e_magazine": "E-Magazine",
-  "title_ar": "عنوان"
+  "title_ar": "عنوان",
+  "meta_description": "Meta Description",
+  "meta_description_ar": "ميتا الوصف",
+  "meta_title": "Meta Title",
+  "meta_title_ar": "عنوان الفوقية"
 }
