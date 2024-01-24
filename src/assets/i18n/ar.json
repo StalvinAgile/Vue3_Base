@@ -272,5 +272,9 @@
   "status": "حالة",
   "english": "English",
   "arabic": "عربي",
-  "coming_soon":"قريباً"
+  "coming_soon":"قريباً",
+  "create_career": "إنشاء/تعديل المستخدم",
+  "meta_title": "إنشاء/تعديل المستخدم",
+  "meta_description": "إنشاء/تعديل المستخدم",
+  "vacancy": "المستخدم"
 }
