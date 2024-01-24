@@ -237,6 +237,32 @@ const routes = [
     component: () =>
       import("../components/Cruds/Notification/NotificationAmend.vue"),
   },
+  //Mall Timings
+  {
+    path: "/:lang?/mall-timings",
+    name: "mall-timings",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/MallTimings/IndexPage.vue"),
+  },
+  {
+    path: "/:lang?/mall-timings-amend",
+    name: "mall-timings-amend",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/MallTimings/MallTimingsAmend.vue"),
+  },
+  // E-Magazine
+  {
+    path: "/:lang?/e-magazine",
+    name: "e-magazine",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/EMagazine/IndexPage.vue"),
+  },
+  {
+    path: "/:lang?/e-magazine-amend",
+    name: "e-magazine-amend",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/EMagazine/EMagazineAmend.vue"),
+  },
 ];
 
 const router = createRouter({
