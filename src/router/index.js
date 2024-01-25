@@ -250,7 +250,7 @@ const routes = [
     beforeEnter: guardMyroute,
     component: () =>
       import("../components/Cruds/Careers/IndexPage.vue"),
-    },
+  },
   //Mall Timings
   {
     path: "/:lang?/mall-timings",
@@ -276,6 +276,13 @@ const routes = [
     name: "e-magazine-amend",
     // meta: { layout: "userpages" },
     component: () => import("../components/Cruds/EMagazine/EMagazineAmend.vue"),
+  },
+  // Reviews & Testimonials
+  {
+    path: "/:lang?/reviews-testimonials",
+    name: "reviews-testimonials",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/Testimonials/IndexPage.vue"),
   },
 ];
 

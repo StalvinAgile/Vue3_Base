@@ -284,5 +284,11 @@
   "to_time": "إلى التوقيت",
   "create_ammend_mall_timing": "إنشاء/تعديل توقيت المول",
   "change_language":"تغيير اللغة",
-  "switch_mode":"تغيير النظام"
+  "switch_mode":"تغيير النظام",
+  "reviews_testimonials": "التعليقات والشهادات",
+  "testimonials": "الشهادات - التوصيات",
+  "reviews": "التعليقات",
+  "customer": "عميل",
+  "testimonial_details": "تفاصيل الشهادة",
+  "is_published": "يتم نشر"
 }

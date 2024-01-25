@@ -3,7 +3,7 @@
     <div flat color="white" class="row py-5 pl-5 align-items-center">
       <page-title
         class="col-md-3"
-        :heading="$t('e_magazine')"
+        :heading="$t('reviews_testimonials')"
         :google_icon="google_icon"
       ></page-title>
 
@@ -26,39 +26,24 @@
           </template>
         </v-tooltip>
       </div>
-
-      <div class="add_new_button">
-        <v-tooltip :text="this.$t('add_new')" location="bottom">
-          <template v-slot:activator="{ props }">
-            <router-link
-              :to="{ name: 'e-magazine-amend' }"
-              style="color: white"
-            >
-              <v-btn size="small" class="mb-2 green_btn_color" v-bind="props">{{
-                $t("add_new")
-              }}</v-btn>
-            </router-link>
-          </template>
-        </v-tooltip>
-      </div>
     </div>
 
     <v-tabs v-model="tabs" color="blue">
       <v-tab :value="1">
-        <span>{{ $t("english") }}</span>
+        <span>{{ $t("testimonials") }}</span>
       </v-tab>
 
       <v-tab :value="2">
-        <span>{{ $t("arabic") }}</span>
+        <span>{{ $t("reviews") }}</span>
       </v-tab>
     </v-tabs>
-    
+
     <v-window v-model="tabs">
-      <!-- ENGLISH TAB STARTS -->
+      <!-- Testimonials Tab Start -->
       <v-window-item :value="1">
         <v-data-table
           :headers="headers"
-          :items="e_magazine"
+          :items="testimonials"
           :search="search"
           :loading="initval"
           v-bind:no-data-text="$t('no_data_available')"
@@ -68,8 +53,34 @@
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
-              <td>{{ props.item.selectable.title }}</td>
-              <td>{{ props.item.selectable.description }}</td>
+              <td>
+                {{ props.item.selectable.customer_id }}
+              </td>
+              <td>{{ props.item.selectable.testimonial_details }}</td>
+              <td>
+                <v-btn
+                  class="hover_shine btn mr-2"
+                  :disabled="isDisabled"
+                  @click="updateIsPublishStatus(props.item.selectable.id)"
+                  size="small"
+                  v-bind:color="[
+                    props.item.selectable.is_published == 1
+                      ? 'success'
+                      : 'warning',
+                  ]"
+                >
+                  <span
+                    v-if="props.item.selectable.is_published == 1"
+                    class="spanactivesize"
+                    >{{ $t("yes") }}</span
+                  >
+                  <span
+                    v-if="props.item.selectable.is_published == 0"
+                    class="spanactivesize"
+                    >{{ $t("no") }}</span
+                  >
+                </v-btn>
+              </td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -93,25 +104,6 @@
                 </v-btn>
               </td>
               <td class="text-center">
-                <router-link
-                  small
-                  :to="{
-                    name: 'e-magazine-amend',
-                    query: { slug: props.item.selectable.slug },
-                  }"
-                >
-                  <v-tooltip :text="this.$t('edit')" location="top">
-                    <template v-slot:activator="{ props }">
-                      <v-icon
-                        v-bind="props"
-                        small
-                        class="mr-2 edit_btn icon_size"
-                        >mdi-pencil-outline</v-icon
-                      >
-                    </template>
-                    <span>{{ $t("edit") }}</span>
-                  </v-tooltip>
-                </router-link>
                 <span @click="deleteItem(props.item.selectable.id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
@@ -127,22 +119,49 @@
           </template>
         </v-data-table>
       </v-window-item>
-      <!-- ENGLISH TAB END -->
-      <!-- ARABIC TAB STARTS -->
+      <!-- Testimonials Tab End -->
+      <!-- Reviews Tab Start -->
       <v-window-item :value="2">
         <v-data-table
-          :headers="headers_ar"
-          :items="e_magazine"
+          :headers="headers"
+          :items="reviews"
           :search="search"
           :loading="initval"
-          class="rtl-direction"
-          :no-data-text="$t('no_data_available')"
-          :items-per-page-text="$t('rows_per_page')"
+          v-bind:no-data-text="$t('no_data_available')"
+          :footer-props="{
+            'items-per-page-text': $t('rows_per_page'),
+          }"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
-              <td>{{ props.item.selectable.title_ar }}</td>
-              <td>{{ props.item.selectable.description_ar }}</td>
+              <td>
+                {{ props.item.selectable.customer_id }}
+              </td>
+              <td>{{ props.item.selectable.testimonial_details }}</td>
+              <td>
+                <v-btn
+                  class="hover_shine btn mr-2"
+                  :disabled="isDisabled"
+                  @click="updateIsPublishStatus(props.item.selectable.id)"
+                  size="small"
+                  v-bind:color="[
+                    props.item.selectable.is_published == 1
+                      ? 'success'
+                      : 'warning',
+                  ]"
+                >
+                  <span
+                    v-if="props.item.selectable.is_published == 1"
+                    class="spanactivesize"
+                    >{{ $t("yes") }}</span
+                  >
+                  <span
+                    v-if="props.item.selectable.is_published == 0"
+                    class="spanactivesize"
+                    >{{ $t("no") }}</span
+                  >
+                </v-btn>
+              </td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -156,35 +175,16 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active_ar") }}</span
+                    >{{ $t("active") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive_ar") }}</span
+                    >{{ $t("inactive") }}</span
                   >
                 </v-btn>
               </td>
               <td class="text-center">
-                <router-link
-                  small
-                  :to="{
-                    name: 'e-magazine-amend',
-                    query: { slug: props.item.selectable.slug },
-                  }"
-                >
-                  <v-tooltip :text="this.$t('edit')" location="top">
-                    <template v-slot:activator="{ props }">
-                      <v-icon
-                        v-bind="props"
-                        small
-                        class="mr-2 edit_btn icon_size"
-                        >mdi-pencil-outline</v-icon
-                      >
-                    </template>
-                    <span>{{ $t("edit") }}</span>
-                  </v-tooltip>
-                </router-link>
                 <span @click="deleteItem(props.item.selectable.id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
@@ -200,7 +200,7 @@
           </template>
         </v-data-table>
       </v-window-item>
-      <!-- ARABIC TAB END -->
+      <!-- Reviews Tab End -->
     </v-window>
     <ConfirmDialog
       :show="showConfirmDialog"
@@ -217,6 +217,13 @@
       v-bind:title="$t('confirm')"
       v-bind:description="$t('status_change')"
     />
+    <ConfirmDialog
+      :show="showIsPublishStatusDialog"
+      :cancel="cancelIsPublishStatus"
+      :confirm="confirmIsPublishStatus"
+      v-bind:title="$t('confirm')"
+      v-bind:description="$t('status_change')"
+    />
   </div>
 </template>
     
@@ -230,15 +237,18 @@ export default {
     showConfirmDialog: false,
     delete_id: null,
     dialog: false,
-    e_magazine: [],
+    testimonials: [],
+    reviews: [],
     initval: true,
     google_icon: {
-      icon_name: "auto_stories",
+      icon_name: "speaker_notes",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },
     status_id: null,
+    is_publish_id: null,
     showStatusDialog: false,
+    showIsPublishStatusDialog: false,
     tabs: 1,
   }),
 
@@ -249,12 +259,16 @@ export default {
     headers() {
       return [
         {
-          title: this.$t("title"),
-          key: "title",
+          title: this.$t("customer"),
+          key: "customer",
         },
         {
-          title: this.$t("description"),
-          key: "description",
+          title: this.$t("testimonial_details"),
+          key: "testimonial_details",
+        },
+        {
+          title: this.$t("is_published"),
+          key: "is_published",
         },
         {
           title: this.$t("status"),
@@ -262,27 +276,6 @@ export default {
         },
         {
           title: this.$t("action"),
-          align: "center",
-          key: "email",
-        },
-      ];
-    },
-    headers_ar() {
-      return [
-        {
-          title: this.$t("title_ar"),
-          key: "title_ar",
-        },
-        {
-          title: this.$t("description_ar"),
-          key: "from_day",
-        },
-        {
-          title: this.$t("status_ar"),
-          key: "status",
-        },
-        {
-          title: this.$t("action_ar"),
           align: "center",
           key: "email",
         },
@@ -298,24 +291,17 @@ export default {
 
   created() {},
   mounted() {
-    this.fetchEMagazine();
+    this.fetchReviewsTestimonials();
   },
 
   methods: {
-    cancel() {
-      this.showConfirmDialog = false;
-    },
-    confirm(id) {
-      this.deleteConfirm(id);
-      this.showConfirmDialog = false;
-    },
-
-    fetchEMagazine() {
+    fetchReviewsTestimonials() {
       this.initval = true;
       this.$axios
-        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-e-magazine")
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-reviews-testimonials")
         .then((res) => {
-          this.e_magazine = res.data.e_magazine;
+          this.testimonials = res.data.testimonials;
+          this.reviews = res.data.reviews;
           this.initval = false;
         })
         .catch((err) => {
@@ -325,15 +311,24 @@ export default {
         });
     },
 
-    deleteItem(time_id) {
-      this.delete_id = time_id;
+    deleteItem(testimonial_id) {
+      this.delete_id = testimonial_id;
       this.showConfirmDialog = true;
     },
 
-    deleteConfirm(time_id) {
+    cancel() {
+      this.showConfirmDialog = false;
+    },
+    
+    confirm(id) {
+      this.deleteConfirm(id);
+      this.showConfirmDialog = false;
+    },
+
+    deleteConfirm(testimonial_id) {
       this.$axios
         .post(
-          process.env.VUE_APP_API_URL_ADMIN + "delete-e-magazine/" + time_id
+          process.env.VUE_APP_API_URL_ADMIN + "delete-testimonial-and-reviews/" + testimonial_id
         )
         .then((res) => {
           if (Array.isArray(res.data.message)) {
@@ -345,7 +340,7 @@ export default {
             this.$toast.error(this.array_data);
           } else {
             this.$toast.success(this.array_data);
-            this.fetchEMagazine();
+            this.fetchReviewsTestimonials();
           }
         })
         .catch((err) => {
@@ -377,7 +372,8 @@ export default {
       this.loader = true;
       this.$axios
         .post(
-          process.env.VUE_APP_API_URL_ADMIN + "update-e-magazine-status",
+          process.env.VUE_APP_API_URL_ADMIN +
+            "update-testimonial-and-reviews-status",
           {
             id: this.status_id,
           }
@@ -390,12 +386,52 @@ export default {
           }
           if (res.data.status == "S") {
             this.$toast.success(this.array_data);
-            this.fetchEMagazine();
+            this.fetchReviewsTestimonials();
           } else if (res.data.status == "E") {
             this.$toast.error(this.array_data);
           } else {
             this.$toast.error(this.array_data);
-            this.fetchEMagazine();
+            this.fetchReviewsTestimonials();
+          }
+        })
+        .catch((err) => {
+          this.$toast.error(this.array_data);
+          console.log("this error" + err);
+        });
+      this.loader = false;
+    },
+    //------is upload status change-----------
+    updateIsPublishStatus(id) {
+      this.is_publish_id = id;
+      this.showIsPublishStatusDialog = true;
+    },
+    confirmIsPublishStatus() {
+      this.statusIsPublishUpdate();
+      this.showIsPublishStatusDialog = false;
+    },
+    cancelIsPublishStatus() {
+      this.showIsPublishStatusDialog = false;
+    },
+    statusIsPublishUpdate() {
+      this.loader = true;
+      this.$axios
+        .post(process.env.VUE_APP_API_URL_ADMIN + "update-is-publish-status", {
+          id: this.is_publish_id,
+        })
+        .then((res) => {
+          if (Array.isArray(res.data.message)) {
+            this.array_data = res.data.message.toString();
+          } else {
+            this.array_data = res.data.message;
+          }
+          if (res.data.status == "S") {
+            this.$toast.success(this.array_data);
+            this.fetchReviewsTestimonials();
+          } else if (res.data.status == "E") {
+            this.$toast.error(this.array_data);
+          } else {
+            this.$toast.error(this.array_data);
+            this.fetchReviewsTestimonials();
           }
         })
         .catch((err) => {
