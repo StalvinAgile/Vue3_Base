@@ -4,6 +4,7 @@ import { apptheme } from "./store/apptheme.js";
 </script>
 
 <template>
+  <content-loader v-if="c_loader"></content-loader>
   <div id="app" v-bind:class="apptheme.theme_type">
     <v-card>
       <FlashMessage
@@ -302,6 +303,7 @@ export default {
       currentIndex: 0,
       itemsPerPage: 5,
       sel_lang: "",
+      c_loader: false,
     };
   },
   computed: {
@@ -361,6 +363,10 @@ export default {
 
   methods: {
     setUserLang(lang) {
+      this.c_loader = true;
+      setTimeout(() => {
+        this.c_loader = false;
+      }, 2000);
       localStorage.setItem("pref_lang", lang);
       this.$i18n.locale = lang;
 
@@ -379,7 +385,7 @@ export default {
       });
 
       this.selectedLang();
-      this.componentKey += 1; // Assuming componentKey is defined in your data
+      this.componentKey += 1;
     },
     selectedLang() {
       this.sel_lang = localStorage.getItem("pref_lang") || "en";
