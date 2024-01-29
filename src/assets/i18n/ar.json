@@ -272,7 +272,7 @@
   "status": "حالة",
   "english": "English",
   "arabic": "عربي",
-  "coming_soon":"قريباً",
+  "coming_soon": "قريباً",
   "create_career": "إنشاء/تعديل المستخدم",
   "meta_title": "إنشاء/تعديل المستخدم",
   "meta_description": "إنشاء/تعديل المستخدم",
@@ -283,12 +283,15 @@
   "from_time": "من التوقيت",
   "to_time": "إلى التوقيت",
   "create_ammend_mall_timing": "إنشاء/تعديل توقيت المول",
-  "change_language":"تغيير اللغة",
-  "switch_mode":"تغيير النظام",
+  "change_language": "تغيير اللغة",
+  "switch_mode": "تغيير النظام",
   "reviews_testimonials": "التعليقات والشهادات",
   "testimonials": "الشهادات - التوصيات",
   "reviews": "التعليقات",
   "customer": "عميل",
   "testimonial_details": "تفاصيل الشهادة",
-  "is_published": "يتم نشر"
+  "is_published": "يتم نشر",
+  "create_amend_category": "إنشاء/تعديل الفئة",
+  "category": "فئة",
+  "display_in_header_menu": "العرض في قائمة الرأس"
 }
