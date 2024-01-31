@@ -54,7 +54,7 @@
       <v-window-item :value="1">
         <v-data-table
           :headers="headers"
-          :items="countries"
+          :items="countries_en"
           :search="search"
           :loading="initval"
         >
@@ -126,7 +126,7 @@
       <v-window-item :value="2">
         <v-data-table
           :headers="headers"
-          :items="countries"
+          :items="countries_ar"
           :search="search"
           :loading="initval"
         >
@@ -134,8 +134,8 @@
             <tr class="vdatatable_tbody">
               <td>
                 {{
-                  props.item.selectable.name_ar
-                    ? props.item.selectable.name_ar
+                  props.item.selectable.name
+                    ? props.item.selectable.name
                     : $t("not_appllicable")
                 }}
               </td>
@@ -180,7 +180,7 @@
                     <span>{{ $t("states") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -221,7 +221,8 @@ export default {
     ConfirmDialog,
   },
   data: () => ({
-    countries: [],
+    countries_en: [],
+    countries_ar: [],
     showdeleteDialog: false,
     delete_id: null,
     status_id: null,
@@ -255,7 +256,7 @@ export default {
           title: this.$t("name"),
           align: "left",
           sortable: true,
-          key: this.tabs == 1 ? "name" : "name_ar",
+          key: this.tabs == 1 ? "name" : "name",
         },
         {
           title: this.$t("actions"),
@@ -282,7 +283,8 @@ export default {
           this.initval = false;
 
           // this.$toast.success(this.array_data);
-          this.countries = res.data.countries;
+          this.countries_en = res.data.countries_en;
+          this.countries_ar = res.data.countries_ar;
         })
         .catch((err) => {
           this.$toast.error(this.array_data);

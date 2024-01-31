@@ -9,6 +9,7 @@
         ></page-title>
       </div>
       <div class="card-body">
+        
         <content-loader v-if="loader"></content-loader>
         <v-tabs v-model="tabs" color="blue">
           <v-tab :value="1" @click="checkUploadImage">
@@ -28,7 +29,7 @@
                     <template v-slot:activator="{ props }">
                       <v-text-field
                         v-on="on"
-                        v-model="country.name"
+                        v-model="country[0].name"
                         :rules="fieldRules"
                         v-bind:label="$t('name')"
                         required
@@ -53,7 +54,7 @@
                     <template v-slot:activator="{ props }">
                       <v-text-field
                         v-on="on"
-                        v-model="country.name_ar"
+                        v-model="country[1].name"
                         :rules="fieldRules"
                         v-bind:label="$t('name')"
                         required
@@ -133,11 +134,18 @@ export default {
     showupload: "",
     isDisabled: false,
     checkbox_value: false,
-    country: {
-      id: 0,
-      name: "",
-      name_ar: "",
-    },
+    country: [
+      {
+        id:0,
+        name: "",
+        lang: "en",
+      },
+      {
+        id:0,
+        name: "",
+        lang: "ar",
+      },
+    ],
     noimagepreview: "",
     items: [],
   }),
@@ -166,8 +174,6 @@ export default {
                 this.$route.query.slug
             )
             .then((res) => {
-              console.log("CALLED IN ROUTE");
-              console.log(res);
               this.country = res.data.countries;
               this.loader = false;
             });
@@ -215,6 +221,11 @@ export default {
           })
           .catch((err) => {
             console.log(err);
+          })
+          .finally(() => {
+            this.btnloading = false;
+            this.isBtnLoading = false;
+            this.isDisabled = false;
           });
       }
     },

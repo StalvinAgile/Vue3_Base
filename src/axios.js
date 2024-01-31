@@ -10,11 +10,11 @@ instance.interceptors.request.use((config) => {
     config.headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const language = localStorage.getItem("pref_lang") || "en";
-
-  config.params = { ...config.params, lang: language };
+  if (config.method === "get") {
+    const language = localStorage.getItem("pref_lang") || "en";
+    config.params = { ...config.params, lang: language };
+  }
   return config;
-  
 });
 
 instance.interceptors.response.use(
