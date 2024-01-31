@@ -35,7 +35,7 @@
               :to="{
                 name: 'states_amend',
                 query: {
-                  countryslug: countryname,
+                  countryslug: countryslug,
                 },
               }"
               style="color: white"
@@ -79,7 +79,7 @@
       <v-window-item :value="1">
         <v-data-table
           :headers="headers"
-          :items="states"
+          :items="states_en"
           :search="search"
           :loading="initval"
         >
@@ -113,7 +113,7 @@
                   :to="{
                     name: 'cities',
                     query: {
-                      countryslug: countryname,
+                      countryslug: countryslug,
                       stateslug: props.item.selectable.slug,
                     },
                   }"
@@ -154,7 +154,7 @@
       <v-window-item :value="2">
         <v-data-table
           :headers="headers"
-          :items="states"
+          :items="states_ar"
           :search="search"
           :loading="initval"
         >
@@ -162,8 +162,8 @@
             <tr class="vdatatable_tbody">
               <td>
                 {{
-                  props.item.selectable.name_ar
-                    ? props.item.selectable.name_ar
+                  props.item.selectable.name
+                    ? props.item.selectable.name
                     : $t("not_appllicable")
                 }}
               </td>
@@ -194,7 +194,7 @@
                   :to="{
                     name: 'cities',
                     query: {
-                      countryslug: countryname,
+                      countryslug: countryslug,
                       stateslug: props.item.selectable.slug,
                     },
                   }"
@@ -211,7 +211,7 @@
                     <span>{{ $t("city") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -270,7 +270,9 @@ export default {
     successmessage: "",
     valid: false,
     message: "",
-    countryname: "",
+    countryslug: "",
+    states_ar: [],
+    states_en: [],
     json_fields: [
       {
         label: "Name",
@@ -285,7 +287,7 @@ export default {
           title: this.$t("name"),
           align: "left",
           sortable: true,
-          key: this.tabs == 1 ? "name" : "name_ar",
+          key: this.tabs == 1 ? "name" : "name",
         },
         {
           title: this.$t("actions"),
@@ -301,14 +303,13 @@ export default {
       immediate: true,
       handler() {
         if (this.$route.query.countryslug) {
-          this.countryname = this.$route.query.countryslug;
+          this.countryslug = this.$route.query.countryslug;
+          this.fetchstates();
         }
       },
     },
   },
-  mounted() {
-    this.fetchstates();
-  },
+  mounted() {},
   methods: {
     cancel() {
       this.showdeleteDialog = false;
@@ -322,13 +323,14 @@ export default {
       this.$axios
         .get(
           process.env.VUE_APP_API_URL_ADMIN +
-            "fetch_states?countryname=" +
-            this.countryname
+            "fetch_states?countryslug=" +
+            this.countryslug
         )
         .then((res) => {
           this.initval = false;
           // this.$toast.success(this.array_data);
-          this.states = res.data.states;
+          this.states_en = res.data.states_en;
+          this.states_ar = res.data.states_ar;
           this.selected_country_details = res.data.countries;
         })
         .catch((err) => {
@@ -355,7 +357,6 @@ export default {
           if (res.data.status == "S") {
             this.$toast.success(this.array_data);
             this.fetchstates();
-            localStorage.removeItem("appimage");
           } else if (res.data.status == "E") {
             this.$toast.error(this.array_data);
           } else {

@@ -29,7 +29,7 @@
                       <v-text-field
                         v-on="on"
                         readonly="isReadOnly"
-                        v-model="country.name"
+                        v-model="country[0].name"
                         v-bind:label="$t('country')"
                         v-bind="props"
                         variant="outlined"
@@ -43,7 +43,7 @@
                     <template v-slot:activator="{ props }">
                       <v-text-field
                         v-on="on"
-                        v-model="state.name"
+                        v-model="state[0].name"
                         :rules="fieldRules"
                         v-bind:label="$t('state')"
                         required
@@ -69,7 +69,7 @@
                       <v-text-field
                         v-on="on"
                         readonly="isReadOnly"
-                        v-model="country.name_ar"
+                        v-model="country[1].name"
                         v-bind:label="$t('country')"
                         v-bind="props"
                         variant="outlined"
@@ -83,7 +83,7 @@
                     <template v-slot:activator="{ props }">
                       <v-text-field
                         v-on="on"
-                        v-model="state.name_ar"
+                        v-model="state[1].name"
                         :rules="fieldRules"
                         v-bind:label="$t('state')"
                         required
@@ -109,7 +109,7 @@
               <v-btn
                 v-bind="props"
                 size="small"
-                @click="$router.go(-1)"
+                @click="cancel()"
                 :disabled="loading"
                 class="ma-1"
                 color="cancel"
@@ -162,14 +162,32 @@ export default {
     showupload: "",
     isDisabled: false,
     checkbox_value: false,
-    state: {
-      id: 0,
-      name: "",
-      name_ar: "",
-      country_id: 0,
-    },
-    country: "",
-    country_array: [],
+    country_slug: "",
+
+    state: [
+      {
+        id: 0,
+        name: "",
+        lang: "en",
+        country_id: null,
+      },
+      {
+        id: 0,
+        name: "",
+        lang: "ar",
+        country_id: null,
+      },
+    ],
+    country: [
+      {
+        id: 0,
+        name: "",
+      },
+      {
+        id: 0,
+        name: "",
+      },
+    ],
     noimagepreview: "",
     items: [],
     tabs: 1,
@@ -200,12 +218,17 @@ export default {
             )
             .then((res) => {
               this.country = res.data.countries;
-              this.state.country_id = res.data.countries.id;
+              for (let i = 0; i < 2; i++) {
+                this.state[i].country_id = res.data.countries[i].header_id;
+              }
+              this.country_slug = this.$route.query.countryslug;
+
               this.loader = false;
             });
         }
       },
     },
+
     "$route.query.slug": {
       immediate: true,
       handler() {
@@ -218,11 +241,9 @@ export default {
                 this.$route.query.slug
             )
             .then((res) => {
-              this.state = res.data.states;
-              console.log("this.state");
-              console.log(res.data.states.country.name);
-              this.state.country_id = res.data.states.id;
-              this.country = res.data.states.country;
+              this.country = res.data.country;
+              this.state = res.data.state;
+              this.country_slug = this.country[0].slug;
               this.loader = false;
             });
         }
@@ -255,7 +276,7 @@ export default {
               this.$router.push({
                 name: "states",
                 query: {
-                  countryslug: this.country.slug,
+                  countryslug: this.country_slug,
                 },
               });
             } else if (res.data.status == "E") {
@@ -276,6 +297,14 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
+    },
+    cancel() {
+      this.$router.push({
+        name: "states",
+        query: {
+          countryslug: this.country_slug,
+        },
+      });
     },
   },
 };
