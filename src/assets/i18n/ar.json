@@ -293,5 +293,11 @@
   "is_published": "يتم نشر",
   "create_amend_category": "إنشاء/تعديل الفئة",
   "category": "فئة",
-  "display_in_header_menu": "العرض في قائمة الرأس"
+  "display_in_header_menu": "العرض في قائمة الرأس",
+  "stores": "منظمة",
+  "create_amend_stores": "إنشاء/تعديل المتاجر",
+  "logo": "شعار",
+  "stor_type": "نوع كبير ",
+  "mall_admin": "مشرف مول",
+  "stor_admin": "المشرف العظيم"
 }

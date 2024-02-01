@@ -284,6 +284,19 @@ const routes = [
     // meta: { layout: "userpages" },
     component: () => import("../components/Cruds/Testimonials/IndexPage.vue"),
   },
+  // Stores
+  {
+    path: "/:lang?/stores",
+    name: "stores",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/Stores/IndexPage.vue"),
+  },
+  {
+    path: "/:lang?/stores-amend",
+    name: "stores-amend",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/Stores/StoresAmend.vue"),
+  },
 ];
 
 const router = createRouter({
