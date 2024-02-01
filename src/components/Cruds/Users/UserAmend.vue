@@ -541,7 +541,7 @@ export default {
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_countries")
         .then((response) => {
           console.log(response);
-          this.country_array = response.data.countries;
+          this.country_array = response.data.countries_ar;
           this.initval = false;
         })
         .catch((err) => {
@@ -553,7 +553,7 @@ export default {
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_states_name/" + name)
         .then((response) => {
-          this.state_array = response.data.states;
+          this.state_array = response.data.states_en;
           this.initval = false;
           this.city_array = [];
         })
@@ -567,7 +567,7 @@ export default {
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_cities_name/" + name)
         .then((response) => {
           console.log(response);
-          this.city_array = response.data.cities;
+          this.city_array = response.data.cities_en;
           this.initval = false;
         })
         .catch((err) => {
