@@ -53,7 +53,7 @@
         <v-window-item :value="1">
             <v-data-table
       :headers="headers"
-      :items="careers_data"
+      :items="careers_data_en"
       :search="search"
       :loading="initval"
       v-bind:no-data-text="$t('no_data_available')"
@@ -134,7 +134,7 @@
                 </template>
               </v-tooltip>
             </router-link>
-            <span @click="deleteItem(props.item.selectable.id)">
+            <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -159,7 +159,7 @@
         <v-window-item :value="2">
             <v-data-table
       :headers="headers"
-      :items="careers_data"
+      :items="careers_data_ar"
       :search="search"
       :loading="initval"
       v-bind:no-data-text="$t('no_data_available')"
@@ -170,14 +170,14 @@
       <template v-slot:item="props">
         <tr class="vdatatable_tbody">
           <td>
-            <span v-if="props.item.selectable.title_ar">
-              {{ props.item.selectable.title_ar }}</span
+            <span v-if="props.item.selectable.title">
+              {{ props.item.selectable.title }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
           <td>
-            <span v-if="props.item.selectable.description_ar">
-              {{ props.item.selectable.description_ar }}</span
+            <span v-if="props.item.selectable.description">
+              {{ props.item.selectable.description }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
@@ -188,14 +188,14 @@
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
           <td>
-            <span v-if="props.item.selectable.meta_title_ar">
-              {{ props.item.selectable.meta_title_ar }}</span
+            <span v-if="props.item.selectable.meta_title">
+              {{ props.item.selectable.meta_title }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
           <td>
-            <span v-if="props.item.selectable.meta_description_ar">
-              {{ props.item.selectable.meta_description_ar }}</span
+            <span v-if="props.item.selectable.meta_description">
+              {{ props.item.selectable.meta_description }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
@@ -240,7 +240,7 @@
                 </template>
               </v-tooltip>
             </router-link>
-            <span @click="deleteItem(props.item.selectable.id)">
+            <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -295,6 +295,8 @@ export default {
     showConfirmDialog: false,
     delete_id: "",
     tabs: 1,
+    careers_data_en:[],
+    careers_data_ar:[],
     headers: [
       {
         title: "Title",
@@ -397,7 +399,11 @@ export default {
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_careers")
         .then((res) => {
-          this.careers_data = res.data.careersdata;
+          console.log('res');
+          console.log(res);
+          this.careers_data_en = res.data.careers_data_en;
+          console.log(this.careers_data_en);
+          this.careers_data_ar = res.data.careers_data_ar;
           this.initval = false;
         })
         .catch((err) => {

@@ -27,7 +27,7 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.title"
+                      v-model="careers[0].title"
                       :rules="fieldRules"
                       v-bind:label="$t('title')"
                       v-bind="props"
@@ -45,7 +45,7 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.vacancy"
+                      v-model="careers[0].vacancy"
                       :rules="fieldRules"
                       v-bind:label="$t('vacancy')"
                       v-bind="props"
@@ -64,7 +64,7 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.meta_title"
+                      v-model="careers[0].meta_title"
                       :rules="fieldRules"
                       v-bind:label="$t('meta_title')"
                       v-bind="props"
@@ -83,9 +83,9 @@
                     <v-textarea
                       v-on="on"
                       rows="2"
-                      v-model="careers.description"
+                      v-model="careers[0].description"
                       :rules="fieldRules"
-                      maxlength="100"
+                      maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('description')"
                       required
@@ -105,9 +105,9 @@
                     <v-textarea
                       v-on="on"
                       rows="2"
-                      v-model="careers.meta_description"
+                      v-model="careers[0].meta_description"
                       :rules="fieldRules"
-                      maxlength="100"
+                      maxlength="1000"
                       v-bind="props"
                       v-bind:label="$t('meta_description')"
                       required
@@ -132,7 +132,7 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.title_ar"
+                      v-model="careers[1].title"
                       :rules="fieldRules"
                       v-bind:label="$t('title')"
                       v-bind="props"
@@ -150,7 +150,7 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.vacancy"
+                      v-model="careers[1].vacancy"
                       :rules="fieldRules"
                       v-bind:label="$t('vacancy')"
                       v-bind="props"
@@ -169,7 +169,7 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.meta_title_ar"
+                      v-model="careers[1].meta_title"
                       :rules="fieldRules"
                       v-bind:label="$t('meta_title')"
                       v-bind="props"
@@ -188,9 +188,9 @@
                     <v-textarea
                       v-on="on"
                       rows="2"
-                      v-model="careers.description_ar"
+                      v-model="careers[1].description"
                       :rules="fieldRules"
-                      maxlength="100"
+                      maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('description')"
                       required
@@ -210,7 +210,7 @@
                     <v-textarea
                       v-on="on"
                       rows="2"
-                      v-model="careers.meta_description_ar"
+                      v-model="careers[1].meta_description"
                       :rules="fieldRules"
                       maxlength="100"
                       v-bind="props"
@@ -289,27 +289,22 @@ export default {
     showupload: "",
     isDisabled: false,
     checkbox_value: false,
-    careers: {
-      id: 0,
-      title: "",
-      title_ar: "",
-      vacancy:"",
-      description: "",
-      description_ar: "",
-      meta_title: "",
-      meta_title_ar: "",
-      meta_description: "",
-      meta_description_ar: "",
-    },
-    country: [
+    careers: [
       {
-        id:0,
-        name: "",
+        id: 0,
+        title: "",
+        description: "",
+        vacancy:"",
+        meta_title: "",
+        meta_description: "",
         lang: "en",
       },
       {
-        id:0,
-        name: "",
+        id: 0,
+        title_ar: "",
+        description_ar: "",
+        meta_title_ar: "",
+        meta_description_ar: "",
         lang: "ar",
       },
     ],
@@ -335,7 +330,6 @@ export default {
         // alert('Inside watch');
         // alert(this.$route.query.slug);
         if (this.$route.query.slug) {
-          
           this.loader = true;
           this.$axios
             .get(
@@ -364,9 +358,13 @@ export default {
         this.isDisabled = true;
         this.isBtnLoading = true;
         this.loader = true;
+        console.log(this.careers);
         // Form is valid, process
         this.$axios
-          .post(process.env.VUE_APP_API_URL_ADMIN + "save_careers", this.careers)
+          .post(
+            process.env.VUE_APP_API_URL_ADMIN + "save_careers",
+            this.careers
+          )
           .then((res) => {
             this.btnloading = false;
             if (Array.isArray(res.data.message)) {

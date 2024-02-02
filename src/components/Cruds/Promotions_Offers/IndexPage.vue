@@ -4,7 +4,7 @@
     <div flat color="white" class="row py-5 pl-5 align-items-center">
       <page-title
         class="col-md-3"
-        :heading="$t('careers')"
+        :heading="$t('promotions')"
         :google_icon="google_icon"
       ></page-title>
       
@@ -30,7 +30,7 @@
       <div class="add_new_button">
         <v-tooltip :text="this.$t('add_new')" location="bottom">
           <template v-slot:activator="{ props }">
-            <router-link :to="{ name: 'career_amend' }" style="color: white">
+            <router-link :to="{ name: 'promotions_amend' }" style="color: white">
               <v-btn size="small" class="mb-2 green_btn_color" v-bind="props">{{
                 $t("add_new")
               }}</v-btn>
@@ -53,7 +53,7 @@
         <v-window-item :value="1">
             <v-data-table
       :headers="headers"
-      :items="careers_data"
+      :items="promotions_en"
       :search="search"
       :loading="initval"
       v-bind:no-data-text="$t('no_data_available')"
@@ -76,8 +76,26 @@
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
           <td>
-            <span v-if="props.item.selectable.vacancy">
-              {{ props.item.selectable.vacancy }}</span
+            <span v-if="props.item.selectable.phone">
+              {{ props.item.selectable.phone }}</span
+            >
+            <span v-else>{{ $t("not_appllicable") }}</span>
+          </td>
+          <td>
+            <span v-if="props.item.selectable.email">
+              {{ props.item.selectable.email }}</span
+            >
+            <span v-else>{{ $t("not_appllicable") }}</span>
+          </td>
+          <td>
+            <span v-if="props.item.selectable.start_date">
+              {{ formatDate(props.item.selectable.start_date)}}</span
+            >
+            <span v-else>{{ $t("not_appllicable") }}</span>
+          </td>
+          <td>
+            <span v-if="props.item.selectable.end_date">
+              {{ formatDate(props.item.selectable.end_date)}}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
@@ -118,7 +136,7 @@
           <td>
             <router-link
               :to="{
-                name: 'career_amend',
+                name: 'promotions_amend',
                 query: { slug: props.item.selectable.slug },
               }"
             >
@@ -159,7 +177,7 @@
         <v-window-item :value="2">
             <v-data-table
       :headers="headers"
-      :items="careers_data"
+      :items="promotions_ar"
       :search="search"
       :loading="initval"
       v-bind:no-data-text="$t('no_data_available')"
@@ -170,32 +188,50 @@
       <template v-slot:item="props">
         <tr class="vdatatable_tbody">
           <td>
-            <span v-if="props.item.selectable.title_ar">
-              {{ props.item.selectable.title_ar }}</span
+            <span v-if="props.item.selectable.title">
+              {{ props.item.selectable.title }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
           <td>
-            <span v-if="props.item.selectable.description_ar">
-              {{ props.item.selectable.description_ar }}</span
+            <span v-if="props.item.selectable.description">
+              {{ props.item.selectable.description }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
           <td>
-            <span v-if="props.item.selectable.vacancy">
-              {{ props.item.selectable.vacancy }}</span
+            <span v-if="props.item.selectable.phone">
+              {{ props.item.selectable.phone }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
           <td>
-            <span v-if="props.item.selectable.meta_title_ar">
-              {{ props.item.selectable.meta_title_ar }}</span
+            <span v-if="props.item.selectable.email">
+              {{ props.item.selectable.email }}</span
+            >
+            <span v-else>{{ $t("not_appllicable") }}</span>
+          </td>
+           <td>
+            <span v-if="props.item.selectable.start_date">
+              {{ formatDate(props.item.selectable.start_date)}}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
           <td>
-            <span v-if="props.item.selectable.meta_description_ar">
-              {{ props.item.selectable.meta_description_ar }}</span
+            <span v-if="props.item.selectable.end_date">
+              {{ formatDate(props.item.selectable.end_date)}}</span
+            >
+            <span v-else>{{ $t("not_appllicable") }}</span>
+          </td>
+          <td>
+            <span v-if="props.item.selectable.meta_title">
+              {{ props.item.selectable.meta_title}}</span
+            >
+            <span v-else>{{ $t("not_appllicable") }}</span>
+          </td>
+          <td>
+            <span v-if="props.item.selectable.meta_description">
+              {{ props.item.selectable.meta_description}}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
@@ -224,7 +260,7 @@
           <td>
             <router-link
               :to="{
-                name: 'career_amend',
+                name: 'promotions_amend',
                 query: { slug: props.item.selectable.slug },
               }"
             >
@@ -288,7 +324,8 @@ export default {
     ConfirmDialog,
   },
   data: () => ({
-    careers_data: [],
+    promotions_en: [],
+    promotions_ar: [],
     initval: false,
     status_id: null,
     isDisabled: false,
@@ -306,8 +343,20 @@ export default {
         key: "description",
       },
       {
-        title: "Vacancy",
-        key: "vacancy",
+        title: "Phone",
+        key: "phone",
+      },
+      {
+        title: "Email",
+        key: "email",
+      },
+      {
+        title: "Start Date",
+        key: "start_date",
+      },
+      {
+        title: "End Date",
+        key: "end_date",
       },
       {
         title: "Meta Title",
@@ -346,7 +395,7 @@ export default {
   }),
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user"));
-    this.fetchCareers();
+    this.fetchPromotions();
   },
   methods: {
     cancel() {
@@ -362,7 +411,7 @@ export default {
     },
     deleteConfirm(id) {
       this.$axios
-        .post(process.env.VUE_APP_API_URL_ADMIN + "delete_career/" + id)
+        .post(process.env.VUE_APP_API_URL_ADMIN + "delete_promotions/" + id)
         .then((res) => {
           if (Array.isArray(res.data.message)) {
             this.array_data = res.data.message.toString();
@@ -371,12 +420,12 @@ export default {
           }
           if (res.data.status == "S") {
             this.$toast.success(this.array_data);
-            this.fetchCareers();
+            this.fetchPromotions();
           } else if (res.data.status == "E") {
             this.$toast.error(this.array_data);
           } else {
             this.$toast.error(this.array_data);
-            this.fetchCareers();
+            this.fetchPromotions();
           }
         })
         .catch((err) => {
@@ -392,12 +441,13 @@ export default {
       this.showStatusDialog = false;
       this.statusUpdate();
     },
-    fetchCareers() {
+    fetchPromotions() {
       this.initval = true;
       this.$axios
-        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_careers")
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_promotions")
         .then((res) => {
-          this.careers_data = res.data.careersdata;
+          this.promotions_en = res.data.promotions_offers_data_en;
+          this.promotions_ar = res.data.promotions_offers_data_ar;
           this.initval = false;
         })
         .catch((err) => {
@@ -446,13 +496,13 @@ export default {
           if (res.data.status == "S") {
             this.$toast.success(this.array_data);
             this.initval = true;
-            this.fetchCareers();
+            this.fetchPromotions();
           } else if (res.data.status == "E") {
             this.$toast.success(this.$t("something_went_wrong"));
           } else {
             this.$toast.error(this.array_data);
             this.initval = true;
-            this.fetchCareers();
+            this.fetchPromotions();
           }
         })
         .catch((err) => {

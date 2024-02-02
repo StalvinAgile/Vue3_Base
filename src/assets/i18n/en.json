@@ -306,6 +306,9 @@
   "approve_status": "Approve Status",
   "mall_admin": "Mall Admin",
   "stor_admin": "Stor Admin",
+  "create_promotion" :"Create / Amend Promotions",
+  "promotions":"Promotions",
+  
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
   "from_day_ar": "من اليوم",

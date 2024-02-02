@@ -3,9 +3,10 @@
     <div class="container my-3 p-0">
       <page-title
         class="col-md-4 ml-2"
-        :heading="$t('create_career')"
+        :heading="$t('create_promotion')"
         :google_icon="google_icon"
       ></page-title>
+      
     </div>
     <div class="card-body">
       <content-loader v-if="loader"></content-loader>
@@ -27,7 +28,7 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.title"
+                      v-model="promotions[0].title"
                       :rules="fieldRules"
                       v-bind:label="$t('title')"
                       v-bind="props"
@@ -41,13 +42,32 @@
                 </v-tooltip>
               </v-col>
               <v-col md="4">
-                <v-tooltip :text="this.$t('vacancy')" location="bottom">
+                <v-tooltip :text="this.$t('phone')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.vacancy"
-                      :rules="fieldRules"
-                      v-bind:label="$t('vacancy')"
+                      v-model="promotions[0].phone"
+                      v-bind:label="$t('phone')"                    
+                      :rules="phoneRules"
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                        maxlength="12"                    
+                        required
+                    ></v-text-field>
+                  </template>
+                  <span>{{ $t("phone") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col md="4">
+                <v-tooltip :text="this.$t('email')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="promotions[0].email"
+                      :rules="emailRules"
+                      v-bind:label="$t('email')"
                       v-bind="props"
                       required
                       class="required_field"
@@ -56,7 +76,64 @@
                       maxlength="500"
                     ></v-text-field>
                   </template>
-                  <span>{{ $t("vacancy") }}</span>
+                  <span>{{ $t("email") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col md="4">
+                <v-tooltip :text="this.$t('type')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                      <v-select
+                          v-bind="props"
+                          v-model="promotions[0].type"
+                          :rules="fieldRules"
+                          v-bind:label="$t('type')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="promotions_type"
+                          item-value="name"
+                          item-title="name"
+                        ></v-select>
+                  </template>
+                  <span>{{ $t("type") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col md="4">
+                <v-tooltip :text="this.$t('start_date')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                   <DatePicker
+                     v-bind="props"
+                    :label="$t('start_date')"
+                    :min="new Date().toISOString().substr(0, 10)"
+                    :stored_date="promotions[0].start_date"
+                    @formatted_date="formatted_start_date"
+                    dense
+                    :class_required="'RequiredField'"
+                    
+                    v-on="on"
+                  />
+                  </template>
+                  <span>{{ $t("start_date") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col md="4">
+                <v-tooltip :text="this.$t('end_date')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <DatePicker
+                     v-bind="props"
+                    :label="$t('end_date')"
+                    :min="new Date().toISOString().substr(0, 10)"
+                    :stored_date="promotions[0].end_date"
+                    @formatted_date="formatted_end_date"
+                    dense
+                    :class_required="'RequiredField'"
+                    
+                    v-on="on"
+                  />
+                  </template>
+                  <span>{{ $t("end_date") }}</span>
                 </v-tooltip>
               </v-col>
               <v-col cols="4" sm="12" md="4">
@@ -64,12 +141,10 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.meta_title"
+                      v-model="promotions[0].meta_title"
                       :rules="fieldRules"
                       v-bind:label="$t('meta_title')"
                       v-bind="props"
-                      required
-                      class="required_field rtl"
                       variant="outlined"
                       density="compact"
                       maxlength="100"
@@ -77,26 +152,24 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="6">
+              <v-col md="4">
                 <v-tooltip :text="this.$t('description')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea
                       v-on="on"
                       rows="2"
-                      v-model="careers.description"
+                      v-model="promotions[0].description"
                       :rules="fieldRules"
-                      maxlength="100"
+                      maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('description')"
-                      required
-                      class="required_field"
                       variant="outlined"
                       counter="true"
                     ></v-textarea>
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="6">
+              <v-col md="4">
                 <v-tooltip
                   :text="this.$t('meta_description')"
                   location="bottom"
@@ -105,13 +178,11 @@
                     <v-textarea
                       v-on="on"
                       rows="2"
-                      v-model="careers.meta_description"
+                      v-model="promotions[0].meta_description"
                       :rules="fieldRules"
                       maxlength="100"
                       v-bind="props"
                       v-bind:label="$t('meta_description')"
-                      required
-                      class="required_field"
                       variant="outlined"
                       counter="true"
                     ></v-textarea>
@@ -125,14 +196,14 @@
         <!-- ENGLISH TAB STOPS -->
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
-          <v-form ref="form" v-model="valid">
+           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
               <v-col cols="4" sm="12" md="4">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.title_ar"
+                      v-model="promotions[1].title"
                       :rules="fieldRules"
                       v-bind:label="$t('title')"
                       v-bind="props"
@@ -146,13 +217,32 @@
                 </v-tooltip>
               </v-col>
               <v-col md="4">
-                <v-tooltip :text="this.$t('vacancy')" location="bottom">
+                <v-tooltip :text="this.$t('phone')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.vacancy"
-                      :rules="fieldRules"
-                      v-bind:label="$t('vacancy')"
+                      v-model="promotions[1].phone"
+                      v-bind:label="$t('phone')"                    
+                      :rules="phoneRules"
+                        v-bind="props"
+                      class="required_field"
+                        variant="outlined"
+                        density="compact"
+                        maxlength="12"                    
+                        required
+                    ></v-text-field>
+                  </template>
+                  <span>{{ $t("phone") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col md="4">
+                <v-tooltip :text="this.$t('email')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="promotions[1].email"
+                      :rules="emailRules"
+                      v-bind:label="$t('email')"
                       v-bind="props"
                       required
                       class="required_field"
@@ -161,7 +251,64 @@
                       maxlength="500"
                     ></v-text-field>
                   </template>
-                  <span>{{ $t("vacancy") }}</span>
+                  <span>{{ $t("email") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col md="4">
+                <v-tooltip :text="this.$t('type')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-select
+                          v-bind="props"
+                          v-model="promotions[1].type"
+                          :rules="fieldRules"
+                          v-bind:label="$t('type')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="promotions_type"
+                          item-value="name"
+                          item-title="name"
+                        ></v-select>
+                  </template>
+                  <span>{{ $t("type") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col md="4">
+                <v-tooltip :text="this.$t('start_date')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <DatePicker
+                     v-bind="props"
+                    :label="$t('start_date')"
+                    :min="new Date().toISOString().substr(0, 10)"
+                    :stored_date="promotions[1].start_date"
+                    @formatted_date="formatted_start_date_ar"
+                    dense
+                    :class_required="'RequiredField'"
+                    
+                    v-on="on"
+                  />
+                  </template>
+                  <span>{{ $t("start_date") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col md="4">
+                <v-tooltip :text="this.$t('end_date')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <DatePicker
+                     v-bind="props"
+                    :label="$t('end_date')"
+                    :min="new Date().toISOString().substr(0, 10)"
+                    :stored_date="promotions[1].end_date"
+                    @formatted_date="formatted_end_date_ar"
+                    dense
+                    :class_required="'RequiredField'"
+                    
+                    v-on="on"
+                  />
+                  </template>
+                  <span>{{ $t("end_date") }}</span>
                 </v-tooltip>
               </v-col>
               <v-col cols="4" sm="12" md="4">
@@ -169,7 +316,7 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
-                      v-model="careers.meta_title_ar"
+                      v-model="promotions[1].meta_title"
                       :rules="fieldRules"
                       v-bind:label="$t('meta_title')"
                       v-bind="props"
@@ -182,15 +329,15 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="6">
+              <v-col md="4">
                 <v-tooltip :text="this.$t('description')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea
                       v-on="on"
                       rows="2"
-                      v-model="careers.description_ar"
+                      v-model="promotions[1].description"
                       :rules="fieldRules"
-                      maxlength="100"
+                      maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('description')"
                       required
@@ -201,7 +348,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="6">
+              <v-col md="4">
                 <v-tooltip
                   :text="this.$t('meta_description')"
                   location="bottom"
@@ -210,9 +357,9 @@
                     <v-textarea
                       v-on="on"
                       rows="2"
-                      v-model="careers.meta_description_ar"
+                      v-model="promotions[1].meta_description"
                       :rules="fieldRules"
-                      maxlength="100"
+                      maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('meta_description')"
                       required
@@ -273,7 +420,9 @@
 </template>
 
 <script>
+import DatePicker from "../../CustomComponents/DatePicker.vue";
 export default {
+  components: {DatePicker },
   data: () => ({
     google_icon: {
       icon_name: "edit_note",
@@ -289,43 +438,83 @@ export default {
     showupload: "",
     isDisabled: false,
     checkbox_value: false,
-    promotions: {
-      id: 0,
-      title: "",
-      title_ar: "",
-      description: "",
-      description_ar: "",
-      meta_title: "",
-      meta_title_ar: "",
-      meta_description: "",
-      meta_description_ar: "",
-    },
-    country: [
+    promotions_type:[
       {
-        id:0,
-        name: "",
+        id:1,
+        name:"promotions"
+      },
+      {
+        id:2,
+        name:"offers"
+        }
+      ],
+    promotions: [
+      {
+        id: 0,
+        title: "",
+        description: "",
+        phone:"",
+        email: "",
+        type: "",
+        start_date: "",
+        end_date: "",
+        image_path: "",
+        meta_title: "",
+        meta_description: "",
         lang: "en",
       },
       {
-        id:0,
-        name: "",
+        id: 0,
+        title: "",
+        description: "",
+        phone:"",
+        email: "",
+        type: "",
+        start_date: "",
+        end_date: "",
+        image_path: "",
+        meta_title: "",
+        meta_description: "",
         lang: "ar",
       },
     ],
+      
+ 
     noimagepreview: "",
     items: [],
   }),
 
   computed: {
+   emailRules() {
+      return [
+        (v) => !!v || this.$t("email_required"),
+        (v) =>
+          !v ||
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          this.$t("email_valid"),
+      ];
+    },
+    phoneRules() {
+      return [
+        (v) => (v >= 0 && v <= 999999999999) || this.$t("number_required"),
+      ];
+    },
+    numberRules() {
+      return [(v) => (v >= 0 && v <= 999999999999) || this.$t("entered_value")];
+    },
+
+    postcodeRules() {
+      return [(v) => (v >= 0 && v <= 999999) || this.$t("postcode_valid")];
+    },
+
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
     },
-
-    numberRules() {
-      return [(v) => !!v || this.$t("number_required")];
-    },
   },
-
+mounted(){
+  this.promotions[0].type="promotions";
+  this.promotions[1].type="promotions";
+},
   created() {},
   watch: {
     "$route.query.slug": {
@@ -339,13 +528,13 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-                "edit_careers/" +
+                "edit_promotions_offers/" +
                 this.$route.query.slug
             )
             .then((res) => {
               console.log("CALLED IN ROUTE");
               console.log(res);
-              this.careers = res.data.careers;
+              this.promotions = res.data.promotions_offers;
               this.loader = false;
             });
         }
@@ -353,6 +542,18 @@ export default {
     },
   },
   methods: {
+     formatted_start_date(formatted_date) {
+      this.promotions[0].start_date = formatted_date;
+    },
+     formatted_start_date_ar(formatted_date) {
+      this.promotions[1].start_date = formatted_date;
+    },
+     formatted_end_date(formatted_date) {
+      this.promotions[0].end_date = formatted_date;
+    },
+     formatted_end_date_ar(formatted_date) {
+      this.promotions[1].end_date = formatted_date;
+    },
     onFileChanged(e) {
       this.selectedFile = e.target.files[0];
 
@@ -365,7 +566,7 @@ export default {
         this.loader = true;
         // Form is valid, process
         this.$axios
-          .post(process.env.VUE_APP_API_URL_ADMIN + "save_careers", this.careers)
+          .post(process.env.VUE_APP_API_URL_ADMIN + "save_promotions", this.promotions)
           .then((res) => {
             this.btnloading = false;
             if (Array.isArray(res.data.message)) {
@@ -377,7 +578,7 @@ export default {
               this.$toast.success(this.array_data);
               this.message = res.data.message;
               this.$router.push({
-                name: "careers",
+                name: "promotions_offers",
               });
             } else if (res.data.status == "E") {
               this.$toast.error(this.array_data);
