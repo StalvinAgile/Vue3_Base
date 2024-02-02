@@ -32,7 +32,6 @@ const routes = [
     name: "dashboard",
     beforeEnter: guardMyroute,
     component: () => import("../components/Cruds/Dashboard/MainDashboard.vue"),
-    
   },
   {
     path: "/:lang?/users",
@@ -242,15 +241,13 @@ const routes = [
     name: "career_amend",
     path: "/:lang?/career_amend",
     beforeEnter: guardMyroute,
-    component: () =>
-      import("../components/Cruds/Careers/CareerAmend.vue"),
+    component: () => import("../components/Cruds/Careers/CareerAmend.vue"),
   },
   {
     name: "careers",
     path: "/:lang?/careers",
     beforeEnter: guardMyroute,
-    component: () =>
-      import("../components/Cruds/Careers/IndexPage.vue"),
+    component: () => import("../components/Cruds/Careers/IndexPage.vue"),
   },
   {
     name: "promotions_amend",
@@ -277,7 +274,8 @@ const routes = [
     path: "/:lang?/mall-timings-amend",
     name: "mall-timings-amend",
     // meta: { layout: "userpages" },
-    component: () => import("../components/Cruds/MallTimings/MallTimingsAmend.vue"),
+    component: () =>
+      import("../components/Cruds/MallTimings/MallTimingsAmend.vue"),
   },
   // E-Magazine
   {
@@ -311,6 +309,20 @@ const routes = [
     name: "stores-amend",
     // meta: { layout: "userpages" },
     component: () => import("../components/Cruds/Stores/StoresAmend.vue"),
+  },
+
+  //categories
+  {
+    path: "/:lang?/categories",
+    name: "categories",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/Category/IndexPage.vue"),
+  },
+  {
+    path: "/:lang?/categories-amend",
+    name: "categories-amend",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/Category/CategoryAmend.vue"),
   },
 ];
 

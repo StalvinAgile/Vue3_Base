@@ -25,12 +25,32 @@
             <v-form ref="form" v-model="valid">
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="6" sm="6" md="6">
+                  <v-col cols="6" sm="12" md="4">
+                    <v-tooltip :text="$t('name')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          v-bind="props"
+                          @update:modelValue="
+                            (value) => updateParent('en', value)
+                          "
+                          v-model="category[0].parent_id"
+                          v-bind:label="$t('parent_category')"
+                          variant="outlined"
+                          density="compact"
+                          :items="category_en"
+                          item-title="name"
+                          item-value="id"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+
+                  <v-col cols="6" sm="12" md="4">
                     <v-tooltip :text="$t('name')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
-                          v-model="category.name"
+                          v-model="category[0].name"
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="100"
@@ -42,12 +62,12 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="6" sm="6" md="6">
+                  <v-col cols="6" sm="12" md="4">
                     <v-tooltip :text="$t('title')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
-                          v-model="category.title"
+                          v-model="category[0].title"
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="100"
@@ -77,7 +97,7 @@
                                 ? 'quill_item'
                                 : 'quill_item_border'
                             "
-                            v-model:value="category.description"
+                            v-model:value="category[0].description"
                             @blur="onEditorBlur($event)"
                             @focus="onEditorFocus($event)"
                             @ready="onEditorReady($event)"
@@ -101,7 +121,7 @@
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
-                          v-model="category.meta_title"
+                          v-model="category[0].meta_title"
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="150"
@@ -122,7 +142,7 @@
                         <v-textarea
                           v-on="on"
                           rows="2"
-                          v-model="category.meta_description"
+                          v-model="category[0].meta_description"
                           v-bind="props"
                           :rules="descriptionRules"
                           v-bind:label="$t('meta_description')"
@@ -145,12 +165,31 @@
             <v-form ref="form" v-model="valid">
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="6" sm="6" md="6">
+                  <v-col cols="6" sm="12" md="4">
+                    <v-tooltip :text="$t('name')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          @update:modelValue="
+                            (value) => updateParent('ar', value)
+                          "
+                          v-bind="props"
+                          v-model="category[1].parent_id"
+                          v-bind:label="$t('parent_category')"
+                          variant="outlined"
+                          density="compact"
+                          :items="category_ar"
+                          item-title="name"
+                          item-value="id"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="6" sm="12" md="4">
                     <v-tooltip :text="$t('name_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
-                          v-model="category.name_ar"
+                          v-model="category[1].name"
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="100"
@@ -162,12 +201,12 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="6" sm="6" md="6">
+                  <v-col cols="6" sm="12" md="4">
                     <v-tooltip :text="$t('title_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
-                          v-model="category.title_ar"
+                          v-model="category[1].title"
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="100"
@@ -197,7 +236,7 @@
                                 ? 'quill_item'
                                 : 'quill_item_border'
                             "
-                            v-model:value="category.description_ar"
+                            v-model:value="category[1].description"
                             @blur="onEditorBlurAR($event)"
                             @focus="onEditorFocusAR($event)"
                             @ready="onEditorReadyAR($event)"
@@ -224,7 +263,7 @@
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
-                          v-model="category.meta_title_ar"
+                          v-model="category[1].meta_title"
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="150"
@@ -245,7 +284,7 @@
                         <v-textarea
                           v-on="on"
                           rows="2"
-                          v-model="category.meta_description_ar"
+                          v-model="category[1].meta_description"
                           v-bind="props"
                           :rules="descriptionRules"
                           v-bind:label="$t('meta_description_ar')"
@@ -274,24 +313,26 @@
             >
               <template v-slot:activator="{ props }">
                 <v-switch
-                  color="primary"
                   v-bind="props"
-                  v-model="category.display_header_menu"
-                  :model-value="
-                    category.display_header_menu === 1 ? true : false
+                  color="blue"
+                  :model-value="category[0].display_header_menu === 1"
+                  @update:model-value="
+                    (value) => (category[0].display_header_menu = value ? 1 : 0)
                   "
-                  v-bind:label="$t('display_in_header_menu')"
+                  hide-details
+                  inset
+                  :label="$t('display_in_header_menu')"
                 ></v-switch>
               </template>
             </v-tooltip>
           </v-col>
         </v-row>
       </v-layout>
-      <div class="d-block mr-4 mt-3 text-right">
+      <div class="d-block mr-4 mt-3 pb-3 text-right">
         <v-tooltip :text="this.$t('cancel')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block mr-2">
-              <router-link :to="{ name: 'category' }">
+              <router-link :to="{ name: 'categories' }">
                 <v-btn
                   v-bind="props"
                   size="small"
@@ -343,17 +384,17 @@ export default {
     quillEditor,
   },
   setup() {
-    const onEditorFocus = (quill) => {
-      console.log("editor focus!", quill);
+    const onEditorFocus = () => {
+      // console.log("editor focus!", quill);
     };
-    const onEditorFocusAR = (quill) => {
-      console.log("editor focus!", quill);
+    const onEditorFocusAR = () => {
+      // console.log("editor focus!", quill);
     };
-    const onEditorReady = (quill) => {
-      console.log("editor ready!", quill);
+    const onEditorReady = () => {
+      // console.log("editor ready!", quill);
     };
-    const onEditorReadyAR = (quill) => {
-      console.log("editor ready!", quill);
+    const onEditorReadyAR = () => {
+      // console.log("editor ready!", quill);
     };
 
     return { onEditorReady, onEditorFocus, onEditorFocusAR, onEditorReadyAR };
@@ -374,20 +415,38 @@ export default {
     isDisabled: false,
     loader: false,
     tabs: 1,
-    category: {
+    default_sel: {
       id: 0,
-      name: "",
-      name_ar: "",
-      title: "",
-      title_ar: "",
-      description: "",
-      description_ar: "",
-      meta_title: "",
-      meta_title_ar: "",
-      meta_description: "",
-      meta_description_ar: "",
-      display_header_menu: "",
+      name: "--SELECT--",
     },
+    category_en: [],
+    category_ar: [],
+    category: [
+      {
+        id: 0,
+        name: "",
+        title: "",
+        description: "",
+        meta_title: "",
+        meta_description: "",
+        display_header_menu: 0,
+        header_id: 0,
+        parent_id: 0,
+        lang: "en",
+      },
+      {
+        id: 0,
+        name: "",
+        title: "",
+        description: "",
+        meta_title: "",
+        meta_description: "",
+        display_header_menu: 0,
+        header_id: 0,
+        parent_id: 0,
+        lang: "ar",
+      },
+    ],
   }),
 
   computed: {
@@ -401,6 +460,9 @@ export default {
   },
 
   created() {},
+  mounted() {
+    this.fetchParentCategories();
+  },
 
   watch: {
     "$route.query.slug": {
@@ -439,6 +501,55 @@ export default {
   },
 
   methods: {
+    updateParent(lang, value) {
+      if (lang == "en") {
+        if (value == 0) {
+          this.category[1].parent_id = 0;
+        } else {
+          let header = this.category_en.filter((record) => record.id === value);
+          let pr_id = this.category_ar.filter(
+            (record) => record.header_id === header[0].header_id
+          );
+          this.category[1].parent_id = pr_id[0].id;
+        }
+      } else {
+        if (value == 0) {
+          this.category[0].parent_id = 0;
+        } else {
+          let header = this.category_ar.filter((record) => record.id === value);
+          let pr_id = this.category_en.filter(
+            (record) => record.header_id === header[0].header_id
+          );
+          this.category[0].parent_id = pr_id[0].id;
+        }
+      }
+    },
+    fetchParentCategories() {
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-parent-categories")
+        .then((res) => {
+          this.category_en = res.data.category_en;
+          this.category_ar = res.data.category_ar;
+
+          const default_en = {
+            id: 0,
+            name: this.$t("select_en"),
+            header_id: 0,
+          };
+          const default_ar = {
+            id: 0,
+            name: this.$t("select_ar"),
+            header_id: 0,
+          };
+
+          this.category_en = [default_en, ...this.category_en];
+          this.category_ar = [default_ar, ...this.category_ar];
+        })
+        .catch((err) => {
+          this.$toast.error(this.$t("something_went_wrong"));
+          console.log(err);
+        });
+    },
     submit() {
       if (this.category.description == "") {
         this.quill_item = true;
@@ -472,7 +583,7 @@ export default {
               this.$toast.success(this.array_data);
               this.message = res.data.message;
               this.$router.push({
-                name: "category",
+                name: "categories",
               });
             } else {
               this.$toast.error(this.array_data);
@@ -502,8 +613,8 @@ export default {
         this.quill_item = false;
       }
     },
-    onEditorBlur(event) {
-      console.log(event.options);
+    onEditorBlur() {
+      // console.log(event.options);
       if (this.category.description == "") {
         this.quill_item = true;
       }

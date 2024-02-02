@@ -299,6 +299,7 @@
   "logo": "شعار",
   "stor_type": "نوع كبير ",
   "mall_admin": "مشرف مول",
-  "stor_admin": "المشرف العظيم"
+  "stor_admin": "المشرف العظيم",
+  "parent_category": "القسم الرئيسي"
   
 }

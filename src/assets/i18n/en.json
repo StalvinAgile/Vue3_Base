@@ -308,6 +308,8 @@
   "stor_admin": "Stor Admin",
   "create_promotion" :"Create / Amend Promotions",
   "promotions":"Promotions",
+  "parent_category": "Parent Category",
+  "select_en": "--SELECT--",
   
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
@@ -339,5 +341,6 @@
   "download_ar": "تحميل",
   "logo_ar": "شعار",
   "background_image_ar": "الصورة الخلفية",
-  "website_ar": "موقع إلكتروني"
+  "website_ar": "موقع إلكتروني",
+  "select_ar": "--يختار--"
 }

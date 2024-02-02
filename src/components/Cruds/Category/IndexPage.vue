@@ -30,7 +30,10 @@
       <div class="add_new_button">
         <v-tooltip :text="this.$t('add_new')" location="bottom">
           <template v-slot:activator="{ props }">
-            <router-link :to="{ name: 'category-amend' }" style="color: white">
+            <router-link
+              :to="{ name: 'categories-amend' }"
+              style="color: white"
+            >
               <v-btn size="small" class="mb-2 green_btn_color" v-bind="props">{{
                 $t("add_new")
               }}</v-btn>
@@ -55,23 +58,25 @@
       <v-window-item :value="1">
         <v-data-table
           :headers="headers"
-          :items="categories"
+          :items="category_en"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+          :no-data-text="$t('no_data_available')"
+          :items-per-page-text="$t('rows_per_page')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>{{ props.item.selectable.name }}</td>
+              <td v-if="props.item.selectable.parent_category">
+                {{ props.item.selectable.parent_category }}
+              </td>
+              <td v-else>{{ $t("not_appllicable") }}</td>
               <td>{{ props.item.selectable.title }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
-                  @click="updateStatus(props.item.selectable.id)"
+                  @click="updateStatus(props.item.selectable.header_id)"
                   size="small"
                   v-bind:color="[
                     props.item.selectable.status == 1 ? 'success' : 'warning',
@@ -93,7 +98,7 @@
                 <router-link
                   small
                   :to="{
-                    name: 'category-amend',
+                    name: 'categories-amend',
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
@@ -128,25 +133,28 @@
       <!-- ARABIC TAB STARTS -->
       <v-window-item :value="2">
         <v-data-table
-          :headers="headers_ar"
-          :items="categories"
+          :headers="headers"
+          :items="category_ar"
           :search="search"
           class="rtl-direction"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+          :no-data-text="$t('no_data_available')"
+          :items-per-page-text="$t('rows_per_page')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
-              <td>{{ props.item.selectable.name_ar }}</td>
-              <td>{{ props.item.selectable.title_ar }}</td>
+              <td>{{ props.item.selectable.name }}</td>
+              <td v-if="props.item.selectable.parent_category">
+                {{ props.item.selectable.parent_category }}
+              </td>
+              <td v-else>{{ $t("not_appllicable") }}</td>
+
+              <td>{{ props.item.selectable.title }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
-                  @click="updateStatus(props.item.selectable.id)"
+                  @click="updateStatus(props.item.selectable.header_id)"
                   size="small"
                   v-bind:color="[
                     props.item.selectable.status == 1 ? 'success' : 'warning',
@@ -168,7 +176,7 @@
                 <router-link
                   small
                   :to="{
-                    name: 'category-amend',
+                    name: 'categories-amend',
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
@@ -229,6 +237,8 @@ export default {
     showConfirmDialog: false,
     delete_id: null,
     dialog: false,
+    category_en: [],
+    category_ar: [],
     categories: [],
     initval: true,
     google_icon: {
@@ -252,6 +262,10 @@ export default {
           key: "name",
         },
         {
+          title: this.$t("parent_category"),
+          key: "parent_category.name",
+        },
+        {
           title: this.$t("title"),
           key: "title",
         },
@@ -263,26 +277,6 @@ export default {
           title: this.$t("action"),
           align: "center",
           key: "email",
-        },
-      ];
-    },
-    headers_ar() {
-      return [
-        {
-          title: this.$t("name_ar"),
-          key: "name_ar",
-        },
-        {
-          title: this.$t("title_ar"),
-          key: "title_ar",
-        },
-        {
-          title: this.$t("status_ar"),
-          key: "status",
-        },
-        {
-          title: this.$t("action_ar"),
-          align: "center",
         },
       ];
     },
@@ -313,7 +307,8 @@ export default {
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-category")
         .then((res) => {
-          this.categories = res.data.categories;
+          this.category_en = res.data.category_en;
+          this.category_ar = res.data.category_ar;
           this.initval = false;
         })
         .catch((err) => {
