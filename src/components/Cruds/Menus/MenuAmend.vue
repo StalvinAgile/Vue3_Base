@@ -59,7 +59,6 @@
                   <v-text-field
                     v-bind="props"
                     v-model="fieldItem.href"
-                    :readonly="this.$route.query.slug"
                     :rules="fieldRules"
                     v-bind:label="$t('link')"
                     required
