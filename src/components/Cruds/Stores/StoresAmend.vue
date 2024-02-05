@@ -318,7 +318,7 @@
                               v-bind:style="
                                 isHovering == true ? 'filter: blur(1px);' : ''
                               "
-                              v-if="stores[0].icon != null"
+                              v-if="stores[0].icon != ''"
                               :src="envImagePath + stores[0].icon"
                               width="100"
                               height="65
@@ -369,7 +369,7 @@
                               v-bind:style="
                                 isHovering == true ? 'filter: blur(1px);' : ''
                               "
-                              v-if="stores[0].background_image != null"
+                              v-if="stores[0].background_image != ''"
                               :src="envImagePath + stores[0].background_image"
                               width="100"
                               height="65
@@ -403,7 +403,7 @@
                     </div>
                     <br />
                     <Imageupload
-                      :folder="'stores'"
+                      :folder="'backgroundimg'"
                       :resizewidth="0.4"
                       :resizeheight="0.1"
                       @uploaded_image="uploaded_image"
@@ -716,7 +716,7 @@
                               v-bind:style="
                                 isHovering == true ? 'filter: blur(1px);' : ''
                               "
-                              v-if="stores[1].icon != null"
+                              v-if="stores[1].icon != ''"
                               :src="envImagePath + stores[1].icon"
                               width="100"
                               height="65
@@ -754,7 +754,7 @@
                       :resizewidth="0.4"
                       :resizeheight="0.1"
                       @uploaded_image="uploaded_image"
-                      :upload_profile="uploadfile"
+                      :upload_profile="uploadfilear"
                     />
                   </v-col>
                   <!-- <v-col cols="3" sm="3" md="3">
@@ -904,6 +904,7 @@ export default {
     categories_ar: [],
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
     uploadfile: false,
+    uploadfilear: false,
     uploadbifile: false,
     country_array: [],
     country_array_ar: [],
@@ -1047,16 +1048,25 @@ export default {
     // Uploading a image
     uploaded_image(img_src) {
       if (this.tabs == 1) {
+        console.log('img_src path', img_src);
         this.stores[0].icon = img_src;
       } else {
         this.stores[1].icon = img_src;
       }
     },
     uploadFile() {
-      if (this.uploadfile == false) {
-        this.uploadfile = true;
+      if (this.tabs == 1) {
+        if (this.uploadfile == false) {
+          this.uploadfile = true;
+        } else {
+          this.uploadfile = false;
+        }
       } else {
-        this.uploadfile = false;
+        if (this.uploadfilear == false) {
+          this.uploadfilear = true;
+        } else {
+          this.uploadfilear = false;
+        }
       }
     },
     uploadBIFile() {
