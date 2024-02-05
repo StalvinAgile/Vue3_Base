@@ -277,15 +277,30 @@
               </v-layout>
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="6" sm="6" md="4">
+                  <v-col cols="4" sm="4" md="4">
                     <v-tooltip :text="$t('website')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
                           v-model="stores[0].website"
-                          :rules="fieldRules"
                           maxlength="100"
                           v-bind:label="$t('website')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="2" sm="2" md="2">
+                    <v-tooltip :text="$t('sequence')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="stores[0].seq"
+                          maxlength="100"
+                          :rules="phoneRules"
+                          v-bind:label="$t('sequence')"
                           required
                           variant="outlined"
                           density="compact"
@@ -666,9 +681,24 @@
                         <v-text-field
                           v-bind="props"
                           v-model="stores[1].website"
-                          :rules="fieldRules"
                           maxlength="100"
                           v-bind:label="$t('website_ar')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="2" sm="2" md="2">
+                    <v-tooltip :text="$t('sequence_ar')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="stores[1].seq"
+                          maxlength="100"
+                          :rules="phoneRules"
+                          v-bind:label="$t('sequence_ar')"
                           required
                           variant="outlined"
                           density="compact"

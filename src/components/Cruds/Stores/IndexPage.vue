@@ -70,6 +70,7 @@
               <td>{{ props.item.selectable.email }}</td>
               <td>{{ props.item.selectable.phone }}</td>
               <td>{{ props.item.selectable.address }}</td>
+              <td>{{ props.item.selectable.seq }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -146,6 +147,7 @@
               <td>{{ props.item.selectable.email }}</td>
               <td>{{ props.item.selectable.phone }}</td>
               <td>{{ props.item.selectable.address }}</td>
+              <td>{{ props.item.selectable.seq }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -271,6 +273,10 @@ export default {
         {
           title: this.$t("address"),
           key: "address",
+        },
+        {
+          title: this.$t("sequence"),
+          key: "seq",
         },
         {
           title: this.$t("status"),
