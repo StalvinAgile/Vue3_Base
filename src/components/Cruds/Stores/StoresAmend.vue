@@ -412,6 +412,36 @@
                   </v-col> -->
                 </v-row>
               </v-layout>
+              <div>
+                <h6 class="m-4">
+                  <b>{{ $t("social_media") }}</b>
+                </h6>
+              </div>
+              <v-layout>
+                <v-row class="px-6 mt-2">
+                  <v-col
+                    v-for="(media_data, media_index) in social_media_en"
+                    :key="media_index"
+                    cols="4"
+                    sm="4"
+                    md="4"
+                  >
+                    <v-tooltip :text="media_data.longname" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="stores[0].website"
+                          maxlength="100"
+                          v-bind:label="media_data.longname"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                </v-row>
+              </v-layout>
             </v-form>
           </v-window-item>
           <!-- ENGLISH TAB END -->
@@ -912,6 +942,8 @@ export default {
     state_array_ar: [],
     city_array: [],
     city_array_ar: [],
+    social_media_en: [],
+    social_media_ar: [],
   }),
 
   computed: {
@@ -942,6 +974,7 @@ export default {
   created() {
     this.get_categories();
     this.get_countries();
+    this.fetch_social_media();
   },
 
   watch: {
@@ -984,6 +1017,20 @@ export default {
   },
 
   methods: {
+    fetch_social_media() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-social-media")
+        .then((response) => {
+          console.log(response);
+          this.social_media_en = response.data.social_media_en;
+          this.social_media_ar = response.data.social_media_ar;
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     get_categories() {
       this.initval = true;
       this.$axios
@@ -1048,7 +1095,7 @@ export default {
     // Uploading a image
     uploaded_image(img_src) {
       if (this.tabs == 1) {
-        console.log('img_src path', img_src);
+        console.log("img_src path", img_src);
         this.stores[0].icon = img_src;
       } else {
         this.stores[1].icon = img_src;
