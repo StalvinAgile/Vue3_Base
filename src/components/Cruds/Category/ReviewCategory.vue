@@ -63,8 +63,16 @@
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4">
-                    <div class="d-label">{{ $t("approved_by_en") }}</div>
-                    <div v-if="category.review_by">{{ category.review_by }}</div>
+                    <div
+                      class="d-label"
+                      v-if="category.approval_status != 'Approved'"
+                    >
+                      {{ $t("approved_by_en") }}
+                    </div>
+                    <div class="d-label" v-else>{{ $t("rejected_by_en") }}</div>
+                    <div v-if="category.review_by">
+                      {{ category.review_by }}
+                    </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
@@ -91,7 +99,7 @@
                   color="green"
                   class="mx-1"
                 >
-                  {{ $t("approve") }}
+                  {{ $t("approve_en") }}
                 </v-chip>
                 <v-chip
                   @click="statusOnChange('Rejected', category.header_id)"
@@ -99,7 +107,7 @@
                   color="red"
                   class="mx-1"
                 >
-                  {{ $t("reject") }}
+                  {{ $t("reject_en") }}
                 </v-chip>
               </div>
             </v-card>
@@ -148,7 +156,9 @@
 
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("approved_by_ar") }}</div>
-                    <div v-if="category.review_by">{{ category.review_by }}</div>
+                    <div v-if="category.review_by">
+                      {{ category.review_by }}
+                    </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
@@ -175,7 +185,7 @@
                   color="green"
                   class="mx-1"
                 >
-                  {{ $t("approve") }}
+                  {{ $t("approve_ar") }}
                 </v-chip>
                 <v-chip
                   @click="statusOnChange('Rejected', category.header_id)"
@@ -183,7 +193,7 @@
                   color="red"
                   class="mx-1"
                 >
-                  {{ $t("reject") }}
+                  {{ $t("reject_ar") }}
                 </v-chip>
               </div>
             </v-card>
@@ -195,7 +205,7 @@
       <div class="d-block mr-4 mt-3 pb-3 text-right">
         <v-btn
           size="small"
-          @click="$router.go(-1)"
+          @click="cancel()"
           :disabled="loading"
           class="ma-1"
           color="cancel"
@@ -345,6 +355,11 @@ export default {
         default:
           return "";
       }
+    },
+    cancel() {
+      this.$router.push({
+        name: "categories",
+      });
     },
   },
 };
