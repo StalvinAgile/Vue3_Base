@@ -6,11 +6,11 @@
         :heading="$t('create_amend_category')"
         :google_icon="google_icon"
       ></page-title>
-      
     </div>
     <div class="mb-3 mx-auto">
       <div class="card-body">
         <content-loader v-if="loader"></content-loader>
+        
         <v-tabs v-model="tabs" color="blue">
           <v-tab :value="1">
             <span>{{ $t("english") }}</span>
@@ -156,56 +156,56 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                   <v-col md="6">
-                <div>
-                  <div class="image-container">
-                    <v-hover v-slot="{ isHovering, props }">
-                      <div style="position: relative" v-bind="props">
-                        <img
-                          v-bind:style="
-                            isHovering == true ? 'filter: blur(1px);' : ''
+                  <v-col md="6">
+                    <div>
+                      <div class="image-container">
+                        <v-hover v-slot="{ isHovering, props }">
+                          <div style="position: relative" v-bind="props">
+                            <img
+                              v-bind:style="
+                                isHovering == true ? 'filter: blur(1px);' : ''
+                              "
+                              v-if="category[0].image_path != null"
+                              :src="envImagePath + category[0].image_path"
+                              width="100"
+                              height="65
                           "
-                          v-if="category[0].image_path != null"
-                          :src="envImagePath + category[0].image_path"
-                          width="100"
-                          height="65
-                          "
-                          alt
-                        />
-                        <img
-                          v-bind:style="
-                            isHovering == true ? 'filter: blur(1px);' : ''
-                          "
-                          v-else
-                          src="@/assets/images/upload_image_default.png"
-                          width="100"
-                        />
-                        <div v-show="isHovering" class="camera-icon">
-                          <v-icon @click="uploadFile">mdi-camera</v-icon>
-                        </div>
+                              alt
+                            />
+                            <img
+                              v-bind:style="
+                                isHovering == true ? 'filter: blur(1px);' : ''
+                              "
+                              v-else
+                              src="@/assets/images/upload_image_default.png"
+                              width="100"
+                            />
+                            <div v-show="isHovering" class="camera-icon">
+                              <v-icon @click="uploadFile">mdi-camera</v-icon>
+                            </div>
+                          </div>
+                        </v-hover>
                       </div>
-                    </v-hover>
-                  </div>
-                  <a
-                    class="text-center pointer"
-                    @click="downloadImage(category[0].image_path)"
-                  >
-                    <span
-                      v-if="category[0].image_path"
-                      class="download_btn_color"
-                      >{{ $t("download") }}</span
-                    >
-                  </a>
-                </div>
-                <br />
-                <Imageupload
-                  :folder="'category'"
-                  :resizewidth="0.4"
-                  :resizeheight="0.1"
-                  @uploaded_image="uploaded_image"
-                  :upload_profile="uploadfile"
-                />
-              </v-col>
+                      <a
+                        class="text-center pointer"
+                        @click="downloadImage(category[0].image_path)"
+                      >
+                        <span
+                          v-if="category[0].image_path"
+                          class="download_btn_color"
+                          >{{ $t("download") }}</span
+                        >
+                      </a>
+                    </div>
+                    <br />
+                    <Imageupload
+                      :folder="'category'"
+                      :resizewidth="0.4"
+                      :resizeheight="0.1"
+                      @uploaded_image="uploaded_image"
+                      :upload_profile="uploadfile"
+                    />
+                  </v-col>
                 </v-row>
               </v-layout>
             </v-form>
@@ -348,56 +348,56 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                   <v-col md="6">
-                <div>
-                  <div class="image-container">
-                    <v-hover v-slot="{ isHovering, props }">
-                      <div style="position: relative" v-bind="props">
-                        <img
-                          v-bind:style="
-                            isHovering == true ? 'filter: blur(1px);' : ''
+                  <v-col md="6">
+                    <div>
+                      <div class="image-container">
+                        <v-hover v-slot="{ isHovering, props }">
+                          <div style="position: relative" v-bind="props">
+                            <img
+                              v-bind:style="
+                                isHovering == true ? 'filter: blur(1px);' : ''
+                              "
+                              v-if="category[1].image_path != null"
+                              :src="envImagePath + category[1].image_path"
+                              width="100"
+                              height="65
                           "
-                          v-if="category[1].image_path != null"
-                          :src="envImagePath + category[1].image_path"
-                          width="100"
-                          height="65
-                          "
-                          alt
-                        />
-                        <img
-                          v-bind:style="
-                            isHovering == true ? 'filter: blur(1px);' : ''
-                          "
-                          v-else
-                          src="@/assets/images/upload_image_default.png"
-                          width="100"
-                        />
-                        <div v-show="isHovering" class="camera-icon">
-                          <v-icon @click="uploadFile">mdi-camera</v-icon>
-                        </div>
+                              alt
+                            />
+                            <img
+                              v-bind:style="
+                                isHovering == true ? 'filter: blur(1px);' : ''
+                              "
+                              v-else
+                              src="@/assets/images/upload_image_default.png"
+                              width="100"
+                            />
+                            <div v-show="isHovering" class="camera-icon">
+                              <v-icon @click="uploadFile">mdi-camera</v-icon>
+                            </div>
+                          </div>
+                        </v-hover>
                       </div>
-                    </v-hover>
-                  </div>
-                  <a
-                    class="text-center pointer"
-                    @click="downloadImage(category[1].image_path)"
-                  >
-                    <span
-                      v-if="category[1].image_path"
-                      class="download_btn_color"
-                      >{{ $t("download") }}</span
-                    >
-                  </a>
-                </div>
-                <br />
-                <Imageupload
-                  :folder="'category'"
-                  :resizewidth="0.4"
-                  :resizeheight="0.1"
-                  @uploaded_image="uploaded_image"
-                  :upload_profile="uploadfile"
-                />
-              </v-col>
+                      <a
+                        class="text-center pointer"
+                        @click="downloadImage(category[1].image_path)"
+                      >
+                        <span
+                          v-if="category[1].image_path"
+                          class="download_btn_color"
+                          >{{ $t("download") }}</span
+                        >
+                      </a>
+                    </div>
+                    <br />
+                    <Imageupload
+                      :folder="'category'"
+                      :resizewidth="0.4"
+                      :resizeheight="0.1"
+                      @uploaded_image="uploaded_image"
+                      :upload_profile="uploadfile"
+                    />
+                  </v-col>
                 </v-row>
               </v-layout>
             </v-form>
@@ -430,6 +430,7 @@
         </v-row>
       </v-layout>
       <div class="d-block mr-4 mt-3 pb-3 text-right">
+
         <v-tooltip :text="this.$t('cancel')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block mr-2">
@@ -476,7 +477,7 @@
 </template>
     
   <script>
-  import Imageupload from "../../CustomComponents/ImageUpload.vue";
+import Imageupload from "../../CustomComponents/ImageUpload.vue";
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import { quillEditor } from "vue3-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
@@ -533,7 +534,7 @@ export default {
         title: "",
         description: "",
         meta_title: "",
-        image_path:"",
+        image_path: "",
         meta_description: "",
         display_header_menu: 0,
         header_id: 0,
@@ -546,7 +547,7 @@ export default {
         title: "",
         description: "",
         meta_title: "",
-        image_path:"",
+        image_path: "",
         meta_description: "",
         display_header_menu: 0,
         header_id: 0,
@@ -608,7 +609,7 @@ export default {
   },
 
   methods: {
-     uploaded_image(img_src) {
+    uploaded_image(img_src) {
       //alert('uploaded image');
       //alert(img_src);
       if (this.tabs == 1) {

@@ -52,17 +52,16 @@
         <span>{{ $t("arabic") }}</span>
       </v-tab>
     </v-tabs>
-
     <v-window v-model="tabs">
       <!-- ENGLISH TAB STARTS -->
       <v-window-item :value="1">
         <v-data-table
-          :headers="headers"
+          :headers="headers_en"
           :items="category_en"
           :search="search"
           :loading="initval"
           :no-data-text="$t('no_data_available')"
-          :items-per-page-text="$t('rows_per_page')"
+          :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -94,6 +93,15 @@
                   >
                 </v-btn>
               </td>
+
+              <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
               <td class="text-center">
                 <router-link
                   small
@@ -114,7 +122,7 @@
                     <span>{{ $t("edit") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
@@ -125,6 +133,16 @@
                   </v-tooltip>
                 </span>
               </td>
+              <td>
+                <v-btn
+                  size="small"
+                  @click="viewCategory(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_en") }}</v-btn
+                >
+              </td>
             </tr>
           </template>
         </v-data-table>
@@ -133,13 +151,13 @@
       <!-- ARABIC TAB STARTS -->
       <v-window-item :value="2">
         <v-data-table
-          :headers="headers"
+          :headers="headers_ar"
           :items="category_ar"
           :search="search"
           class="rtl-direction"
           :loading="initval"
           :no-data-text="$t('no_data_available')"
-          :items-per-page-text="$t('rows_per_page')"
+          :items-per-page-text="$t('rows_per_page_ar')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -172,6 +190,14 @@
                   >
                 </v-btn>
               </td>
+              <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
               <td class="text-center">
                 <router-link
                   small
@@ -192,7 +218,7 @@
                     <span>{{ $t("edit") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
@@ -202,6 +228,16 @@
                     <span>{{ $t("delete") }}</span>
                   </v-tooltip>
                 </span>
+              </td>
+               <td>
+                <v-btn
+                  size="small"
+                  @click="viewCategory(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_ar") }}</v-btn
+                >
               </td>
             </tr>
           </template>
@@ -235,6 +271,7 @@ export default {
   data: () => ({
     search: "",
     showConfirmDialog: false,
+    showApprovalDialog: false,
     delete_id: null,
     dialog: false,
     category_en: [],
@@ -249,34 +286,91 @@ export default {
     status_id: null,
     showStatusDialog: false,
     tabs: 1,
+    approval_status_items: [
+      {
+        id: 1,
+        shortname: "In Review",
+        longname: "In Review",
+      },
+      {
+        id: 2,
+        shortname: "Approved",
+        longname: "Approved",
+      },
+      {
+        id: 3,
+        shortname: "Rejected",
+        longname: "Rejected",
+      },
+    ],
   }),
 
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
-    headers() {
+    headers_en() {
       return [
         {
-          title: this.$t("name"),
+          title: this.$t("name_en"),
           key: "name",
         },
         {
-          title: this.$t("parent_category"),
+          title: this.$t("parent_category_en"),
           key: "parent_category.name",
         },
         {
-          title: this.$t("title"),
+          title: this.$t("title_en"),
           key: "title",
         },
         {
-          title: this.$t("status"),
+          title: this.$t("status_en"),
           key: "status",
         },
         {
-          title: this.$t("action"),
+          title: this.$t("approval_en"),
+          key: "approval_status",
+        },
+        {
+          title: this.$t("action_en"),
           align: "center",
           key: "email",
+        },
+        {
+          title: "",
+          align: "center",
+        },
+      ];
+    },
+    headers_ar() {
+      return [
+        {
+          title: this.$t("name_ar"),
+          key: "name",
+        },
+        {
+          title: this.$t("parent_category_ar"),
+          key: "parent_category.name",
+        },
+        {
+          title: this.$t("title_ar"),
+          key: "title",
+        },
+        {
+          title: this.$t("status_ar"),
+          key: "status",
+        },
+        {
+          title: this.$t("approval_ar"),
+          key: "approval_status",
+        },
+        {
+          title: this.$t("action_ar"),
+          align: "center",
+        },
+        {
+          title: "",
+          align: "center",
         },
       ];
     },
@@ -294,6 +388,30 @@ export default {
   },
 
   methods: {
+    getStatusColor(status) {
+      switch (status) {
+        case "Approved":
+          return "green";
+        case "In Review":
+          return "orange";
+        case "Rejected":
+          return "red";
+        default:
+          return "";
+      }
+    },
+    viewCategory(slug) {
+      this.$router.push({
+        name: "categories-review",
+        query: { slug: slug },
+      });
+    },
+
+    statusOnChange(value, id) {
+      this.selected.approval_status = value;
+      this.selected.header_id = id;
+      this.showApprovalDialog = true;
+    },
     cancel() {
       this.showConfirmDialog = false;
     },

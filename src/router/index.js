@@ -364,6 +364,12 @@ const routes = [
     // meta: { layout: "userpages" },
     component: () => import("../components/Cruds/HomeSlider/HomeSliderAmend.vue"),
   },
+  {
+    path: "/:lang?/categories-review",
+    name: "categories-review",
+    component: () => import("../components/Cruds/Category/ReviewCategory.vue"),
+  },
+
 ];
 
 const router = createRouter({
