@@ -10,7 +10,7 @@
     <div class="mb-3 mx-auto">
       <div class="card-body">
         <content-loader v-if="loader"></content-loader>
-        
+
         <v-tabs v-model="tabs" color="blue">
           <v-tab :value="1">
             <span>{{ $t("english") }}</span>
@@ -430,7 +430,6 @@
         </v-row>
       </v-layout>
       <div class="d-block mr-4 mt-3 pb-3 text-right">
-
         <v-tooltip :text="this.$t('cancel')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block mr-2">
@@ -438,7 +437,7 @@
                 <v-btn
                   v-bind="props"
                   size="small"
-                  @click="$router.go(-1)"
+                  @click="cancel()"
                   :disabled="loading"
                   class="ma-1"
                   color="cancel"
@@ -752,6 +751,11 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
+    },
+    cancel() {
+      this.$router.push({
+        name: "categories",
+      });
     },
   },
 };

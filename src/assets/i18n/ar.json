@@ -323,6 +323,7 @@
   "approve_ar": "يعتمد",
   "reject_ar": "يرفض",
   "rejected_by_ar": "مرفوض من طرف",
+  "approval_status_ar": "تمت الموافقة عليه ",
 
   "--------start_english_translation----------": "--------start_english_translation----------",
 
@@ -340,5 +341,6 @@
   "view_en": "View",
   "approve_en": "Approve",
   "reject_en": "Reject",
-  "rejected_by_en": "Rejected by"
+  "rejected_by_en": "Rejected by",
+  "approval_status_en": "Approval Status"
 }

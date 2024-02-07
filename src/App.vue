@@ -359,7 +359,7 @@ export default {
       this.c_loader = true;
       setTimeout(() => {
         this.c_loader = false;
-      }, 2000);
+      }, 1000);
       localStorage.setItem("pref_lang", lang);
       this.$i18n.locale = lang;
 
