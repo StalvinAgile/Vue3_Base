@@ -53,12 +53,12 @@
       <!-- ENGLISH TAB STARTS -->
       <v-window-item :value="1">
         <v-data-table
-          :headers="headers"
-          :items="lookup"
+          :headers="headers_en"
+          :items="lookup_en"
           :search="search"
           :loading="initval"
           :no-data-text="$t('no_data_available')"
-          :items-per-page-text="$t('rows_per_page')"
+          :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -84,7 +84,7 @@
                 <v-btn
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
-                  @click="updateLookupsStatus(props.item.selectable.id)"
+                  @click="updateLookupsStatus(props.item.selectable.header_id)"
                   size="small"
                   v-bind:color="[
                     props.item.selectable.status == 1 ? 'success' : 'warning',
@@ -93,12 +93,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_en") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_en") }}</span
                   >
                 </v-btn>
               </td>
@@ -148,7 +148,7 @@
                     <span>{{ $t("child_look_ups") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -172,21 +172,21 @@
       <!-- ARABIC TAB STARTS -->
       <v-window-item :value="2">
         <v-data-table
-          :headers="headers"
-          :items="lookup"
+          :headers="headers_ar"
+          :items="lookup_ar"
           :search="search"
           :loading="initval"
           class="rtl-direction"
           :no-data-text="$t('no_data_available')"
-          :items-per-page-text="$t('rows_per_page')"
+          :items-per-page-text="$t('rows_per_page_ar')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>
                 <div class="text-truncate" style="max-width: 160px">
                   {{
-                    props.item.selectable.shortname_ar
-                      ? props.item.selectable.shortname_ar
+                    props.item.selectable.shortname
+                      ? props.item.selectable.shortname
                       : $t("not_appllicable")
                   }}
                 </div>
@@ -194,8 +194,8 @@
               <td>
                 <div class="text-truncate" style="max-width: 160px">
                   {{
-                    props.item.selectable.longname_ar
-                      ? props.item.selectable.longname_ar
+                    props.item.selectable.longname
+                      ? props.item.selectable.longname
                       : $t("not_appllicable")
                   }}
                 </div>
@@ -204,7 +204,7 @@
                 <v-btn
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
-                  @click="updateLookupsStatus(props.item.selectable.id)"
+                  @click="updateLookupsStatus(props.item.selectable.header_id)"
                   size="small"
                   v-bind:color="[
                     props.item.selectable.status == 1 ? 'success' : 'warning',
@@ -213,12 +213,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_ar") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_ar") }}</span
                   >
                 </v-btn>
               </td>
@@ -268,7 +268,7 @@
                     <span>{{ $t("child_look_ups") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -322,6 +322,8 @@ export default {
     showStatusDialog: false,
     delete_id: null,
     status_id: null,
+    lookup_en: [],
+    lookup_ar: [],
     isDisabled: false,
     tabs: 1,
     google_icon: {
@@ -355,28 +357,56 @@ export default {
     this.initialize();
   },
   computed: {
-    headers() {
+    headers_en() {
       return [
         {
-          title: this.$t("shortname"),
+          title: this.$t("shortname_en"),
           align: "left",
           sortable: true,
-          key: this.tabs == 1 ? "shortname" : "shortname_ar",
+          key: "shortname",
         },
         {
-          title: this.$t("longname"),
+          title: this.$t("longname_en"),
           align: "left",
           sortable: false,
-          key: this.tabs == 1 ? "longname" : "longname_ar",
+          key: "longname",
         },
         {
-          title: this.$t("status"),
+          title: this.$t("status_en"),
           align: "left",
           sortable: false,
           key: "status",
         },
         {
-          title: this.$t("actions"),
+          title: this.$t("action_en"),
+          key: "name",
+          align: "center",
+          sortable: false,
+        },
+      ];
+    },
+    headers_ar() {
+      return [
+        {
+          title: this.$t("shortname_ar"),
+          align: "left",
+          sortable: true,
+          key: "shortname",
+        },
+        {
+          title: this.$t("longname_ar"),
+          align: "left",
+          sortable: false,
+          key: "longname",
+        },
+        {
+          title: this.$t("status_ar"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: this.$t("action_ar"),
           key: "name",
           align: "center",
           sortable: false,
@@ -414,7 +444,6 @@ export default {
           if (res.data.status == "S") {
             this.$toast.success(this.array_data);
             this.initialize();
-            this.$eventBus.$emit("app_logo");
           } else if (res.data.status == "E") {
             this.$toast.success(this.array_data);
           } else {
@@ -466,7 +495,8 @@ export default {
           }
           if (res.data.status == "S") {
             this.initval = false;
-            this.lookup = res.data.lookups;
+            this.lookup_en = res.data.lookup_en;
+            this.lookup_ar = res.data.lookup_ar;
           } else if (res.data.status == "E") {
             this.initval = false;
             this.$toast.error(this.array_data);

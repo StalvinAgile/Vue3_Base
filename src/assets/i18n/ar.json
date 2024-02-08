@@ -327,6 +327,13 @@
   "rejection_comment": "سبب الرفض",
   "comments_ar": "تعليقات",
   "reason_for_rejection_ar": "سبب الرفض",
+  "store_timings":"مواعيد المتجر",
+  "create_store_timings":"إنشاء/تعديل توقيت المتجر",
+  "icon_ar": "أيقونة",
+  "parent_lookup_ar":"بحث الوالدين",
+  "shortname_ar":"اسم قصير",
+  "longname_ar":"اسم طويل",
+  
 
   "--------start_english_translation----------": "--------start_english_translation----------",
 
@@ -347,5 +354,12 @@
   "rejected_by_en": "Rejected by",
   "approval_status_en": "Approval Status",
   "comments_en": "Comments",
-  "reason_for_rejection_en": "Reason for Rejection"
+  "reason_for_rejection_en": "Reason for Rejection",
+  "icon_en": "Icon",
+  "parent_lookup_en":"Parent Lookup",
+  "shortname_en":"Shortname",
+  "longname_en":"Longname",
+  "inactive_en":"Inactive",
+  "active_en":"Active",
+  "active_ar":"نشيط"
 }
