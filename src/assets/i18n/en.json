@@ -346,6 +346,8 @@
   "create_store_timings": "Create/Amend Store Timings",
   "icon_en": "Icon",
   "parent_lookup_en":"Parent Lookup",
+  "shortname_en":"Shortname",
+  "longname_en":"Longname",
 
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
@@ -393,5 +395,7 @@
   "reason_for_rejection_ar": "سبب الرفض",
   "mall_name_ar": "مول نام",
   "icon_ar": "أيقونة",
-  "parent_lookup_ar":"بحث الوالدين"
+  "parent_lookup_ar":"بحث الوالدين",
+  "shortname_ar":"اسم قصير",
+  "longname_ar":"اسم طويل"
 }

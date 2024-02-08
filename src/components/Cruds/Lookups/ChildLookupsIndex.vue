@@ -82,10 +82,12 @@
       <!-- ENGLISH TAB STARTS -->
       <v-window-item :value="1">
         <v-data-table
-          :headers="headers"
+          :headers="headers_en"
           :items="lookups_en"
           :search="search"
           :loading="initval"
+          :no-data-text="$t('no_data_available')"
+          :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -165,10 +167,13 @@
       <!-- ARABIC TAB STARTS -->
       <v-window-item :value="2">
         <v-data-table
-          :headers="headers"
+          :headers="headers_ar"
           :items="lookups_ar"
           :search="search"
           :loading="initval"
+          class="rtl-direction"
+          :no-data-text="$t('no_data_available')"
+          :items-per-page-text="$t('rows_per_page_ar')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -304,28 +309,56 @@ export default {
     
   }),
   computed: {
-    headers() {
+    headers_en() {
       return [
         {
-          title: this.$t("shortname"),
+          title: this.$t("shortname_en"),
           align: "left",
           sortable: true,
           key:"shortname",
         },
         {
-          title: this.$t("longname"),
+          title: this.$t("longname_en"),
           align: "left",
           sortable: false,
           key: "longname",
         },
         {
-          title: this.$t("status"),
+          title: this.$t("status_en"),
           align: "left",
           sortable: false,
           key: "status",
         },
         {
-          title: this.$t("actions"),
+          title: this.$t("action_en"),
+          key: "name",
+          align: "center",
+          sortable: false,
+        },
+      ];
+    },
+    headers_ar() {
+      return [
+        {
+          title: this.$t("shortname_ar"),
+          align: "left",
+          sortable: true,
+          key:"shortname",
+        },
+        {
+          title: this.$t("longname_ar"),
+          align: "left",
+          sortable: false,
+          key: "longname",
+        },
+        {
+          title: this.$t("status_ar"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: this.$t("action_ar"),
           key: "name",
           align: "center",
           sortable: false,
