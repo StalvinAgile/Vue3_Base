@@ -9,18 +9,20 @@
           <div class="cropper-container" ref="cropperContainer">
             <!-- Below one is porp can be used where we can define all the props in data and pass like below one -->
             <!-- :options="cropperOptions" -->
-            <VueCropper
-              ref='cropper'
-          :guides="true"
-          :view-mode="2"
-          drag-mode="crop"        
-          :min-container-width="250"
-          :min-container-height="180"
-          :cropBoxResizable="false"
-          :cropBoxMovable="true"
-          :src="selectedFile"
-          alt="Source Image"
-          :img-style="{ 'width': '400px', 'height': '300px' }"
+          <VueCropper
+             ref="cropper"
+              :dragMode="'none'"
+              :src="selectedFile"
+              :aspectRatio="1/1"
+:initialAspectRatio="1/1"
+              :view-mode="1"
+              :cropBoxResizable="false"
+              :cropBoxMovable="true"
+              :minCropBoxWidth="50"
+              :minCropBoxHeight="90"
+              :autoCrop="true"
+              :img-style="{ width: resizewidth, height: resizeheight }"
+              v-bind="$attrs"
               @crop="handleCrop"
               @ready="cropperReady"
             ></VueCropper>
