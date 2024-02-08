@@ -200,8 +200,8 @@
                     <br />
                     <Imageupload
                       :folder="'category'"
-                      :resizewidth="1.5"
-                      :resizeheight="2.5"
+                      :resizewidth="0.4"
+                      :resizeheight="0.1"
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
@@ -392,8 +392,8 @@
                     <br />
                     <Imageupload
                       :folder="'category'"
-                      :resizewidth="1.5"
-                      :resizeheight="2.5"
+                      :resizewidth="0.4"
+                      :resizeheight="0.1"
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />

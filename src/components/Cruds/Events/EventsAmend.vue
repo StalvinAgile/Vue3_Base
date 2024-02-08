@@ -6,7 +6,7 @@
         :heading="$t('create_events')"
         :google_icon="google_icon"
       ></page-title>
-  {{events_en}}
+ 
     </div>
     <div class="card-body">
       <content-loader v-if="loader"></content-loader>
