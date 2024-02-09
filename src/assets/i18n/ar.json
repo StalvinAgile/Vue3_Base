@@ -339,6 +339,8 @@
   "from": "من",
   "to_meridiem": "إلى ميريديم",
   "to": "ل",
+  "create_products": "إنشاء المنتجات",
+  "products":"المنتجات",
 
   "--------start_english_translation----------": "--------start_english_translation----------",
 
@@ -361,10 +363,11 @@
   "comments_en": "Comments",
   "reason_for_rejection_en": "Reason for Rejection",
   "icon_en": "Icon",
-  "parent_lookup_en":"Parent Lookup",
-  "shortname_en":"Shortname",
-  "longname_en":"Longname",
-  "inactive_en":"Inactive",
-  "active_en":"Active",
-  "active_ar":"نشيط"
+  "active_ar":"نشيط",
+  "parent_lookup_en": "Parent Lookup",
+  "shortname_en": "Shortname",
+  "longname_en": "Longname",
+  "inactive_en": "Inactive",
+  "active_en": "Active"
+  
 }

@@ -1,12 +1,11 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="container my-3 p-0">
+    <div class="my-3 p-0">
       <page-title
         class="col-md-4 ml-2"
         :heading="$t('create_products')"
         :google_icon="google_icon"
       ></page-title>
-  
     </div>
     <div class="card-body">
       <content-loader v-if="loader"></content-loader>
@@ -26,6 +25,22 @@
               <v-col cols="4" sm="12" md="4">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="products[0].store_id"
+                      v-bind:label="$t('store')"
+                      variant="outlined"
+                      density="compact"
+                      :items="stores_en"
+                      item-title="name"
+                      item-value="id"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="4" sm="12" md="4">
+                <v-tooltip :text="this.$t('title')" location="bottom">
+                  <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
                       v-model="products[0].title"
@@ -41,7 +56,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-         <v-col md="4">
+              <v-col md="4">
                 <v-tooltip :text="this.$t('description')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea
@@ -55,6 +70,22 @@
                       variant="outlined"
                       counter="true"
                     ></v-textarea>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="4" sm="12" md="4">
+                <v-tooltip :text="$t('sequence')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-bind="props"
+                      v-model="products[0].seq"
+                      maxlength="100"
+                      :rules="phoneRules"
+                      v-bind:label="$t('sequence')"
+                      required
+                      variant="outlined"
+                      density="compact"
+                    ></v-text-field>
                   </template>
                 </v-tooltip>
               </v-col>
@@ -74,7 +105,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-            
+
               <v-col md="4">
                 <v-tooltip
                   :text="this.$t('meta_description')"
@@ -140,7 +171,7 @@
                 <br />
                 <Imageupload
                   :folder="'products'"
-                   :resizewidth="0.4"
+                  :resizewidth="0.4"
                   :resizeheight="0.1"
                   @uploaded_image="uploaded_image"
                   :upload_profile="uploadfile"
@@ -154,6 +185,22 @@
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
+              <v-col cols="4" sm="12" md="4">
+                <v-tooltip :text="this.$t('title')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="products[1].store_id"
+                      v-bind:label="$t('parent_category')"
+                      variant="outlined"
+                      density="compact"
+                      :items="stores_en"
+                      item-title="name"
+                      item-value="id"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
               <v-col cols="4" sm="12" md="4">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
@@ -172,7 +219,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-             <v-col md="4">
+              <v-col md="4">
                 <v-tooltip :text="this.$t('description')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea
@@ -188,6 +235,22 @@
                       variant="outlined"
                       counter="true"
                     ></v-textarea>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="4" sm="12" md="4">
+                <v-tooltip :text="$t('sequence')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-bind="props"
+                      v-model="products[1].seq"
+                      maxlength="100"
+                      :rules="phoneRules"
+                      v-bind:label="$t('sequence')"
+                      required
+                      variant="outlined"
+                      density="compact"
+                    ></v-text-field>
                   </template>
                 </v-tooltip>
               </v-col>
@@ -209,7 +272,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-            
+
               <v-col md="4">
                 <v-tooltip
                   :text="this.$t('meta_description')"
@@ -233,7 +296,7 @@
                   <span>{{ $t("vacancy") }}</span>
                 </v-tooltip>
               </v-col>
-               <v-col md="6">
+              <v-col md="6">
                 <div>
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
@@ -277,7 +340,7 @@
                 <br />
                 <Imageupload
                   :folder="'products'"
-                 :resizewidth="0.4"
+                  :resizewidth="0.4"
                   :resizeheight="0.1"
                   @uploaded_image="uploaded_image"
                   :upload_profile="uploadfile"
@@ -356,6 +419,7 @@ export default {
       {
         id: 0,
         title: "",
+        store_id: null,
         description: "",
         start_date: "",
         end_date: "",
@@ -367,6 +431,7 @@ export default {
       {
         id: 0,
         title: "",
+        store_id: null,
         description: "",
         start_date: "",
         end_date: "",
@@ -376,6 +441,8 @@ export default {
         lang: "ar",
       },
     ],
+    stores_en:[],
+    stores_ar:[],
 
     noimagepreview: "",
     items: [],
@@ -409,7 +476,7 @@ export default {
     },
   },
   mounted() {
-
+    this.get_stores();
   },
   created() {},
   watch: {
@@ -437,6 +504,34 @@ export default {
     },
   },
   methods: {
+    get_stores() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-stores")
+        .then((response) => {
+          console.log(response);
+          this.stores_en = response.data.stores_en;
+          this.stores_ar = response.data.stores_ar;
+
+          // const default_en = {
+          //   id: 0,
+          //   name: this.$t("select_en"),
+          //   header_id: 0,
+          // };
+          // const default_ar = {
+          //   id: 0,
+          //   name: this.$t("select_ar"),
+          //   header_id: 0,
+          // };
+
+          // this.stores_en = [default_en, ...this.stores_en];
+          // this.stores_ar = [default_ar, ...this.stores_ar];
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     uploaded_image(img_src) {
       //alert('uploaded image');
       //alert(img_src);
@@ -536,5 +631,4 @@ input.larger {
   border: 2px solid black;
   padding: 1px;
 }
-
 </style>

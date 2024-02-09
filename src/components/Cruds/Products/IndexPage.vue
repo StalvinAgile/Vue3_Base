@@ -1,7 +1,6 @@
 
   <template>
   <div>
-  
     <div flat color="white" class="row py-5 pl-5 align-items-center">
       <page-title
         class="col-md-3"
@@ -39,97 +38,104 @@
           </template>
         </v-tooltip>
       </div>
-      
     </div>
-  <v-tabs v-model="tabs" color="blue">
-        <v-tab :value="1">
-          <span>{{$t('english')}}</span>
-        </v-tab>
-        <v-tab :value="2">
-          <span>{{$t('arabic')}}</span>
-        </v-tab>
-      </v-tabs>
-      <v-window v-model="tabs">
-        <!-- ENGLISH TAB STARTS -->
-        <v-window-item :value="1">
-            <v-data-table
-      :headers="headers"
-      :items="products_en"
-      :search="search"
-      :loading="initval"
-      v-bind:no-data-text="$t('no_data_available')"
-      :footer-props="{
-        'items-per-page-text': $t('rows_per_page'),
-      }"
-    >
-      <template v-slot:item="props">
-        <tr class="vdatatable_tbody">
-          <td>
-            <span v-if="props.item.selectable.title">
-              {{ props.item.selectable.title }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.description">
-              {{ props.item.selectable.description }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.meta_title">
-              {{ props.item.selectable.meta_title }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.meta_description">
-              {{ props.item.selectable.meta_description }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <v-btn
-              class="hover_shine btn mr-2"
-              :disabled="isDisabled"
-              size="small"
-              @click="changeStatus(props.item.selectable.id)"
-              v-bind:color="[
-                props.item.selectable.status == 1 ? 'success' : 'warning',
-              ]"
-            >
-              <span
-                v-if="props.item.selectable.status == 1"
-                class="spanactivesize"
-                >{{ $t("active") }}</span
-              >
-              <span
-                v-if="props.item.selectable.status == 0"
-                class="spanactivesize"
-                >{{ $t("inactive") }}</span
-              >
-            </v-btn>
-          </td>
-          <td>
-            <router-link
-              :to="{
-                name: 'products_amend',
-                query: { slug: props.item.selectable.slug },
-              }"
-            >
-              <v-tooltip :text="this.$t('edit')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    plain
-                    v-bind="props"
-                    dense
-                    class="mr-2 edit_btn icon_size"
-                    >mdi-pencil-outline</v-icon
+    <v-tabs v-model="tabs" color="blue">
+      <v-tab :value="1">
+        <span>{{ $t("english") }}</span>
+      </v-tab>
+      <v-tab :value="2">
+        <span>{{ $t("arabic") }}</span>
+      </v-tab>
+    </v-tabs>
+    <v-window v-model="tabs">
+      <!-- ENGLISH TAB STARTS -->
+      <v-window-item :value="1">
+        <v-data-table
+          :headers="headers"
+          :items="products_en"
+          :search="search"
+          :loading="initval"
+          v-bind:no-data-text="$t('no_data_available')"
+          :footer-props="{
+            'items-per-page-text': $t('rows_per_page'),
+          }"
+        >
+          <template v-slot:item="props">
+            <tr class="vdatatable_tbody">
+              <td>
+                <span v-if="props.item.selectable.title">
+                  {{ props.item.selectable.title }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.description">
+                  {{ props.item.selectable.description }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.meta_title">
+                  {{ props.item.selectable.meta_title }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.meta_description">
+                  {{ props.item.selectable.meta_description }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <v-btn
+                  class="hover_shine btn mr-2"
+                  :disabled="isDisabled"
+                  size="small"
+                  @click="changeStatus(props.item.selectable.id)"
+                  v-bind:color="[
+                    props.item.selectable.status == 1 ? 'success' : 'warning',
+                  ]"
+                >
+                  <span
+                    v-if="props.item.selectable.status == 1"
+                    class="spanactivesize"
+                    >{{ $t("active") }}</span
                   >
-                </template>
-              </v-tooltip>
-            </router-link>
-            <span @click="deleteItem(props.item.selectable.id)">
+                  <span
+                    v-if="props.item.selectable.status == 0"
+                    class="spanactivesize"
+                    >{{ $t("inactive") }}</span
+                  >
+                </v-btn>
+              </td>
+              <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
+              <td>
+                <router-link
+                  :to="{
+                    name: 'products_amend',
+                    query: { slug: props.item.selectable.slug },
+                  }"
+                >
+                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-icon
+                        plain
+                        v-bind="props"
+                        dense
+                        class="mr-2 edit_btn icon_size"
+                        >mdi-pencil-outline</v-icon
+                      >
+                    </template>
+                  </v-tooltip>
+                </router-link>
+                <span @click="deleteItem(props.item.selectable.id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -144,92 +150,110 @@
                     <span>{{ $t("delete") }}</span>
                   </v-tooltip>
                 </span>
-          </td>
-        </tr>
-      </template>
-    </v-data-table>
-        </v-window-item>
-        <!-- ENGLISH TAB STOPS -->
-        <!-- ARABIC TAB STARTS -->
-        <v-window-item :value="2">
-            <v-data-table
-      :headers="headers"
-      :items="products_ar"
-      :search="search"
-      :loading="initval"
-      v-bind:no-data-text="$t('no_data_available')"
-      :footer-props="{
-        'items-per-page-text': $t('rows_per_page'),
-      }"
-    >
-      <template v-slot:item="props">
-        <tr class="vdatatable_tbody">
-          <td>
-            <span v-if="props.item.selectable.title">
-              {{ props.item.selectable.title }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.description">
-              {{ props.item.selectable.description }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.meta_title">
-              {{ props.item.selectable.meta_title}}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.meta_description">
-              {{ props.item.selectable.meta_description}}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <v-btn
-              class="hover_shine btn mr-2"
-              :disabled="isDisabled"
-              size="small"
-              @click="changeStatus(props.item.selectable.id)"
-              v-bind:color="[
-                props.item.selectable.status == 1 ? 'success' : 'warning',
-              ]"
-            >
-              <span
-                v-if="props.item.selectable.status == 1"
-                class="spanactivesize"
-                >{{ $t("active") }}</span
-              >
-              <span
-                v-if="props.item.selectable.status == 0"
-                class="spanactivesize"
-                >{{ $t("inactive") }}</span
-              >
-            </v-btn>
-          </td>
-          <td>
-            <router-link
-              :to="{
-                name: 'products_amend',
-                query: { slug: props.item.selectable.slug },
-              }"
-            >
-              <v-tooltip :text="this.$t('edit')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    plain
-                    v-bind="props"
-                    dense
-                    class="mr-2 edit_btn icon_size"
-                    >mdi-pencil-outline</v-icon
+              </td>
+              <td>
+                <v-btn
+                  size="small"
+                  @click="viewProduct(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_en") }}</v-btn
+                >
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-window-item>
+      <!-- ENGLISH TAB STOPS -->
+      <!-- ARABIC TAB STARTS -->
+      <v-window-item :value="2">
+        <v-data-table
+          :headers="headers"
+          :items="products_ar"
+          :search="search"
+          :loading="initval"
+          v-bind:no-data-text="$t('no_data_available')"
+          :footer-props="{
+            'items-per-page-text': $t('rows_per_page'),
+          }"
+        >
+          <template v-slot:item="props">
+            <tr class="vdatatable_tbody">
+              <td>
+                <span v-if="props.item.selectable.title">
+                  {{ props.item.selectable.title }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.description">
+                  {{ props.item.selectable.description }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.meta_title">
+                  {{ props.item.selectable.meta_title }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.meta_description">
+                  {{ props.item.selectable.meta_description }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <v-btn
+                  class="hover_shine btn mr-2"
+                  :disabled="isDisabled"
+                  size="small"
+                  @click="changeStatus(props.item.selectable.id)"
+                  v-bind:color="[
+                    props.item.selectable.status == 1 ? 'success' : 'warning',
+                  ]"
+                >
+                  <span
+                    v-if="props.item.selectable.status == 1"
+                    class="spanactivesize"
+                    >{{ $t("active") }}</span
                   >
-                </template>
-              </v-tooltip>
-            </router-link>
-            <span @click="deleteItem(props.item.selectable.id)">
+                  <span
+                    v-if="props.item.selectable.status == 0"
+                    class="spanactivesize"
+                    >{{ $t("inactive") }}</span
+                  >
+                </v-btn>
+              </td>
+              <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
+              <td>
+                <router-link
+                  :to="{
+                    name: 'products_amend',
+                    query: { slug: props.item.selectable.slug },
+                  }"
+                >
+                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-icon
+                        plain
+                        v-bind="props"
+                        dense
+                        class="mr-2 edit_btn icon_size"
+                        >mdi-pencil-outline</v-icon
+                      >
+                    </template>
+                  </v-tooltip>
+                </router-link>
+                <span @click="deleteItem(props.item.selectable.id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -244,12 +268,22 @@
                     <span>{{ $t("delete") }}</span>
                   </v-tooltip>
                 </span>
-          </td>
-        </tr>
-      </template>
-    </v-data-table>
-        </v-window-item>
-      </v-window>
+              </td>
+              <td>
+                <v-btn
+                  size="small"
+                  @click="viewProduct(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_ar") }}</v-btn
+                >
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-window-item>
+    </v-window>
     <ConfirmDialog
       :show="showStatusDialog"
       :cancel="cancelStatus"
@@ -285,37 +319,6 @@ export default {
     showConfirmDialog: false,
     delete_id: "",
     tabs: 1,
-    headers: [
-      {
-        title: "Title",
-        align: "left",
-        key: "title",
-      },
-      {
-        title: "Description",
-        key: "description",
-      },
-      {
-        title: "Meta Title",
-        key: "meta_title",
-      },
-
-      {
-        title: "Meta Description",
-        key: "meta_description",
-      },
-      {
-        title: "Status",
-        align: "left",
-        sortable: false,
-        key: "status",
-      },
-      {
-        title: "Actions",
-        key: "",
-        align: "left",
-      },
-    ],
     google_icon: {
       icon_name: "group",
       color: "google_icon_gradient",
@@ -334,7 +337,68 @@ export default {
     this.user = JSON.parse(localStorage.getItem("user"));
     this.fetchproducts();
   },
+  computed: {
+    headers() {
+      return [
+        {
+          title: "Title",
+          align: "left",
+          key: "title",
+        },
+        {
+          title: "Description",
+          key: "description",
+        },
+        {
+          title: "Meta Title",
+          key: "meta_title",
+        },
+
+        {
+          title: "Meta Description",
+          key: "meta_description",
+        },
+        {
+          title: "Status",
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: this.$t("approval_en"),
+          key: "approval_status",
+        },
+        {
+          title: "Actions",
+          key: "",
+          align: "left",
+        },
+        {
+          title: " ",
+          align: "center",
+        },
+      ];
+    },
+  },
   methods: {
+    viewProduct(slug) {
+      this.$router.push({
+        name: "products-review",
+        query: { slug: slug },
+      });
+    },
+    getStatusColor(status) {
+      switch (status) {
+        case "Approved":
+          return "green";
+        case "In Review":
+          return "orange";
+        case "Rejected":
+          return "red";
+        default:
+          return "";
+      }
+    },
     cancel() {
       this.showConfirmDialog = false;
     },
