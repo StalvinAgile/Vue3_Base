@@ -8,7 +8,7 @@
       ></page-title>
     </div>
     <div class="card-body">
-      {{ lookup }}
+      <!-- {{ lookup }} -->
       <content-loader v-if="loader"></content-loader>
       <v-tabs v-model="tabs" color="blue">
         <v-tab :value="1" @click="checkUploadImage">
