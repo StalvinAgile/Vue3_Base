@@ -156,6 +156,22 @@
                       </template>
                     </v-tooltip>
                   </v-col>
+                  <v-col cols="2" sm="2" md="2">
+                    <v-tooltip :text="$t('sequence')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="category[0].seq"
+                          maxlength="100"
+                          :rules="phoneRules"
+                          v-bind:label="$t('sequence')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
                   <v-col md="6">
                     <div>
                       <div class="image-container">
@@ -197,6 +213,7 @@
                         >
                       </a>
                     </div>
+                    
                     <br />
                     <Imageupload
                       :folder="'category'"
@@ -348,6 +365,22 @@
                       </template>
                     </v-tooltip>
                   </v-col>
+                   <v-col cols="2" sm="2" md="2">
+                    <v-tooltip :text="$t('sequence')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="category[1].seq"
+                          maxlength="100"
+                          :rules="phoneRules"
+                          v-bind:label="$t('sequence')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
                   <v-col md="6">
                     <div>
                       <div class="image-container">
@@ -389,6 +422,7 @@
                         >
                       </a>
                     </div>
+                    
                     <br />
                     <Imageupload
                       :folder="'category'"
@@ -534,6 +568,7 @@ export default {
         description: "",
         meta_title: "",
         image_path: "",
+        seq:"",
         meta_description: "",
         display_header_menu: 0,
         header_id: 0,
@@ -547,6 +582,7 @@ export default {
         description: "",
         meta_title: "",
         image_path: "",
+        seq:"",
         meta_description: "",
         display_header_menu: 0,
         header_id: 0,
@@ -579,8 +615,7 @@ export default {
           this.loader = true;
           this.$axios
             .get(
-              process.env.VUE_APP_API_URL_ADMIN +
-                "edit-category/" +
+              process.env.VUE_APP_API_URL_ADMIN + "edit-category/" +
                 this.$route.query.slug
             )
             .then((res) => {

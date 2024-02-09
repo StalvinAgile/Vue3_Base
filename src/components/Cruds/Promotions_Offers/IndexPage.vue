@@ -52,7 +52,7 @@
         <!-- ENGLISH TAB STARTS -->
         <v-window-item :value="1">
             <v-data-table
-      :headers="headers"
+      :headers="headers_en"
       :items="promotions_en"
       :search="search"
       :loading="initval"
@@ -75,7 +75,7 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
-          <td>
+          <!-- <td>
             <span v-if="props.item.selectable.phone">
               {{ props.item.selectable.phone }}</span
             >
@@ -86,7 +86,7 @@
               {{ props.item.selectable.email }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
+          </td> -->
           <td>
             <span v-if="props.item.selectable.start_date">
               {{ formatDate(props.item.selectable.start_date)}}</span
@@ -99,7 +99,7 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
-          <td>
+          <!-- <td>
             <span v-if="props.item.selectable.meta_title">
               {{ props.item.selectable.meta_title }}</span
             >
@@ -110,7 +110,15 @@
               {{ props.item.selectable.meta_description }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
+          </td> -->
+          <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
           <td>
             <v-btn
               class="hover_shine btn mr-2"
@@ -168,6 +176,16 @@
                   </v-tooltip>
                 </span>
           </td>
+          <td>
+                <v-btn
+                  size="small"
+                  @click="viewPromotions(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_en") }}</v-btn
+                >
+              </td>
         </tr>
       </template>
     </v-data-table>
@@ -176,7 +194,7 @@
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
             <v-data-table
-      :headers="headers"
+      :headers="headers_ar"
       :items="promotions_ar"
       :search="search"
       :loading="initval"
@@ -199,7 +217,7 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
-          <td>
+          <!-- <td>
             <span v-if="props.item.selectable.phone">
               {{ props.item.selectable.phone }}</span
             >
@@ -210,7 +228,7 @@
               {{ props.item.selectable.email }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
+          </td> -->
            <td>
             <span v-if="props.item.selectable.start_date">
               {{ formatDate(props.item.selectable.start_date)}}</span
@@ -223,7 +241,7 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
-          <td>
+          <!-- <td>
             <span v-if="props.item.selectable.meta_title">
               {{ props.item.selectable.meta_title}}</span
             >
@@ -234,7 +252,15 @@
               {{ props.item.selectable.meta_description}}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
+          </td> -->
+          <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
           <td>
             <v-btn
               class="hover_shine btn mr-2"
@@ -292,6 +318,16 @@
                   </v-tooltip>
                 </span>
           </td>
+          <td>
+                <v-btn
+                  size="small"
+                  @click="viewPromotions(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_ar") }}</v-btn
+                >
+              </td>
         </tr>
       </template>
     </v-data-table>
@@ -332,53 +368,24 @@ export default {
     showConfirmDialog: false,
     delete_id: "",
     tabs: 1,
-    headers: [
+    approval_status_items: [
       {
-        title: "Title",
-        align: "left",
-        key: "title",
+        id: 1,
+        shortname: "In Review",
+        longname: "In Review",
       },
       {
-        title: "Description",
-        key: "description",
+        id: 2,
+        shortname: "Approved",
+        longname: "Approved",
       },
       {
-        title: "Phone",
-        key: "phone",
-      },
-      {
-        title: "Email",
-        key: "email",
-      },
-      {
-        title: "Start Date",
-        key: "start_date",
-      },
-      {
-        title: "End Date",
-        key: "end_date",
-      },
-      {
-        title: "Meta Title",
-        key: "meta_title",
-      },
-
-      {
-        title: "Meta Description",
-        key: "meta_description",
-      },
-      {
-        title: "Status",
-        align: "left",
-        sortable: false,
-        key: "status",
-      },
-      {
-        title: "Actions",
-        key: "",
-        align: "left",
+        id: 3,
+        shortname: "Rejected",
+        longname: "Rejected",
       },
     ],
+   
     google_icon: {
       icon_name: "group",
       color: "google_icon_gradient",
@@ -397,7 +404,130 @@ export default {
     this.user = JSON.parse(localStorage.getItem("user"));
     this.fetchPromotions();
   },
+    computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    headers_en() {
+      return [
+        {
+        title:this.$t("title_en"),
+        align: "left",
+        key: "title",
+      },
+      {
+        title: "Description",
+        key: "description",
+      },
+      {
+        title: "Phone",
+        key: "phone",
+      },
+      {
+        title: "Email",
+        key: "email",
+      },
+      // {
+      //   title: "Start Date",
+      //   key: "start_date",
+      // },
+      // {
+      //   title: "End Date",
+      //   key: "end_date",
+      // },
+      // {
+      //   title: "Meta Title",
+      //   key: "meta_title",
+      // },
+
+      // {
+      //   title: "Meta Description",
+      //   key: "meta_description",
+      // },
+      {
+          title: this.$t("approval_en"),
+          key: "approval_status",
+        },
+      {
+        title: this.$t("status_en"),
+        align: "left",
+        sortable: false,
+        key: "status",
+      },
+      {
+        title: "Actions",
+        key: "",
+        align: "left",
+      },
+      ];
+    },
+    headers_ar() {
+      return [
+        {
+        title:this.$t("title_en"),
+        align: "left",
+        key: "title",
+      },
+      {
+        title: "Description",
+        key: "description",
+      },
+      // {
+      //   title: "Phone",
+      //   key: "phone",
+      // },
+      // {
+      //   title: "Email",
+      //   key: "email",
+      // },
+      {
+        title: "Start Date",
+        key: "start_date",
+      },
+      {
+        title: "End Date",
+        key: "end_date",
+      },
+      // {
+      //   title: "Meta Title",
+      //   key: "meta_title",
+      // },
+
+      // {
+      //   title: "Meta Description",
+      //   key: "meta_description",
+      // },
+      {
+          title: this.$t("approval_ar"),
+          key: "approval_status",
+        },
+      {
+        title: this.$t("status_ar"),
+        align: "left",
+        sortable: false,
+        key: "status",
+      },
+      {
+        title: "Actions",
+        key: "",
+        align: "left",
+      },
+      ];
+    },
+  },
   methods: {
+        getStatusColor(status) {
+      switch (status) {
+        case "Approved":
+          return "green";
+        case "In Review":
+          return "orange";
+        case "Rejected":
+          return "red";
+        default:
+          return "";
+      }
+    },
     cancel() {
       this.showConfirmDialog = false;
     },
@@ -408,6 +538,12 @@ export default {
     deleteItem(template_id) {
       this.delete_id = template_id;
       this.showConfirmDialog = true;
+    },
+      viewPromotions(slug) {
+      this.$router.push({
+        name: "promotions-review",
+        query: { slug: slug },
+      });
     },
     deleteConfirm(id) {
       this.$axios

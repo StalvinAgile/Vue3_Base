@@ -271,6 +271,11 @@ const routes = [
       import("../components/Cruds/Events/EventsAmend.vue"),
   },
   {
+    path: "/:lang?/events-review",
+    name: "events-review",
+    component: () => import("../components/Cruds/Events/ReviewEvents.vue"),
+  },
+  {
     name: "products",
     path: "/:lang?/products",
     beforeEnter: guardMyroute,
@@ -290,6 +295,11 @@ const routes = [
     beforeEnter: guardMyroute,
     component: () =>
       import("../components/Cruds/Promotions_Offers/IndexPage.vue"),
+  },
+  {
+    path: "/:lang?/promotions-review",
+    name: "promotions-review",
+    component: () => import("../components/Cruds/Promotions_Offers/ReviewPromotions.vue"),
   },
   //Mall Timings
   {
@@ -363,6 +373,11 @@ const routes = [
     name: "home-slider-amend",
     // meta: { layout: "userpages" },
     component: () => import("../components/Cruds/HomeSlider/HomeSliderAmend.vue"),
+  },
+  {
+    path: "/:lang?/home-slider-review",
+    name: "home-slider-review",
+    component: () => import("../components/Cruds/HomeSlider/ReviewSlider.vue"),
   },
   {
     path: "/:lang?/categories-review",

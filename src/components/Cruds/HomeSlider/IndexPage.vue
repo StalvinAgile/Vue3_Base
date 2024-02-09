@@ -57,7 +57,7 @@
       <!-- ENGLISH TAB STARTS -->
       <v-window-item :value="1">
         <v-data-table
-          :headers="headers"
+          :headers="headers_en"
           :items="home_sliders_en"
           :search="search"
           :loading="initval"
@@ -94,6 +94,14 @@
                   >
                 </v-btn>
               </td>
+              <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
               <td class="text-center">
                 <router-link
                   small
@@ -125,6 +133,16 @@
                   </v-tooltip>
                 </span>
               </td>
+               <td>
+                <v-btn
+                  size="small"
+                  @click="viewSlider(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_en") }}</v-btn
+                >
+              </td>
             </tr>
           </template>
         </v-data-table>
@@ -133,7 +151,7 @@
       <!-- ARABIC TAB STARTS -->
       <v-window-item :value="2">
         <v-data-table
-          :headers="headers"
+          :headers="headers_ar"
           :items="home_sliders_ar"
           :search="search"
           :loading="initval"
@@ -169,6 +187,14 @@
                   >
                 </v-btn>
               </td>
+              <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
               <td class="text-center">
                 <router-link
                   small
@@ -199,6 +225,16 @@
                     <span>{{ $t("delete") }}</span>
                   </v-tooltip>
                 </span>
+              </td>
+              <td>
+                <v-btn
+                  size="small"
+                  @click="viewSlider(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_en") }}</v-btn
+                >
               </td>
             </tr>
           </template>
@@ -242,16 +278,45 @@ export default {
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },
+     approval_status_items: [
+      {
+        id: 1,
+        shortname: "In Review",
+        longname: "In Review",
+      },
+      {
+        id: 2,
+        shortname: "Approved",
+        longname: "Approved",
+      },
+      {
+        id: 3,
+        shortname: "Rejected",
+        longname: "Rejected",
+      },
+    ],
     status_id: null,
     showStatusDialog: false,
     tabs: 1,
   }),
 
-  computed: {
+
+
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+  },
+
+  created() {},
+  mounted() {
+    this.fetchHome_sliders();
+  },
+ computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
-    headers() {
+    headers_en() {
       return [
         {
           title: this.$t("title"),
@@ -269,31 +334,74 @@ export default {
           title: this.$t("sequence"),
           key: "seq",
         },
+        
         {
           title: this.$t("status"),
           key: "status",
         },
+         {
+        title: this.$t("approval"),
+        key: "approval_status",
+      },
         {
           title: this.$t("actions"),
           align: "center",
           key: "actions",
         },
+      
+      ];
+    },
+    headers_ar() {
+      return [
+        {
+          title: this.$t("title"),
+          key: "title",
+        },
+        {
+          title: this.$t("action"),
+          key: "action",
+        },
+        {
+          title: this.$t("target"),
+          key: "target",
+        },
+        {
+          title: this.$t("sequence"),
+          key: "seq",
+        },
+        
+        {
+          title: this.$t("status"),
+          key: "status",
+        },
+         {
+        title: this.$t("approval"),
+        key: "approval_status",
+      },
+        {
+          title: this.$t("actions"),
+          align: "center",
+          key: "actions",
+        },
+      
+       
+      
       ];
     },
   },
-
-  watch: {
-    dialog(val) {
-      val || this.close();
-    },
-  },
-
-  created() {},
-  mounted() {
-    this.fetchHome_sliders();
-  },
-
   methods: {
+       getStatusColor(status) {
+      switch (status) {
+        case "Approved":
+          return "green";
+        case "In Review":
+          return "orange";
+        case "Rejected":
+          return "red";
+        default:
+          return "";
+      }
+    },
     cancel() {
       this.showConfirmDialog = false;
     },
@@ -317,7 +425,12 @@ export default {
           console.log(err);
         });
     },
-
+  viewSlider(slug) {
+      this.$router.push({
+        name: "home-slider-review",
+        query: { slug: slug },
+      });
+    },
     deleteItem(store_id) {
       this.delete_id = store_id;
       this.showConfirmDialog = true;

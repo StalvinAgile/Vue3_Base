@@ -130,6 +130,22 @@
                   <span>{{ $t("meta_description") }}</span>
                 </v-tooltip>
               </v-col>
+              <v-col cols="2" sm="2" md="2">
+                    <v-tooltip :text="$t('sequence')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="events[0].seq"
+                          maxlength="100"
+                          :rules="phoneRules"
+                          v-bind:label="$t('sequence')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
               <v-col md="6">
                 <div>
                   <div class="image-container">
@@ -171,6 +187,7 @@
                     >
                   </a>
                 </div>
+                
                 <br />
                 <Imageupload
                   :folder="'events'"
@@ -300,6 +317,22 @@
                   <span>{{ $t("vacancy") }}</span>
                 </v-tooltip>
               </v-col>
+              <v-col cols="2" sm="2" md="2">
+                    <v-tooltip :text="$t('sequence')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="events[1].seq"
+                          maxlength="100"
+                          :rules="phoneRules"
+                          v-bind:label="$t('sequence')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
                <v-col md="6">
                 <div>
                   <div class="image-container">
@@ -341,6 +374,7 @@
                     >
                   </a>
                 </div>
+                 
                 <br />
                 <Imageupload
                   :folder="'events'"
@@ -419,6 +453,8 @@ export default {
     isDisabled: false,
     checkbox_value: false,
     uploadfile: false,
+    events_en: [],
+    events_ar: [],
     events: [
       {
         id: 0,
@@ -427,6 +463,7 @@ export default {
         start_date: "",
         end_date: "",
         image_path: "",
+        seq:"",
         meta_title: "",
         meta_description: "",
         lang: "en",
@@ -438,6 +475,7 @@ export default {
         start_date: "",
         end_date: "",
         image_path: "",
+        seq:"",
         meta_title: "",
         meta_description: "",
         lang: "ar",

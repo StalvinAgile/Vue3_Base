@@ -187,6 +187,22 @@
                   <span>{{ $t("meta_description") }}</span>
                 </v-tooltip>
               </v-col>
+              <v-col cols="2" sm="2" md="2">
+                    <v-tooltip :text="$t('sequence')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="promotions[0].seq"
+                          maxlength="100"
+                          :rules="phoneRules"
+                          v-bind:label="$t('sequence')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
               <v-col md="6">
                 <div>
                   <div class="image-container">
@@ -228,6 +244,7 @@
                     >
                   </a>
                 </div>
+                
                 <br />
                 <Imageupload
                   :folder="'promotions_offers'"
@@ -416,6 +433,22 @@
                   <span>{{ $t("vacancy") }}</span>
                 </v-tooltip>
               </v-col>
+               <v-col cols="2" sm="2" md="2">
+                    <v-tooltip :text="$t('sequence')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="promotions[1].seq"
+                          maxlength="100"
+                          :rules="phoneRules"
+                          v-bind:label="$t('sequence')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
               <v-col md="6">
                 <div>
                   <div class="image-container">
@@ -457,6 +490,7 @@
                     >
                   </a>
                 </div>
+               
                 <br />
                 <Imageupload
                   :folder="'promotions_offers'"
@@ -555,6 +589,7 @@ export default {
         type: "",
         start_date: "",
         end_date: "",
+        seq:"",
         image_path: "",
         meta_title: "",
         meta_description: "",
@@ -569,6 +604,7 @@ export default {
         type: "",
         start_date: "",
         end_date: "",
+        seq:"",
         image_path: "",
         meta_title: "",
         meta_description: "",

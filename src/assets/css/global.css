@@ -480,4 +480,15 @@ input::placeholder {
   100% {
     transform: translateX(-2px);
   }
+}
+.v-list-item__content {
+  color: #624e37;
+}
+
+.v-tab.v-tab {
+  color: #624e37;
+}
+
+.v-list-item__prepend > .v-icon {
+  color: #614f38;
 }/*# sourceMappingURL=global.css.map */
