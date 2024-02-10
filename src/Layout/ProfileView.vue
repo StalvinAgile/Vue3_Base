@@ -187,11 +187,15 @@ export default {
     fetchUserData() {
       this.user = JSON.parse(localStorage.getItem("user_data"));
     },
-    ...mapActions("auth", ["logoutRequest"]),
+    ...mapActions("auth", ["logoutUser"]),
     logoutUser() {
-      // console.log("inside ");
-      localStorage.clear();
-      this.$router.push("/");
+      this.$store.dispatch('auth/logoutUser') 
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.error("Logout failed", error);
+        });
     },
     // async login() {
     //   await this.loginRequest(this.userdata).then(() => {

@@ -51,17 +51,10 @@ const actions = {
       // });
   },
 
-  // logoutRequest({ commit }) {
-  //   axios
-  //     .post(process.env.VUE_APP_API_URL_ADMIN + "logout")
-  //     .then(() => {
-  //       commit("setUserData", null);
-  //       commit("setAuthentication", false);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // },
+  logoutUser({ commit }) {
+    localStorage.clear();
+    commit("setAuthentication", false);
+  },
 };
 
 export default {

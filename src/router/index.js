@@ -408,7 +408,7 @@ const router = createRouter({
   routes,
 });
 
-var isAuthenticated = store.getters["auth/authentication"];
+// var isAuthenticated = store.getters["auth/authentication"];
 
 router.beforeEach((to, from, next) => {
   const lang = localStorage.getItem("pref_lang") || "en";
@@ -425,7 +425,7 @@ router.beforeEach((to, from, next) => {
         next({ path: `/${lang}${to.fullPath}` });
       }
     } else {
-      next({ path: "/en/login" });
+      next({ path: "/" });
     }
   } else {
     next();
@@ -433,10 +433,11 @@ router.beforeEach((to, from, next) => {
 });
 
 function guardMyroute(to, from, next) {
+  const isAuthenticated = store.getters["auth/authentication"];
   if (isAuthenticated) {
     next();
   } else {
-    next("/en/");
+    next({ path: "/" });
   }
 }
 
