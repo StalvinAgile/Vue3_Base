@@ -44,7 +44,7 @@
       </div>
     </div>
     <v-data-table
-      :headers="headers"
+      :headers="headers_en"
       :items="store_timings"
       :search="search"
       :loading="initval"
@@ -126,24 +126,7 @@ export default {
     status_id: null,
     isDisabled: false,
     initval: false,
-    headers: [
-      {
-        title: "Name",
-        key: "name",
-      },
-      {
-        title: "From Time",
-        key: "from_time",
-      },
-      {
-        title: "To Time",
-        key: "to_time",
-      },
-      {
-        title: "Actions",
-        align: "center",
-      },
-    ],
+
     google_icon: {
       icon_name: "punch_clock",
       color: "google_icon_gradient",
@@ -156,6 +139,45 @@ export default {
     valid: false,
     message: "",
   }),
+
+  
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    headers_en() {
+      return [
+        {
+          title: this.$t("name_en"),
+          key: "name",
+        },
+        {
+          title: this.$t("from_time_en"),
+          key: "from_time",
+        },
+        {
+          title: this.$t("to_time_en"),
+          key: "to_time",
+        },
+       
+        {
+          title: this.$t("status_en"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: this.$t("approval_en"),
+          key: "approval_status",
+        },
+        {
+          title: this.$t("action_en"),
+          align: "center",
+          key: "action",
+        },
+      ];
+    },
+  },
   mounted() {
     this.fetchStoreTimings();
   },

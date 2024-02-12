@@ -250,6 +250,11 @@ const routes = [
     component: () => import("../components/Cruds/Careers/IndexPage.vue"),
   },
   {
+    path: "/:lang?/careers-review",
+    name: "careers-review",
+    component: () => import("../components/Cruds/Careers/ReviewCareer.vue"),
+  },
+  {
     name: "promotions_amend",
     path: "/:lang?/promotions_amend",
     beforeEnter: guardMyroute,
