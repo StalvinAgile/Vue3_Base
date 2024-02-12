@@ -345,11 +345,11 @@
   "store_name": "Store Name",
   "create_store_timings": "Create/Amend Store Timings",
   "icon_en": "Icon",
-  "parent_lookup_en":"Parent Lookup",
-  "shortname_en":"Shortname",
-  "longname_en":"Longname",
-  "inactive_en":"Inactive",
-  "active_en":"Active",
+  "parent_lookup_en": "Parent Lookup",
+  "shortname_en": "Shortname",
+  "longname_en": "Longname",
+  "inactive_en": "Inactive",
+  "active_en": "Active",
   "meridiem": "Meridiem",
   "from_meridiem": "From Meridiem",
   "from": "From",
@@ -358,9 +358,8 @@
   "is_holiday": "Is Holiday",
   "create_products":"Create Products",
   "products":"Products",
-
-
-   
+  "customer_newsletter": "Customer Newsletters",
+  "created_at": "Created At",
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
   "from_day_ar": "من اليوم",
@@ -411,5 +410,9 @@
   "shortname_ar":"اسم قصير",
   "longname_ar":"اسم طويل",
   "social_media_ar": "وسائل التواصل الاجتماعي",
-  "vacancy_ar":"شاغر"
+  "vacancy_ar":"شاغر",
+  "mall_details_ar": "تفاصيل المول",
+  "store_details_ar": "تفاصيل المتجر"
 }
+
+

@@ -119,8 +119,8 @@
               <br />
               <Imageupload
                 :folder="'user_profile'"
-                :resizewidth="0.4"
-                :resizeheight="0.1"
+                :resizewidth="200"
+                :resizeheight="80"
                 @uploaded_image="uploaded_image"
                 :upload_profile="uploadfile"
               />
@@ -160,7 +160,7 @@
               <v-btn
                 v-bind="props"
                 size="small"
-                @click="$router.go(-1)"
+                @click="cancel"
                 :disabled="isDisabled"
                 class="ma-1"
                 color="cancel"
@@ -254,6 +254,11 @@ export default {
     },
   },
   methods: {
+    cancel(){
+  this.$router.push({
+        name: "system_parameter",
+      });
+    },
     uploaded_image(img_src) {
       this.system_params.parameter_value = img_src;
     },
@@ -367,4 +372,3 @@ input.larger {
   padding: 1px;
 }
 </style>
-

@@ -9,30 +9,33 @@
           <div class="cropper-container" ref="cropperContainer">
             <!-- Below one is porp can be used where we can define all the props in data and pass like below one -->
             <!-- :options="cropperOptions" -->
+              <!-- :min-container-width="250"
+              :min-container-height="180" -->
             <VueCropper
-              ref='cropper'
-          :guides="true"
-          :view-mode="2"
-          drag-mode="crop"        
-          :min-container-width="250"
-          :min-container-height="180"
-          :cropBoxResizable="false"
-          :cropBoxMovable="true"
-          :src="selectedFile"
-          alt="Source Image"
-          :img-style="{ 'width': '400px', 'height': '300px' }"
+              ref="cropper"
+              :guides="true"
+              :view-mode="0"
+              drag-mode="none"
+              :min-canvas-width="0"
+              :min-canvas-height="0"
+              :cropBoxResizable="false"
+              :cropBoxMovable="true"
+              :src="selectedFile"
+              :zoomable="true"
+              alt="Source Image"
+              :img-style="{ width: '400px', height: '300px' }"
               @crop="handleCrop"
               @ready="cropperReady"
             ></VueCropper>
-             <!-- <VueCropper
+            <!--  <VueCropper
              ref="cropper"
               :dragMode="'none'"
               :src="selectedFile"
-              :view-mode="3"
+              :view-mode="2"
               :cropBoxResizable="false"
               :cropBoxMovable="true"
-              :minCropBoxWidth="800"
-              :minCropBoxHeight="450"
+              :minCropBoxWidth="250"
+              :minCropBoxHeight="180"
               :autoCrop="true"
               :img-style="{ width: '500px', height: '400px' }"
               v-bind="$attrs"
@@ -72,11 +75,11 @@ export default {
   props: {
     resizewidth: {
       type: Number,
-      default: 0.3,
+      default: 200,
     },
     resizeheight: {
       type: Number,
-      default: 0.2,
+      default: 80,
     },
     folder: {
       type: String,
@@ -92,7 +95,7 @@ export default {
       loader: false,
       //Below are the options that are there in Cropper
       cropperOptions: {
-        aspectRatio: 12 / 12,
+        // aspectRatio: 12 / 12,
         viewMode: 1,
         autoCropArea: 1,
         movable: false,
@@ -122,17 +125,19 @@ export default {
       }
     },
     cropperReady() {
-      const cropper_data = this.$refs.cropper;
-      if (cropper_data) {
-        const cropBoxData = cropper_data.getCropBoxData();
-        const newWidth = cropBoxData.width * this.resizewidth; // Example: Reduce width by 20%
-        const newHeight = cropBoxData.height * this.resizeheight; // Example: Reduce height by 20%
-        cropper_data.setCropBoxData({
-          ...cropBoxData,
-          width: newWidth,
-          height: newHeight,
-        });
-      }
+      const fixedWidth = this.resizewidth;
+      const fixedHeight = this.resizeheight;
+
+      this.$nextTick(() => {
+        const containerData = this.$refs.cropper.getContainerData();
+        const cropBoxData = {
+          left: Math.max(0, (containerData.width - fixedWidth) / 2),
+          top: Math.max(0, (containerData.height - fixedHeight) / 2),
+          width: Math.min(fixedWidth, containerData.width),
+          height: Math.min(fixedHeight, containerData.height),
+        };
+        this.$refs.cropper.setCropBoxData(cropBoxData);
+      });
     },
 
     openFileInput() {

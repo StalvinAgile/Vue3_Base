@@ -406,6 +406,13 @@ const routes = [
     component: () => import("../components/Cruds/Products/ReviewProducts.vue"),
   },
 
+  //
+  {
+    path: "/:lang?/customer-newsletter",
+    name: "customer-newsletter",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/CustomerNewsletter/IndexPage.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -427,7 +434,9 @@ router.beforeEach((to, from, next) => {
           query: to.query,
         });
       } else {
-        next({ path: `/${lang}${to.fullPath}` });
+        const redirectpathlogin = "/" + lang + to.redirectedFrom.fullPath;
+        next({ path: redirectpathlogin });
+        // next({ path: `/${lang}${to.fullPath}` });
       }
     } else {
       next({ path: "/" });
