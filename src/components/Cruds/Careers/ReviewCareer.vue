@@ -3,19 +3,17 @@
     <div class="my-3 p-0">
       <page-title
         class="col-md-4 ml-2"
-        :heading="$t('events')"
+        :heading="$t('careers')"
         :google_icon="google_icon"
       ></page-title>
     </div>
     <div class="mb-3 mx-auto">
       <div class="card-body">
-        <content-loader v-if="loader"></content-loader>
-
+        <content-loader v-if="loader"></content-loader> 
         <v-tabs v-model="tabs" color="blue">
           <v-tab :value="1">
             <span>{{ $t("english") }}</span>
           </v-tab>
-
           <v-tab :value="2">
             <span>{{ $t("arabic") }}</span>
           </v-tab>
@@ -26,20 +24,20 @@
             <v-card
               variant="elevated"
               class="p-3 my-3 card-border"
-              v-for="(event, index) in events_en"
+              v-for="(career, index) in careers_en"
               :key="index"
-              :style="'border-color:' + getStatusColor(event.approval_status)"
+              :style="'border-color:' + getStatusColor(career.approval_status)"
             >
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("title_en") }}</div>
-                    <div>{{ event.title }}</div>
+                    <div>{{ career.title }}</div>
                   </v-col>
                   <!-- <v-col cols="12" sm="6" md="4">
-                    <div class="d-label">{{ $t("parent_event_en") }}</div>
-                    <div v-if="event.parent_event">
-                      {{ event.parent_event }}
+                    <div class="d-label">{{ $t("parent_career_en") }}</div>
+                    <div v-if="career.parent_career">
+                      {{ career.parent_career }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col> -->
@@ -47,13 +45,13 @@
                   <v-col cols="12" sm="6" md="4">
                     <div
                       class="d-label"
-                      v-if="event.approval_status == 'Rejected'"
+                      v-if="career.approval_status == 'Rejected'"
                     >
                       {{ $t("rejected_by_en") }}
                     </div>
                     <div class="d-label" v-else>{{ $t("approved_by_en") }}</div>
-                    <div v-if="event.review_by">
-                      {{ event.review_by }}
+                    <div v-if="career.review_by">
+                      {{ career.review_by }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
@@ -62,37 +60,37 @@
                     <div>
                       <v-chip
                         class="ma-2"
-                        :color="getStatusColor(event.approval_status)"
+                        :color="getStatusColor(career.approval_status)"
                         variant="outlined"
                       >
-                        {{ event.approval_status }}
+                        {{ career.approval_status }}
                       </v-chip>
                     </div>
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("meta_title_en") }}</div>
-                    <div>{{ event.meta_title }}</div>
+                    <div>{{ career.meta_title }}</div>
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
                     <div class="d-label">{{ $t("description_en") }}</div>
-                    <div v-html="event.description"></div>
+                    <div v-html="career.description"></div>
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
                     <div class="d-label">{{ $t("meta_description_en") }}</div>
-                    <div>{{ event.meta_description }}</div>
+                    <div>{{ career.meta_description }}</div>
                   </v-col>
                   <v-col
                     cols="12"
                     sm="12"
                     md="12"
-                    v-if="event.approval_status == 'Rejected'"
+                    v-if="career.approval_status == 'Rejected'"
                   >
                     <div class="d-label">
                       {{ $t("reason_for_rejection_en") }}
                     </div>
-                    <div v-if="event.review_comment">
-                      {{ event.review_comment }}
+                    <div v-if="career.review_comment">
+                      {{ career.review_comment }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
@@ -100,10 +98,10 @@
               </v-layout>
               <div
                 class="d-flex justify-content-end"
-                v-if="event.approval_status == 'In Review'"
+                v-if="career.approval_status == 'In Review'"
               >
                 <v-chip
-                  @click="statusOnChange('Approved', event.header_id)"
+                  @click="statusOnChange('Approved', career.header_id)"
                   variant="flat"
                   color="green"
                   class="mx-1"
@@ -111,7 +109,7 @@
                   {{ $t("approve_en") }}
                 </v-chip>
                 <v-chip
-                  @click="statusOnChange('Rejected', event.header_id)"
+                  @click="statusOnChange('Rejected', career.header_id)"
                   variant="flat"
                   color="red"
                   class="mx-1"
@@ -127,9 +125,9 @@
             <v-card
               variant="elevated"
               class="p-3 my-3 card-border rtl-direction"
-              v-for="(event, index) in events_ar"
+              v-for="(career, index) in careers_ar"
               :key="index"
-              :style="'border-color:' + getStatusColor(event.approval_status)"
+              :style="'border-color:' + getStatusColor(career.approval_status)"
             >
               <v-layout>
                 <v-row class="px-6 mt-2">
@@ -138,55 +136,55 @@
                     <div>
                       <v-chip
                         class="ma-2"
-                        :color="getStatusColor(event.approval_status)"
+                        :color="getStatusColor(career.approval_status)"
                         variant="outlined"
                       >
-                        {{ event.approval_status }}
+                        {{ career.approval_status }}
                       </v-chip>
                     </div>
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("title_ar") }}</div>
-                    <div>{{ event.title }}</div>
+                    <div>{{ career.title }}</div>
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4">
                     <div
                       class="d-label"
-                      v-if="event.approval_status == 'Rejected'"
+                      v-if="career.approval_status == 'Rejected'"
                     >
                       {{ $t("rejected_by_ar") }}
                     </div>
                     <div class="d-label" v-else>{{ $t("approved_by_ar") }}</div>
-                    <div v-if="event.review_by">
-                      {{ event.review_by }}
+                    <div v-if="career.review_by">
+                      {{ career.review_by }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("meta_title_ar") }}</div>
-                    <div>{{ event.meta_title }}</div>
+                    <div>{{ career.meta_title }}</div>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <div class="d-label">{{ $t("description_ar") }}</div>
-                    <div v-html="event.description"></div>
+                    <div v-html="career.description"></div>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <div class="d-label">{{ $t("meta_description_ar") }}</div>
-                    <div>{{ event.meta_description }}</div>
+                    <div>{{ career.meta_description }}</div>
                   </v-col>
                   <v-col
                     cols="12"
                     sm="12"
                     md="12"
-                    v-if="event.approval_status == 'Rejected'"
+                    v-if="career.approval_status == 'Rejected'"
                   >
                     <div class="d-label">
                       {{ $t("reason_for_rejection_ar") }}
                     </div>
-                    <div v-if="event.review_comment">
-                      {{ event.review_comment }}
+                    <div v-if="career.review_comment">
+                      {{ career.review_comment }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
@@ -194,10 +192,10 @@
               </v-layout>
               <div
                 class="d-flex justify-content-end"
-                v-if="event.approval_status == 'In Review'"
+                v-if="career.approval_status == 'In Review'"
               >
                 <v-chip
-                  @click="statusOnChange('Approved', event.header_id)"
+                  @click="statusOnChange('Approved', career.header_id)"
                   variant="flat"
                   color="green"
                   class="mx-1"
@@ -205,7 +203,7 @@
                   {{ $t("approve_ar") }}
                 </v-chip>
                 <v-chip
-                  @click="statusOnChange('Rejected', event.header_id)"
+                  @click="statusOnChange('Rejected', career.header_id)"
                   variant="flat"
                   color="red"
                   class="mx-1"
@@ -258,7 +256,7 @@ export default {
   },
   data: () => ({
     google_icon: {
-      icon_name: "event",
+      icon_name: "careers",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },
@@ -273,8 +271,8 @@ export default {
     isDisabled: false,
     loader: false,
     tabs: 1,
-    events_en: [],
-    events_ar: [],
+    careers_en: [],
+    careers_ar: [],
     showApprovalDialog: false,
     selected: {
       header_id: null,
@@ -289,14 +287,14 @@ export default {
       immediate: true,
       handler() {
         if (this.$route.query.slug) {
-          this.fetcheventDetails();
+          this.fetchcareerDetails();
         }
       },
     },
   },
 
   methods: {
-    fetcheventDetails() {
+    fetchcareerDetails() {
       this.loader = true;
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-career-details", {
@@ -311,8 +309,8 @@ export default {
             this.array_data = res.data.message;
           }
           if (res.data.status == "S") {
-            this.events_en = res.data.events_en;
-            this.events_ar = res.data.events_ar;
+            this.careers_en = res.data.careers_en;
+            this.careers_ar = res.data.careers_ar;
             this.loader = false;
           } else {
             this.$toast.error(this.$t("something_went_wrong"));
@@ -352,7 +350,7 @@ export default {
     updateApprovalStatus(comment_en = "", comment_ar = "") {
       this.loader = true;
       this.$axios
-        .post(process.env.VUE_APP_API_URL_ADMIN + "update-events-approval", {
+        .post(process.env.VUE_APP_API_URL_ADMIN + "update-career-approval", {
           id: this.selected.header_id,
           status: this.selected.approval_status,
           comment_en: comment_en,
@@ -365,7 +363,7 @@ export default {
             this.array_data = res.data.message;
           }
           if (res.data.status == "S") {
-            this.fetcheventDetails();
+            this.fetchcareerDetails();
             this.$toast.success(this.array_data);
           } else {
             this.$toast.error(this.array_data);
@@ -395,7 +393,7 @@ export default {
     },
     cancel() {
       this.$router.push({
-        name: "events",
+        name: "careers",
       });
     },
     closeReviewComment() {

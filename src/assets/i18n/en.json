@@ -345,11 +345,11 @@
   "store_name": "Store Name",
   "create_store_timings": "Create/Amend Store Timings",
   "icon_en": "Icon",
-  "parent_lookup_en":"Parent Lookup",
-  "shortname_en":"Shortname",
-  "longname_en":"Longname",
-  "inactive_en":"Inactive",
-  "active_en":"Active",
+  "parent_lookup_en": "Parent Lookup",
+  "shortname_en": "Shortname",
+  "longname_en": "Longname",
+  "inactive_en": "Inactive",
+  "active_en": "Active",
   "meridiem": "Meridiem",
   "from_meridiem": "From Meridiem",
   "from": "From",
@@ -360,6 +360,8 @@
   "products":"Products",
   "no_data_available_en":"No data available",
 
+  "customer_newsletter": "Customer Newsletters",
+  "created_at": "Created At",
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
   "from_day_ar": "من اليوم",
@@ -375,7 +377,7 @@
   "meta_description_ar": "ميتا الوصف",
   "mall_timing_categories_ar": "فئات توقيت مول",
   "meta_title_ar": "عنوان الفوقية",
-  "Careers": "وظائف",
+  "careers_ar": "وظائف",
   "mall_ar": "مجمع تجاري",
   "store_ar": "محل",
   "name_ar": "اسم",
@@ -410,5 +412,13 @@
   "shortname_ar":"اسم قصير",
   "longname_ar":"اسم طويل",
   "social_media_ar": "وسائل التواصل الاجتماعي",
-  "no_data_available_ar": "لا تتوافر بيانات"
+  "no_data_available_ar": "لا تتوافر بيانات",
+  "vacancy_ar":"شاغر",
+  "mall_details_ar": "تفاصيل المول",
+  "store_details_ar": "تفاصيل المتجر",
+  "accept_change": "Do you wish to accept this data ?",
+  "reject_change": "Do you wish to reject this data ?",
+  "accept": "Accept"
 }
+
+

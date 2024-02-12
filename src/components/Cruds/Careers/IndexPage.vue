@@ -52,7 +52,7 @@
         <!-- ENGLISH TAB STARTS -->
         <v-window-item :value="1">
             <v-data-table
-      :headers="headers"
+      :headers="headers_en"
       :items="careers_data_en"
       :search="search"
       :loading="initval"
@@ -81,7 +81,7 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
-          <td>
+          <!-- <td>
             <span v-if="props.item.selectable.meta_title">
               {{ props.item.selectable.meta_title }}</span
             >
@@ -92,7 +92,8 @@
               {{ props.item.selectable.meta_description }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
+          </td> -->
+           
           <td>
             <v-btn
               class="hover_shine btn mr-2"
@@ -115,6 +116,14 @@
               >
             </v-btn>
           </td>
+          <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
           <td>
             <router-link
               :to="{
@@ -150,6 +159,16 @@
                   </v-tooltip>
                 </span>
           </td>
+          <td>
+                <v-btn
+                  size="small"
+                  @click="viewEvents(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_en") }}</v-btn
+                >
+              </td>
         </tr>
       </template>
     </v-data-table>
@@ -158,7 +177,7 @@
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
             <v-data-table
-      :headers="headers"
+      :headers="headers_ar"
       :items="careers_data_ar"
       :search="search"
       :loading="initval"
@@ -187,7 +206,7 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td>
-          <td>
+          <!-- <td>
             <span v-if="props.item.selectable.meta_title">
               {{ props.item.selectable.meta_title }}</span
             >
@@ -198,7 +217,8 @@
               {{ props.item.selectable.meta_description }}</span
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
+          </td> -->
+          
           <td>
             <v-btn
               class="hover_shine btn mr-2"
@@ -212,15 +232,23 @@
               <span
                 v-if="props.item.selectable.status == 1"
                 class="spanactivesize"
-                >{{ $t("active") }}</span
+                >{{ $t("active_ar") }}</span
               >
               <span
                 v-if="props.item.selectable.status == 0"
                 class="spanactivesize"
-                >{{ $t("inactive") }}</span
+                >{{ $t("inactive_ar") }}</span
               >
             </v-btn>
           </td>
+           <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
+              </td>
           <td>
             <router-link
               :to="{
@@ -256,6 +284,16 @@
                   </v-tooltip>
                 </span>
           </td>
+          <td>
+                <v-btn
+                  size="small"
+                  @click="viewEvents(props.item.selectable.slug)"
+                  :disabled="loading"
+                  class="ma-1"
+                  color="blue"
+                  >{{ $t("view_ar") }}</v-btn
+                >
+              </td>
         </tr>
       </template>
     </v-data-table>
@@ -297,39 +335,21 @@ export default {
     tabs: 1,
     careers_data_en:[],
     careers_data_ar:[],
-    headers: [
+      approval_status_items: [
       {
-        title: "Title",
-        align: "left",
-        key: "title",
+        id: 1,
+        shortname: "In Review",
+        longname: "In Review",
       },
       {
-        title: "Description",
-        key: "description",
+        id: 2,
+        shortname: "Approved",
+        longname: "Approved",
       },
       {
-        title: "Vacancy",
-        key: "vacancy",
-      },
-      {
-        title: "Meta Title",
-        key: "meta_title",
-      },
-
-      {
-        title: "Meta Description",
-        key: "meta_description",
-      },
-      {
-        title: "Status",
-        align: "left",
-        sortable: false,
-        key: "status",
-      },
-      {
-        title: "Actions",
-        key: "",
-        align: "left",
+        id: 3,
+        shortname: "Rejected",
+        longname: "Rejected",
       },
     ],
     google_icon: {
@@ -350,7 +370,100 @@ export default {
     this.user = JSON.parse(localStorage.getItem("user"));
     this.fetchCareers();
   },
+   computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    headers_en() {
+      return [
+        {
+        title: this.$t("title_en"),
+        align: "left",
+        key: "title",
+      },
+      {
+        title: this.$t("description_en"),
+        key: "description",
+      },
+      {
+        title: this.$t("vacancy_en"),
+        key: "vacancy",
+      },
+      {
+        title: this.$t("status_en"),
+        align: "left",
+        sortable: false,
+        key: "status",
+      },
+     {
+        title: this.$t("approval_en"),
+        key: "approval_status",
+      },
+      {
+        title: this.$t("action_en"),
+        align: "center",
+        key: "action",
+      },
+       
+      
+      ];
+    },
+    headers_ar() {
+      return [
+        {
+        title: this.$t("title_ar"),
+        align: "left",
+        key: "title",
+      },
+      {
+        title: this.$t("description_ar"),
+        key: "description",
+      },
+      {
+        title: this.$t("vacancy_ar"),
+        key: "vacancy",
+      },
+     
+     {
+        title: this.$t("status_ar"),
+        align: "left",
+        sortable: false,
+        key: "status",
+      },
+      {
+        title: this.$t("approval_ar"),
+        key: "approval_status",
+      },
+      {
+        title: this.$t("action_ar"),
+        align: "center",
+        key: "action",
+      },
+      
+       
+      
+      ];
+    },
+  },
   methods: {
+      viewEvents(slug) {
+      this.$router.push({
+        name: "careers-review",
+        query: { slug: slug },
+      });
+    },
+      getStatusColor(status) {
+      switch (status) {
+        case "Approved":
+          return "green";
+        case "In Review":
+          return "orange";
+        case "Rejected":
+          return "red";
+        default:
+          return "";
+      }
+    },
     cancel() {
       this.showConfirmDialog = false;
     },
