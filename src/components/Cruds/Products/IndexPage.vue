@@ -1,32 +1,34 @@
 <template>
   <div>
-    <div flat color="white" class="row py-5 pl-5 align-items-center">
+     <div
+      flat
+      color="white"
+      class="row py-5 pl-5 align-items-center component_app_bar position-relative"
+    >
       <page-title
         class="col-md-3"
         :heading="$t('products')"
         :google_icon="google_icon"
       ></page-title>
-
       <div class="col-md-4">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
+        <v-tooltip :text="this.$t('search')" location="bottom">
+          <template v-slot:activator="{ props }">
             <v-text-field
-              dense
+              rounded
               density="compact"
-              v-on="on"
               variant="outlined"
+              elevation="24"
+              v-bind="props"
               v-model="search"
               append-icon="search"
-              label="Search"
-              class="srch_bar"
-              small
+              v-bind:label="$t('search')"
               hide-details
+              class="srch_bar"
             ></v-text-field>
           </template>
-          <span>{{ $t("search") }}</span>
         </v-tooltip>
       </div>
-      <div class="add_new_button">
+       <div class="add_new_button">
         <v-tooltip :text="this.$t('add_new')" location="bottom">
           <template v-slot:activator="{ props }">
             <router-link :to="{ name: 'products_amend' }" style="color: white">
@@ -36,6 +38,7 @@
             </router-link>
           </template>
         </v-tooltip>
+        
       </div>
     </div>
     <v-tabs v-model="tabs" color="blue">
@@ -98,12 +101,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_en") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_en") }}</span
                   >
                 </v-btn>
               </td>
@@ -216,12 +219,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_ar") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_ar") }}</span
                   >
                 </v-btn>
               </td>

@@ -1,6 +1,7 @@
 <template>
   <div class="main-20">
-    <div flat color="white" class="row py-5 pl-5 align-items-center">
+    <div flat color="white" class="row py-5 pl-5 align-items-center component_app_bar position-relative"
+>
       <page-title
         class="col-md-3"
         :heading="$t('category')"
@@ -262,8 +263,8 @@
     />
   </div>
 </template>
-    
-  <script>
+
+<script>
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import ConfirmDialog from "../../CustomComponents/ConfirmDialog.vue";
 export default {
@@ -369,7 +370,7 @@ export default {
           align: "center",
           key: "action",
         },
-        { 
+        {
           title: "",
           align: "center",
         },
@@ -514,7 +515,7 @@ export default {
   },
 };
 </script>
-  <style scoped>
+<style scoped>
 .list_item {
   cursor: pointer;
 }
