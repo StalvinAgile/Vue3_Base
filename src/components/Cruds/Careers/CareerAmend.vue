@@ -236,7 +236,7 @@
             <v-btn
               v-bind="props"
               size="small"
-              @click="$router.go(-1)"
+              @click="cancel"
               :disabled="loading"
               class="ma-1 rtl"
               color="cancel"
@@ -353,6 +353,11 @@ export default {
     },
   },
   methods: {
+        cancel() {
+      this.$router.push({
+        name: "careers",
+      });
+    },
     onFileChanged(e) {
       this.selectedFile = e.target.files[0];
 
