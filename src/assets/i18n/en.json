@@ -359,8 +359,8 @@
   "create_products":"Create Products",
   "products":"Products",
   "no_data_available_en":"No data available",
-
   "customer_newsletter": "Customer Newsletters",
+  "sequence_en":"Sequence",
   "created_at": "Created At",
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
@@ -419,6 +419,7 @@
   "accept_change": "Do you wish to accept this data ?",
   "reject_change": "Do you wish to reject this data ?",
   "accept": "Accept"
+
 }
 
 

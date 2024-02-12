@@ -343,6 +343,8 @@
   "products": "المنتجات",
   "customer_newsletter": "النشرة الإخبارية للعملاء",
   "created_at": "أنشئت في",
+  "store_ar": "محل",
+
   "--------start_english_translation----------": "--------start_english_translation----------",
   "name_en": "Name",
   "title_en": "Title",
@@ -369,5 +371,6 @@
   "longname_en": "Longname",
   "inactive_en": "Inactive",
   "active_en": "Active",
-  "no_data_available_en": "No data available"
+  "no_data_available_en": "No data available",
+  "sequence_en":"Sequence"
 }
