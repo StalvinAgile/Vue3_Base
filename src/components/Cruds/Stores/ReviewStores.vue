@@ -26,10 +26,10 @@
               <v-card
                 variant="elevated"
                 class="p-3 my-3 card-border"
-                v-for="(category, index) in stores_en"
+                v-for="(store, index) in stores_en"
                 :key="index"
                 :style="
-                  'border-color:' + getStatusColor(category.approval_status)
+                  'border-color:' + getStatusColor(store.approval_status)
                 "
               >
                 <v-layout>
@@ -39,65 +39,54 @@
                       <div>
                         <v-chip
                           class="ma-2"
-                          :color="getStatusColor(category.approval_status)"
+                          :color="getStatusColor(store.approval_status)"
                           variant="outlined"
                         >
-                          {{ category.approval_status }}
+                          {{ store.approval_status }}
                         </v-chip>
                       </div>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <div class="d-label">{{ $t("name_en") }}</div>
-                      <div>{{ category.name }}</div>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <div class="d-label">{{ $t("title_en") }}</div>
-                      <div>{{ category.title }}</div>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <div class="d-label">{{ $t("parent_stores_en") }}</div>
-                      <div v-if="category.parent_category">
-                        {{ category.parent_category }}
-                      </div>
-                      <div v-else>{{ $t("not_applicable") }}</div>
+                      <div>{{ store.name }}</div>
                     </v-col>
   
                     <v-col cols="12" sm="6" md="4">
                       <div
                         class="d-label"
-                        v-if="category.approval_status == 'Rejected'"
+                        v-if="store.approval_status == 'Rejected'"
                       >
                         {{ $t("rejected_by_en") }}
                       </div>
                       <div class="d-label" v-else>{{ $t("approved_by_en") }}</div>
-                      <div v-if="category.review_by">
-                        {{ category.review_by }}
+                      <div v-if="store.review_by">
+                        {{ store.review_by }}
                       </div>
                       <div v-else>{{ $t("not_applicable") }}</div>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <div class="d-label">{{ $t("meta_title_en") }}</div>
-                      <div>{{ category.meta_title }}</div>
+                      <div>{{ store.meta_title }}</div>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
                       <div class="d-label">{{ $t("description_en") }}</div>
-                      <div v-html="category.description"></div>
+                      <div v-html="store.description"></div>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
                       <div class="d-label">{{ $t("meta_description_en") }}</div>
-                      <div>{{ category.meta_description }}</div>
+                      <div>{{ store.meta_description }}</div>
                     </v-col>
                     <v-col
                       cols="12"
                       sm="12"
                       md="12"
-                      v-if="category.approval_status == 'Rejected'"
+                      v-if="store.approval_status == 'Rejected'"
                     >
                       <div class="d-label">
                         {{ $t("reason_for_rejection_en") }}
                       </div>
-                      <div v-if="category.review_comment">
-                        {{ category.review_comment }}
+                      <div v-if="store.review_comment">
+                        {{ store.review_comment }}
                       </div>
                       <div v-else>{{ $t("not_applicable") }}</div>
                     </v-col>
@@ -105,10 +94,10 @@
                 </v-layout>
                 <div
                   class="d-flex justify-content-end"
-                  v-if="category.approval_status == 'In Review'"
+                  v-if="store.approval_status == 'In Review'"
                 >
                   <v-chip
-                    @click="statusOnChange('Approved', category.header_id)"
+                    @click="statusOnChange('Approved', store.header_id)"
                     variant="flat"
                     color="green"
                     class="mx-1"
@@ -116,7 +105,7 @@
                     {{ $t("approve_en") }}
                   </v-chip>
                   <v-chip
-                    @click="statusOnChange('Rejected', category.header_id)"
+                    @click="statusOnChange('Rejected', store.header_id)"
                     variant="flat"
                     color="red"
                     class="mx-1"
@@ -132,10 +121,10 @@
               <v-card
                 variant="elevated"
                 class="p-3 my-3 card-border rtl-direction"
-                v-for="(category, index) in stores_ar"
+                v-for="(store, index) in stores_ar"
                 :key="index"
                 :style="
-                  'border-color:' + getStatusColor(category.approval_status)
+                  'border-color:' + getStatusColor(store.approval_status)
                 "
               >
                 <v-layout>
@@ -145,65 +134,54 @@
                       <div>
                         <v-chip
                           class="ma-2"
-                          :color="getStatusColor(category.approval_status)"
+                          :color="getStatusColor(store.approval_status)"
                           variant="outlined"
                         >
-                          {{ category.approval_status }}
+                          {{ store.approval_status }}
                         </v-chip>
                       </div>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <div class="d-label">{{ $t("name_ar") }}</div>
-                      <div>{{ category.name }}</div>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <div class="d-label">{{ $t("title_ar") }}</div>
-                      <div>{{ category.title }}</div>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <div class="d-label">{{ $t("parent_stores_ar") }}</div>
-                      <div v-if="category.parent_category">
-                        {{ category.parent_category }}
-                      </div>
-                      <div v-else>{{ $t("not_applicable") }}</div>
+                      <div>{{ store.name }}</div>
                     </v-col>
   
                     <v-col cols="12" sm="6" md="4">
                       <div
                         class="d-label"
-                        v-if="category.approval_status == 'Rejected'"
+                        v-if="store.approval_status == 'Rejected'"
                       >
                         {{ $t("rejected_by_ar") }}
                       </div>
                       <div class="d-label" v-else>{{ $t("approved_by_ar") }}</div>
-                      <div v-if="category.review_by">
-                        {{ category.review_by }}
+                      <div v-if="store.review_by">
+                        {{ store.review_by }}
                       </div>
                       <div v-else>{{ $t("not_applicable") }}</div>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <div class="d-label">{{ $t("meta_title_ar") }}</div>
-                      <div>{{ category.meta_title }}</div>
+                      <div>{{ store.meta_title }}</div>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
                       <div class="d-label">{{ $t("description_ar") }}</div>
-                      <div v-html="category.description"></div>
+                      <div v-html="store.description"></div>
                     </v-col>
                     <v-col cols="12" sm="12" md="12">
                       <div class="d-label">{{ $t("meta_description_ar") }}</div>
-                      <div>{{ category.meta_description }}</div>
+                      <div>{{ store.meta_description }}</div>
                     </v-col>
                     <v-col
                       cols="12"
                       sm="12"
                       md="12"
-                      v-if="category.approval_status == 'Rejected'"
+                      v-if="store.approval_status == 'Rejected'"
                     >
                       <div class="d-label">
                         {{ $t("reason_for_rejection_ar") }}
                       </div>
-                      <div v-if="category.review_comment">
-                        {{ category.review_comment }}
+                      <div v-if="store.review_comment">
+                        {{ store.review_comment }}
                       </div>
                       <div v-else>{{ $t("not_applicable") }}</div>
                     </v-col>
@@ -211,10 +189,10 @@
                 </v-layout>
                 <div
                   class="d-flex justify-content-end"
-                  v-if="category.approval_status == 'In Review'"
+                  v-if="store.approval_status == 'In Review'"
                 >
                   <v-chip
-                    @click="statusOnChange('Approved', category.header_id)"
+                    @click="statusOnChange('Approved', store.header_id)"
                     variant="flat"
                     color="green"
                     class="mx-1"
@@ -222,7 +200,7 @@
                     {{ $t("approve_ar") }}
                   </v-chip>
                   <v-chip
-                    @click="statusOnChange('Rejected', category.header_id)"
+                    @click="statusOnChange('Rejected', store.header_id)"
                     variant="flat"
                     color="red"
                     class="mx-1"
@@ -275,7 +253,7 @@
     },
     data: () => ({
       google_icon: {
-        icon_name: "category",
+        icon_name: "store",
         color: "google_icon_gradient",
         icon: "material-symbols-outlined",
       },
