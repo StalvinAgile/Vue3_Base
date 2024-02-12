@@ -1,5 +1,4 @@
-
-  <template>
+<template>
   <div>
     <div flat color="white" class="row py-5 pl-5 align-items-center">
       <page-title
@@ -55,7 +54,7 @@
           :items="products_en"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
+          v-bind:no-data-text="$t('no_data_available_en')"
           :footer-props="{
             'items-per-page-text': $t('rows_per_page'),
           }"
@@ -169,14 +168,14 @@
       <!-- ARABIC TAB STARTS -->
       <v-window-item :value="2">
         <v-data-table
-          :headers="headers"
+          :headers="headers_ar"
           :items="products_ar"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+          class="rtl-direction"
+          v-bind:no-data-text="$t('no_data_available_ar')"
+                :items-per-page-text="$t('rows_per_page_ar')"
+
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -341,25 +340,25 @@ export default {
     headers() {
       return [
         {
-          title: "Title",
+          title: this.$t("title_en"),
           align: "left",
           key: "title",
         },
         {
-          title: "Description",
+          title: this.$t("description_en"),
           key: "description",
         },
         {
-          title: "Meta Title",
+          title: this.$t("meta_title_en"),
           key: "meta_title",
         },
 
         {
-          title: "Meta Description",
+          title: this.$t("meta_description_en"),
           key: "meta_description",
         },
         {
-          title: "Status",
+          title: this.$t("status_en"),
           align: "left",
           sortable: false,
           key: "status",
@@ -369,7 +368,49 @@ export default {
           key: "approval_status",
         },
         {
-          title: "Actions",
+          title: this.$t("action_en"),
+          key: "",
+          align: "left",
+        },
+        {
+          title: " ",
+          align: "center",
+        },
+      ];
+    },
+
+    headers_ar() {
+      return [
+        {
+          title: this.$t("title_ar"),
+          align: "left",
+          key: "title",
+        },
+        {
+          title: this.$t("description_ar"),
+          key: "description",
+        },
+        {
+          title: this.$t("meta_title_ar"),
+          key: "meta_title",
+        },
+
+        {
+          title: this.$t("meta_description_ar"),
+          key: "meta_description",
+        },
+        {
+          title: this.$t("status_ar"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: this.$t("approval_ar"),
+          key: "approval_status",
+        },
+        {
+          title: this.$t("action_ar"),
           key: "",
           align: "left",
         },

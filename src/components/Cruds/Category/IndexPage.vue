@@ -60,7 +60,7 @@
           :items="category_en"
           :search="search"
           :loading="initval"
-          :no-data-text="$t('no_data_available')"
+          :no-data-text="$t('no_data_available_en')"
           :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
@@ -156,7 +156,7 @@
           :search="search"
           class="rtl-direction"
           :loading="initval"
-          :no-data-text="$t('no_data_available')"
+          :no-data-text="$t('no_data_available_ar')"
           :items-per-page-text="$t('rows_per_page_ar')"
         >
           <template v-slot:item="props">

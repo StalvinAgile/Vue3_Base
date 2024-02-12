@@ -119,8 +119,8 @@
               <br />
               <Imageupload
                 :folder="'user_profile'"
-                :resizewidth="200"
-                :resizeheight="80"
+                :resizewidth="250"
+                :resizeheight="150"
                 @uploaded_image="uploaded_image"
                 :upload_profile="uploadfile"
               />
@@ -344,11 +344,11 @@ input.larger {
   width: 20px;
   height: 20px;
 }
-.image-container {
+/* .image-container {
   max-width: 110px;
   border: 1px double black;
   border-radius: 3px;
-}
+} */
 .camera-icon {
   position: absolute;
   bottom: 20px;

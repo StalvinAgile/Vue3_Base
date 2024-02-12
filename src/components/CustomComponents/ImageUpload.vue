@@ -1,10 +1,18 @@
 <template>
   <div>
-    <v-dialog v-model="dialogVisible" max-width="500px" persistent>
+    <v-dialog v-model="dialogVisible" max-width="750px" persistent>
       <content-loader v-if="loader"></content-loader>
 
       <v-card>
+        <div class="d-flex justify-content-between">
+        <div>
         <v-card-title>{{ $t("crop_image") }} </v-card-title>
+        </div>
+        <div class="btn_margin">
+         <v-btn color="success" @click="cropImage">{{ $t("upload") }}</v-btn>
+          <v-btn color="error" @click="cancelCrop" class="ml-2">{{ $t("cancel") }}</v-btn>
+          </div>
+          </div>
         <v-card-text>
           <div class="cropper-container" ref="cropperContainer">
             <!-- Below one is porp can be used where we can define all the props in data and pass like below one -->
@@ -23,8 +31,8 @@
               :src="selectedFile"
               :zoomable="true"
               alt="Source Image"
-              :img-style="{ width: '400px', height: '300px' }"
               @crop="handleCrop"
+              :img-style="{ width: '800px', height: '500px' }"
               @ready="cropperReady"
             ></VueCropper>
             <!--  <VueCropper
@@ -45,11 +53,11 @@
           </div>
         </v-card-text>
 
-        <v-card-actions>
+        <!-- <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="success" @click="cropImage">{{ $t("upload") }}</v-btn>
           <v-btn color="error" @click="cancelCrop">{{ $t("cancel") }}</v-btn>
-        </v-card-actions>
+        </v-card-actions> -->
       </v-card>
     </v-dialog>
     <input
@@ -221,4 +229,9 @@ export default {
   min-width: 200px !important; /* Set your desired minimum width here */
   min-height: 10px !important; /* Set your desired minimum width here */
 }
+.btn_margin{
+  margin: 10px 26px 0px 0px;
+}
+
+
 </style>

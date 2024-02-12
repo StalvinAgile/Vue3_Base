@@ -358,6 +358,7 @@
   "is_holiday": "Is Holiday",
   "create_products":"Create Products",
   "products":"Products",
+  "no_data_available_en":"No data available",
 
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
@@ -408,6 +409,6 @@
   "parent_lookup_ar":"بحث الوالدين",
   "shortname_ar":"اسم قصير",
   "longname_ar":"اسم طويل",
-  "social_media_ar": "وسائل التواصل الاجتماعي"
-
+  "social_media_ar": "وسائل التواصل الاجتماعي",
+  "no_data_available_ar": "لا تتوافر بيانات"
 }

@@ -368,6 +368,7 @@
   "shortname_en": "Shortname",
   "longname_en": "Longname",
   "inactive_en": "Inactive",
-  "active_en": "Active"
+  "active_en": "Active",
+  "no_data_available_en": "No data available"
   
 }

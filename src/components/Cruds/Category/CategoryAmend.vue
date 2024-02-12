@@ -217,8 +217,8 @@
                     <br />
                     <Imageupload
                       :folder="'category'"
-                      :resizewidth="0.4"
-                      :resizeheight="0.1"
+                      :resizewidth="150"
+                      :resizeheight="100"
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
