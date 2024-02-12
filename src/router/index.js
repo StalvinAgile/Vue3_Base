@@ -401,6 +401,13 @@ const routes = [
     component: () => import("../components/Cruds/Products/ReviewProducts.vue"),
   },
 
+  //
+  {
+    path: "/:lang?/customer-newsletter",
+    name: "customer-newsletter",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/CustomerNewsletter/IndexPage.vue"),
+  },
 ];
 
 const router = createRouter({
