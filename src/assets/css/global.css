@@ -61,6 +61,9 @@
   background-color: #222 !important;
   color: #fff !important;
 }
+#app.theme-dark .avatarcount {
+  color: #ffffffa3;
+}
 #app.theme-dark .v-navigation-drawer {
   border-radius: 0px 10px 10px 0px;
   border-top: 1px solid #414141;

@@ -6,7 +6,7 @@
       <div class="dash-parent">
         <v-row>
           <v-col md="3">
-            <v-card density="comfortable" elevation="3" hover="true" class="card">
+            <v-card density="comfortable" elevation="3" hover="true" class="usercard">
               <v-row>
                 <v-col md="8">
                   <v-card-title>
@@ -37,7 +37,7 @@
                 </v-col>
                 <v-col md="4" class="cardlogo">
                   <div class="icon-wrapper">
-                    <i class="text-primary fa fa-user"></i>
+                    <i class="text-success fa fa-user"></i>
                   </div>
                 </v-col>
               </v-row>
@@ -45,7 +45,7 @@
           </v-col>
 
           <v-col md="3">
-            <v-card density="comfortable" elevation="3" hover="true" class="card">
+            <v-card density="comfortable" elevation="3" hover="true" class="eventcard">
               <v-row>
                 <v-col md="8">
                   <v-card-title>
@@ -76,7 +76,7 @@
                 </v-col>
                 <v-col md="4" class="cardlogo">
                   <div class="icon-wrapper">
-                    <i class="text-primary fa fa-user"></i>
+                    <i class="text-warning fa fa-calendar-o"></i>
                   </div>
                 </v-col>
               </v-row>
@@ -84,7 +84,7 @@
           </v-col>
 
           <v-col md="3">
-            <v-card density="comfortable" elevation="3" hover="true" class="card">
+            <v-card density="comfortable" elevation="3" hover="true" class="promocard">
               <v-row>
                 <v-col md="8">
                   <v-card-title>
@@ -115,7 +115,7 @@
                 </v-col>
                 <v-col md="4" class="cardlogo">
                   <div class="icon-wrapper">
-                    <i class="text-primary fa fa-user"></i>
+                    <i class="text-primary fa fa-trophy "></i>
                   </div>
                 </v-col>
               </v-row>
@@ -123,7 +123,7 @@
           </v-col>
 
           <v-col md="3">
-            <v-card density="comfortable" elevation="3" hover="true" class="card">
+            <v-card density="comfortable" elevation="3" hover="true" class="productcard">
               <v-row>
                 <v-col md="8">
                   <v-card-title>
@@ -154,7 +154,7 @@
                 </v-col>
                 <v-col md="4" class="cardlogo">
                   <div class="icon-wrapper">
-                    <i class="text-primary fa fa-user"></i>
+                    <i class="text-error fa fa-shopping-cart "></i>
                   </div>
                 </v-col>
               </v-row>
@@ -232,8 +232,17 @@ export default {
   padding-right: 0px;
 }
 
-.dash-parent .card {
+.dash-parent .usercard {
   border-bottom: 4px solid #31c25ad2;
+}
+.dash-parent .eventcard {
+  border-bottom: 4px solid #ffa600f5;
+}
+.dash-parent .promocard {
+  border-bottom: 4px solid #3680f0d2;
+}
+.dash-parent .productcard {
+  border-bottom: 4px solid #f83a3ad2;
 }
 
 .cardlogo {
@@ -241,7 +250,7 @@ export default {
 }
 
 .icon-wrapper i {
-  font-size: 25px;
+  font-size: 20px;
   padding: 10px 13px;
   background: #0000ff2b;
   border-radius: 50px;
@@ -250,6 +259,7 @@ export default {
 .avatarcount{
   color: rgba(0, 0, 0, 0.411);
     font-weight: 700;
+    margin-bottom: 1px;
 }
 .icon-wrapper{
   text-align: center;
