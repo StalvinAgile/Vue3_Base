@@ -233,16 +233,16 @@ export default {
 }
 
 .dash-parent .usercard {
-  border-bottom: 4px solid #31c25ad2;
+  border-bottom: 4px solid green;
 }
 .dash-parent .eventcard {
-  border-bottom: 4px solid #ffa600f5;
+  border-bottom: 4px solid orange;
 }
 .dash-parent .promocard {
-  border-bottom: 4px solid #3680f0d2;
+  border-bottom: 4px solid blue;
 }
 .dash-parent .productcard {
-  border-bottom: 4px solid #f83a3ad2;
+  border-bottom: 4px solid red;
 }
 
 .cardlogo {
