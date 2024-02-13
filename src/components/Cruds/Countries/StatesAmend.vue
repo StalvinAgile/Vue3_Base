@@ -1,7 +1,7 @@
 <template>
   <div class="mx-2 mt-3 p-0">
     <div class="main-card mb-3 card">
-      <div class="container my-3 p-0">
+      <div class="my-3 p-0">
         <page-title
           class="col-md-4 ml-2"
           :heading="$t('create_state')"
