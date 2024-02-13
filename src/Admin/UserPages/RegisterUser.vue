@@ -28,9 +28,56 @@
               </div>
               <h4 class="pb-md-0 text-center">{{ $t("registration_form") }}</h4>
               <v-divider></v-divider>
-
+              <div class="d-flex">
+                <h5 class="mb-4 pt-1 mr-2">{{ $t("i_am") }}</h5>
+                <v-radio-group inline v-model="users.role_id" @update:modelValue="users.store_id = null">
+                  <v-radio v-bind:label="$t('mall_admin')" :value="2"></v-radio>
+                  <v-radio
+                    v-bind:label="$t('store_admin')"
+                    :value="3"
+                  ></v-radio>
+                </v-radio-group>
+              </div>
               <v-form ref="form" v-model="valid" lazy-validation>
                 <div class="row mt-2">
+                  <div class="col-md-12 mb-2" v-if="users.role_id == 2">
+                    <v-tooltip :text="this.$t('title')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="users.store_id"
+                          :disabled="users.id > 0"
+                          v-bind:label="$t('mall')"
+                          variant="outlined"
+                          density="compact"
+                          :items="malls_en"
+                          item-title="name"
+                          item-value="id"
+                          :rules="fieldRules"
+                          class="required_field"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </div>
+                  <div class="col-md-12 mb-2" v-if="users.role_id == 3">
+                    <v-tooltip :text="this.$t('title')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="users.store_id"
+                          :disabled="users.id > 0"
+                          v-bind:label="$t('store')"
+                          variant="outlined"
+                          density="compact"
+                          :items="stores_en"
+                          item-title="name"
+                          item-value="id"
+                          :rules="fieldRules"
+                          class="required_field"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </div>
                   <div class="col-md-6 mb-2">
                     <div class="form-outline">
                       <v-tooltip :text="this.$t('firstname')" location="bottom">
@@ -77,7 +124,7 @@
                           <v-text-field
                             v-bind="props"
                             v-model="users.email"
-                            :rules="[...fieldRules1,...emailRules]"
+                            :rules="[...fieldRules1, ...emailRules]"
                             @keyup.enter="login"
                             v-bind:label="$t('email')"
                             variant="outlined"
@@ -142,23 +189,6 @@
                     </v-tooltip>
                   </div>
                 </div>
-                <!-- <div v-if="role_array" class="row">
-                  <v-radio-group
-                    required
-                    :rules="fieldRules1"
-                    inline
-                    v-model="users.role_id"
-                    :label="$t('is_trade_or_principle')"
-                    class="radio_item"
-                  >
-                    <v-radio
-                      v-for="(role, i) in role_array"
-                      :key="i"
-                      :label="role.rolename"
-                      :value="role.id"
-                    ></v-radio>
-                  </v-radio-group>
-                </div> -->
               </v-form>
               <div>
                 <v-btn
@@ -185,7 +215,6 @@
                   </div>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>
@@ -213,7 +242,8 @@ export default {
       gender: "",
       email: "",
       password: "",
-      role_id: null,
+      role_id: 2,
+      store_id: null,
       userrole: "User",
       confirm_password: "",
     },
@@ -225,6 +255,8 @@ export default {
     message: "",
     alertmessage: "",
     array_data: "",
+    stores_en: [],
+    malls_en: [],
   }),
 
   computed: {
@@ -237,7 +269,7 @@ export default {
       ];
     },
     fieldRules() {
-      return [(v) => (!!v && !!v.trim()) || this.$t("field_required")];
+      return [(v) => !!v || this.$t("field_required")];
     },
     fieldRules1() {
       return [(v) => !!v || this.$t("field_required")];
@@ -250,8 +282,23 @@ export default {
   created() {
     this.fetchRoles();
     this.getAppImage();
+    this.get_stores();
   },
   methods: {
+    get_stores() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-reg-stores")
+        .then((response) => {
+          console.log(response);
+          this.stores_en = response.data.stores_en;
+          this.malls_en = response.data.malls_en;
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     getAppImage() {
       if (localStorageWrapper.getItem("App_Image_Url") != null) {
         this.app_image_url = localStorageWrapper.getItem("App_Image_Url");
@@ -283,14 +330,14 @@ export default {
                 this.loader = false;
                 this.$toast.success(res.data.message);
                 this.message = res.data.message;
-                setTimeout(
-                  () =>
-                    this.$router.replace({
-                      name: "register",
-                      query: { email: this.users.email },
-                    }),
-                  500
-                );
+
+                if (this.users.email) {
+                  localStorageWrapper.setItem("verifyemail", this.users.email);
+                }
+                this.$router.push({
+                  name: "register",
+                  query: { slug: this.users.email },
+                });
               } else {
                 this.loader = false;
                 this.isDisabled = false;
