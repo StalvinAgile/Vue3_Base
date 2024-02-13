@@ -17,7 +17,9 @@
   font-family: cursive;
   color: #6a6afc;
 }
-
+#app.theme-dark .dash-parent .card{
+  background: black !important;
+}
 .navigation-title {
   background-color: #fff !important;
   color: #222 !important;
@@ -58,6 +60,9 @@
 #app.theme-dark .main-card {
   background-color: #222 !important;
   color: #fff !important;
+}
+#app.theme-dark .avatarcount {
+  color: #ffffffa3;
 }
 #app.theme-dark .v-navigation-drawer {
   border-radius: 0px 10px 10px 0px;

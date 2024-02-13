@@ -1,33 +1,34 @@
-
-  <template>
+<template>
   <div>
-    <div flat color="white" class="row py-5 pl-5 align-items-center">
+     <div
+      flat
+      color="white"
+      class="row py-5 pl-5 align-items-center component_app_bar position-relative"
+    >
       <page-title
         class="col-md-3"
         :heading="$t('products')"
         :google_icon="google_icon"
       ></page-title>
-
       <div class="col-md-4">
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on }">
+        <v-tooltip :text="this.$t('search')" location="bottom">
+          <template v-slot:activator="{ props }">
             <v-text-field
-              dense
+              rounded
               density="compact"
-              v-on="on"
               variant="outlined"
+              elevation="24"
+              v-bind="props"
               v-model="search"
               append-icon="search"
-              label="Search"
-              class="srch_bar"
-              small
+              v-bind:label="$t('search')"
               hide-details
+              class="srch_bar"
             ></v-text-field>
           </template>
-          <span>{{ $t("search") }}</span>
         </v-tooltip>
       </div>
-      <div class="add_new_button">
+       <div class="add_new_button">
         <v-tooltip :text="this.$t('add_new')" location="bottom">
           <template v-slot:activator="{ props }">
             <router-link :to="{ name: 'products_amend' }" style="color: white">
@@ -37,6 +38,7 @@
             </router-link>
           </template>
         </v-tooltip>
+        
       </div>
     </div>
     <v-tabs v-model="tabs" color="blue">
@@ -55,7 +57,7 @@
           :items="products_en"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
+          v-bind:no-data-text="$t('no_data_available_en')"
           :footer-props="{
             'items-per-page-text': $t('rows_per_page'),
           }"
@@ -99,12 +101,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_en") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_en") }}</span
                   >
                 </v-btn>
               </td>
@@ -169,14 +171,14 @@
       <!-- ARABIC TAB STARTS -->
       <v-window-item :value="2">
         <v-data-table
-          :headers="headers"
+          :headers="headers_ar"
           :items="products_ar"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+          class="rtl-direction"
+          v-bind:no-data-text="$t('no_data_available_ar')"
+                :items-per-page-text="$t('rows_per_page_ar')"
+
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -217,12 +219,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_ar") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_ar") }}</span
                   >
                 </v-btn>
               </td>
@@ -341,25 +343,25 @@ export default {
     headers() {
       return [
         {
-          title: "Title",
+          title: this.$t("title_en"),
           align: "left",
           key: "title",
         },
         {
-          title: "Description",
+          title: this.$t("description_en"),
           key: "description",
         },
         {
-          title: "Meta Title",
+          title: this.$t("meta_title_en"),
           key: "meta_title",
         },
 
         {
-          title: "Meta Description",
+          title: this.$t("meta_description_en"),
           key: "meta_description",
         },
         {
-          title: "Status",
+          title: this.$t("status_en"),
           align: "left",
           sortable: false,
           key: "status",
@@ -369,7 +371,49 @@ export default {
           key: "approval_status",
         },
         {
-          title: "Actions",
+          title: this.$t("action_en"),
+          key: "",
+          align: "left",
+        },
+        {
+          title: " ",
+          align: "center",
+        },
+      ];
+    },
+
+    headers_ar() {
+      return [
+        {
+          title: this.$t("title_ar"),
+          align: "left",
+          key: "title",
+        },
+        {
+          title: this.$t("description_ar"),
+          key: "description",
+        },
+        {
+          title: this.$t("meta_title_ar"),
+          key: "meta_title",
+        },
+
+        {
+          title: this.$t("meta_description_ar"),
+          key: "meta_description",
+        },
+        {
+          title: this.$t("status_ar"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: this.$t("approval_ar"),
+          key: "approval_status",
+        },
+        {
+          title: this.$t("action_ar"),
           key: "",
           align: "left",
         },

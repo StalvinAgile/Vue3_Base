@@ -1,13 +1,16 @@
-
-  <template>
+<template>
   <div>
-    <div flat color="white" class="row py-5 pl-5 align-items-center">
+    <div
+      flat
+      color="white"
+      class="row py-5 pl-5 align-items-center component_app_bar position-relative"
+    >
       <page-title
         class="col-md-3"
         :heading="$t('promotions')"
         :google_icon="google_icon"
       ></page-title>
-      
+
       <div class="col-md-4">
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
@@ -30,7 +33,10 @@
       <div class="add_new_button">
         <v-tooltip :text="this.$t('add_new')" location="bottom">
           <template v-slot:activator="{ props }">
-            <router-link :to="{ name: 'promotions_amend' }" style="color: white">
+            <router-link
+              :to="{ name: 'promotions_amend' }"
+              style="color: white"
+            >
               <v-btn size="small" class="mb-2 green_btn_color" v-bind="props">{{
                 $t("add_new")
               }}</v-btn>
@@ -38,44 +44,43 @@
           </template>
         </v-tooltip>
       </div>
-      
     </div>
-  <v-tabs v-model="tabs" color="blue">
-        <v-tab :value="1">
-          <span>{{$t('english')}}</span>
-        </v-tab>
-        <v-tab :value="2">
-          <span>{{$t('arabic')}}</span>
-        </v-tab>
-      </v-tabs>
-      <v-window v-model="tabs">
-        <!-- ENGLISH TAB STARTS -->
-        <v-window-item :value="1">
-            <v-data-table
-      :headers="headers_en"
-      :items="promotions_en"
-      :search="search"
-      :loading="initval"
-      v-bind:no-data-text="$t('no_data_available')"
-      :footer-props="{
-        'items-per-page-text': $t('rows_per_page'),
-      }"
-    >
-      <template v-slot:item="props">
-        <tr class="vdatatable_tbody">
-          <td>
-            <span v-if="props.item.selectable.title">
-              {{ props.item.selectable.title }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.description">
-              {{ props.item.selectable.description }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <!-- <td>
+    <v-tabs v-model="tabs" color="blue">
+      <v-tab :value="1">
+        <span>{{ $t("english") }}</span>
+      </v-tab>
+      <v-tab :value="2">
+        <span>{{ $t("arabic") }}</span>
+      </v-tab>
+    </v-tabs>
+    <v-window v-model="tabs">
+      <!-- ENGLISH TAB STARTS -->
+      <v-window-item :value="1">
+        <v-data-table
+          :headers="headers_en"
+          :items="promotions_en"
+          :search="search"
+          :loading="initval"
+          v-bind:no-data-text="$t('no_data_available')"
+          :footer-props="{
+            'items-per-page-text': $t('rows_per_page'),
+          }"
+        >
+          <template v-slot:item="props">
+            <tr class="vdatatable_tbody">
+              <td>
+                <span v-if="props.item.selectable.title">
+                  {{ props.item.selectable.title }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.description">
+                  {{ props.item.selectable.description }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <!-- <td>
             <span v-if="props.item.selectable.phone">
               {{ props.item.selectable.phone }}</span
             >
@@ -87,19 +92,19 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td> -->
-          <td>
-            <span v-if="props.item.selectable.start_date">
-              {{ formatDate(props.item.selectable.start_date)}}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.end_date">
-              {{ formatDate(props.item.selectable.end_date)}}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <!-- <td>
+              <td>
+                <span v-if="props.item.selectable.start_date">
+                  {{ formatDate(props.item.selectable.start_date) }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.end_date">
+                  {{ formatDate(props.item.selectable.end_date) }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <!-- <td>
             <span v-if="props.item.selectable.meta_title">
               {{ props.item.selectable.meta_title }}</span
             >
@@ -111,7 +116,7 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td> -->
-          <td>
+              <td>
                 <v-chip
                   :color="getStatusColor(props.item.selectable.approval_status)"
                   variant="outlined"
@@ -119,48 +124,48 @@
                   {{ props.item.selectable.approval_status }}
                 </v-chip>
               </td>
-          <td>
-            <v-btn
-              class="hover_shine btn mr-2"
-              :disabled="isDisabled"
-              size="small"
-              @click="changeStatus(props.item.selectable.id)"
-              v-bind:color="[
-                props.item.selectable.status == 1 ? 'success' : 'warning',
-              ]"
-            >
-              <span
-                v-if="props.item.selectable.status == 1"
-                class="spanactivesize"
-                >{{ $t("active") }}</span
-              >
-              <span
-                v-if="props.item.selectable.status == 0"
-                class="spanactivesize"
-                >{{ $t("inactive") }}</span
-              >
-            </v-btn>
-          </td>
-          <td>
-            <router-link
-              :to="{
-                name: 'promotions_amend',
-                query: { slug: props.item.selectable.slug },
-              }"
-            >
-              <v-tooltip :text="this.$t('edit')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    plain
-                    v-bind="props"
-                    dense
-                    class="mr-2 edit_btn icon_size"
-                    >mdi-pencil-outline</v-icon
+              <td>
+                <v-btn
+                  class="hover_shine btn mr-2"
+                  :disabled="isDisabled"
+                  size="small"
+                  @click="changeStatus(props.item.selectable.id)"
+                  v-bind:color="[
+                    props.item.selectable.status == 1 ? 'success' : 'warning',
+                  ]"
+                >
+                  <span
+                    v-if="props.item.selectable.status == 1"
+                    class="spanactivesize"
+                    >{{ $t("active") }}</span
                   >
-                </template>
-              </v-tooltip>
-            </router-link>
-            <span @click="deleteItem(props.item.selectable.id)">
+                  <span
+                    v-if="props.item.selectable.status == 0"
+                    class="spanactivesize"
+                    >{{ $t("inactive") }}</span
+                  >
+                </v-btn>
+              </td>
+              <td>
+                <router-link
+                  :to="{
+                    name: 'promotions_amend',
+                    query: { slug: props.item.selectable.slug },
+                  }"
+                >
+                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-icon
+                        plain
+                        v-bind="props"
+                        dense
+                        class="mr-2 edit_btn icon_size"
+                        >mdi-pencil-outline</v-icon
+                      >
+                    </template>
+                  </v-tooltip>
+                </router-link>
+                <span @click="deleteItem(props.item.selectable.id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -175,8 +180,8 @@
                     <span>{{ $t("delete") }}</span>
                   </v-tooltip>
                 </span>
-          </td>
-          <td>
+              </td>
+              <td>
                 <v-btn
                   size="small"
                   @click="viewPromotions(props.item.selectable.slug)"
@@ -186,38 +191,38 @@
                   >{{ $t("view_en") }}</v-btn
                 >
               </td>
-        </tr>
-      </template>
-    </v-data-table>
-        </v-window-item>
-        <!-- ENGLISH TAB STOPS -->
-        <!-- ARABIC TAB STARTS -->
-        <v-window-item :value="2">
-            <v-data-table
-      :headers="headers_ar"
-      :items="promotions_ar"
-      :search="search"
-      :loading="initval"
-      v-bind:no-data-text="$t('no_data_available')"
-      :footer-props="{
-        'items-per-page-text': $t('rows_per_page'),
-      }"
-    >
-      <template v-slot:item="props">
-        <tr class="vdatatable_tbody">
-          <td>
-            <span v-if="props.item.selectable.title">
-              {{ props.item.selectable.title }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.description">
-              {{ props.item.selectable.description }}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <!-- <td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-window-item>
+      <!-- ENGLISH TAB STOPS -->
+      <!-- ARABIC TAB STARTS -->
+      <v-window-item :value="2">
+        <v-data-table
+          :headers="headers_ar"
+          :items="promotions_ar"
+          :search="search"
+          :loading="initval"
+          v-bind:no-data-text="$t('no_data_available')"
+          :footer-props="{
+            'items-per-page-text': $t('rows_per_page'),
+          }"
+        >
+          <template v-slot:item="props">
+            <tr class="vdatatable_tbody">
+              <td>
+                <span v-if="props.item.selectable.title">
+                  {{ props.item.selectable.title }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.description">
+                  {{ props.item.selectable.description }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <!-- <td>
             <span v-if="props.item.selectable.phone">
               {{ props.item.selectable.phone }}</span
             >
@@ -229,19 +234,19 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td> -->
-           <td>
-            <span v-if="props.item.selectable.start_date">
-              {{ formatDate(props.item.selectable.start_date)}}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <td>
-            <span v-if="props.item.selectable.end_date">
-              {{ formatDate(props.item.selectable.end_date)}}</span
-            >
-            <span v-else>{{ $t("not_appllicable") }}</span>
-          </td>
-          <!-- <td>
+              <td>
+                <span v-if="props.item.selectable.start_date">
+                  {{ formatDate(props.item.selectable.start_date) }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td>
+                <span v-if="props.item.selectable.end_date">
+                  {{ formatDate(props.item.selectable.end_date) }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <!-- <td>
             <span v-if="props.item.selectable.meta_title">
               {{ props.item.selectable.meta_title}}</span
             >
@@ -253,7 +258,7 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td> -->
-          <td>
+              <td>
                 <v-chip
                   :color="getStatusColor(props.item.selectable.approval_status)"
                   variant="outlined"
@@ -261,48 +266,48 @@
                   {{ props.item.selectable.approval_status }}
                 </v-chip>
               </td>
-          <td>
-            <v-btn
-              class="hover_shine btn mr-2"
-              :disabled="isDisabled"
-              size="small"
-              @click="changeStatus(props.item.selectable.id)"
-              v-bind:color="[
-                props.item.selectable.status == 1 ? 'success' : 'warning',
-              ]"
-            >
-              <span
-                v-if="props.item.selectable.status == 1"
-                class="spanactivesize"
-                >{{ $t("active") }}</span
-              >
-              <span
-                v-if="props.item.selectable.status == 0"
-                class="spanactivesize"
-                >{{ $t("inactive") }}</span
-              >
-            </v-btn>
-          </td>
-          <td>
-            <router-link
-              :to="{
-                name: 'promotions_amend',
-                query: { slug: props.item.selectable.slug },
-              }"
-            >
-              <v-tooltip :text="this.$t('edit')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    plain
-                    v-bind="props"
-                    dense
-                    class="mr-2 edit_btn icon_size"
-                    >mdi-pencil-outline</v-icon
+              <td>
+                <v-btn
+                  class="hover_shine btn mr-2"
+                  :disabled="isDisabled"
+                  size="small"
+                  @click="changeStatus(props.item.selectable.id)"
+                  v-bind:color="[
+                    props.item.selectable.status == 1 ? 'success' : 'warning',
+                  ]"
+                >
+                  <span
+                    v-if="props.item.selectable.status == 1"
+                    class="spanactivesize"
+                    >{{ $t("active") }}</span
                   >
-                </template>
-              </v-tooltip>
-            </router-link>
-            <span @click="deleteItem(props.item.selectable.id)">
+                  <span
+                    v-if="props.item.selectable.status == 0"
+                    class="spanactivesize"
+                    >{{ $t("inactive") }}</span
+                  >
+                </v-btn>
+              </td>
+              <td>
+                <router-link
+                  :to="{
+                    name: 'promotions_amend',
+                    query: { slug: props.item.selectable.slug },
+                  }"
+                >
+                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-icon
+                        plain
+                        v-bind="props"
+                        dense
+                        class="mr-2 edit_btn icon_size"
+                        >mdi-pencil-outline</v-icon
+                      >
+                    </template>
+                  </v-tooltip>
+                </router-link>
+                <span @click="deleteItem(props.item.selectable.id)">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
@@ -317,8 +322,8 @@
                     <span>{{ $t("delete") }}</span>
                   </v-tooltip>
                 </span>
-          </td>
-          <td>
+              </td>
+              <td>
                 <v-btn
                   size="small"
                   @click="viewPromotions(props.item.selectable.slug)"
@@ -328,11 +333,11 @@
                   >{{ $t("view_ar") }}</v-btn
                 >
               </td>
-        </tr>
-      </template>
-    </v-data-table>
-        </v-window-item>
-      </v-window>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-window-item>
+    </v-window>
     <ConfirmDialog
       :show="showStatusDialog"
       :cancel="cancelStatus"
@@ -385,7 +390,7 @@ export default {
         longname: "Rejected",
       },
     ],
-   
+
     google_icon: {
       icon_name: "group",
       color: "google_icon_gradient",
@@ -404,119 +409,119 @@ export default {
     this.user = JSON.parse(localStorage.getItem("user"));
     this.fetchPromotions();
   },
-    computed: {
+  computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
     headers_en() {
       return [
         {
-        title:this.$t("title_en"),
-        align: "left",
-        key: "title",
-      },
-      {
-        title: "Description",
-        key: "description",
-      },
-      {
-        title: "Phone",
-        key: "phone",
-      },
-      {
-        title: "Email",
-        key: "email",
-      },
-      // {
-      //   title: "Start Date",
-      //   key: "start_date",
-      // },
-      // {
-      //   title: "End Date",
-      //   key: "end_date",
-      // },
-      // {
-      //   title: "Meta Title",
-      //   key: "meta_title",
-      // },
+          title: this.$t("title_en"),
+          align: "left",
+          key: "title",
+        },
+        {
+          title: "Description",
+          key: "description",
+        },
+        {
+          title: "Phone",
+          key: "phone",
+        },
+        {
+          title: "Email",
+          key: "email",
+        },
+        // {
+        //   title: "Start Date",
+        //   key: "start_date",
+        // },
+        // {
+        //   title: "End Date",
+        //   key: "end_date",
+        // },
+        // {
+        //   title: "Meta Title",
+        //   key: "meta_title",
+        // },
 
-      // {
-      //   title: "Meta Description",
-      //   key: "meta_description",
-      // },
-      {
+        // {
+        //   title: "Meta Description",
+        //   key: "meta_description",
+        // },
+        {
           title: this.$t("approval_en"),
           key: "approval_status",
         },
-      {
-        title: this.$t("status_en"),
-        align: "left",
-        sortable: false,
-        key: "status",
-      },
-      {
-        title: "Actions",
-        key: "",
-        align: "left",
-      },
+        {
+          title: this.$t("status_en"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: "Actions",
+          key: "",
+          align: "left",
+        },
       ];
     },
     headers_ar() {
       return [
         {
-        title:this.$t("title_en"),
-        align: "left",
-        key: "title",
-      },
-      {
-        title: "Description",
-        key: "description",
-      },
-      // {
-      //   title: "Phone",
-      //   key: "phone",
-      // },
-      // {
-      //   title: "Email",
-      //   key: "email",
-      // },
-      {
-        title: "Start Date",
-        key: "start_date",
-      },
-      {
-        title: "End Date",
-        key: "end_date",
-      },
-      // {
-      //   title: "Meta Title",
-      //   key: "meta_title",
-      // },
+          title: this.$t("title_en"),
+          align: "left",
+          key: "title",
+        },
+        {
+          title: "Description",
+          key: "description",
+        },
+        // {
+        //   title: "Phone",
+        //   key: "phone",
+        // },
+        // {
+        //   title: "Email",
+        //   key: "email",
+        // },
+        {
+          title: "Start Date",
+          key: "start_date",
+        },
+        {
+          title: "End Date",
+          key: "end_date",
+        },
+        // {
+        //   title: "Meta Title",
+        //   key: "meta_title",
+        // },
 
-      // {
-      //   title: "Meta Description",
-      //   key: "meta_description",
-      // },
-      {
+        // {
+        //   title: "Meta Description",
+        //   key: "meta_description",
+        // },
+        {
           title: this.$t("approval_ar"),
           key: "approval_status",
         },
-      {
-        title: this.$t("status_ar"),
-        align: "left",
-        sortable: false,
-        key: "status",
-      },
-      {
-        title: "Actions",
-        key: "",
-        align: "left",
-      },
+        {
+          title: this.$t("status_ar"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: "Actions",
+          key: "",
+          align: "left",
+        },
       ];
     },
   },
   methods: {
-        getStatusColor(status) {
+    getStatusColor(status) {
       switch (status) {
         case "Approved":
           return "green";
@@ -539,7 +544,7 @@ export default {
       this.delete_id = template_id;
       this.showConfirmDialog = true;
     },
-      viewPromotions(slug) {
+    viewPromotions(slug) {
       this.$router.push({
         name: "promotions-review",
         query: { slug: slug },

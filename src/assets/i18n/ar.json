@@ -343,6 +343,10 @@
   "products": "المنتجات",
   "customer_newsletter": "النشرة الإخبارية للعملاء",
   "created_at": "أنشئت في",
+  "store_ar": "محل",
+  "vacancy_ar":"خالي",
+  "careers":"وظائف",
+
   "--------start_english_translation----------": "--------start_english_translation----------",
   "name_en": "Name",
   "title_en": "Title",
@@ -368,5 +372,12 @@
   "shortname_en": "Shortname",
   "longname_en": "Longname",
   "inactive_en": "Inactive",
-  "active_en": "Active"
+  "no_data_available_en": "No data available",
+  "active_en": "Active",
+  "sequence_en":"Sequence",
+  "user1" : "المستخدمين",
+  "promotions" : "الترقيات",
+  "events": "الأحداث",
+  "register" : "يسجل",
+  "in_review" : "في مراجعة"
 }
