@@ -22,6 +22,22 @@
         <v-window-item :value="1">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
+             <v-col cols="4" sm="12" md="4">
+                <v-tooltip :text="this.$t('store')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="careers[0].store_id"
+                      v-bind:label="$t('store')"
+                      variant="outlined"
+                      density="compact"
+                      :items="stores_en"
+                      item-title="name"
+                      item-value="id"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
               <v-col cols="4" sm="12" md="4">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
@@ -46,7 +62,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="careers[0].vacancy"
-                      :rules="fieldRules"
+                      :rules="vacancyRules"
                       v-bind:label="$t('vacancy')"
                       v-bind="props"
                       required
@@ -127,6 +143,22 @@
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
+               <v-col cols="4" sm="12" md="4">
+                <v-tooltip :text="this.$t('store')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="careers[1].store_id"
+                      v-bind:label="$t('store')"
+                      variant="outlined"
+                      density="compact"
+                      :items="stores_en"
+                      item-title="name"
+                      item-value="id"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
               <v-col cols="4" sm="12" md="4">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
@@ -151,7 +183,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="careers[1].vacancy"
-                      :rules="fieldRules"
+                      :rules="vacancyRules"
                       v-bind:label="$t('vacancy')"
                       v-bind="props"
                       required
@@ -310,13 +342,17 @@ export default {
         seq:"",
         meta_title: "",
         meta_description: "",
-        lang: "en",
+        lang: "ar",
       },
     ],
     noimagepreview: "",
     items: [],
+    stores_en: [],
+    stores_ar: [],
   }),
-
+ mounted() {
+    this.get_stores();
+  },
   computed: {
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
@@ -324,6 +360,11 @@ export default {
 
     numberRules() {
       return [(v) => !!v || this.$t("number_required")];
+    },
+    vacancyRules() {
+      return [
+        (v) => (v >= 0 && v <= 9999) || this.$t("number_required"),
+      ];
     },
   },
 
@@ -353,6 +394,34 @@ export default {
     },
   },
   methods: {
+     get_stores() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-stores")
+        .then((response) => {
+          console.log(response);
+          this.stores_en = response.data.stores_en;
+          this.stores_ar = response.data.stores_ar;
+
+          // const default_en = {
+          //   id: 0,
+          //   name: this.$t("select_en"),
+          //   header_id: 0,
+          // };
+          // const default_ar = {
+          //   id: 0,
+          //   name: this.$t("select_ar"),
+          //   header_id: 0,
+          // };
+
+          // this.stores_en = [default_en, ...this.stores_en];
+          // this.stores_ar = [default_ar, ...this.stores_ar];
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
         cancel() {
       this.$router.push({
         name: "careers",
