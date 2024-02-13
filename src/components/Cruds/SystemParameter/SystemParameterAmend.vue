@@ -331,7 +331,7 @@ export default {
     },
 
     downloadImage(image_url) {
-      window.open(this.envPath + image_url, "_blank");
+      window.open(this.envImagePath + image_url, "_blank");
     },
     clear() {
       this.$refs.form.reset();
