@@ -386,7 +386,8 @@
   "to_day_en": "To Day",
   "from_time_en": "From Timing",
   "to_time_en": "To Timing",
-
+  "view_extend_timing_details": "View Timing Details",
+  "week_day": "Week Day",
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
   "from_day_ar": "من اليوم",
