@@ -333,6 +333,12 @@ const routes = [
     // meta: { layout: "userpages" },
     component: () => import("../components/Cruds/EMagazine/EMagazineAmend.vue"),
   },
+  {
+    path: "/:lang?/e-magazine-review",
+    name: "e-magazine-review",
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/EMagazine/ReviewEMagazine.vue"),
+  },
   // Reviews & Testimonials
   {
     path: "/:lang?/reviews-testimonials",
@@ -399,6 +405,11 @@ const routes = [
     path: "/:lang?/store-timing-amend",
     name: "store-timing-amend",
     component: () => import("../components/Cruds/StoreTimings/StoreTimingAmend.vue"),
+  },
+  {
+    path: "/:lang?/store-timing-review",
+    name: "store-timing-review",
+    component: () => import("../components/Cruds/StoreTimings/ReviewStoreTiming.vue"),
   },
   {
     path: "/:lang?/products-review",
