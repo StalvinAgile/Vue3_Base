@@ -487,6 +487,7 @@ export default {
   text-align: right;
   direction: rtl;
 }
+:global(.v-list-group--prepend .v-list-item--active){background: #e4e4e4;}
 
 nav {
   padding: 30px;
