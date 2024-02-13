@@ -27,7 +27,7 @@
                 <v-row class="px-6 mt-2">
                   <v-col xs="4" md="4" lg="4">
                     <v-tooltip
-                      :text="this.$t('mall_timing_categories')"
+                      :text="this.$t('mall_timing_categories_en')"
                       location="bottom"
                     >
                       <template v-slot:activator="{ props }">
@@ -35,7 +35,7 @@
                           v-bind="props"
                           v-model="fieldItem.mall_timing_categories"
                           :rules="fieldRules"
-                          v-bind:label="$t('mall_timing_categories')"
+                          v-bind:label="$t('mall_timing_categories_en')"
                           variant="outlined"
                           density="compact"
                           class="required_field"
@@ -49,13 +49,13 @@
                     </v-tooltip>
                   </v-col>
                   <v-col xs="4" md="4" lg="4">
-                    <v-tooltip :text="this.$t('from_day')" location="bottom">
+                    <v-tooltip :text="this.$t('from_day_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-select
                           v-bind="props"
                           v-model="fieldItem.from_day"
                           :rules="fieldRules"
-                          v-bind:label="$t('from_day')"
+                          v-bind:label="$t('from_day_en')"
                           variant="outlined"
                           density="compact"
                           class="required_field"
@@ -69,13 +69,13 @@
                     </v-tooltip>
                   </v-col>
                   <v-col xs="4" md="4" lg="4">
-                    <v-tooltip :text="this.$t('to_day')" location="bottom">
+                    <v-tooltip :text="this.$t('to_day_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-select
                           v-bind="props"
                           v-model="fieldItem.to_day"
                           :rules="fieldRules"
-                          v-bind:label="$t('to_day')"
+                          v-bind:label="$t('to_day_en')"
                           variant="outlined"
                           density="compact"
                           class="required_field"
@@ -90,13 +90,13 @@
                   </v-col>
                   <!-- ------------- -->
                   <v-col xs="4" md="4" lg="4">
-                    <v-tooltip :text="this.$t('from_time')" location="bottom">
+                    <v-tooltip :text="this.$t('from_time_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-select
                           v-bind="props"
                           v-model="fieldItem.from_time"
                           :rules="fieldRules"
-                          v-bind:label="$t('from_time')"
+                          v-bind:label="$t('from_time_en')"
                           variant="outlined"
                           density="compact"
                           class="required_field"
@@ -110,13 +110,13 @@
                     </v-tooltip>
                   </v-col>
                   <v-col xs="4" md="4" lg="4">
-                    <v-tooltip :text="this.$t('to_time')" location="bottom">
+                    <v-tooltip :text="this.$t('to_time_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-select
                           v-bind="props"
                           v-model="fieldItem.to_time"
                           :rules="fieldRules"
-                          v-bind:label="$t('to_time')"
+                          v-bind:label="$t('to_time_en')"
                           variant="outlined"
                           density="compact"
                           class="required_field"
@@ -134,7 +134,7 @@
               <v-layout>
                 <v-row class="mt-2 px-6" max-width="344">
                   <v-col md="12">
-                    <v-tooltip :text="this.$t('description')" location="bottom">
+                    <v-tooltip :text="this.$t('description_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea
                           v-on="on"
@@ -142,7 +142,7 @@
                           v-model="fieldItem.description"
                           v-bind="props"
                           :rules="descriptionRules"
-                          v-bind:label="$t('description')"
+                          v-bind:label="$t('description_en')"
                           required
                           class="required_field"
                           variant="outlined"
