@@ -3,9 +3,10 @@
     <page-title :heading="$t('dashboard')" :google_icon="google_icon"></page-title>
     <content-loader v-if="loader"></content-loader>
     <div class="container-fluid">
-      <div class="dash-parent">
+      <div class="dash-parent" v-bind:class="[is_arabic ? 'arabic_row' : '']">
         <v-row>
-          <v-col md="3">
+          <!------- USER CARD ------>
+          <v-col md="3" class="direction_col">
             <v-card density="comfortable" elevation="6" class="usercard routecard" @click="route_to_page('user')">
               <v-row>
                 <v-col md="8">
@@ -49,7 +50,8 @@
             </v-card>
           </v-col>
 
-          <v-col md="3">
+          <!------- EVENT CARD ------>
+          <v-col md="3" class="direction_col">
             <v-card density="comfortable" elevation="6" class="eventcard routecard" @click="route_to_page('event')">
               <v-row>
                 <v-col md="8">
@@ -98,7 +100,8 @@
             </v-card>
           </v-col>
 
-          <v-col md="3">
+          <!------- PROMOTION CARD ------>
+          <v-col md="3" class="direction_col">
             <v-card density="comfortable" elevation="6" class="promocard routecard" @click="route_to_page('promotion')">
               <v-row>
                 <v-col md="8">
@@ -147,7 +150,8 @@
             </v-card>
           </v-col>
 
-          <v-col md="3">
+          <!------- PRODUCT CARD ------>
+          <v-col md="3" class="direction_col">
             <v-card density="comfortable" elevation="6" class="productcard routecard" @click="route_to_page('product')">
               <v-row>
                 <v-col md="8">
@@ -196,7 +200,8 @@
             </v-card>
           </v-col>
 
-          <v-col md="3">
+          <!------- CATEGORY CARD ------>
+          <v-col md="3" class="direction_col">
             <v-card density="comfortable" elevation="6" class="categorycard routecard" @click="route_to_page('category')">
               <v-row>
                 <v-col md="8">
@@ -245,7 +250,8 @@
             </v-card>
           </v-col>
 
-          <v-col md="3">
+          <!------- CAREER CARD ------>
+          <v-col md="3" class="direction_col">
             <v-card density="comfortable" elevation="6" class="carriercard routecard" @click="route_to_page('career')">
               <v-row>
                 <v-col md="8">
@@ -294,7 +300,8 @@
             </v-card>
           </v-col>
 
-          <v-col md="3">
+          <!------- STORE CARD ------>
+          <v-col md="3" class="direction_col">
             <v-card density="comfortable" elevation="6" class="storecard routecard" @click="route_to_page('store')">
               <v-row>
                 <v-col md="8">
@@ -343,7 +350,8 @@
             </v-card>
           </v-col>
 
-          <v-col md="3">
+          <!------- TESTIMONIAL CARD ------>
+          <v-col md="3" class="direction_col">
             <v-card density="comfortable" elevation="6" class="testimonialcard routecard"
               @click="route_to_page('testimonial')">
               <v-row>
@@ -407,6 +415,7 @@ export default {
   data: () => ({
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
     search: "",
+    is_arabic : false,
     activeuser: 0,
     inactiveuser: 0,
     reevents: 0,
@@ -439,6 +448,15 @@ export default {
     },
 
   }),
+   watch: {
+    '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {         
+        this.is_arabic = true;
+      } else {
+        this.is_arabic = false;
+      }
+    }
+  },
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user_data"));
     this.fetchDashboard();
@@ -563,9 +581,13 @@ export default {
 .routecard {
   cursor: pointer;
 }
-
+.arabic_row .direction_col{
+  direction: rtl;
+  text-align: right;
+}
 .routecard:hover {
   height: 100.7%;
   width: 100.7%;
   box-shadow: 0 18px 26px rgba(21, 1, 1, 0.2);
-}</style>
+}
+</style>
