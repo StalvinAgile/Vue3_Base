@@ -8,20 +8,19 @@
       ></page-title>
 
       <div class="col-md-4">
-        <v-tooltip :text="this.$t('search')" location="top">
+        <v-tooltip :text="this.$t('search')" location="bottom">
           <template v-slot:activator="{ props }">
             <v-text-field
-              dense
+              rounded
               density="compact"
-              v-on="on"
               variant="outlined"
+              elevation="24"
+              v-bind="props"
               v-model="search"
               append-icon="search"
-              label="Search"
-              class="srch_bar"
-              small
+              v-bind:label="$t('search')"
               hide-details
-              v-bind="props"
+              class="srch_bar"
             ></v-text-field>
           </template>
         </v-tooltip>
@@ -52,7 +51,7 @@
         <span>{{ $t("arabic") }}</span>
       </v-tab>
     </v-tabs>
-    
+
     <v-window v-model="tabs">
       <!-- ENGLISH TAB STARTS -->
       <v-window-item :value="1">
@@ -61,7 +60,7 @@
           :items="mall_timings"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
+          v-bind:no-data-text="$t('no_data_available_en')"
           :footer-props="{
             'items-per-page-text': $t('rows_per_page'),
           }"
@@ -229,8 +228,8 @@
     />
   </div>
 </template>
-    
-  <script>
+
+<script>
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import ConfirmDialog from "../../CustomComponents/ConfirmDialog.vue";
 export default {
@@ -259,31 +258,31 @@ export default {
     headers() {
       return [
         {
-          title: this.$t("mall_timing_categories"),
+          title: this.$t("mall_timing_categories_en"),
           key: "mall_timing_categories",
         },
         {
-          title: this.$t("from_day"),
+          title: this.$t("from_day_en"),
           key: "from_day",
         },
         {
-          title: this.$t("to_day"),
+          title: this.$t("to_day_en"),
           key: "to_day",
         },
         {
-          title: this.$t("from_time"),
+          title: this.$t("from_time_en"),
           key: "from_time",
         },
         {
-          title: this.$t("to_time"),
+          title: this.$t("to_time_en"),
           key: "to_time",
         },
         {
-          title: this.$t("status"),
+          title: this.$t("status_en"),
           key: "status",
         },
         {
-          title: this.$t("action"),
+          title: this.$t("action_en"),
           align: "center",
           key: "email",
         },
@@ -441,7 +440,7 @@ export default {
   },
 };
 </script>
-  <style scoped>
+<style scoped>
 .list_item {
   cursor: pointer;
 }

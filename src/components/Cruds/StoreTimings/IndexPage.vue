@@ -44,17 +44,86 @@
       </div>
     </div>
     <v-data-table
-      :headers="headers_en"
+      :headers="headers"
       :items="store_timings"
       :search="search"
       :loading="initval"
+      v-model:expanded="expanded"
+      show-expand
+      item-value="name"
       v-bind:style="$route.params.lang == 'ar' ? 'direction:rtl' : ''"
     >
-      <template v-slot:item="props">
-        <tr class="vdatatable_tbody">
+      <template v-slot:expanded-row="{ columns, item }">
+        <tr>
+          <td :colspan="columns.length" class="child_table p-4">
+            <v-data-table
+              :headers="child_headers"
+              :items="item.selectable.store_timings"
+              item-value="name"
+              v-bind:style="$route.params.lang == 'ar' ? 'direction:rtl' : ''"
+              class="child_table"
+            >
+              <template v-slot:item="props">
+                <tr class="vdatatable_tbody">
+                  <td>{{ props.item.selectable.week_day }}</td>
+                  <td>
+                    {{ props.item.selectable.from_time }}
+                    {{ props.item.selectable.from_meridiem }}
+                  </td>
+                  <td>
+                    {{ props.item.selectable.to_time }}
+                    {{ props.item.selectable.to_meridiem }}
+                  </td>
+                  <td>
+                    <v-btn
+                      class="hover_shine btn mr-2"
+                      :disabled="isDisabled"
+                      @click="updateIsPublishStatus(props.item.selectable.id)"
+                      size="small"
+                      v-bind:color="[
+                        props.item.selectable.is_holiday == 1
+                          ? 'success'
+                          : 'warning',
+                      ]"
+                    >
+                      <span
+                        v-if="props.item.selectable.is_holiday == 1"
+                        class="spanactivesize"
+                        >{{ $t("yes") }}</span
+                      >
+                      <span
+                        v-if="props.item.selectable.is_holiday == 0"
+                        class="spanactivesize"
+                        >{{ $t("no") }}</span
+                      >
+                    </v-btn>
+                  </td>
+                </tr>
+              </template>
+            </v-data-table>
+          </td>
+        </tr>
+      </template>
+      <!-- <template v-slot:item="{ props, columns }">
+        <tr class="vdatatable_tbody parent_row">
+          <td class="text-start" :colspan="columns.length">
+            More info about {{ props.item.selectable.name }}
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-btn icon v-if="isExpanded == false" v-on="on">
+                  <v-icon class="text-primary">mdi mdi-plus-circle</v-icon>
+                </v-btn>
+                <v-btn icon v-else>
+                  <v-icon class="text-danger">mdi mdi-minus-circle</v-icon>
+                </v-btn>
+              </template>
+              <span>{{ $t("view_extend_timing_details") }}</span>
+            </v-tooltip>
+          </td>
           <td>{{ props.item.selectable.name }}</td>
-          <td>{{ props.item.selectable.timings.from_time }}</td>
-          <td>{{ props.item.selectable.timings.to_time }}</td>
+          <td>{{ props.item.selectable.email }}</td>
+          <td>{{ props.item.selectable.approval_status }}</td>
+          <td>{{ props.item.selectable.website }}</td>
 
           <td class="text-center px-0">
             <router-link
@@ -91,7 +160,7 @@
             </span>
           </td>
         </tr>
-      </template>
+      </template> -->
     </v-data-table>
     <ConfirmDialog
       :show="showStatusDialog"
@@ -126,7 +195,9 @@ export default {
     status_id: null,
     isDisabled: false,
     initval: false,
-
+    expanded: [],
+    singleExpand: false,
+    isExpanded: false,
     google_icon: {
       icon_name: "punch_clock",
       color: "google_icon_gradient",
@@ -140,26 +211,26 @@ export default {
     message: "",
   }),
 
-  
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
-    headers_en() {
+    headers() {
       return [
+        {
+          text: "",
+          align: "start",
+          sortable: false,
+          value: "store_timing_id",
+        },
         {
           title: this.$t("name_en"),
           key: "name",
         },
         {
-          title: this.$t("from_time_en"),
-          key: "from_time",
+          title: this.$t("email"),
+          key: "email",
         },
-        {
-          title: this.$t("to_time_en"),
-          key: "to_time",
-        },
-       
         {
           title: this.$t("status_en"),
           align: "left",
@@ -177,11 +248,38 @@ export default {
         },
       ];
     },
+    child_headers() {
+      return [
+        {
+          title: this.$t("week_day"),
+          key: "week_day",
+        },
+        {
+          title: this.$t("from_time"),
+          key: "from_time",
+        },
+        {
+          title: this.$t("to_time"),
+          key: "to_time",
+        },
+        {
+          title: this.$t("is_holiday"),
+          key: "is_holiday",
+        },
+      ];
+    },
   },
   mounted() {
     this.fetchStoreTimings();
   },
   methods: {
+    // expand() {
+    //   if (this.isExpanded == false) {
+    //     this.isExpanded = true;
+    //   } else {
+    //     this.isExpanded = false;
+    //   }
+    // },
     cancel() {
       this.showdeleteDialog = false;
     },
@@ -204,7 +302,7 @@ export default {
           this.initval = false;
           let store_timing = [];
           res.data.store_timings.map((ele) => {
-            if (ele.timings != null) {
+            if (ele.header_id == ele.id) {
               console.log(ele);
               store_timing.push(ele);
             }
@@ -287,5 +385,16 @@ export default {
 
 .v-btn:not(.v-btn--round).v-size--small {
   min-width: 90px !important;
+}
+.parent_row {
+  background: #eeeeee;
+}
+.child_row {
+  background: #ffffff;
+}
+
+.child_table {
+  border: 2px solid #8080808a !important;
+  padding: 5px;
 }
 </style>

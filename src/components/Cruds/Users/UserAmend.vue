@@ -723,6 +723,7 @@ export default {
                   name: "view-my-profile",
                   query: {
                     slug: this.profile_details.slug,
+                    from: this.$route.query.from,
                   },
                 });
               }
