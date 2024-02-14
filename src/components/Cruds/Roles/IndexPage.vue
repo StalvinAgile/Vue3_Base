@@ -10,9 +10,8 @@
         :heading="$t('role')"
         :google_icon="google_icon"
       ></page-title>
-      
 
-       <div class="col-md-4">
+      <div class="col-md-4">
         <v-tooltip :text="this.$t('search')" location="bottom">
           <template v-slot:activator="{ props }">
             <v-text-field
@@ -49,9 +48,7 @@
       :search="search"
       :loading="initval"
       v-bind:no-data-text="$t('no_data_available')"
-      :footer-props="{
-        'items-per-page-text': $t('rows_per_page'),
-      }"
+      :items-per-page-text="$t('rows_per_page')"
       v-bind:style="$route.params.lang == 'ar' ? 'direction:rtl' : ''"
     >
       <template v-slot:item="props">

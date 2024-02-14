@@ -95,7 +95,7 @@
             <v-btn
               v-bind="props"
               size="small"
-              @click="$router.go(-1)"
+              @click="cancel"
               :disabled="isBtnLoading"
               class="ma-1"
               color="cancel"
@@ -177,6 +177,7 @@ export default {
     this.userprofile = JSON.parse(localStorage.getItem("user_data"));
   },
   methods: {
+
     submit() {
       if (this.$refs.form.validate()) {
         if (this.fieldItem.newpassword != this.fieldItem.confirmpassword) {

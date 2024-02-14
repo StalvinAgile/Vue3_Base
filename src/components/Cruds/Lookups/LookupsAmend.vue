@@ -63,18 +63,19 @@
             <v-layout>
               <v-row class="mx-auto mt-2" max-width="344">
                 <v-col md="12">
-                  <v-tooltip :text="this.$t('description_en')" location="bottom">
+                  <v-tooltip
+                    :text="this.$t('description_en')"
+                    location="bottom"
+                  >
                     <template v-slot:activator="{ props }">
                       <v-textarea
                         v-on="on"
                         rows="2"
                         v-model="lookup[0].description"
-                        :rules="fieldRules"
                         maxlength="100"
                         v-bind="props"
                         v-bind:label="$t('description_en')"
                         required
-                        class="required_field"
                         variant="outlined"
                         counter="true"
                       ></v-textarea>
@@ -95,7 +96,7 @@
                           v-bind:style="
                             isHovering == true ? 'filter: blur(1px);' : ''
                           "
-                          v-if="lookup[0].icon != ''"
+                          v-if="lookup[0].icon != null"
                           :src="envImagePath + lookup[0].icon"
                           width="100"
                           height="65
@@ -182,18 +183,21 @@
             <v-layout>
               <v-row class="mx-auto mt-2" max-width="344">
                 <v-col md="12">
-                  <v-tooltip :text="this.$t('description_ar')" location="bottom">
+                  <v-tooltip
+                    :text="this.$t('description_ar')"
+                    location="bottom"
+                  >
                     <template v-slot:activator="{ props }">
                       <v-textarea
                         v-on="on"
                         rows="2"
                         v-model="lookup[1].description"
-                        :rules="fieldRules"
+
                         maxlength="100"
                         v-bind="props"
                         v-bind:label="$t('description_ar')"
                         required
-                        class="required_field rtl"
+                        class="rtl"
                         variant="outlined"
                         counter="true"
                       ></v-textarea>
@@ -214,7 +218,7 @@
                           v-bind:style="
                             isHovering == true ? 'filter: blur(1px);' : ''
                           "
-                          v-if="lookup[1].icon != ''"
+                          v-if="lookup[1].icon != null"
                           :src="envImagePath + lookup[1].icon"
                           width="100"
                           height="65
@@ -332,7 +336,7 @@ export default {
         shortname: "",
         longname: "",
         description: "",
-        icon: "",
+        icon: null,
       },
       {
         id: 0,
@@ -341,7 +345,7 @@ export default {
         shortname: "",
         longname: "",
         description: "",
-        icon: "",
+        icon: null,
       },
     ],
     noimagepreview: "",

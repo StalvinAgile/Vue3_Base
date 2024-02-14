@@ -69,10 +69,8 @@
                         rows="2"
                         v-model="lookup[0].description"
                         v-bind="props"
-                        :rules="fieldRules"
                         v-bind:label="$t('description')"
                         required
-                        class="required_field"
                         variant="outlined"
                         maxlength="100"
                         counter="true"
@@ -186,10 +184,9 @@
                         rows="2"
                         v-model="lookup[1].description"
                         v-bind="props"
-                        :rules="fieldRules"
                         v-bind:label="$t('description')"
                         required
-                        class="required_field rtl"
+                        class="rtl"
                         variant="outlined"
                         maxlength="100"
                         counter="true"
