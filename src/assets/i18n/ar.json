@@ -81,6 +81,7 @@
   "subject": "موضوع",
   "amend_email_template": "إنشاء/تعديل قالب البريد الإلكتروني",
   "select_mode": "حدد الوضع",
+  "select_en": "--SELECT--",
   "body": "جسم",
   "signature": "إمضاء",
   "users": "المستخدمين الإداريين",
@@ -404,6 +405,19 @@
   "store": "Store",
   "i_am": "أنا أكون",
   "type_en":"Type",
-  "subject_en":"Subject"
+  "subject_en":"Subject",
+  "create_promotion": "إنشاء / تعديل العروض الترويجية",
+  "phone_en": "Phone",
+  "email_en": "E-mail",
+  "start_date_en": "Start Date",
+  "end_date_en": "End Date",
+  "email_ar": "بريد إلكتروني",
+  "phone_ar": "هاتف",
+  "type_ar": "يكتب",
+  "start_date_ar": "بدء العرض",
+  "end_date_ar": "انتهاء العرض",
+  "mall_en":"Mall",
+  "select_ar": "--يختار--",
+  "mall_ar": "مجمع تجاري"
 
 }
