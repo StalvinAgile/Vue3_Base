@@ -21,7 +21,7 @@
               variant="outlined"
               v-model="search"
               append-icon="search"
-              label="Search"
+              v-bind:label="$t('search')"
               class="srch_bar"
               small
               hide-details
@@ -61,10 +61,8 @@
           :items="promotions_en"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+          :no-data-text="$t('no_data_available_en')"
+          :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -203,10 +201,8 @@
           :items="promotions_ar"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+          :no-data-text="$t('no_data_available_ar')"
+          :items-per-page-text="$t('rows_per_page_ar')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -421,34 +417,18 @@ export default {
           key: "title",
         },
         {
-          title: "Description",
+          title: this.$t("description_en"),
           key: "description",
         },
         {
-          title: "Phone",
+          title: this.$t("phone_en"),
           key: "phone",
         },
         {
-          title: "Email",
+          title:  this.$t("email_en"),
           key: "email",
         },
-        // {
-        //   title: "Start Date",
-        //   key: "start_date",
-        // },
-        // {
-        //   title: "End Date",
-        //   key: "end_date",
-        // },
-        // {
-        //   title: "Meta Title",
-        //   key: "meta_title",
-        // },
 
-        // {
-        //   title: "Meta Description",
-        //   key: "meta_description",
-        // },
         {
           title: this.$t("approval_en"),
           key: "approval_status",
@@ -460,7 +440,7 @@ export default {
           key: "status",
         },
         {
-          title: "Actions",
+          title: this.$t("action_en"),
           key: "",
           align: "left",
         },
@@ -469,39 +449,24 @@ export default {
     headers_ar() {
       return [
         {
-          title: this.$t("title_en"),
+          title: this.$t("title_ar"),
           align: "left",
           key: "title",
         },
         {
-          title: "Description",
+          title: this.$t("description_ar"),
           key: "description",
         },
-        // {
-        //   title: "Phone",
-        //   key: "phone",
-        // },
-        // {
-        //   title: "Email",
-        //   key: "email",
-        // },
-        {
-          title: "Start Date",
-          key: "start_date",
-        },
-        {
-          title: "End Date",
-          key: "end_date",
-        },
-        // {
-        //   title: "Meta Title",
-        //   key: "meta_title",
-        // },
 
-        // {
-        //   title: "Meta Description",
-        //   key: "meta_description",
-        // },
+        {
+          title: this.$t("phone_ar"),
+          key: "phone",
+        },
+        {
+          title: this.$t("email_ar"),
+          key: "email",
+        },
+
         {
           title: this.$t("approval_ar"),
           key: "approval_status",
@@ -513,7 +478,7 @@ export default {
           key: "status",
         },
         {
-          title: "Actions",
+          title: this.$t("action_ar"),
           key: "",
           align: "left",
         },

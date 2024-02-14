@@ -24,10 +24,30 @@
           <!-- ENGLISH TAB STARTS -->
           <v-window-item :value="1">
             <v-form ref="form" v-model="valid">
+              <v-col cols="4" sm="12" md="4" class="ml-3 pr-5">
+                <v-tooltip :text="this.$t('mall_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-if="user_role == 'SuperUser'"
+                      v-bind="props"
+                      v-model="category[0].store_id"
+                      v-bind:label="$t('mall_en')"
+                      variant="outlined"
+                      density="compact"
+                      :items="malls_en"
+                      item-title="name"
+                      item-value="header_id"
+                      class="required_field"
+                      :rules="fieldRules"
+                      required
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="6" sm="12" md="4">
-                    <v-tooltip :text="$t('name')" location="bottom">
+                    <v-tooltip :text="$t('name_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
@@ -35,7 +55,7 @@
                             (value) => updateParent('en', value)
                           "
                           v-model="category[0].parent_id"
-                          v-bind:label="$t('parent_category')"
+                          v-bind:label="$t('parent_category_en')"
                           variant="outlined"
                           density="compact"
                           :items="category_en"
@@ -47,7 +67,7 @@
                   </v-col>
 
                   <v-col cols="6" sm="12" md="4">
-                    <v-tooltip :text="$t('name')" location="bottom">
+                    <v-tooltip :text="$t('name_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
@@ -55,7 +75,7 @@
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="100"
-                          v-bind:label="$t('name')"
+                          v-bind:label="$t('name_en')"
                           required
                           variant="outlined"
                           density="compact"
@@ -64,7 +84,7 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="6" sm="12" md="4">
-                    <v-tooltip :text="$t('title')" location="bottom">
+                    <v-tooltip :text="$t('title_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
@@ -72,7 +92,7 @@
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="100"
-                          v-bind:label="$t('title')"
+                          v-bind:label="$t('title_en')"
                           required
                           variant="outlined"
                           density="compact"
@@ -86,9 +106,9 @@
                 <v-row class="px-6 pt-0">
                   <v-col cols="12" md="12" lg="12" sm="12" class="pt-0">
                     <v-card-title class="text-left" style="font-size: 17px">{{
-                      $t("description")
+                      $t("description_en")
                     }}</v-card-title>
-                    <v-tooltip :text="$t('description')" location="top">
+                    <v-tooltip :text="$t('description_en')" location="top">
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
                           <quill-editor
@@ -118,7 +138,7 @@
               <v-layout>
                 <v-row class="mt-2 px-6" max-width="344">
                   <v-col md="12">
-                    <v-tooltip :text="this.$t('meta_title')" location="bottom">
+                    <v-tooltip :text="this.$t('meta_title_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
@@ -126,7 +146,7 @@
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="150"
-                          v-bind:label="$t('meta_title')"
+                          v-bind:label="$t('meta_title_en')"
                           required
                           variant="outlined"
                           density="compact"
@@ -136,7 +156,7 @@
                   </v-col>
                   <v-col md="12">
                     <v-tooltip
-                      :text="this.$t('meta_description')"
+                      :text="this.$t('meta_description_en')"
                       location="bottom"
                     >
                       <template v-slot:activator="{ props }">
@@ -146,7 +166,7 @@
                           v-model="category[0].meta_description"
                           v-bind="props"
                           :rules="descriptionRules"
-                          v-bind:label="$t('meta_description')"
+                          v-bind:label="$t('meta_description_en')"
                           required
                           class="required_field"
                           variant="outlined"
@@ -157,17 +177,18 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="2" sm="2" md="2">
-                    <v-tooltip :text="$t('sequence')" location="bottom">
+                    <v-tooltip :text="$t('sequence_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
                           v-model="category[0].seq"
                           maxlength="100"
                           :rules="phoneRules"
-                          v-bind:label="$t('sequence')"
+                          v-bind:label="$t('sequence_en')"
                           required
                           variant="outlined"
                           density="compact"
+                          v-on:keypress="NumbersOnly"
                         ></v-text-field>
                       </template>
                     </v-tooltip>
@@ -209,7 +230,7 @@
                         <span
                           v-if="category[0].image_path"
                           class="download_btn_color"
-                          >{{ $t("download") }}</span
+                          >{{ $t("download_en") }}</span
                         >
                       </a>
                     </div>
@@ -231,10 +252,30 @@
           <!-- ARABIC TAB STARTS -->
           <v-window-item :value="2">
             <v-form ref="form" v-model="valid">
+              <v-col cols="4" sm="12" md="4" class="ml-3 pr-5">
+                <v-tooltip :text="this.$t('mall_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-if="user_role == 'SuperUser'"
+                      v-bind="props"
+                      v-model="category[1].store_id"
+                      v-bind:label="$t('mall_ar')"
+                      variant="outlined"
+                      density="compact"
+                      :items="malls_ar"
+                      item-title="name"
+                      item-value="header_id"
+                      class="required_field"
+                      :rules="fieldRules"
+                      required
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="6" sm="12" md="4">
-                    <v-tooltip :text="$t('name')" location="bottom">
+                    <v-tooltip :text="$t('parent_category_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           @update:modelValue="
@@ -242,7 +283,7 @@
                           "
                           v-bind="props"
                           v-model="category[1].parent_id"
-                          v-bind:label="$t('parent_category')"
+                          v-bind:label="$t('parent_category_ar')"
                           variant="outlined"
                           density="compact"
                           :items="category_ar"
@@ -297,7 +338,7 @@
                     <v-tooltip :text="$t('description_ar')" location="top">
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
-                              <!-- @ready="setRtlDirection" -->
+                          <!-- @ready="setRtlDirection" -->
                           <quill-editor
                             ref="quill_editor_ref"
                             :options="editorOptions"
@@ -369,17 +410,18 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="2" sm="2" md="2">
-                    <v-tooltip :text="$t('sequence')" location="bottom">
+                    <v-tooltip :text="$t('sequence_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
                           v-model="category[1].seq"
                           maxlength="100"
                           :rules="phoneRules"
-                          v-bind:label="$t('sequence')"
+                          v-bind:label="$t('sequence_ar')"
                           required
                           variant="outlined"
                           density="compact"
+                          v-on:keypress="NumbersOnly"
                         ></v-text-field>
                       </template>
                     </v-tooltip>
@@ -421,7 +463,7 @@
                         <span
                           v-if="category[1].image_path"
                           class="download_btn_color"
-                          >{{ $t("download") }}</span
+                          >{{ $t("download_ar") }}</span
                         >
                       </a>
                     </div>
@@ -540,6 +582,8 @@ export default {
     return { onEditorReady, onEditorFocus, onEditorFocusAR, onEditorReadyAR };
   },
   data: () => ({
+    malls_en: "",
+    malls_ar: "",
     google_icon: {
       icon_name: "edit_note",
       color: "google_icon_gradient",
@@ -547,9 +591,10 @@ export default {
     },
     editorOptions: {
       theme: "snow",
-      direction: 'rtl', 
-        placeholder: "أدخل المحتوى هنا",
+      direction: "rtl",
+      placeholder: "أدخل المحتوى هنا",
     },
+
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
     valid: true,
     successmessage: "",
@@ -582,6 +627,7 @@ export default {
         header_id: 0,
         parent_id: 0,
         lang: "en",
+        store_id: null,
       },
       {
         id: 0,
@@ -596,8 +642,10 @@ export default {
         header_id: 0,
         parent_id: 0,
         lang: "ar",
+        store_id: null,
       },
     ],
+    user_role: "",
   }),
 
   computed: {
@@ -612,6 +660,15 @@ export default {
 
   mounted() {
     this.fetchParentCategories();
+    this.user_role = JSON.parse(localStorage.getItem("user_data")).rolename;
+    const storeid = JSON.parse(localStorage.getItem("user_data")).store_id;
+
+    this.category[0].store_id = storeid;
+    this.category[1].store_id = storeid;
+    this.get_malls();
+    // if (this.user_role == 'MallAdmin') {
+    //   this.category[0].store_id =
+    // }
     // setTimeout(()=>{
 
     //   // this.setRtlDirection();
@@ -655,18 +712,45 @@ export default {
   },
 
   methods: {
-setRtlDirection(quill) {
-    quill.on('text-change', () => {
-      const text = quill.getText();
-      const rtlChar = /[\u0590-\u05FF\u0600-\u06FF]/; 
-      console.log("rtl char ",rtlChar)
-      if (rtlChar.test(text)) {
-        quill.root.setAttribute('dir', 'rtl');
+    NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
       } else {
-        quill.root.setAttribute('dir', 'ltr');
+        return true;
       }
-    });
-  },
+    },
+    get_malls() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-malls")
+        .then((response) => {
+          console.log(response);
+          this.malls_en = response.data.malls_en;
+          this.malls_ar = response.data.malls_ar;
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    setRtlDirection(quill) {
+      quill.on("text-change", () => {
+        const text = quill.getText();
+        const rtlChar = /[\u0590-\u05FF\u0600-\u06FF]/;
+        console.log("rtl char ", rtlChar);
+        if (rtlChar.test(text)) {
+          quill.root.setAttribute("dir", "rtl");
+        } else {
+          quill.root.setAttribute("dir", "ltr");
+        }
+      });
+    },
     uploaded_image(img_src) {
       //alert('uploaded image');
       //alert(img_src);
@@ -835,5 +919,4 @@ setRtlDirection(quill) {
   direction: rtl !important;
   text-align: right !important;
 }
-
 </style>

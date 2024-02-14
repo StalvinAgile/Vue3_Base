@@ -98,7 +98,7 @@
             >
             <span v-else>{{ $t("not_appllicable") }}</span>
           </td> -->
-          
+
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -380,7 +380,7 @@ export default {
     this.user = JSON.parse(localStorage.getItem("user"));
     this.fetchEvents();
   },
-  
+
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
@@ -388,83 +388,86 @@ export default {
     headers_en() {
       return [
         {
-        title: "Title",
-        align: "left",
-        key: "title",
-      },
-      {
-        title: "Description",
-        key: "description",
-      },
-      {
-        title: "Start Date",
-        key: "start_date",
-      },
-      {
-        title: "End Date",
-        key: "end_date",
-      },
-      {
-        title: "Status",
-        align: "left",
-        sortable: false,
-        key: "status",
-      },
-     {
-        title: this.$t("approval_en"),
-        key: "approval_status",
-      },
-      {
-        title: this.$t("action_en"),
-        align: "center",
-        key: "action",
-      },
-       
-      
+          title: this.$t("title_en"),
+          align: "left",
+          key: "title",
+        },
+        {
+          title: this.$t("description_en"),
+          key: "description",
+        },
+        {
+          title: this.$t("start_date_en"),
+          key: "start_date",
+        },
+        {
+          title: this.$t("end_date_en"),
+          key: "end_date",
+        },
+        {
+          title: this.$t("status_en"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: this.$t("approval_en"),
+          key: "approval_status",
+        },
+        {
+          title: this.$t("action_en"),
+          align: "center",
+          key: "action",
+        },
+        {
+          title: "",
+          align: "center",
+        },
       ];
     },
     headers_ar() {
       return [
         {
-        title: "Title",
-        align: "left",
-        key: "title",
-      },
-      {
-        title: "Description",
-        key: "description",
-      },
-      {
-        title: "Start Date",
-        key: "start_date",
-      },
-      {
-        title: "End Date",
-        key: "end_date",
-      },
-     {
-        title: "Status",
-        align: "left",
-        sortable: false,
-        key: "status",
-      },
-      {
-        title: this.$t("approval_en"),
-        key: "approval_status",
-      },
-      {
-        title: this.$t("action_en"),
-        align: "center",
-        key: "action",
-      },
-      
-       
-      
+          title: this.$t("title_ar"),
+          align: "left",
+          key: "title",
+        },
+        {
+          title: this.$t("description_ar"),
+          key: "description",
+        },
+        {
+          title: this.$t("start_date_ar"),
+          key: "start_date",
+        },
+        {
+          title: this.$t("end_date_ar"),
+          key: "end_date",
+        },
+        {
+          title: this.$t("status_ar"),
+          align: "left",
+          sortable: false,
+          key: "status",
+        },
+        {
+          title: this.$t("approval_ar"),
+          key: "approval_status",
+        },
+        {
+          title: this.$t("action_ar"),
+          align: "center",
+          key: "action",
+        },
+        {
+          title: "",
+          align: "center",
+        },
       ];
     },
   },
   methods: {
-      getStatusColor(status) {
+    getStatusColor(status) {
       switch (status) {
         case "Approved":
           return "green";
@@ -588,7 +591,7 @@ export default {
           console.log("this error" + err);
         });
     },
-     viewEvents(slug) {
+    viewEvents(slug) {
       this.$router.push({
         name: "events-review",
         query: { slug: slug },
