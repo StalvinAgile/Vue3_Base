@@ -95,10 +95,10 @@
           </td>
           <td>
             <v-chip
-              :color="getStatusColor(item.selectable.approval_status)"
+              :color="getStatusColor(item.selectable.store_timings[0].approval_status)"
               variant="outlined"
             >
-              {{ item.selectable.approval_status }}
+              {{ item.selectable.store_timings[0].approval_status }}
             </v-chip>
           </td>
           <td class="text-center">
@@ -330,13 +330,6 @@ export default {
           return "";
       }
     },
-    cancel() {
-      this.showdeleteDialog = false;
-    },
-    confirm(id) {
-      this.deleteConfirm(id);
-      this.showdeleteDialog = false;
-    },
     fetchStoreTimings() {
       this.initval = true;
       this.$axios
@@ -359,6 +352,13 @@ export default {
     },
     deleteConfirm() {
       this.deletestoretimings(this.delete_id);
+    },
+    cancel() {
+      this.showdeleteDialog = false;
+    },
+    confirm(id) {
+      this.deleteConfirm(id);
+      this.showdeleteDialog = false;
     },
     deleteItem($id) {
       this.delete_id = $id;

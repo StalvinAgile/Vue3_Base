@@ -309,7 +309,6 @@ export default {
               // console.log(res.data.store_timings[0].store_id);
               this.store_timing_id = res.data.store_timings[0].store_id;
               this.get_added_stores();
-              this.loader = false;
             });
         }
       },
