@@ -134,7 +134,7 @@
                         :color="getStatusColor(product.approval_status)"
                         variant="outlined"
                       >
-                        {{ product.approval_status }}
+                        {{ changeStatusAr(product.approval_status) }}
                       </v-chip>
                     </div>
                   </v-col>
@@ -288,6 +288,18 @@ export default {
   },
 
   methods: {
+      changeStatusAr(status) {
+      switch (status) {
+        case "Approved":
+          return this.$t("approved_ar");
+        case "In Review":
+          return this.$t("inreview_ar");
+        case "Rejected":
+          return this.$t("rejected_ar");
+        default:
+          return "";
+      }
+    },
     fetchProductDetails() {
       this.loader = true;
       this.$axios
