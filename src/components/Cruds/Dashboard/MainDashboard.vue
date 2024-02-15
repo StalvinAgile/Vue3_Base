@@ -1,434 +1,35 @@
 <template>
   <div>
-    <page-title   :heading="$t('dashboard')" :google_icon="google_icon"></page-title>
+    <page-title :heading="$t('dashboard')" :google_icon="google_icon"></page-title>
     <content-loader v-if="loader"></content-loader>
     <div class="container-fluid">
       <div class="dash-parent" v-bind:class="[is_arabic ? 'arabic_row' : '']">
-        <v-row>
-          <!------- USER CARD ------>
-          <v-col md="3" class="direction_col" v-if="user.rolename == 'SuperUser'">
-            <v-card density="comfortable" elevation="6" class="usercard routecard" @click="route_to_page('user')">
+        <v-row> <v-col md="3" class="direction_col" v-for="(dashboard, i) in dashboard_count" :key="i">
+            <v-card density="comfortable" elevation="6" class="routecard" :class="dashboard.color"
+              @click="route_to_page(dashboard.name)">
               <v-row>
                 <v-col md="12">
-                  <div class="d-flex1">
-                     <v-card-title>
-                    {{ $t('user1') }}
-                  </v-card-title>
-                  <v-col md="4" class="cardlogo">
-                  <div class="icon-wrapper">
-                    <v-btn class="ma-2" color="success" icon="mdi-pencil"></v-btn>
+                  <div class="d-flex2">
+                    <v-card-title class="d-flex2">
+                    {{ dashboard.name }} <v-btn class="ma-2" :color="dashboard.color" size="small" :icon="dashboard.icon"></v-btn>   
+                    </v-card-title>
                   </div>
-                </v-col>
-                  </div>
-                  
-                  <div class="pb-5 pt-2 px-3 d-flex1">
-                    <div class="text-left row">
-                      <v-chip class="mx-3" color="green" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ activeuser }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('active') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="orange" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ inactiveuser }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('inactive') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="error" style="visibility: hidden;" size="small">
-
+                  <div class="pb-5 pl-1 pt-1 d-flex1">
+                    <div class="text-left row  px-1" v-for="(status, k) in dashboard.status" :key="k">
+                      <v-chip class="mx-3" :color="status.color" size="small">
+                       <b class="mr-1">{{ status.count }}</b> {{ status.status_name }}
                       </v-chip>
                     </div>
                   </div>
                 </v-col>
-                
               </v-row>
             </v-card>
           </v-col>
-
-          <!------- EVENT CARD ------>
-          <v-col md="3" class="direction_col">
-            <v-card density="comfortable" elevation="6" class="eventcard routecard" @click="route_to_page('event')">
-              <v-row>
-                <v-col md="12">
-                  <div class="d-flex1">
-                  <v-card-title>
-                    {{ $t('events') }}
-                  </v-card-title>
-                  <v-col md="4" class="cardlogo">
-                  <div class="icon-wrapper">
-                    <v-btn class="ma-2" color="warning" icon="mdi-calendar-check"></v-btn>
-                  </div>
-                </v-col>
-                  </div>
-                  <div class="pb-5 pt-2 px-3 d-flex1">
-                    <div class="text-left row">
-                      <v-chip class="mx-3" color="orange" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ irevents }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('in_review') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="green" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ apevents }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('approved') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="error" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ reevents }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('rejected') }}
-                      </v-chip>
-                    </div>
-                  </div>
-                </v-col>
-                
-              </v-row>
-            </v-card>
-          </v-col>
-
-          <!------- PROMOTION CARD ------>
-          <v-col md="3" class="direction_col">
-            <v-card density="comfortable" elevation="6" class="promocard routecard" @click="route_to_page('promotion')">
-              <v-row>
-                <v-col md="12">
-                   <div class="d-flex1">
-                  <v-card-title>
-                    {{ $t('promotions') }}
-                  </v-card-title>
-                   <v-col md="4" class="cardlogo">
-                  <div class="icon-wrapper">
-                    <v-btn class="ma-2" color="primary" icon="mdi-ticket-percent"></v-btn>
-                  </div>
-                </v-col>
-                  </div>
-                  <div class="pb-5 pt-2 px-3 d-flex1">
-                    <div class="text-left row">
-                      <v-chip class="mx-3" color="orange" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ irpromo }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('in_review') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="green" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ appromo }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('approved') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="error" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ repromo }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('rejected') }}
-                      </v-chip>
-                    </div>
-                  </div>
-                </v-col>
-               
-              </v-row>
-            </v-card>
-          </v-col>
-
-          <!------- PRODUCT CARD ------>
-          <v-col md="3" class="direction_col">
-            <v-card density="comfortable" elevation="6" class="productcard routecard" @click="route_to_page('product')">
-              <v-row>
-                <v-col md="12">
-                  <div class="d-flex1">
-                  <v-card-title>
-                    {{ $t('products') }}
-                  </v-card-title>
-                   <v-col md="4" class="cardlogo">
-                  <div class="icon-wrapper">
-                    <v-btn class="ma-2" color="error" icon="mdi-view-module"></v-btn>
-                  </div>
-                </v-col>
-                  </div>
-                  <div class="pb-5 pt-2 px-3 d-flex1">
-                    <div class="text-left row">
-                      <v-chip class="mx-3" color="orange" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ irprod }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('in_review') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="green" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ approd }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('approved') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="error" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ reprod }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('rejected') }}
-                      </v-chip>
-                    </div>
-                  </div>
-                </v-col>
-               
-              </v-row>
-            </v-card>
-          </v-col>
-
-          <!------- CATEGORY CARD ------>
-          <v-col md="3" class="direction_col" v-if="user.rolename == 'SuperUser'">
-            <v-card density="comfortable" elevation="6" class="categorycard routecard" @click="route_to_page('category')">
-              <v-row>
-                <v-col md="12">
-                    <div class="d-flex1">
-                  <v-card-title>
-                    {{ $t('categories') }}
-                  </v-card-title>
-                   <v-col md="4" class="cardlogo">
-                  <div class="icon-wrapper">
-                    <v-btn class="ma-2" color="error" icon="mdi mdi-apps"></v-btn>
-                  </div>
-                </v-col>
-                  </div>
-                  <div class="pb-5 pt-2 px-3 d-flex1">
-                    <div class="text-left row">
-                      <v-chip class="mx-3" color="orange" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ ircat }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('in_review') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="green" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ apcat }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('approved') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="error" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ recat }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('rejected') }}
-                      </v-chip>
-                    </div>
-                  </div>
-                </v-col>
-               
-              </v-row>
-            </v-card>
-          </v-col>
-
-          <!------- CAREER CARD ------>
-          <v-col md="3" class="direction_col">
-            <v-card density="comfortable" elevation="6" class="carriercard routecard" @click="route_to_page('career')">
-              <v-row>
-                <v-col md="12">
-                   <div class="d-flex1">
-                  <v-card-title>
-                    {{ $t('careers') }}
-                  </v-card-title>
-                    <v-col md="4" class="cardlogo">
-                  <div class="icon-wrapper">
-                    <v-btn class="ma-2" color="primary" icon="mdi mdi-briefcase"></v-btn>
-                  </div>
-                </v-col>
-                  </div>
-                  <div class="pb-5 pt-2 px-3 d-flex1">
-                    <div class="text-left row">
-                      <v-chip class="mx-3" color="orange" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ ircar }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('in_review') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="green" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ apcar }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('approved') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="error" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ recar }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('rejected') }}
-                      </v-chip>
-                    </div>
-                  </div>
-                </v-col>
-              
-              </v-row>
-            </v-card>
-          </v-col>
-
-          <!------- STORE CARD ------>
-          <v-col md="3" class="direction_col" v-if="user.rolename == 'SuperUser'">
-            <v-card density="comfortable" elevation="6" class="storecard routecard" @click="route_to_page('store')">
-              <v-row>
-                <v-col md="12">
-                   <div class="d-flex1">
-                  <v-card-title>
-                    {{ $t('stores') }}
-                  </v-card-title>
-                   <v-col md="4" class="cardlogo">
-                  <div class="icon-wrapper">
-                    <v-btn class="ma-2" color="warning" icon="mdi mdi-storefront-outline"></v-btn>
-                  </div>
-                </v-col>
-                  </div>
-                  <div class="pb-5 pt-2 px-3 d-flex1">
-                    <div class="text-left row">
-                      <v-chip class="mx-3" color="orange" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ irstore }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('in_review') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="green" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ apstore }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('approved') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="error" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ re_store }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('rejected') }}
-                      </v-chip>
-                    </div>
-                  </div>
-                </v-col>
-               
-              </v-row>
-            </v-card>
-          </v-col>
-
-          <!------- TESTIMONIAL CARD ------>
-          <v-col md="3" class="direction_col" v-if="user.rolename == 'SuperUser'">
-            <v-card density="comfortable" elevation="6" class="testimonialcard routecard"
-              @click="route_to_page('testimonial')">
-              <v-row>
-                <v-col md="12">
-                  <div class="d-flex1">
-                  <v-card-title>
-                    {{ $t('testimonials') }}
-                  </v-card-title>
-                   <v-col md="4" class="cardlogo">
-                  <div class="icon-wrapper">
-                    <v-btn class="ma-2" color="success" icon="mdi mdi-message-text-fast-outline"></v-btn>
-                  </div>
-                </v-col>
-                  </div>
-                  <div class="pb-5 pt-2 px-3 d-flex1">
-                    <div class="text-left row">
-                      <v-chip class="mx-3" color="green" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ aptesti }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('approved') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="error" size="small">
-                        <template v-slot:prepend>
-                          <v-avatar class="avatarcount">
-                            {{ retesti }}
-                          </v-avatar>
-                        </template>
-                        {{ $t('rejected') }}
-                      </v-chip>
-                    </div>
-                    <div class="text-left row mt-2">
-                      <v-chip class="mx-3" color="error" style="visibility: hidden;" size="small">
-
-                      </v-chip>
-                    </div>
-                  </div>
-                </v-col>
-               
-              </v-row>
-            </v-card>
-          </v-col>
-
         </v-row>
-
       </div>
     </div>
-
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
 export default {
@@ -440,31 +41,9 @@ export default {
   data: () => ({
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
     search: "",
-    is_arabic : false,
-    user:[],
-    dasharray:[],
-    activeuser: 0,
-    inactiveuser: 0,
-    reevents: 0,
-    apevents: 0,
-    irevents: 0,
-    repromo: 0,
-    appromo: 0,
-    irpromo: 0,
-    reprod: 0,
-    approd: 0,
-    irprod: 0,
-    recat: 0,
-    apcat: 0,
-    ircat: 0,
-    recar: 0,
-    apcar: 0,
-    ircar: 0,
-    re_store: 0,
-    apstore: 0,
-    irstore: 0,
-    aptesti: 0,
-    retesti: 0,
+    is_arabic: false,
+    user: [],
+    dashboard_count: [],
     loader: false,
     role_id: "",
     menuitems: [],
@@ -475,9 +54,9 @@ export default {
     },
 
   }),
-   watch: {
+  watch: {
     '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {         
+      if (newLocale === 'ar') {
         this.is_arabic = true;
       } else {
         this.is_arabic = false;
@@ -495,29 +74,7 @@ export default {
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetchdashboard")
         .then((res) => {
-          this.dasharray=res.data;
-          this.activeuser = res.data.activeuser;
-          this.inactiveuser = res.data.inactiveuser;
-          this.irevents = res.data.irevents;
-          this.apevents = res.data.apevents;
-          this.reevents = res.data.reevents;
-          this.irpromo = res.data.irpromo;
-          this.appromo = res.data.appromo;
-          this.repromo = res.data.repromo;
-          this.irprod = res.data.irprod;
-          this.approd = res.data.approd;
-          this.reprod = res.data.reprod;
-          this.ircat = res.data.ircat;
-          this.apcat = res.data.apcat;
-          this.recat = res.data.recat;
-          this.ircar = res.data.ircar;
-          this.apcar = res.data.apcar;
-          this.recar = res.data.recar;
-          this.irstore = res.data.irstore;
-          this.apstore = res.data.apstore;
-          this.re_store = res.data.re_store;
-          this.aptesti = res.data.aptesti;
-          this.retesti = res.data.retesti;
+          this.dashboard_count = res.data.count_dashboard;
           this.loader = false;
         })
         .catch((err) => {
@@ -528,28 +85,28 @@ export default {
     },
 
     route_to_page(page) {
-      if (page == 'user') {
+      if (page == 'Users') {
         this.$router.push({ name: 'users' });
       }
-      else if (page == 'event') {
+      else if (page == 'Events') {
         this.$router.push({ name: 'events' });
       }
-      else if (page == 'promotion') {
+      else if (page == 'Promotions') {
         this.$router.push({ name: 'promotions_offers' });
       }
-      else if (page == 'product') {
+      else if (page == 'Products') {
         this.$router.push({ name: 'products' });
       }
-      else if (page == 'category') {
+      else if (page == 'Categories') {
         this.$router.push({ name: 'categories' });
       }
-      else if (page == 'career') {
+      else if (page == 'Careers') {
         this.$router.push({ name: 'careers' });
       }
-      else if (page == 'store') {
+      else if (page == 'Stores') {
         this.$router.push({ name: 'stores' });
       }
-      else if (page == 'testimonial') {
+      else if (page == 'Testimonials') {
         this.$router.push({ name: 'reviews-testimonials' });
       }
       else {
@@ -564,23 +121,19 @@ export default {
   padding-right: 0px;
 }
 
-.dash-parent .usercard,
-.testimonialcard {
+.dash-parent .success {
   border-bottom: 4px solid green;
 }
 
-.dash-parent .eventcard,
-.storecard {
+.dash-parent .warning {
   border-bottom: 4px solid orange;
 }
 
-.dash-parent .promocard,
-.carriercard {
+.dash-parent .primary {
   border-bottom: 4px solid blue;
 }
 
-.dash-parent .productcard,
-.categorycard {
+.dash-parent .error {
   border-bottom: 4px solid red;
 }
 
@@ -609,18 +162,30 @@ export default {
 .routecard {
   cursor: pointer;
 }
-.arabic_row .direction_col{
+
+.arabic_row .direction_col {
   direction: rtl;
   text-align: right;
 }
-.d-flex1{display: flex !important;
+
+.d-flex2 {
+  display: flex !important;
   width: 100%;
   justify-content: space-between;
-  align-items: baseline;}
+  align-items: baseline;
+}
+.d-flex1 {
+  display: flex !important;
+  width: 100%;
+  align-items: baseline;
+}
+
 .routecard:hover {
   height: 100.1%;
   width: 100.1%;
   box-shadow: 0 18px 26px rgba(21, 1, 1, 0.2);
 }
-.v-chip.v-chip--size-small{width: 86px;}
-</style>
+
+.v-chip.v-chip--size-small {
+  width: 86px;
+}</style>
