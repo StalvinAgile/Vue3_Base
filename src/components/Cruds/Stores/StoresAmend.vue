@@ -103,14 +103,14 @@
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="4" sm="4" md="4">
-                    <v-tooltip :text="$t('name')" location="bottom">
+                    <v-tooltip :text="$t('name_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
                           v-model="stores[0].name"
                           :rules="fieldRules"
                           maxlength="100"
-                          v-bind:label="$t('name')"
+                          v-bind:label="$t('name_en')"
                           class="required_field"
                           required
                           variant="outlined"
@@ -120,14 +120,14 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
-                    <v-tooltip :text="$t('email')" location="bottom">
+                    <v-tooltip :text="$t('email_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
                           v-model="stores[0].email"
                           :rules="[...fieldRules, ...emailRules]"
                           maxlength="100"
-                          v-bind:label="$t('email')"
+                          v-bind:label="$t('email_en')"
                           class="required_field"
                           required
                           variant="outlined"
@@ -137,7 +137,7 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="4" sm="4" md="4">
-                    <v-tooltip :text="$t('phone')" location="bottom">
+                    <v-tooltip :text="$t('phone_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
@@ -145,7 +145,7 @@
                           :rules="phoneRules"
                           v-on:keypress="NumbersOnly"
                           maxlength="100"
-                          v-bind:label="$t('phone')"
+                          v-bind:label="$t('phone_en')"
                           required
                           class="required_field"
                           variant="outlined"
@@ -159,10 +159,10 @@
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="12" md="3" sm="3" lg="3">
-                    <v-tooltip :text="$t('country')" location="bottom">
+                    <v-tooltip :text="$t('country_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
-                          v-bind:label="$t('country')"
+                          v-bind:label="$t('country_en')"
                           v-bind="props"
                           variant="outlined"
                           density="compact"
@@ -181,10 +181,10 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" md="3" sm="3" lg="3">
-                    <v-tooltip :text="$t('state')" location="bottom">
+                    <v-tooltip :text="$t('state_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
-                          v-bind:label="$t('state')"
+                          v-bind:label="$t('state_en')"
                           v-bind="props"
                           variant="outlined"
                           density="compact"
@@ -203,10 +203,10 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" md="3" sm="3" lg="3">
-                    <v-tooltip :text="$t('city')" location="bottom">
+                    <v-tooltip :text="$t('city_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
-                          v-bind:label="$t('city')"
+                          v-bind:label="$t('city_en')"
                           v-bind="props"
                           variant="outlined"
                           density="compact"
@@ -225,10 +225,10 @@
                   </v-col>
 
                   <v-col cols="12" md="3" lg="3" sm="3" px-2>
-                    <v-tooltip :text="$t('postcode')" location="bottom">
+                    <v-tooltip :text="$t('postcode_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
-                          v-bind:label="$t('postcode')"
+                          v-bind:label="$t('postcode_en')"
                           :rules="postcodeRules"
                           v-on:keypress="NumbersOnly"
                           v-bind="props"
@@ -247,7 +247,7 @@
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="12" md="4" sm="4" lg="4">
-                    <v-tooltip :text="$t('address')" location="bottom">
+                    <v-tooltip :text="$t('address_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea
                           rows="3"
@@ -259,14 +259,14 @@
                           :rules="fieldRules"
                           counter="true"
                           v-model="stores[0].address"
-                          v-bind:label="$t('address')"
+                          v-bind:label="$t('address_en')"
                           required
                         ></v-textarea>
                       </template>
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" md="8" sm="8" lg="8">
-                    <v-tooltip :text="$t('description')" location="bottom">
+                    <v-tooltip :text="$t('description_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea
                           rows="3"
@@ -278,7 +278,7 @@
                           :rules="descriptionRules"
                           counter="true"
                           v-model="stores[0].description"
-                          v-bind:label="$t('description')"
+                          v-bind:label="$t('description_en')"
                           required
                         ></v-textarea>
                       </template>
@@ -289,7 +289,7 @@
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="4" sm="4" md="4">
-                    <v-tooltip :text="$t('meta_title')" location="bottom">
+                    <v-tooltip :text="$t('meta_title_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
@@ -297,7 +297,7 @@
                           :rules="fieldRules"
                           maxlength="100"
                           class="required_field"
-                          v-bind:label="$t('meta_title')"
+                          v-bind:label="$t('meta_title_en')"
                           required
                           variant="outlined"
                           density="compact"
@@ -306,7 +306,7 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" md="8" sm="8" lg="8">
-                    <v-tooltip :text="$t('meta_description')" location="bottom">
+                    <v-tooltip :text="$t('meta_description_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea
                           rows="3"
@@ -318,7 +318,7 @@
                           class="required_field"
                           counter="true"
                           v-model="stores[0].meta_description"
-                          v-bind:label="$t('meta_description')"
+                          v-bind:label="$t('meta_description_en')"
                           required
                         ></v-textarea>
                       </template>
@@ -329,30 +329,13 @@
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="4" sm="4" md="4">
-                    <v-tooltip :text="$t('website')" location="bottom">
+                    <v-tooltip :text="$t('store_code')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
-                          v-model="stores[0].website"
+                          v-model="stores[0].store_code"
                           maxlength="100"
-                          v-bind:label="$t('website')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
-                      </template>
-                    </v-tooltip>
-                  </v-col>
-                  <v-col cols="2" sm="2" md="2">
-                    <v-tooltip :text="$t('sequence')" location="bottom">
-                      <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="stores[0].seq"
-                          maxlength="100"
-                          :rules="phoneRules"
-                          v-on:keypress="NumbersOnly"
-                          v-bind:label="$t('sequence')"
+                          v-bind:label="$t('store_code')"
                           required
                           class="required_field"
                           variant="outlined"
@@ -361,9 +344,42 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="3" sm="3" md="3">
+                  <v-col cols="4" sm="4" md="4">
+                    <v-tooltip :text="$t('website_en')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="stores[0].website"
+                          maxlength="100"
+                          v-bind:label="$t('website_en')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="2" sm="2" md="2">
+                    <v-tooltip :text="$t('sequence_en')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="stores[0].seq"
+                          maxlength="100"
+                          :rules="phoneRules"
+                          v-on:keypress="NumbersOnly"
+                          v-bind:label="$t('sequence_en')"
+                          required
+                          class="required_field"
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="2" sm="2" md="2">
                     <div>
-                      <span class="mb-5">{{ $t("logo") }}</span>
+                      <span class="mb-5">{{ $t("logo_en") }}</span>
                       <div class="image-container">
                         <v-hover v-slot="{ isHovering, props }">
                           <div style="position: relative" v-bind="props">
@@ -779,6 +795,21 @@
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="6" sm="6" md="4">
+                    <v-tooltip :text="$t('store_code_ar')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-text-field
+                          v-bind="props"
+                          v-model="stores[1].store_code"
+                          maxlength="100"
+                          v-bind:label="$t('store_code_ar')"
+                          required
+                          variant="outlined"
+                          density="compact"
+                        ></v-text-field>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="6" sm="6" md="4">
                     <v-tooltip :text="$t('website_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
@@ -811,7 +842,7 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="3" sm="3" md="3">
+                  <v-col cols="2" sm="2" md="2">
                     <div>
                       <span class="mb-5">{{ $t("logo_ar") }}</span>
                       <div class="image-container">
