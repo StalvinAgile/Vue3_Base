@@ -369,7 +369,10 @@
   "mall":"مول",
   "click_here_to_file_upload": "انقر هنا لتحميل الملف",
   "store_timing": "توقيت المتجر",
-
+  "pls_fill_all_fields_in_template" : "يرجى ملء جميع الحقول المطلوبة كما هو موضح في النموذج.",
+  "uploaded_succesfully" : "تم الرفع بنجاح",
+  "error_message" : "رسالة خطأ",
+  "rows_inserted": " تم إدراج الصفوف",
   "--------start_english_translation----------": "--------start_english_translation----------",
   "name_en": "Name",
   "title_en": "Title",

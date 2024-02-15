@@ -111,6 +111,7 @@
                           :rules="fieldRules"
                           maxlength="100"
                           v-bind:label="$t('name')"
+                          class="required_field rtl"
                           required
                           variant="outlined"
                           density="compact"
@@ -127,6 +128,7 @@
                           :rules="[...fieldRules, ...emailRules]"
                           maxlength="100"
                           v-bind:label="$t('email')"
+                          class="required_field rtl"
                           required
                           variant="outlined"
                           density="compact"
@@ -145,6 +147,7 @@
                           maxlength="100"
                           v-bind:label="$t('phone')"
                           required
+                          class="required_field rtl"
                           variant="outlined"
                           density="compact"
                         ></v-text-field>
@@ -165,6 +168,7 @@
                           density="compact"
                           index="id"
                           item-key="name"
+                          class="required_field rtl"
                           item-value="header_id"
                           item-title="name"
                           required
@@ -184,6 +188,7 @@
                           v-bind="props"
                           variant="outlined"
                           density="compact"
+                          class="required_field rtl"
                           index="id"
                           item-key="name"
                           item-title="name"
@@ -207,6 +212,7 @@
                           density="compact"
                           index="id"
                           item-key="name"
+                          class="required_field rtl"
                           item-value="header_id"
                           item-title="name"
                           required
@@ -227,6 +233,7 @@
                           v-on:keypress="NumbersOnly"
                           v-bind="props"
                           variant="outlined"
+                          class="required_field rtl"
                           density="compact"
                           maxlength="12"
                           v-model="stores[0].post_code"
@@ -247,6 +254,7 @@
                           v-bind="props"
                           variant="outlined"
                           density="compact"
+                          class="required_field rtl"
                           maxlength="250"
                           :rules="fieldRules"
                           counter="true"
@@ -265,6 +273,7 @@
                           v-bind="props"
                           variant="outlined"
                           density="compact"
+                          class="required_field rtl"
                           maxlength="250"
                           :rules="descriptionRules"
                           counter="true"
@@ -287,6 +296,7 @@
                           v-model="stores[0].meta_title"
                           :rules="fieldRules"
                           maxlength="100"
+                          class="required_field rtl"
                           v-bind:label="$t('meta_title')"
                           required
                           variant="outlined"
@@ -305,6 +315,7 @@
                           density="compact"
                           :rules="descriptionRules"
                           maxlength="250"
+                          class="required_field rtl"
                           counter="true"
                           v-model="stores[0].meta_description"
                           v-bind:label="$t('meta_description')"
@@ -343,6 +354,7 @@
                           v-on:keypress="NumbersOnly"
                           v-bind:label="$t('sequence')"
                           required
+                          class="required_field rtl"
                           variant="outlined"
                           density="compact"
                         ></v-text-field>
@@ -605,6 +617,7 @@
                           index="id"
                           item-key="name"
                           item-value="header_id"
+                          class="required_field rtl"
                           item-title="name"
                           required
                           :rules="fieldRules"
@@ -624,6 +637,7 @@
                           variant="outlined"
                           density="compact"
                           index="id"
+                          class="required_field rtl"
                           item-key="name"
                           item-value="header_id"
                           item-title="name"
@@ -647,6 +661,7 @@
                           index="id"
                           item-key="name"
                           item-title="name"
+                          class="required_field rtl"
                           required
                           :rules="fieldRules"
                           item-value="header_id"
@@ -772,7 +787,6 @@
                           maxlength="100"
                           v-bind:label="$t('website_ar')"
                           required
-                          class="required_field rtl"
                           variant="outlined"
                           density="compact"
                         ></v-text-field>
