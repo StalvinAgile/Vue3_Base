@@ -2,12 +2,12 @@
     <div>
         <v-row v-if="response_data">
             <v-col md="12">
-                <v-alert v-if="fail_message" icon="mdi-message-alert" class="erroralert" v-model="have_error"
-                    variant="tonal" closable close-label="Close Alert" color="error" title="Error Message">
+                <v-alert icon="mdi-message-alert" class="erroralert" v-model="fail_alert" variant="tonal" closable
+                    close-label="Close Alert" color="error" :title="$t('error_message')">
                     {{ fail_message }}
                 </v-alert>
-                <v-alert v-if="success_message" icon="mdi-check-bold" class="erroralert" v-model="alert_message"
-                    variant="tonal" closable close-label="Close Alert" color="success" title="Uploaded Succesfully">
+                <v-alert icon="mdi-check-bold" class="erroralert" v-model="success_alert" variant="tonal" closable
+                    close-label="Close Alert" color="success" :title="$t('uploaded_succesfully')">
                     {{ success_message }}
                 </v-alert>
             </v-col>
@@ -62,6 +62,8 @@ export default {
             excel_json: [],
             success_message: '',
             fail_message: '',
+            success_alert: false,
+            fail_alert: false,
             btn_loader: false,
         };
     },
@@ -70,13 +72,24 @@ export default {
             immediate: true,
             handler() {
                 this.btn_loader = false;
+                this.fail_alert = false;
+                this.success_alert = false;
                 if (this.response_data == "S") {
+                    this.success_message = (this.count_row-1) + this.$t('rows_inserted');
+                    this.filename = '';
+                    this.$refs.file.value = null;
+                    this.success_alert = false;
+                    this.fail_alert = false;
                     this.fail_message = '';
-                    this.success_message = this.count_row + this.$t('rows_inserted');
+                    this.success_alert = true;
+                    this.fail_alert = false;
+                    this.tableData = [];
                 }
                 else {
+                    this.success_alert = false;
+                    this.fail_alert = true;
                     this.success_message = '';
-                    this.fail_message = this.$t('please_add_data');
+                    this.fail_message = this.$t('pls_fill_all_fields_in_template');
                 }
             }
         }
@@ -92,11 +105,15 @@ export default {
             this.filename = '';
             this.tableData = [];
             this.$refs.file.value = null;
+            this.success_alert = false;
+            this.fail_alert = false;
         },
         handleFileUpload(event) {
             this.count_row = 0;
             this.fail_message = '';
             this.success_message = '';
+            this.success_alert = false;
+            this.fail_alert = false;
             const file = event.target.files[0];
             this.filename = file.name;
             const reader = new FileReader();
@@ -131,5 +148,9 @@ export default {
     right: 5px;
     top: 4px;
     font-size: 16px;
+}
+
+.erroralert /deep/ i {
+    margin-top: 5px;
 }
 </style>
