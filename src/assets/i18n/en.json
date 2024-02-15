@@ -384,7 +384,7 @@
   "mall_timing_categories_en": "Mall Timing Categories",
   "from_day_en": "From Day",
   "to_day_en": "To Day",
-  "rows_inserted" : " Row inserted !",
+  "rows_inserted": " Row inserted !",
   "from_time_en": "From Timing",
   "to_time_en": "To Timing",
   "click_here_to_file_upload": "Click here to file upload",
@@ -460,6 +460,7 @@
   "file_input_ar": "إدخال الملف",
   "store_type_ar": "نوع المتاجر",
   "target_ar": "هدف",
-  "mall_en":"Mall",
-  "week_day_ar": "يوم الأسبوع"
+  "week_day_ar": "يوم الأسبوع",
+  "mall_en": "Mall",
+  "download_en": "Download"
 }

@@ -17,7 +17,7 @@
               variant="outlined"
               v-model="search"
               append-icon="search"
-             v-bind:label="$t('search')"
+              v-bind:label="$t('search')"
               class="srch_bar"
               small
               hide-details
@@ -52,7 +52,7 @@
         <span>{{ $t("arabic") }}</span>
       </v-tab>
     </v-tabs>
-    
+
     <v-window v-model="tabs">
       <!-- ENGLISH TAB STARTS -->
       <v-window-item :value="1">
@@ -61,10 +61,8 @@
           :items="e_magazine_en"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+          :no-data-text="$t('no_data_available_en')"
+          :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -92,7 +90,7 @@
                   >
                 </v-btn>
               </td>
-                <td>
+              <td>
                 <v-chip
                   :color="getStatusColor(props.item.selectable.approval_status)"
                   variant="outlined"
@@ -154,13 +152,13 @@
           :search="search"
           :loading="initval"
           class="rtl-direction"
-          :no-data-text="$t('no_data_available')"
-          :items-per-page-text="$t('rows_per_page')"
+          :no-data-text="$t('no_data_available_ar')"
+          :items-per-page-text="$t('rows_per_page_ar')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
-              <td>{{ props.item.selectable.title}}</td>
-              <td>{{ props.item.selectable.description}}</td>
+              <td>{{ props.item.selectable.title }}</td>
+              <td>{{ props.item.selectable.description }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -183,7 +181,7 @@
                   >
                 </v-btn>
               </td>
-                <td>
+              <td>
                 <v-chip
                   :color="getStatusColor(props.item.selectable.approval_status)"
                   variant="outlined"
@@ -298,9 +296,9 @@ export default {
           key: "status",
         },
         {
-        title: this.$t("approval_en"),
-        key: "approval_status",
-      },
+          title: this.$t("approval_en"),
+          key: "approval_status",
+        },
         {
           title: this.$t("action_en"),
           align: "center",
@@ -323,9 +321,9 @@ export default {
           key: "status",
         },
         {
-        title: this.$t("approval_ar"),
-        key: "approval_status",
-      },
+          title: this.$t("approval_ar"),
+          key: "approval_status",
+        },
         {
           title: this.$t("action_ar"),
           align: "center",
@@ -347,13 +345,13 @@ export default {
   },
 
   methods: {
-     viewEMagzine(slug) {
+    viewEMagzine(slug) {
       this.$router.push({
         name: "e-magazine-review",
         query: { slug: slug },
       });
     },
-       getStatusColor(status) {
+    getStatusColor(status) {
       switch (status) {
         case "Approved":
           return "green";
@@ -440,12 +438,9 @@ export default {
     statusUpdate() {
       this.loader = true;
       this.$axios
-        .post(
-          process.env.VUE_APP_API_URL_ADMIN + "update-e-magazine-status",
-          {
-            id: this.status_id,
-          }
-        )
+        .post(process.env.VUE_APP_API_URL_ADMIN + "update-e-magazine-status", {
+          id: this.status_id,
+        })
         .then((res) => {
           if (Array.isArray(res.data.message)) {
             this.array_data = res.data.message.toString();

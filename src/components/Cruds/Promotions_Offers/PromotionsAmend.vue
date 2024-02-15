@@ -89,9 +89,9 @@
                       class="required_field"
                       required
                       index="id"
-                      :items="promotions_type"
-                      item-value="name"
-                      item-title="name"
+                      :items="p_type_en"
+                      item-value="shortname"
+                      item-title="longname"
                     ></v-select>
                   </template>
                 </v-tooltip>
@@ -324,9 +324,9 @@
                       class="required_field"
                       required
                       index="id"
-                      :items="promotions_type"
-                      item-value="name"
-                      item-title="name"
+                      :items="p_type_ar"
+                      item-value="shortname"
+                      item-title="longname"
                     ></v-select>
                   </template>
                 </v-tooltip>
@@ -559,18 +559,9 @@ export default {
     isDisabled: false,
     checkbox_value: false,
     uploadfile: false,
-    promotions_type: [
-      {
-        id: 1,
-        name: "promotions",
-        value: "Promotions",
-      },
-      {
-        id: 2,
-        name: "offers",
-        value: "Offers",
-      },
-    ],
+    p_type_en:[],
+    p_type_ar:[],
+    
     promotions: [
       {
         id: 0,
@@ -638,6 +629,7 @@ export default {
   mounted() {
     this.promotions[0].type = "promotions";
     this.promotions[1].type = "promotions";
+    this.fetchLookup();
   },
   created() {},
   watch: {
@@ -665,6 +657,22 @@ export default {
     },
   },
   methods: {
+    fetchLookup() {
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_lang_lookup", {
+          params: {
+            lookup_type: "PROMOTION_TYPE",
+          },
+        })
+        .then((response) => {
+          this.p_type_en = response.data.lookup_en;
+          this.p_type_ar = response.data.lookup_ar;
+        })
+        .catch((err) => {
+          this.$toast.error(this.$t("something_went_wrong"));
+          console.log(err);
+        });
+    },
     uploaded_image(img_src) {
       //alert('uploaded image');
       //alert(img_src);

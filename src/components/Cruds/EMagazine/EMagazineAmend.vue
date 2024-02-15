@@ -486,7 +486,7 @@
                 :disabled="loading"
                 class="ma-1"
                 color="cancel"
-                >{{ $t("cancel_ar") }}</v-btn
+                >{{ $t("cancel") }}</v-btn
               >
             </div>
           </template>
@@ -501,7 +501,7 @@
                 class="mr-2"
                 color="success"
               >
-                {{ $t("submit_ar") }}
+                {{ $t("submit") }}
                 <v-progress-circular
                   v-if="isBtnLoading"
                   indeterminate
