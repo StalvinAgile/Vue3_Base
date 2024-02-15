@@ -4,26 +4,26 @@
     <content-loader v-if="loader"></content-loader>
     <div class="container-fluid">
       <div class="dash-parent" v-bind:class="[is_arabic ? 'arabic_row' : '']">
-        <v-row> <v-col md="3" class="direction_col" v-for="(dashboard, i) in dashboard_count" :key="i">
-            <v-card density="comfortable" elevation="6" class="routecard" :class="dashboard.color"
+        <v-row>
+          <v-col md="3" class="direction_col" v-for="(dashboard, i) in dashboard_count" :key="i">
+            <v-card density="comfortable" elevation="8" class="routecard" :class="dashboard.color"
               @click="route_to_page(dashboard.name)">
               <v-row>
                 <v-col md="12">
                   <div class="d-flex2">
                     <v-card-title class="d-flex2">
                       {{ changeNameTranslation(dashboard.name) }}
-                    <v-btn class="ma-2" :color="dashboard.color" size="small" :icon="dashboard.icon"></v-btn>   
+                      <v-btn class="ma-2" :color="dashboard.color" size="small" :icon="dashboard.icon"></v-btn>
                     </v-card-title>
                   </div>
-                  <div class="pb-5 pt-4 d-flex1">
+                  <div class="pb-6 pt-4 d-flex1">
                     <v-row class="px-5">
                       <div v-for="(status, k) in dashboard.status" :key="k">
                         <v-chip class="mr-1" :color="status.color" size="small">
-                       <b class="mx-1">{{ status.count }}</b> {{ changeStatusTranslation(status.status_name) }}
-                      </v-chip>
+                          <b class="mx-1">{{ status.count }}</b> {{ changeStatusTranslation(status.status_name) }}
+                        </v-chip>
                       </div>
                     </v-row>
-                 
                   </div>
                 </v-col>
               </v-row>
@@ -69,7 +69,7 @@ export default {
   },
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user_data"));
-    this.fetchDashboard(this.user.id,this.user.rolename);
+    this.fetchDashboard(this.user.id, this.user.rolename);
   },
 
   methods: {
@@ -111,43 +111,43 @@ export default {
           return "";
       }
     },
-    fetchDashboard(userId,Role) {
+    fetchDashboard(userId, Role) {
       this.loader = true;
-      if(Role == 'SuperUser'){
+      if (Role == 'SuperUser') {
         this.$axios.get(process.env.VUE_APP_API_URL_ADMIN + "fetchDashboardSuperUser/" + userId)
-        .then((res) => {
-          this.dashboard_count = res.data.count_dashboard;
-          this.loader = false;
-        })
-        .catch((err) => {
-          this.$toast.error(this.$t("something_went_wrong"));
-          this.initval = false;
-          console.log(err);
-        });
+          .then((res) => {
+            this.dashboard_count = res.data.count_dashboard;
+            this.loader = false;
+          })
+          .catch((err) => {
+            this.$toast.error(this.$t("something_went_wrong"));
+            this.initval = false;
+            console.log(err);
+          });
       }
-      else if(Role == 'MallAdmin'){
+      else if (Role == 'MallAdmin') {
         this.$axios.get(process.env.VUE_APP_API_URL_ADMIN + "fetchDashboardMallAdmin/" + userId)
-        .then((res) => {
-          this.dashboard_count = res.data.count_dashboard;
-          this.loader = false;
-        })
-        .catch((err) => {
-          this.$toast.error(this.$t("something_went_wrong"));
-          this.initval = false;
-          console.log(err);
-        });
+          .then((res) => {
+            this.dashboard_count = res.data.count_dashboard;
+            this.loader = false;
+          })
+          .catch((err) => {
+            this.$toast.error(this.$t("something_went_wrong"));
+            this.initval = false;
+            console.log(err);
+          });
       }
-      else{
+      else {
         this.$axios.get(process.env.VUE_APP_API_URL_ADMIN + "fetchDashboardStoreAdmin/" + userId)
-        .then((res) => {
-          this.dashboard_count = res.data.count_dashboard;
-          this.loader = false;
-        })
-        .catch((err) => {
-          this.$toast.error(this.$t("something_went_wrong"));
-          this.initval = false;
-          console.log(err);
-        });
+          .then((res) => {
+            this.dashboard_count = res.data.count_dashboard;
+            this.loader = false;
+          })
+          .catch((err) => {
+            this.$toast.error(this.$t("something_went_wrong"));
+            this.initval = false;
+            console.log(err);
+          });
       }
     },
 
@@ -203,12 +203,15 @@ export default {
 .dash-parent .error {
   border-bottom: 4px solid red;
 }
+
 .dash-parent .pink {
   border-bottom: 4px solid #E91E63;
 }
+
 .dash-parent .purple {
   border-bottom: 4px solid #9C27B0;
 }
+
 .dash-parent .lime {
   border-bottom: 4px solid #CDDC39;
 }
@@ -250,6 +253,7 @@ export default {
   justify-content: space-between;
   align-items: baseline;
 }
+
 .d-flex1 {
   display: flex !important;
   width: 100%;

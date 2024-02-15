@@ -7,9 +7,8 @@
         :google_icon="google_icon"
       ></page-title>
     </div>
-
     <div class="card-body">
-      <v-form autocomplete="off" ref="form" v-model="valid">
+      <v-form autocomplete="off" ref="form" v-model="valid" v-bind:class="[is_arabic ? 'arabicclass' : '']">
         <v-container>
           <v-row class="mx-auto mt-2" max-width="344">
             <v-col md="6">
@@ -157,6 +156,7 @@ export default {
     currentpasswordtoggle: String,
     newpasswordtoggle: String,
     confirmpwdtoggle: String,
+    is_arabic: false,
     newpasswordshow: false,
     confirmpasswordshow: false,
   }),
@@ -172,7 +172,15 @@ export default {
     },
   },
   created() {},
-  watch: {},
+  watch: {
+    '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.is_arabic = true;
+      } else {
+        this.is_arabic = false;
+      }
+    },
+  },
   mounted() {
     this.userprofile = JSON.parse(localStorage.getItem("user_data"));
   },
@@ -248,3 +256,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.arabicclass /deep/ .v-field-label{
+  direction: rtl;
+}
+</style>
