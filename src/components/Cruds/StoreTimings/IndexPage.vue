@@ -252,6 +252,7 @@ export default {
         {
           title: " ",
           align: "center",
+          key: "start",
         },
         {
           title: this.$t("name"),
@@ -279,6 +280,7 @@ export default {
         {
           title: " ",
           align: "center",
+          key: "view",
         },
       ];
     },
