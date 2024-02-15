@@ -1,5 +1,4 @@
-
-  <template>
+<template>
   <div>
     <div flat color="white" class="row py-5 pl-5 align-items-center">
       <page-title
@@ -56,9 +55,7 @@
           v-bind:label="$t('search')"
           :loading="initval"
           v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+          :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -292,7 +289,7 @@
                   :color="getStatusColor(props.item.selectable.approval_status)"
                   variant="outlined"
                 >
-                  {{ props.item.selectable.approval_status }}
+                  {{ changeStatusAr(props.item.selectable.approval_status) }}
                 </v-chip>
               </td>
               <td>
@@ -467,6 +464,18 @@ export default {
     },
   },
   methods: {
+    changeStatusAr(status) {
+      switch (status) {
+        case "Approved":
+          return this.$t("approved_ar");
+        case "In Review":
+          return this.$t("inreview_ar");
+        case "Rejected":
+          return this.$t("rejected_ar");
+        default:
+          return "";
+      }
+    },
     getStatusColor(status) {
       switch (status) {
         case "Approved":

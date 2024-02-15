@@ -199,7 +199,7 @@
                   :color="getStatusColor(props.item.selectable.approval_status)"
                   variant="outlined"
                 >
-                  {{ ap_status(props.item.selectable.approval_status) }}
+                  {{ changeStatusAr(props.item.selectable.approval_status) }}
                 </v-chip>
               </td>
               <td class="text-center">
@@ -393,7 +393,7 @@ export default {
   },
 
   methods: {
-    ap_status(status) {
+    changeStatusAr(status) {
       switch (status) {
         case "Approved":
           return this.$t("approved_ar");

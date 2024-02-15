@@ -248,7 +248,6 @@
                       v-bind="props"
                       v-model="products[1].seq"
                       maxlength="100"
-                      :rules="phoneRules"
                       v-bind:label="$t('sequence_ar')"
                       required
                       variant="outlined"
