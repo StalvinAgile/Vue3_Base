@@ -45,7 +45,7 @@
               v-for="(day, day_index) in weekdays_en"
               :key="day_index"
             >
-              <v-col cols="12" xs="12" sm="12" lg="2" md="2">
+              <v-col cols="12" xs="12" sm="12" lg="12" md="12">
                 <v-checkbox
                   v-model="store_timings[day_index].is_holiday"
                   v-bind:label="$t('is_holiday')"
@@ -99,8 +99,8 @@
                 cols="12"
                 xs="12"
                 sm="6"
-                lg="1"
-                md="1"
+                lg="2"
+                md="2"
                 v-bind:class="[
                   store_timings[day_index].is_holiday == 1 ? 'disable' : '',
                 ]"
@@ -155,8 +155,8 @@
                 cols="12"
                 xs="12"
                 sm="6"
-                lg="1"
-                md="1"
+                lg="2"
+                md="2"
                 v-bind:class="[
                   store_timings[day_index].is_holiday == 1 ? 'disable' : '',
                 ]"
