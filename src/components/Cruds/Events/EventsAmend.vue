@@ -1,14 +1,7 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div
-      class="my-3 p-0"
-      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
-    >
-      <page-title
-        class="col-md-4 ml-2"
-        :heading="$t('create_events')"
-        :google_icon="google_icon"
-      ></page-title>
+    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']">
+      <page-title class="col-md-4 ml-2" :heading="$t('create_events')" :google_icon="google_icon"></page-title>
     </div>
     <div class="card-body">
       <content-loader v-if="loader"></content-loader>
@@ -24,23 +17,14 @@
         <!-- ENGLISH TAB STARTS -->
         <v-window-item :value="1">
           <v-form ref="form" v-model="valid">
-              <v-layout  v-if="user.rolename != 'StoreAdmin'">
+            <v-layout v-if="user.rolename != 'StoreAdmin'">
               <v-row class="px-6 mt-2">
                 <v-col xs="12" md="12" lg="12">
                   <!-- :disabled="$route.query.slug" -->
-                  <v-radio-group
-                    v-model="events[0].stor_type"
-                    inline
-                    class="radio_item"
-                    @change="updateType(events[0].stor_type)"
-                  >
-                    <v-radio
-                      v-for="(role_data, rindex) in role_array"
-                      :key="rindex"
-                      :label="changeRoleName(role_data.rolename)"
-                      :value="role_data.rolename"
-                      class="text--primary"
-                    >
+                  <v-radio-group v-model="events[0].stor_type" inline class="radio_item"
+                    @change="updateType(events[0].stor_type)">
+                    <v-radio v-for="(role_data, rindex) in role_array" :key="rindex"
+                      :label="changeRoleName(role_data.rolename)" :value="role_data.rolename" class="text--primary">
                     </v-radio>
                     <!-- <v-radio :label="$t('mall')" value="Mall"></v-radio>
                     <v-radio value="Store" :label="$t('store')"></v-radio> -->
@@ -49,64 +33,31 @@
               </v-row>
             </v-layout>
             <v-row class="mx-auto mt-2" max-width="344">
-              <v-col
-                cols="12"
-                sm="12"
-                md="12"
-                lg="3"
-                xs="12"
-                v-if="user.rolename != 'StoreAdmin'"
-              >
+              <v-col cols="12" sm="12" md="12" lg="3" xs="12" v-if="user.rolename != 'StoreAdmin'">
                 <v-tooltip :text="this.$t('store')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-autocomplete
-                      v-bind="props"
-                      v-model="events[0].store_id"
-                      v-bind:label="$t('store')"
-                      @update:modelValue="(value) => updateStore(value)"
-                      variant="outlined"
-                      density="compact"
-                      :items="stores_en"
-                      item-title="name"
-                      item-value="header_id"
-                      class="required_field"
-                      :rules="fieldRules"
-                    ></v-autocomplete>
+                    <v-autocomplete v-bind="props" v-model="events[0].store_id" v-bind:label="$t('store')"
+                      @update:modelValue="(value) => updateStore(value)" variant="outlined" density="compact"
+                      :items="stores_en" item-title="name" item-value="header_id" class="required_field"
+                      :rules="fieldRules"></v-autocomplete>
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" :md="user.rolename != 'StoreAdmin'? 4: 3">
+              <v-col cols="12" sm="12" :md="user.rolename != 'StoreAdmin' ? 4 : 3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-on="on"
-                      v-model="events[0].title"
-                      :rules="fieldRules"
-                      v-bind:label="$t('title')"
-                      v-bind="props"
-                      required
-                      variant="outlined"
-                      density="compact"
-                      maxlength="100"
-                      class="required_field"
-                    ></v-text-field>
+                    <v-text-field v-on="on" v-model="events[0].title" :rules="fieldRules" v-bind:label="$t('title')"
+                      v-bind="props" required variant="outlined" density="compact" maxlength="100"
+                      class="required_field"></v-text-field>
                   </template>
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('start_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <DatePicker
-                      v-bind="props"
-                      :label="$t('start_date_en')"
-                      :min="new Date().toISOString().substr(0, 10)"
-                      :stored_date="events[0].start_date"
-                      @formatted_date="formatted_start_date"
-                      dense
-                      :rules="fieldRules"
-                      :class_required="'RequiredField'"
-                      v-on="on"
-                    />
+                    <DatePicker v-bind="props" :label="$t('start_date_en')" :min="new Date().toISOString().substr(0, 10)"
+                      :stored_date="events[0].start_date" @formatted_date="formatted_start_date" dense :rules="fieldRules"
+                      :class_required="'RequiredField'" v-on="on" />
                   </template>
                   <span>{{ $t("start_date_en") }}</span>
                 </v-tooltip>
@@ -114,17 +65,9 @@
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('end_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <DatePicker
-                      v-bind="props"
-                      :label="$t('end_date_en')"
-                      :min="new Date().toISOString().substr(0, 10)"
-                      :stored_date="events[0].end_date"
-                      @formatted_date="formatted_end_date"
-                      dense
-                      :rules="fieldRules"
-                      :class_required="'RequiredField'"
-                      v-on="on"
-                    />
+                    <DatePicker v-bind="props" :label="$t('end_date_en')" :min="new Date().toISOString().substr(0, 10)"
+                      :stored_date="events[0].end_date" @formatted_date="formatted_end_date" dense :rules="fieldRules"
+                      :class_required="'RequiredField'" v-on="on" />
                   </template>
                   <span>{{ $t("end_date_en") }}</span>
                 </v-tooltip>
@@ -136,25 +79,12 @@
                 <v-tooltip :text="this.$t('description_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <div v-bind="props">
-                      <quill-editor
-                        style="direction: ltr"
-                        class="hide_quill_input"
-                        v-bind:id="
-                          quill_item == true
-                            ? 'quill_item'
-                            : 'quill_item_border'
-                        "
-                        v-model:value="events[0].description"
-                        @blur="onEditorBlur($event)"
-                        @focus="onEditorFocus($event)"
-                        @ready="onEditorReady($event)"
-                        @change="onEditorChange($event)"
-                      />
-                      <small
-                        v-if="quill_item"
-                        class="text-danger ml-5 required_item shake"
-                        >Field Required</small
-                      >
+                      <quill-editor style="direction: ltr" class="hide_quill_input" v-bind:id="quill_item == true
+                          ? 'quill_item'
+                          : 'quill_item_border'
+                        " v-model:value="events[0].description" @blur="onEditorBlur($event)"
+                        @focus="onEditorFocus($event)" @ready="onEditorReady($event)" @change="onEditorChange($event)" />
+                      <small v-if="quill_item" class="text-danger ml-5 required_item shake">Field Required</small>
                     </div>
                   </template>
                 </v-tooltip>
@@ -162,38 +92,18 @@
               <v-col cols="12" sm="12" md="6">
                 <v-tooltip :text="this.$t('meta_title')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-on="on"
-                      v-model="events[0].meta_title"
-                      :rules="fieldRules"
-                      v-bind:label="$t('meta_title')"
-                      v-bind="props"
-                      variant="outlined"
-                      density="compact"
-                      maxlength="100"
-                      class="required_field"
-                    ></v-text-field>
+                    <v-text-field v-on="on" v-model="events[0].meta_title" :rules="fieldRules"
+                      v-bind:label="$t('meta_title')" v-bind="props" variant="outlined" density="compact" maxlength="100"
+                      class="required_field"></v-text-field>
                   </template>
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="12" md="6">
-                <v-tooltip
-                  :text="this.$t('meta_description')"
-                  location="bottom"
-                >
+                <v-tooltip :text="this.$t('meta_description')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-textarea
-                      v-on="on"
-                      rows="2"
-                      v-model="events[0].meta_description"
-                      :rules="fieldRules"
-                      maxlength="100"
-                      v-bind="props"
-                      v-bind:label="$t('meta_description')"
-                      variant="outlined"
-                      counter="true"
-                      class="required_field"
-                    ></v-textarea>
+                    <v-textarea v-on="on" rows="2" v-model="events[0].meta_description" :rules="fieldRules"
+                      maxlength="2000" counter="true" v-bind="props" v-bind:label="$t('meta_description')"
+                      variant="outlined" class="required_field"></v-textarea>
                   </template>
                   <span>{{ $t("meta_description") }}</span>
                 </v-tooltip>
@@ -201,16 +111,9 @@
               <v-col cols="12" sm="3" md="3">
                 <v-tooltip :text="$t('sequence')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-bind="props"
-                      v-model="events[0].seq"
-                      v-on:keypress="NumbersOnly"
-                      maxlength="100"
-                      :rules="phoneRules"
-                      v-bind:label="$t('sequence')"
-                      variant="outlined"
-                      density="compact"
-                    ></v-text-field>
+                    <v-text-field v-bind="props" v-model="events[0].seq" v-on:keypress="NumbersOnly" maxlength="100"
+                      :rules="phoneRules" v-bind:label="$t('sequence')" variant="outlined"
+                      density="compact"></v-text-field>
                   </template>
                 </v-tooltip>
               </v-col>
@@ -219,54 +122,27 @@
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
                       <div style="position: relative" v-bind="props">
-                        <img
-                          v-bind:style="
-                            isHovering == true ? 'filter: blur(1px);' : ''
-                          "
-                          v-if="
-                            events[0].image_path == '' ||
-                            events[0].image_path == null
-                          "
-                          src="@/assets/images/upload_image_default.png"
-                          width="100"
-                        />
-                        <img
-                          v-bind:style="
-                            isHovering == true ? 'filter: blur(1px);' : ''
-                          "
-                          v-else
-                          :src="envImagePath + events[0].image_path"
-                          width="100"
-                          height="65
-                          "
-                          alt
-                        />
+                        <img v-bind:style="isHovering == true ? 'filter: blur(1px);' : ''
+                          " v-if="events[0].image_path == '' ||
+    events[0].image_path == null
+    " src="@/assets/images/upload_image_default.png" width="100" />
+                        <img v-bind:style="isHovering == true ? 'filter: blur(1px);' : ''
+                          " v-else :src="envImagePath + events[0].image_path" width="100" height="65
+                          " alt />
                         <div v-show="isHovering" class="camera-icon">
                           <v-icon @click="uploadFile">mdi-camera</v-icon>
                         </div>
                       </div>
                     </v-hover>
                   </div>
-                  <a
-                    class="text-center pointer"
-                    @click="downloadImage(events[0].image_path)"
-                  >
-                    <span
-                      v-if="events[0].image_path"
-                      class="download_btn_color"
-                      >{{ $t("download") }}</span
-                    >
+                  <a class="text-center pointer" @click="downloadImage(events[0].image_path)">
+                    <span v-if="events[0].image_path" class="download_btn_color">{{ $t("download") }}</span>
                   </a>
                 </div>
 
                 <br />
-                <Imageupload
-                  :folder="'events'"
-                  :resizewidth="200"
-                  :resizeheight="200"
-                  @uploaded_image="uploaded_image"
-                  :upload_profile="uploadfile"
-                />
+                <Imageupload :folder="'events'" :resizewidth="200" :resizeheight="200" @uploaded_image="uploaded_image"
+                  :upload_profile="uploadfile" />
               </v-col>
             </v-row>
           </v-form>
@@ -275,23 +151,14 @@
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
-                 <v-layout  v-if="user.rolename != 'StoreAdmin'">
+            <v-layout v-if="user.rolename != 'StoreAdmin'">
               <!-- :disabled="$route.query.slug" -->
               <v-row class="px-6 mt-2 arabdirection">
                 <v-col xs="12" md="12" lg="12">
-                  <v-radio-group
-                    v-model="events[1].stor_type"
-                    inline
-                    class="radio_item"
-                    @change="updateType(events[1].stor_type)"
-                  >
-                    <v-radio
-                      v-for="(role_data, rindex) in role_array"
-                      :key="rindex"
-                      :label="changeStatusAr(role_data.rolename)"
-                      :value="role_data.rolename"
-                      class="text--primary"
-                    >
+                  <v-radio-group v-model="events[1].stor_type" inline class="radio_item"
+                    @change="updateType(events[1].stor_type)">
+                    <v-radio v-for="(role_data, rindex) in role_array" :key="rindex"
+                      :label="changeStatusAr(role_data.rolename)" :value="role_data.rolename" class="text--primary">
                     </v-radio>
                     <!-- <v-radio :label="$t('mall')" value="Mall"></v-radio>
                     <v-radio value="Store" :label="$t('store')"></v-radio> -->
@@ -303,54 +170,28 @@
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('store_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-autocomplete
-                      v-bind="props"
-                      v-model="events[1].store_id"
-                      @update:modelValue="(value) => updateStore(value)"
-                      v-bind:label="$t('store_ar')"
-                      variant="outlined"
-                      density="compact"
-                      :items="stores_ar"
-                      item-title="name"
-                      item-value="header_id"
-                      :rules="fieldRulesAr"
-                      class="required_field rtl"
-                    ></v-autocomplete>
+                    <v-autocomplete v-bind="props" v-model="events[1].store_id"
+                      @update:modelValue="(value) => updateStore(value)" v-bind:label="$t('store_ar')" variant="outlined"
+                      density="compact" :items="stores_ar" item-title="name" item-value="header_id" :rules="fieldRulesAr"
+                      class="required_field rtl"></v-autocomplete>
                   </template>
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-on="on"
-                      v-model="events[1].title"
-                      :rules="fieldRulesAr"
-                      v-bind:label="$t('title_ar')"
-                      v-bind="props"
-                      required
-                      class="required_field rtl"
-                      variant="outlined"
-                      density="compact"
-                      maxlength="100"
-                    ></v-text-field>
+                    <v-text-field v-on="on" v-model="events[1].title" :rules="fieldRulesAr" v-bind:label="$t('title_ar')"
+                      v-bind="props" required class="required_field rtl" variant="outlined" density="compact"
+                      maxlength="100"></v-text-field>
                   </template>
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('start_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <DatePicker
-                      v-bind="props"
-                      :label="$t('start_date_ar')"
-                      :min="new Date().toISOString().substr(0, 10)"
-                      :stored_date="events[1].start_date"
-                      @formatted_date="formatted_start_date_ar"
-                      dense
-                      :class_required="'RequiredField rtl'"
-                      :rules="fieldRulesAr"
-                      v-on="on"
-                    />
+                    <DatePicker v-bind="props" :label="$t('start_date_ar')" :min="new Date().toISOString().substr(0, 10)"
+                      :stored_date="events[1].start_date" @formatted_date="formatted_start_date_ar" dense
+                      :class_required="'RequiredField rtl'" :rules="fieldRulesAr" v-on="on" />
                   </template>
                   <span>{{ $t("start_date_ar") }}</span>
                 </v-tooltip>
@@ -358,18 +199,10 @@
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('end_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <DatePicker
-                      v-bind="props"
-                      :label="$t('end_date_ar')"
-                      :rules="fieldRulesAr"
-                      :min="new Date().toISOString().substr(0, 10)"
-                      :stored_date="events[1].end_date"
-                      @formatted_date="formatted_end_date_ar"
-                      dense
-                      :class_required="'RequiredField rtl'"
-                      required
-                      v-on="on"
-                    />
+                    <DatePicker v-bind="props" :label="$t('end_date_ar')" :rules="fieldRulesAr"
+                      :min="new Date().toISOString().substr(0, 10)" :stored_date="events[1].end_date"
+                      @formatted_date="formatted_end_date_ar" dense :class_required="'RequiredField rtl'" required
+                      v-on="on" />
                   </template>
                   <span>{{ $t("end_date_ar") }}</span>
                 </v-tooltip>
@@ -381,26 +214,13 @@
                 <v-tooltip :text="this.$t('description_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <div v-bind="props">
-                      <quill-editor
-                        ref="quill_editor_ref"
-                        :options="editorOptions"
-                        class="hide_quill_input rtl"
-                        v-bind:id="
-                          quill_item == true
+                      <quill-editor ref="quill_editor_ref" :options="editorOptions" class="hide_quill_input rtl"
+                        v-bind:id="quill_item == true
                             ? 'quill_item'
                             : 'quill_item_border'
-                        "
-                        v-model:value="events[1].description"
-                        @blur="onEditorBlurAR($event)"
-                        @focus="onEditorFocusAR($event)"
-                        @ready="setRtlDirection"
-                        @change="onEditorChangeAR($event)"
-                      />
-                      <small
-                        v-if="quill_item"
-                        class="text-danger ml-5 required_item shake"
-                        >Field Required</small
-                      >
+                          " v-model:value="events[1].description" @blur="onEditorBlurAR($event)"
+                        @focus="onEditorFocusAR($event)" @ready="setRtlDirection" @change="onEditorChangeAR($event)" />
+                      <small v-if="quill_item" class="text-danger ml-5 required_item shake">Field Required</small>
                     </div>
                   </template>
                 </v-tooltip>
@@ -408,40 +228,18 @@
               <v-col cols="12" sm="12" md="6">
                 <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-on="on"
-                      v-model="events[1].meta_title"
-                      :rules="fieldRulesAr"
-                      v-bind:label="$t('meta_title_ar')"
-                      v-bind="props"
-                      required
-                      class="required_field rtl"
-                      variant="outlined"
-                      density="compact"
-                      maxlength="100"
-                    ></v-text-field>
+                    <v-text-field v-on="on" v-model="events[1].meta_title" :rules="fieldRulesAr"
+                      v-bind:label="$t('meta_title_ar')" v-bind="props" required class="required_field rtl"
+                      variant="outlined" density="compact" maxlength="100"></v-text-field>
                   </template>
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="12" md="6">
-                <v-tooltip
-                  :text="this.$t('meta_description_ar')"
-                  location="bottom"
-                >
+                <v-tooltip :text="this.$t('meta_description_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-textarea
-                      v-on="on"
-                      rows="2"
-                      v-model="events[1].meta_description"
-                      :rules="fieldRulesAr"
-                      maxlength="2000"
-                      v-bind="props"
-                      v-bind:label="$t('meta_description_ar')"
-                      required
-                      class="required_field rtl"
-                      variant="outlined"
-                      counter="true"
-                    ></v-textarea>
+                    <v-textarea v-on="on" rows="2" v-model="events[1].meta_description" :rules="fieldRulesAr"
+                      maxlength="2000" v-bind="props" v-bind:label="$t('meta_description_ar')" required
+                      class="required_field rtl" variant="outlined" counter="true"></v-textarea>
                   </template>
                   <span>{{ $t("meta_description_ar") }}</span>
                 </v-tooltip>
@@ -449,18 +247,9 @@
               <v-col cols="12" sm="3" md="3">
                 <v-tooltip :text="$t('sequence_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-bind="props"
-                      v-model="events[1].seq"
-                      maxlength="100"
-                      :rules="phoneRules"
-                      v-bind:label="$t('sequence_ar')"
-                      v-on:keypress="NumbersOnly"
-                      required
-                      class="rtl"
-                      variant="outlined"
-                      density="compact"
-                    ></v-text-field>
+                    <v-text-field v-bind="props" v-model="events[1].seq" maxlength="100" :rules="phoneRules"
+                      v-bind:label="$t('sequence_ar')" v-on:keypress="NumbersOnly" required class="rtl" variant="outlined"
+                      density="compact"></v-text-field>
                   </template>
                 </v-tooltip>
               </v-col>
@@ -469,54 +258,27 @@
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
                       <div style="position: relative" v-bind="props">
-                        <img
-                          v-bind:style="
-                            isHovering == true ? 'filter: blur(1px);' : ''
-                          "
-                          v-if="
-                            events[1].image_path == '' ||
-                            events[1].image_path == null
-                          "
-                          src="@/assets/images/upload_image_default.png"
-                          width="100"
-                        />
-                        <img
-                          v-bind:style="
-                            isHovering == true ? 'filter: blur(1px);' : ''
-                          "
-                          v-else
-                          :src="envImagePath + events[1].image_path"
-                          width="100"
-                          height="65
-                          "
-                          alt
-                        />
+                        <img v-bind:style="isHovering == true ? 'filter: blur(1px);' : ''
+                          " v-if="events[1].image_path == '' ||
+    events[1].image_path == null
+    " src="@/assets/images/upload_image_default.png" width="100" />
+                        <img v-bind:style="isHovering == true ? 'filter: blur(1px);' : ''
+                          " v-else :src="envImagePath + events[1].image_path" width="100" height="65
+                          " alt />
                         <div v-show="isHovering" class="camera-icon">
                           <v-icon @click="uploadFile">mdi-camera</v-icon>
                         </div>
                       </div>
                     </v-hover>
                   </div>
-                  <a
-                    class="text-center pointer"
-                    @click="downloadImage(events[1].image_path)"
-                  >
-                    <span
-                      v-if="events[1].image_path"
-                      class="download_btn_color"
-                      >{{ $t("download") }}</span
-                    >
+                  <a class="text-center pointer" @click="downloadImage(events[1].image_path)">
+                    <span v-if="events[1].image_path" class="download_btn_color">{{ $t("download") }}</span>
                   </a>
                 </div>
 
                 <br />
-                <Imageupload
-                  :folder="'events'"
-                  :resizewidth="1.5"
-                  :resizeheight="2.5"
-                  @uploaded_image="uploaded_image"
-                  :upload_profile="uploadfilear"
-                />
+                <Imageupload :folder="'events'" :resizewidth="1.5" :resizeheight="2.5" @uploaded_image="uploaded_image"
+                  :upload_profile="uploadfilear" />
               </v-col>
             </v-row>
           </v-form>
@@ -527,37 +289,18 @@
       <v-tooltip :text="this.$t('cancel')" location="bottom">
         <template v-slot:activator="{ props }">
           <div v-bind="props" class="d-inline-block mr-2">
-            <v-btn
-              v-bind="props"
-              size="small"
-              @click="$router.push('events')"
-              :disabled="loading"
-              class="ma-1"
-              color="cancel"
-              >{{ $t("cancel") }}</v-btn
-            >
+            <v-btn v-bind="props" size="small" @click="$router.push('events')" :disabled="loading" class="ma-1"
+              color="cancel">{{ $t("cancel") }}</v-btn>
           </div>
         </template>
       </v-tooltip>
       <v-tooltip :text="this.$t('submit')" location="bottom">
         <template v-slot:activator="{ props }">
           <div v-bind="props" class="d-inline-block">
-            <v-btn
-              :disabled="isDisabled"
-              @click="submit"
-              size="small"
-              class="mr-2"
-              color="success"
-            >
+            <v-btn :disabled="isDisabled" @click="submit" size="small" class="mr-2" color="success">
               {{ $t("submit") }}
-              <v-progress-circular
-                v-if="isBtnLoading"
-                indeterminate
-                width="1"
-                color="cancel"
-                size="x-small"
-                class="ml-2"
-              ></v-progress-circular>
+              <v-progress-circular v-if="isBtnLoading" indeterminate width="1" color="cancel" size="x-small"
+                class="ml-2"></v-progress-circular>
             </v-btn>
           </div>
         </template>
@@ -615,7 +358,7 @@ export default {
     events_ar: [],
     stores_en: [],
     stores_ar: [],
-        user: "",
+    user: "",
     events: [
       {
         id: 0,
@@ -629,7 +372,7 @@ export default {
         meta_description: "",
         lang: "en",
         store_id: null,
-        stor_type:"",
+        stor_type: "",
       },
       {
         id: 0,
@@ -643,7 +386,7 @@ export default {
         meta_description: "",
         lang: "ar",
         store_id: null,
-        stor_type:"",
+        stor_type: "",
       },
     ],
     uploadfilear: false,
@@ -683,11 +426,11 @@ export default {
   },
   mounted() {
     this.get_stores();
-        this.fetchRoles();
+    this.fetchRoles();
 
   },
   created() {
-       this.user = JSON.parse(localStorage.getItem("user_data"));
+    this.user = JSON.parse(localStorage.getItem("user_data"));
     if (this.user.store_id && this.user.rolename == "StoreAdmin") {
       this.events[0].store_id = this.user.store_id;
       this.events[1].store_id = this.user.store_id;
@@ -704,8 +447,8 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-                "edit_events/" +
-                this.$route.query.slug
+              "edit_events/" +
+              this.$route.query.slug
             )
             .then((res) => {
               console.log("CALLED IN ROUTE");
@@ -946,26 +689,33 @@ input.larger {
   width: 20px;
   height: 20px;
 }
+
 .upload_doc {
   margin-top: -14px;
 }
+
 .upload_image {
   margin-bottom: 3px;
 }
+
 .download_btn_color {
   color: blue;
 }
+
 .image-width {
   border: 2px solid black;
   padding: 1px;
 }
+
 .rtl :deep() input {
   text-align: right;
   direction: rtl;
 }
+
 .arabdirection /deep/ .v-field {
   direction: rtl !important;
 }
+
 .arabdirection /deep/ .v-input {
   direction: rtl !important;
 }
