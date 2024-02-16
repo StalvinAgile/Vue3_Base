@@ -4,6 +4,7 @@
       flat
       color="white"
       class="row py-5 pl-5 align-items-center component_app_bar position-relative"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]"
     >
       <page-title
         class="col-md-3"
@@ -368,6 +369,7 @@ export default {
     isDisabled: false,
     showConfirmDialog: false,
     delete_id: "",
+    sel_lang: "",
     tabs: 1,
     approval_status_items: [
       {
@@ -401,6 +403,15 @@ export default {
     user: "",
     showStatusDialog: false,
   }),
+  watch:{
+     '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.sel_lang = 'ar';
+      } else {''
+        this.sel_lang = 'en';
+      }
+    }
+  },
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user"));
     this.fetchPromotions();

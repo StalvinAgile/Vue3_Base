@@ -1,6 +1,6 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="container my-3 p-0">
+    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
       <page-title class="col-md-4 ml-2" :heading="$t('create_promotion')" :google_icon="google_icon"></page-title>
     </div>
     <div class="card-body">
@@ -327,6 +327,7 @@ export default {
     valid: true,
     loader: false,
     file: "",
+    sel_lang: "",
     isBtnLoading: false,
     showupload: "",
     isDisabled: false,
@@ -432,6 +433,13 @@ export default {
         }
       },
     },
+     '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.sel_lang = 'ar';
+      } else {''
+        this.sel_lang = 'en';
+      }
+    }
   },
   methods: {
     updateType(type) {
@@ -609,9 +617,7 @@ input.larger {
 .image_cursor {
   cursor: pointer;
 }
-.arabdirection{
-  direction:rtl;
-}
+
 .arabdirection /deep/ .v-field{
   direction:rtl;
 }

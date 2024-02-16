@@ -4,6 +4,7 @@
       flat
       color="white"
       class="row py-5 pl-5 align-items-center component_app_bar position-relative"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]"
     >
       <page-title
         class="col-md-3"
@@ -287,6 +288,7 @@ export default {
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },
+    sel_lang:"",
     status_id: null,
     showStatusDialog: false,
     tabs: 1,
@@ -385,6 +387,13 @@ export default {
     dialog(val) {
       val || this.close();
     },
+     '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.sel_lang = 'ar';
+      } else {''
+        this.sel_lang = 'en';
+      }
+    }
   },
 
   created() {},
