@@ -660,6 +660,10 @@ export default {
     folder: "e_magazin_file_upload",
     is_disabled: false,
     user: "",
+    stores_data_ar: [],
+    stores_data_en: [],
+    mal_data_en:[],
+    mal_data_ar:[],
   }),
 
   computed: {
@@ -680,12 +684,12 @@ export default {
   },
   mounted() {
     this.get_stores();
-
+    this.fetchMall();
     this.user = JSON.parse(localStorage.getItem("user_data"));
-    if (this.user.store_id && this.user.rolename == "StoreAdmin") {
-      this.e_magazine[0].store_id = this.user.store_id;
-      this.e_magazine[1].store_id = this.user.store_id;
-    }
+    // if (this.user.store_id && this.user.rolename == "StoreAdmin") {
+    //   this.e_magazine[0].store_id = this.user.store_id;
+    //   this.e_magazine[1].store_id = this.user.store_id;
+    // }
   },
   watch: {
     "$route.query.slug": {
@@ -734,12 +738,48 @@ export default {
   },
 
   methods: {
+    fetchMall() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-malls")
+        .then((response) => {
+          console.log(response);
+          this.mal_data_en = response.data.malls_en;
+          this.mal_data_ar = response.data.malls_ar;
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     updateType(stor_type) {
-      if (this.tabs == 1) {
-        this.e_magazine[1].stor_type = stor_type;
-      } else {
-        this.e_magazine[0].stor_type = stor_type;
-      }
+      this.e_magazine[1].store_id = null;
+      this.e_magazine[0].store_id = null;
+      this.assignType(stor_type);
+    },
+    assignType(stor_type) {
+      setTimeout(() => {
+        if (this.tabs == 1) {
+          this.e_magazine[1].stor_type = stor_type;
+          if (stor_type == "MallAdmin") {
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else {
+            this.stores_en = this.stores_data_en;
+            console.log("dfsdf", this.stores_data_en);
+            this.stores_ar = this.stores_data_ar;
+          }
+        } else {
+          this.careers[0].stor_type = stor_type;
+          if (stor_type == "MallAdmin") {
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else {
+            this.stores_en = this.stores_data_en;
+            this.stores_ar = this.stores_data_ar;
+          }
+        }
+      }, 1000);
     },
     changeRoleName(role_name) {
       switch (role_name) {
@@ -782,6 +822,7 @@ export default {
           if (!this.$route.query.slug && this.user.rolename == "SuperUser") {
             this.e_magazine[0].stor_type = this.role_array[0].rolename;
             this.e_magazine[1].stor_type = this.role_array[0].rolename;
+            this.updateType(this.e_magazine[0].stor_type);
           } else if (
             this.user.rolename === "MallAdmin" &&
             !this.$route.query.slug
@@ -791,6 +832,15 @@ export default {
             );
             this.e_magazine[0].stor_type = this.role_array[0].rolename;
             this.e_magazine[1].stor_type = this.role_array[0].rolename;
+            this.updateType(this.e_magazine[0].stor_type);
+          } else if (
+            this.user.rolename === "MallAdmin" &&
+            this.$route.query.slug
+          ) {
+            this.role_array = response.data.roles.filter(
+              (role) => role.rolename == "StoreAdmin"
+            );
+            this.assignType(this.e_magazine[0].stor_type);
           }
         })
         .catch((err) => {
@@ -799,28 +849,25 @@ export default {
         });
     },
     get_stores() {
-      this.initval = true;
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-stores")
         .then((response) => {
           console.log(response);
-          this.stores_en = response.data.stores_en;
-          this.stores_ar = response.data.stores_ar;
-
-          // const default_en = {
-          //   id: 0,
-          //   name: this.$t("select_en"),
-          //   header_id: 0,
-          // };
-          // const default_ar = {
-          //   id: 0,
-          //   name: this.$t("select_ar"),
-          //   header_id: 0,
-          // };
-
-          // this.stores_en = [default_en, ...this.stores_en];
-          // this.stores_ar = [default_ar, ...this.stores_ar];
-          this.initval = false;
+          this.stores_data_en = response.data.stores_en;
+          this.stores_data_ar = response.data.stores_ar;
+          if (this.user.rolename == "MallAdmin") {
+            //      this.role_array = response.data.roles.filter(
+            //   (role) => role.rolename == "StoreAdmin"
+            // );
+            this.stores_data_en = this.stores_data_en.filter((x) => {
+              console.log("x", x);
+              return x.mall_name == this.user.store_id;
+            });
+            this.user.store_id;
+            this.stores_data_ar = this.stores_data_ar.filter((x) => {
+              return x.mall_name == this.user.store_id;
+            });
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -943,7 +990,6 @@ export default {
             this.e_magazine
           )
           .then((res) => {
-            this.btnloading = false;
             if (Array.isArray(res.data.message)) {
               this.array_data = res.data.message.toString();
             } else {
@@ -960,13 +1006,13 @@ export default {
             }
           })
           .catch((err) => {
-            this.isDisabled = false;
-            this.isBtnLoading = false;
+
             this.$toast.error(this.$t("something_went_wrong"));
             console.log("error", err);
-          });
-        this.isDisabled = false;
-        this.isBtnLoading = false;
+          }).finally(()=>{
+       this.isDisabled = false;
+        this.isBtnLoading = false;          });
+
       }
     },
     clear() {

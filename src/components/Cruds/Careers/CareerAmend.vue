@@ -207,7 +207,7 @@
                 cols="4"
                 sm="12"
                 md="4"
-                v-if="(user.rolenmae == 'StoreAdmin')"
+                v-if="user.rolename != 'StoreAdmin'"
               >
                 <v-tooltip :text="this.$t('store_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
@@ -435,7 +435,6 @@ export default {
   mounted() {
     this.get_stores();
     this.fetchMall();
-    this.fetchRoles();
   },
   computed: {
     fieldRules() {
@@ -451,6 +450,7 @@ export default {
   },
 
   created() {
+    this.fetchRoles();
     this.user = JSON.parse(localStorage.getItem("user_data"));
   },
   watch: {
@@ -590,28 +590,27 @@ export default {
         });
     },
     get_stores() {
-      this.initval = true;
+      // this.initval = true;
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-stores")
         .then((response) => {
           console.log(response);
           this.stores_data_en = response.data.stores_en;
           this.stores_data_ar = response.data.stores_ar;
-
-          // const default_en = {
-          //   id: 0,
-          //   name: this.$t("select_en"),
-          //   header_id: 0,
-          // };
-          // const default_ar = {
-          //   id: 0,
-          //   name: this.$t("select_ar"),
-          //   header_id: 0,
-          // };
-
-          // this.stores_en = [default_en, ...this.stores_en];
-          // this.stores_ar = [default_ar, ...this.stores_ar];
-          this.initval = false;
+          if (this.user.rolename == "MallAdmin") {
+            //      this.role_array = response.data.roles.filter(
+            //   (role) => role.rolename == "StoreAdmin"
+            // );
+            this.stores_data_en = this.stores_data_en.filter((x) => {
+              console.log("x", x);
+              return x.mall_name == this.user.store_id;
+            });
+            this.user.store_id;
+            this.stores_data_ar = this.stores_data_ar.filter((x) => {
+              return x.mall_name == this.user.store_id;
+            });
+          }
+          // this.initval = false;
         })
         .catch((err) => {
           console.log(err);
