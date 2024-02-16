@@ -83,6 +83,7 @@
   "select_mode": "حدد الوضع",
   "select_en": "--SELECT--",
   "body": "جسم",
+  "body_ar" : "جسم",
   "signature": "إمضاء",
   "users": "المستخدمين الإداريين",
   "create_user": "إنشاء/تعديل المستخدم",
@@ -387,6 +388,7 @@
   "end_date_ar": "انتهاء العرض",
   "mall_en": "Mall",
   "select_ar": "--يختار--",
+  "select_mode_ar": "حدد الوضع",
   "mall_ar": "مجمع تجاري",
   "user1": "المستخدمين",
   "promotions": "الترقيات",
@@ -442,5 +444,8 @@
   "from_day_en": "From Day",
   "to_day_en": "To Day",
   "from_time_en": "From Timing",
-  "to_time_en": "To Timing"
+  "to_time_en": "To Timing",
+  "select_mode_en" : "Select Mode",
+  "body_en" : "Body",
+  "signature_en" : "Signature"
 }
