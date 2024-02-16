@@ -982,7 +982,12 @@ export default {
       if (this.$refs.form.validate()) {
         this.isDisabled = true;
         this.isBtnLoading = true;
-
+  if (this.user.rolename == "StoreAdmin") {
+          this.e_magazine[0].store_id = this.user.store_id;
+          this.e_magazine[1].store_id = this.user.store_id;
+          this.e_magazine[0].stor_type = this.user.rolename;
+          this.e_magazine[1].stor_type = this.user.rolename;
+        } 
         // Form is valid, process
         this.$axios
           .post(

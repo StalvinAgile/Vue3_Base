@@ -1,6 +1,9 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+    <div
+      class="my-3 p-0"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+    >
       <page-title
         class="col-md-4 ml-2"
         :heading="$t('promotions')"
@@ -105,7 +108,10 @@
               </v-layout>
               <div
                 class="d-flex justify-content-end"
-                v-if="promotion.approval_status == 'In Review'"
+                v-if="
+                  promotion.approval_status == 'In Review' &&
+                  user_role != 'StoreAdmin'
+                "
               >
                 <v-chip
                   @click="statusOnChange('Approved', promotion.header_id)"
@@ -211,7 +217,10 @@
               </v-layout>
               <div
                 class="d-flex justify-content-end"
-                v-if="promotion.approval_status == 'In Review'"
+                v-if="
+                  promotion.approval_status == 'In Review' &&
+                  user_role != 'StoreAdmin'
+                "
               >
                 <v-chip
                   @click="statusOnChange('Approved', promotion.header_id)"
@@ -262,8 +271,8 @@
     </ReviewComments>
   </div>
 </template>
-    
-  <script>
+
+<script>
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import ConfirmDialog from "../../CustomComponents/ConfirmDialog.vue";
 import ReviewComments from "../../CustomComponents/ReviewComments.vue";
@@ -294,6 +303,7 @@ export default {
     promotions_en: [],
     promotions_ar: [],
     showApprovalDialog: false,
+    user_role: "",
     selected: {
       header_id: null,
       approval_status: "",
@@ -308,20 +318,24 @@ export default {
       handler() {
         if (this.$route.query.slug) {
           this.fetchpromotionsDetails();
+          this.user_role = JSON.parse(
+            localStorage.getItem("user_data")
+          ).rolename;
         }
       },
     },
-     '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
 
   methods: {
-      changeStatusAr(status) {
+    changeStatusAr(status) {
       switch (status) {
         case "Approved":
           return this.$t("approved_ar");
@@ -389,12 +403,15 @@ export default {
     updateApprovalStatus(comment_en = "", comment_ar = "") {
       this.loader = true;
       this.$axios
-        .post(process.env.VUE_APP_API_URL_ADMIN + "update-promotions-approval", {
-          id: this.selected.header_id,
-          status: this.selected.approval_status,
-          comment_en: comment_en,
-          comment_ar: comment_ar,
-        })
+        .post(
+          process.env.VUE_APP_API_URL_ADMIN + "update-promotions-approval",
+          {
+            id: this.selected.header_id,
+            status: this.selected.approval_status,
+            comment_en: comment_en,
+            comment_ar: comment_ar,
+          }
+        )
         .then((res) => {
           if (Array.isArray(res.data.message)) {
             this.array_data = res.data.message.toString();
@@ -454,4 +471,3 @@ export default {
   border-width: 1px;
 }
 </style>
-    

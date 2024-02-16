@@ -662,6 +662,8 @@ export default {
         if (this.user.rolename == "StoreAdmin") {
           this.careers[0].store_id = this.user.store_id;
           this.careers[1].store_id = this.user.store_id;
+          this.careers[0].stor_type = this.user.rolename;
+          this.careers[1].stor_type = this.user.rolename;
         } // Form is valid, process
         this.$axios
           .post(
