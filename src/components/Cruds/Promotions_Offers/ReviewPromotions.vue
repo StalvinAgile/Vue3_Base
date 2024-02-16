@@ -34,21 +34,11 @@
             >
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="12" sm="6" md="4">
-                    <div class="d-label">{{ $t("approval_status_en") }}</div>
-                    <div>
-                      <v-chip
-                        class="ma-2"
-                        :color="getStatusColor(promotion.approval_status)"
-                        variant="outlined"
-                      >
-                        {{ promotion.approval_status }}
-                      </v-chip>
-                    </div>
-                  </v-col>
+                  
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("name_en") }}</div>
-                    <div>{{ promotion.name }}</div>
+                    <div v-if="promotion.name">{{ promotion.name }}</div>
+                    <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("title_en") }}</div>
@@ -63,6 +53,19 @@
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">{{ $t("meta_title_en") }}</div>
+                    <div>{{ promotion.meta_title }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="4">
+                    <div class="d-label">{{ $t("description_en") }}</div>
+                    <div v-html="promotion.description"></div>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="4">
+                    <div class="d-label">{{ $t("meta_description_en") }}</div>
+                    <div>{{ promotion.meta_description }}</div>
+                  </v-col>
+                  
+                  <v-col cols="12" sm="6" md="4">
                     <div
                       class="d-label"
                       v-if="promotion.approval_status == 'Rejected'"
@@ -75,22 +78,22 @@
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <div class="d-label">{{ $t("meta_title_en") }}</div>
-                    <div>{{ promotion.meta_title }}</div>
-                  </v-col>
-                  <v-col cols="12" sm="12" md="12">
-                    <div class="d-label">{{ $t("description_en") }}</div>
-                    <div v-html="promotion.description"></div>
-                  </v-col>
-                  <v-col cols="12" sm="12" md="12">
-                    <div class="d-label">{{ $t("meta_description_en") }}</div>
-                    <div>{{ promotion.meta_description }}</div>
+                  <v-col cols="12" sm="3" md="3">
+                    <div class="d-label">{{ $t("approval_status_en") }}</div>
+                    <div>
+                      <v-chip
+                        class="ma-2"
+                        :color="getStatusColor(promotion.approval_status)"
+                        variant="outlined"
+                      >
+                        {{ promotion.approval_status }}
+                      </v-chip>
+                    </div>
                   </v-col>
                   <v-col
                     cols="12"
-                    sm="12"
-                    md="12"
+                    sm="3"
+                    md="3"
                     v-if="promotion.approval_status == 'Rejected'"
                   >
                     <div class="d-label">
@@ -140,21 +143,11 @@
             >
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="12" sm="6" md="4">
-                    <div class="d-label">{{ $t("approval_status_ar") }}</div>
-                    <div>
-                      <v-chip
-                        class="ma-2"
-                        :color="getStatusColor(promotion.approval_status)"
-                        variant="outlined"
-                      >
-                        {{ changeStatusAr(promotion.approval_status) }}
-                      </v-chip>
-                    </div>
-                  </v-col>
+                  
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("name_ar") }}</div>
-                    <div>{{ promotion.name }}</div>
+                    <div v-if="promotion.name">{{ promotion.name }}</div>
+                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("title_ar") }}</div>
@@ -168,7 +161,32 @@
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
 
+                 
                   <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">{{ $t("meta_title_ar") }}</div>
+                    <div>{{ promotion.meta_title }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="4">
+                    <div class="d-label">{{ $t("description_ar") }}</div>
+                    <div v-html="promotion.description"></div>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="4">
+                    <div class="d-label">{{ $t("meta_description_ar") }}</div>
+                    <div>{{ promotion.meta_description }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">{{ $t("approval_status_ar") }}</div>
+                    <div>
+                      <v-chip
+                        class="ma-2"
+                        :color="getStatusColor(promotion.approval_status)"
+                        variant="outlined"
+                      >
+                        {{ changeStatusAr(promotion.approval_status) }}
+                      </v-chip>
+                    </div>
+                  </v-col>
+                   <v-col cols="12" sm="6" md="4">
                     <div
                       class="d-label"
                       v-if="promotion.approval_status == 'Rejected'"
@@ -180,18 +198,6 @@
                       {{ promotion.review_by }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <div class="d-label">{{ $t("meta_title_ar") }}</div>
-                    <div>{{ promotion.meta_title }}</div>
-                  </v-col>
-                  <v-col cols="12" sm="12" md="12">
-                    <div class="d-label">{{ $t("description_ar") }}</div>
-                    <div v-html="promotion.description"></div>
-                  </v-col>
-                  <v-col cols="12" sm="12" md="12">
-                    <div class="d-label">{{ $t("meta_description_ar") }}</div>
-                    <div>{{ promotion.meta_description }}</div>
                   </v-col>
                   <v-col
                     cols="12"
