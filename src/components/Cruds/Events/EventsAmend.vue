@@ -29,11 +29,12 @@
                       v-bind="props"
                       v-model="events[0].store_id"
                       v-bind:label="$t('store')"
+                      @update:modelValue="(value) => updateStore(value)"
                       variant="outlined"
                       density="compact"
                       :items="stores_en"
                       item-title="name"
-                      item-value="id"
+                      item-value="header_id"
                       class="required_field"
                       :rules="fieldRules"
                     ></v-autocomplete>
@@ -232,12 +233,13 @@
                     <v-autocomplete
                       v-bind="props"
                       v-model="events[1].store_id"
+                      @update:modelValue="(value) => updateStore(value)"
                       v-bind:label="$t('store_ar')"
                       variant="outlined"
                       density="compact"
                       :items="stores_ar"
                       item-title="name"
-                      item-value="id"
+                      item-value="header_id"
                       :rules="fieldRulesAr"
                       class="required_field rtl"
                     ></v-autocomplete>
@@ -425,7 +427,7 @@
                   :resizewidth="1.5"
                   :resizeheight="2.5"
                   @uploaded_image="uploaded_image"
-                  :upload_profile="uploadfile"
+                  :upload_profile="uploadfilear"
                 />
               </v-col>
             </v-row>
@@ -529,7 +531,7 @@ export default {
         store_id: null,
       },
     ],
-
+    uploadfilear: false,
     noimagepreview: "",
     items: [],
   }),
@@ -593,6 +595,16 @@ export default {
     },
   },
   methods: {
+    downloadImage(image_url) {
+      window.open(this.envImagePath + image_url, "_blank");
+    },
+    updateStore(store) {
+      if (this.tabs == 1) {
+        this.events[1].store_id = store;
+      } else {
+        this.events[0].store_id = store;
+      }
+    },
     NumbersOnly(evt) {
       evt = evt ? evt : window.event;
       var charCode = evt.which ? evt.which : evt.keyCode;
@@ -630,11 +642,18 @@ export default {
       }
     },
     uploadFile() {
-      //alert('hai');
-      if (this.uploadfile == false) {
-        this.uploadfile = true;
+      if (this.tabs == 1) {
+        if (this.uploadfile == false) {
+          this.uploadfile = true;
+        } else {
+          this.uploadfile = false;
+        }
       } else {
-        this.uploadfile = false;
+        if (this.uploadfilear == false) {
+          this.uploadfilear = true;
+        } else {
+          this.uploadfilear = false;
+        }
       }
     },
     formatted_start_date(formatted_date) {
