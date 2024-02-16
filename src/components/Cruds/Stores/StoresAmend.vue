@@ -144,7 +144,7 @@
                           v-model="stores[0].phone"
                           :rules="phoneRules"
                           v-on:keypress="NumbersOnly"
-                          maxlength="100"
+                          maxlength="12"
                           v-bind:label="$t('phone_en')"
                           required
                           class="required_field"
@@ -368,7 +368,7 @@
                         <v-text-field
                           v-bind="props"
                           v-model="stores[0].seq"
-                          maxlength="100"
+                          maxlength="5"
                           :rules="phoneRules"
                           v-on:keypress="NumbersOnly"
                           v-bind:label="$t('sequence_en')"
@@ -425,8 +425,8 @@
                     <br />
                     <Imageupload
                       :folder="'stores'"
-                      :resizewidth="0.4"
-                      :resizeheight="0.1"
+                      :resizewidth="250"
+                      :resizeheight="250"
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
@@ -611,7 +611,7 @@
                           v-model="stores[1].phone"
                           :rules="phoneRules"
                           v-on:keypress="NumbersOnly"
-                          maxlength="100"
+                          maxlength="12"
                           v-bind:label="$t('phone_ar')"
                           required
                           variant="outlined"
@@ -834,7 +834,7 @@
                           v-bind="props"
                           v-model="stores[1].seq"
                           v-on:keypress="NumbersOnly"
-                          maxlength="100"
+                          maxlength="5"
                           :rules="phoneRules"
                           v-bind:label="$t('sequence_ar')"
                           required
@@ -890,8 +890,8 @@
                     <br />
                     <Imageupload
                       :folder="'stores'"
-                      :resizewidth="0.4"
-                      :resizeheight="0.1"
+                      :resizewidth="250"
+                      :resizeheight="250"
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfilear"
                     />
