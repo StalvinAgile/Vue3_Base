@@ -22,7 +22,7 @@
         <v-window-item :value="1">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('store')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
@@ -40,7 +40,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -58,8 +58,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('start_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -77,7 +76,7 @@
                   <span>{{ $t("start_date_en") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('end_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -95,24 +94,7 @@
                   <span>{{ $t("end_date_en") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
-                <v-tooltip :text="this.$t('meta_title')" location="bottom">
-                  <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-on="on"
-                      v-model="events[0].meta_title"
-                      :rules="fieldRules"
-                      v-bind:label="$t('meta_title')"
-                      v-bind="props"
-                      variant="outlined"
-                      density="compact"
-                      maxlength="100"
-                      class="required_field"
-                    ></v-text-field>
-                  </template>
-                </v-tooltip>
-              </v-col>
-              <v-col md="4">
+              <v-col cols="12" sm="12" md="12">
                 <v-tooltip :text="this.$t('description')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea
@@ -130,7 +112,24 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="6" sm="12" md="6">
+                <v-tooltip :text="this.$t('meta_title')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="events[0].meta_title"
+                      :rules="fieldRules"
+                      v-bind:label="$t('meta_title')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      maxlength="100"
+                      class="required_field"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="6" sm="12" md="6">
                 <v-tooltip
                   :text="this.$t('meta_description')"
                   location="bottom"
@@ -152,12 +151,13 @@
                   <span>{{ $t("meta_description") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="2" sm="2" md="2">
+              <v-col cols="3" sm="3" md="3">
                 <v-tooltip :text="$t('sequence')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-bind="props"
                       v-model="events[0].seq"
+                      v-on:keypress="NumbersOnly"
                       maxlength="100"
                       :rules="phoneRules"
                       v-bind:label="$t('sequence')"
@@ -167,7 +167,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="6">
+              <v-col cols="6" sm="6" md="6">
                 <div>
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
@@ -226,7 +226,7 @@
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('store_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
@@ -238,19 +238,19 @@
                       :items="stores_ar"
                       item-title="name"
                       item-value="id"
-                      :rules="fieldRules"
+                      :rules="fieldRulesAr"
                       class="required_field rtl"
                     ></v-autocomplete>
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
                       v-model="events[1].title"
-                      :rules="fieldRules"
+                      :rules="fieldRulesAr"
                       v-bind:label="$t('title_ar')"
                       v-bind="props"
                       required
@@ -262,7 +262,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('start_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -272,58 +272,41 @@
                       :stored_date="events[1].start_date"
                       @formatted_date="formatted_start_date_ar"
                       dense
-                      :class_required="'RequiredField'"
-                      :rules="fieldRules"
+                      :class_required="'RequiredField rtl'"
+                      :rules="fieldRulesAr"
                       v-on="on"
                     />
                   </template>
                   <span>{{ $t("start_date_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('end_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
                       v-bind="props"
                       :label="$t('end_date_ar')"
+                      :rules="fieldRulesAr"
                       :min="new Date().toISOString().substr(0, 10)"
                       :stored_date="events[1].end_date"
                       @formatted_date="formatted_end_date_ar"
                       dense
-                      :class_required="'RequiredField'"
-                      :rules="fieldRules"
+                      :class_required="'RequiredField rtl'"
+                      required
                       v-on="on"
                     />
                   </template>
                   <span>{{ $t("end_date_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
-                <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
-                  <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-on="on"
-                      v-model="events[1].meta_title"
-                      :rules="fieldRules"
-                      v-bind:label="$t('meta_title_ar')"
-                      v-bind="props"
-                      required
-                      class="required_field rtl"
-                      variant="outlined"
-                      density="compact"
-                      maxlength="100"
-                    ></v-text-field>
-                  </template>
-                </v-tooltip>
-              </v-col>
-              <v-col md="4">
+              <v-col cols="12" sm="12" md="12">
                 <v-tooltip :text="this.$t('description_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea
                       v-on="on"
                       rows="2"
                       v-model="events[1].description"
-                      :rules="fieldRules"
+                      :rules="fieldRulesAr"
                       maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('description_ar')"
@@ -335,7 +318,25 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="6" sm="12" md="6">
+                <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="events[1].meta_title"
+                      :rules="fieldRulesAr"
+                      v-bind:label="$t('meta_title_ar')"
+                      v-bind="props"
+                      required
+                      class="required_field rtl"
+                      variant="outlined"
+                      density="compact"
+                      maxlength="100"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="6" sm="12" md="6">
                 <v-tooltip
                   :text="this.$t('meta_description_ar')"
                   location="bottom"
@@ -345,7 +346,7 @@
                       v-on="on"
                       rows="2"
                       v-model="events[1].meta_description"
-                      :rules="fieldRules"
+                      :rules="fieldRulesAr"
                       maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('meta_description_ar')"
@@ -358,7 +359,7 @@
                   <span>{{ $t("meta_description_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="2" sm="2" md="2">
+              <v-col cols="3" sm="3" md="3">
                 <v-tooltip :text="$t('sequence_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -367,6 +368,7 @@
                       maxlength="100"
                       :rules="phoneRules"
                       v-bind:label="$t('sequence_ar')"
+                      v-on:keypress="NumbersOnly"
                       required
                       class="rtl"
                       variant="outlined"
@@ -375,7 +377,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="6">
+              <v-col cols="3" sm="3" md="3">
                 <div>
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
@@ -558,6 +560,9 @@ export default {
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
     },
+    fieldRulesAr() {
+      return [(v) => !!v || this.$t("field_required_ar")];
+    },
   },
   mounted() {
     this.get_stores();
@@ -588,6 +593,19 @@ export default {
     },
   },
   methods: {
+    NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
     get_stores() {
       this.initval = true;
       this.$axios

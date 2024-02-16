@@ -31,6 +31,7 @@
                       v-if="user_role == 'SuperUser'"
                       v-bind="props"
                       v-model="category[0].store_id"
+                      @update:modelValue="(value) => updateMall(value)"
                       v-bind:label="$t('mall_en')"
                       variant="outlined"
                       density="compact"
@@ -263,6 +264,7 @@
                       v-if="user_role == 'SuperUser'"
                       v-bind="props"
                       v-model="category[1].store_id"
+                      @update:modelValue="(value) => updateMall(value)"
                       v-bind:label="$t('mall_ar')"
                       variant="outlined"
                       density="compact"
@@ -720,6 +722,14 @@ export default {
   },
 
   methods: {
+    updateMall(categories) {
+      if (this.tabs == 1) {
+        this.category[1].store_id = categories;
+      } else {
+        this.category[0].store_id = categories;
+      }
+    },
+
     downloadImage(image_url) {
       window.open(this.envImagePath + image_url, "_blank");
     },

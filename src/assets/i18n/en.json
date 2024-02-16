@@ -476,5 +476,6 @@
   "approved_ar":"موافقة",
   "inreview_ar":"مقابلة",
   "rejected_ar":"مرفوض",
-  "store_code_ar": "رمز المتجر"
+  "store_code_ar": "رمز المتجر",
+  "field_required_ar": "حقل مطلوب"
 }
