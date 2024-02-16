@@ -85,6 +85,7 @@
   "body": "جسم",
   "body_ar" : "جسم",
   "signature": "إمضاء",
+  "signature_ar": "إمضاء",
   "users": "المستخدمين الإداريين",
   "create_user": "إنشاء/تعديل المستخدم",
   "postal_code": "رمز بريدي",

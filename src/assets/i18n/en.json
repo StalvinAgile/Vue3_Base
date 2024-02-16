@@ -414,6 +414,7 @@
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
   "from_day_ar": "من اليوم",
+  "signature_ar": "إمضاء",
   "to_day_ar": "اليوم",
   "select_mode_ar": "حدد الوضع",
   "from_time_ar": "من التوقيت",
