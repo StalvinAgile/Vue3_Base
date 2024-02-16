@@ -2,7 +2,7 @@
   <div class="main-20">
     <div flat color="white" class="row py-5 pl-5 align-items-center position-relative">
       <page-title
-        class="col-md-3"
+        class="col-md-4"
         :heading="$t('email_templates')"
         :google_icon="google_icon"
       ></page-title>
@@ -58,9 +58,8 @@
           :search="search"
           :loading="initval"
           v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+                :items-per-page-text="$t('rows_per_page_en')"
+
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -111,9 +110,8 @@
           :search="search"
           :loading="initval"
           v-bind:no-data-text="$t('no_data_available')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+              :items-per-page-text="$t('rows_per_page_ar')"
+
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">

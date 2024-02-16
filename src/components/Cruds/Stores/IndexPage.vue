@@ -121,7 +121,7 @@
                     <span>{{ $t("edit") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
@@ -135,7 +135,7 @@
               <td>
                 <v-btn
                   size="small"
-                  @click="viewCategory(props.item.selectable.slug)"
+                  @click="viewStores(props.item.selectable.slug)"
                   :disabled="loading"
                   class="ma-1"
                   color="blue"
@@ -171,7 +171,7 @@
                   :color="getStatusColor(props.item.selectable.approval_status)"
                   variant="outlined"
                 >
-                  {{ props.item.selectable.approval_status }}
+                  {{ changeStatusAr(props.item.selectable.approval_status) }}
                 </v-chip>
               </td>
               <td>
@@ -216,7 +216,7 @@
                     <span>{{ $t("edit") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
@@ -230,7 +230,7 @@
               <td>
                 <v-btn
                   size="small"
-                  @click="viewCategory(props.item.selectable.slug)"
+                  @click="viewStores(props.item.selectable.slug)"
                   :disabled="loading"
                   class="ma-1"
                   color="blue"
@@ -409,6 +409,18 @@ export default {
   },
 
   methods: {
+    changeStatusAr(status) {
+      switch (status) {
+        case "Approved":
+          return this.$t("approved_ar");
+        case "In Review":
+          return this.$t("inreview_ar");
+        case "Rejected":
+          return this.$t("rejected_ar");
+        default:
+          return "";
+      }
+    },
     getStatusColor(status) {
       switch (status) {
         case "Approved":
@@ -421,7 +433,7 @@ export default {
           return "";
       }
     },
-    viewCategory(slug) {
+    viewStores(slug) {
       this.$router.push({
         name: "stores-review",
         query: { slug: slug },

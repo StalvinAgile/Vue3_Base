@@ -80,7 +80,7 @@
                   }}
                 </div>
               </td>
-              <td>
+              <td >
                 <v-btn
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
@@ -268,7 +268,7 @@
                     <span>{{ $t("child_look_ups") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.header_id)">
+                <span @click="deleteItem(props.item.selectable.header_id)" class="mr-2">
                   <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon

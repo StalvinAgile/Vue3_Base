@@ -69,10 +69,8 @@
                         rows="2"
                         v-model="lookup[0].description"
                         v-bind="props"
-                        :rules="fieldRules"
                         v-bind:label="$t('description')"
                         required
-                        class="required_field"
                         variant="outlined"
                         maxlength="100"
                         counter="true"
@@ -93,7 +91,7 @@
                             isHovering == true ? 'filter: blur(1px);' : ''
                           "
                           v-if="lookup[0].icon != ''"
-                          :src="envImagePath + lookup.icon"
+                          :src="envImagePath + lookup[0].icon"
                           width="100"
                           height="65
                           "
@@ -186,10 +184,9 @@
                         rows="2"
                         v-model="lookup[1].description"
                         v-bind="props"
-                        :rules="fieldRules"
                         v-bind:label="$t('description')"
                         required
-                        class="required_field rtl"
+                        class="rtl"
                         variant="outlined"
                         maxlength="100"
                         counter="true"
@@ -242,8 +239,8 @@
                 <br />
                 <Imageupload
                   :folder="'lookups'"
-                  :resizewidth="0.4"
-                  :resizeheight="0.1"
+                  :resizewidth="200"
+                  :resizeheight="200"
                   @uploaded_image="uploaded_image_ar"
                   :upload_profile="uploadfile_ar"
                 />

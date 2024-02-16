@@ -6,7 +6,6 @@
         :heading="$t('create_events')"
         :google_icon="google_icon"
       ></page-title>
- 
     </div>
     <div class="card-body">
       <content-loader v-if="loader"></content-loader>
@@ -23,7 +22,26 @@
         <v-window-item :value="1">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
+                <v-tooltip :text="this.$t('store')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="events[0].store_id"
+                      v-bind:label="$t('store')"
+                      @update:modelValue="(value) => updateStore(value)"
+                      variant="outlined"
+                      density="compact"
+                      :items="stores_en"
+                      item-title="name"
+                      item-value="header_id"
+                      class="required_field"
+                      :rules="fieldRules"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -33,16 +51,15 @@
                       v-bind:label="$t('title')"
                       v-bind="props"
                       required
-                      class="required_field"
                       variant="outlined"
                       density="compact"
                       maxlength="100"
+                      class="required_field"
                     ></v-text-field>
                   </template>
                 </v-tooltip>
               </v-col>
-            
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('start_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -52,6 +69,7 @@
                       :stored_date="events[0].start_date"
                       @formatted_date="formatted_start_date"
                       dense
+                      :rules="fieldRules"
                       :class_required="'RequiredField'"
                       v-on="on"
                     />
@@ -59,7 +77,7 @@
                   <span>{{ $t("start_date_en") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('end_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -69,6 +87,7 @@
                       :stored_date="events[0].end_date"
                       @formatted_date="formatted_end_date"
                       dense
+                      :rules="fieldRules"
                       :class_required="'RequiredField'"
                       v-on="on"
                     />
@@ -76,23 +95,7 @@
                   <span>{{ $t("end_date_en") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
-                <v-tooltip :text="this.$t('meta_title')" location="bottom">
-                  <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-on="on"
-                      v-model="events[0].meta_title"
-                      :rules="fieldRules"
-                      v-bind:label="$t('meta_title')"
-                      v-bind="props"
-                      variant="outlined"
-                      density="compact"
-                      maxlength="100"
-                    ></v-text-field>
-                  </template>
-                </v-tooltip>
-              </v-col>
-              <v-col md="4">
+              <v-col cols="12" sm="12" md="12">
                 <v-tooltip :text="this.$t('description')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea
@@ -105,11 +108,29 @@
                       v-bind:label="$t('description')"
                       variant="outlined"
                       counter="true"
+                      class="required_field"
                     ></v-textarea>
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="6" sm="12" md="6">
+                <v-tooltip :text="this.$t('meta_title')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="events[0].meta_title"
+                      :rules="fieldRules"
+                      v-bind:label="$t('meta_title')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      maxlength="100"
+                      class="required_field"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="6" sm="12" md="6">
                 <v-tooltip
                   :text="this.$t('meta_description')"
                   location="bottom"
@@ -125,28 +146,29 @@
                       v-bind:label="$t('meta_description')"
                       variant="outlined"
                       counter="true"
+                      class="required_field"
                     ></v-textarea>
                   </template>
                   <span>{{ $t("meta_description") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="2" sm="2" md="2">
-                    <v-tooltip :text="$t('sequence')" location="bottom">
-                      <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="events[0].seq"
-                          maxlength="100"
-                          :rules="phoneRules"
-                          v-bind:label="$t('sequence')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
-                      </template>
-                    </v-tooltip>
-                  </v-col>
-              <v-col md="6">
+              <v-col cols="3" sm="3" md="3">
+                <v-tooltip :text="$t('sequence')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-bind="props"
+                      v-model="events[0].seq"
+                      v-on:keypress="NumbersOnly"
+                      maxlength="100"
+                      :rules="phoneRules"
+                      v-bind:label="$t('sequence')"
+                      variant="outlined"
+                      density="compact"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="6" sm="6" md="6">
                 <div>
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
@@ -187,7 +209,7 @@
                     >
                   </a>
                 </div>
-                
+
                 <br />
                 <Imageupload
                   :folder="'events'"
@@ -205,13 +227,32 @@
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
+                <v-tooltip :text="this.$t('store_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="events[1].store_id"
+                      @update:modelValue="(value) => updateStore(value)"
+                      v-bind:label="$t('store_ar')"
+                      variant="outlined"
+                      density="compact"
+                      :items="stores_ar"
+                      item-title="name"
+                      item-value="header_id"
+                      :rules="fieldRulesAr"
+                      class="required_field rtl"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
                       v-model="events[1].title"
-                      :rules="fieldRules"
+                      :rules="fieldRulesAr"
                       v-bind:label="$t('title_ar')"
                       v-bind="props"
                       required
@@ -223,7 +264,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('start_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -233,56 +274,41 @@
                       :stored_date="events[1].start_date"
                       @formatted_date="formatted_start_date_ar"
                       dense
-                      :class_required="'RequiredField'"
+                      :class_required="'RequiredField rtl'"
+                      :rules="fieldRulesAr"
                       v-on="on"
                     />
                   </template>
                   <span>{{ $t("start_date_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('end_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
                       v-bind="props"
                       :label="$t('end_date_ar')"
+                      :rules="fieldRulesAr"
                       :min="new Date().toISOString().substr(0, 10)"
                       :stored_date="events[1].end_date"
                       @formatted_date="formatted_end_date_ar"
                       dense
-                      :class_required="'RequiredField'"
+                      :class_required="'RequiredField rtl'"
+                      required
                       v-on="on"
                     />
                   </template>
                   <span>{{ $t("end_date_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
-                <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
-                  <template v-slot:activator="{ props }">
-                    <v-text-field
-                      v-on="on"
-                      v-model="events[1].meta_title"
-                      :rules="fieldRules"
-                      v-bind:label="$t('meta_title_ar')"
-                      v-bind="props"
-                      required
-                      class="required_field rtl"
-                      variant="outlined"
-                      density="compact"
-                      maxlength="100"
-                    ></v-text-field>
-                  </template>
-                </v-tooltip>
-              </v-col>
-              <v-col md="4">
+              <v-col cols="12" sm="12" md="12">
                 <v-tooltip :text="this.$t('description_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea
                       v-on="on"
                       rows="2"
                       v-model="events[1].description"
-                      :rules="fieldRules"
+                      :rules="fieldRulesAr"
                       maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('description_ar')"
@@ -294,7 +320,25 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="6" sm="12" md="6">
+                <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="events[1].meta_title"
+                      :rules="fieldRulesAr"
+                      v-bind:label="$t('meta_title_ar')"
+                      v-bind="props"
+                      required
+                      class="required_field rtl"
+                      variant="outlined"
+                      density="compact"
+                      maxlength="100"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="6" sm="12" md="6">
                 <v-tooltip
                   :text="this.$t('meta_description_ar')"
                   location="bottom"
@@ -304,7 +348,7 @@
                       v-on="on"
                       rows="2"
                       v-model="events[1].meta_description"
-                      :rules="fieldRules"
+                      :rules="fieldRulesAr"
                       maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('meta_description_ar')"
@@ -317,24 +361,25 @@
                   <span>{{ $t("meta_description_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="2" sm="2" md="2">
-                    <v-tooltip :text="$t('sequence_ar')" location="bottom">
-                      <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="events[1].seq"
-                          maxlength="100"
-                          :rules="phoneRules"
-                          v-bind:label="$t('sequence_ar')"
-                          required
-                          class="required_field rtl"
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
-                      </template>
-                    </v-tooltip>
-                  </v-col>
-               <v-col md="6">
+              <v-col cols="3" sm="3" md="3">
+                <v-tooltip :text="$t('sequence_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-bind="props"
+                      v-model="events[1].seq"
+                      maxlength="100"
+                      :rules="phoneRules"
+                      v-bind:label="$t('sequence_ar')"
+                      v-on:keypress="NumbersOnly"
+                      required
+                      class="rtl"
+                      variant="outlined"
+                      density="compact"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="3" sm="3" md="3">
                 <div>
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
@@ -375,14 +420,14 @@
                     >
                   </a>
                 </div>
-                 
+
                 <br />
                 <Imageupload
                   :folder="'events'"
                   :resizewidth="1.5"
                   :resizeheight="2.5"
                   @uploaded_image="uploaded_image"
-                  :upload_profile="uploadfile"
+                  :upload_profile="uploadfilear"
                 />
               </v-col>
             </v-row>
@@ -456,6 +501,8 @@ export default {
     uploadfile: false,
     events_en: [],
     events_ar: [],
+    stores_en: [],
+    stores_ar: [],
     events: [
       {
         id: 0,
@@ -464,10 +511,11 @@ export default {
         start_date: "",
         end_date: "",
         image_path: "",
-        seq:"",
+        seq: "",
         meta_title: "",
         meta_description: "",
         lang: "en",
+        store_id: null,
       },
       {
         id: 0,
@@ -476,13 +524,14 @@ export default {
         start_date: "",
         end_date: "",
         image_path: "",
-        seq:"",
+        seq: "",
         meta_title: "",
         meta_description: "",
         lang: "ar",
+        store_id: null,
       },
     ],
-
+    uploadfilear: false,
     noimagepreview: "",
     items: [],
   }),
@@ -513,9 +562,12 @@ export default {
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
     },
+    fieldRulesAr() {
+      return [(v) => !!v || this.$t("field_required_ar")];
+    },
   },
   mounted() {
-
+    this.get_stores();
   },
   created() {},
   watch: {
@@ -543,6 +595,43 @@ export default {
     },
   },
   methods: {
+    downloadImage(image_url) {
+      window.open(this.envImagePath + image_url, "_blank");
+    },
+    updateStore(store) {
+      if (this.tabs == 1) {
+        this.events[1].store_id = store;
+      } else {
+        this.events[0].store_id = store;
+      }
+    },
+    NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
+    get_stores() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-stores")
+        .then((response) => {
+          console.log(response);
+          this.stores_en = response.data.stores_en;
+          this.stores_ar = response.data.stores_ar;
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     uploaded_image(img_src) {
       //alert('uploaded image');
       //alert(img_src);
@@ -553,11 +642,18 @@ export default {
       }
     },
     uploadFile() {
-      //alert('hai');
-      if (this.uploadfile == false) {
-        this.uploadfile = true;
+      if (this.tabs == 1) {
+        if (this.uploadfile == false) {
+          this.uploadfile = true;
+        } else {
+          this.uploadfile = false;
+        }
       } else {
-        this.uploadfile = false;
+        if (this.uploadfilear == false) {
+          this.uploadfilear = true;
+        } else {
+          this.uploadfilear = false;
+        }
       }
     },
     formatted_start_date(formatted_date) {
@@ -588,10 +684,7 @@ export default {
         this.loader = true;
         // Form is valid, process
         this.$axios
-          .post(
-            process.env.VUE_APP_API_URL_ADMIN + "save_events",
-            this.events
-          )
+          .post(process.env.VUE_APP_API_URL_ADMIN + "save_events", this.events)
           .then((res) => {
             this.btnloading = false;
             if (Array.isArray(res.data.message)) {

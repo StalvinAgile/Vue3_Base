@@ -7,9 +7,10 @@
         :google_icon="google_icon"
       ></page-title>
     </div>
+    {{role_array}}
     <div class="card-body">
       <content-loader v-if="loader"></content-loader>
-     <v-tabs v-model="tabs" color="blue">
+      <v-tabs v-model="tabs" color="blue">
         <v-tab :value="1">
           <span>{{ $t("english") }}</span>
         </v-tab>
@@ -22,12 +23,14 @@
         <v-window-item :value="1">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
-             <v-col cols="4" sm="12" md="4">
+              <v-col cols="4" sm="12" md="4">
                 <v-tooltip :text="this.$t('store')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
                       v-bind="props"
                       v-model="careers[0].store_id"
+                      :rules="fieldRules"
+                      class="required_field"
                       v-bind:label="$t('store')"
                       variant="outlined"
                       density="compact"
@@ -93,26 +96,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="6">
-                <v-tooltip :text="this.$t('description')" location="bottom">
-                  <template v-slot:activator="{ props }">
-                    <v-textarea
-                      v-on="on"
-                      rows="2"
-                      v-model="careers[0].description"
-                      :rules="fieldRules"
-                      maxlength="2000"
-                      v-bind="props"
-                      v-bind:label="$t('description')"
-                      required
-                      class="required_field"
-                      variant="outlined"
-                      counter="true"
-                    ></v-textarea>
-                  </template>
-                </v-tooltip>
-              </v-col>
-              <v-col md="6">
+              <v-col md="8">
                 <v-tooltip
                   :text="this.$t('meta_description')"
                   location="bottom"
@@ -135,6 +119,25 @@
                   <span>{{ $t("vacancy") }}</span>
                 </v-tooltip>
               </v-col>
+              <v-col md="12">
+                <v-tooltip :text="this.$t('description')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-textarea
+                      v-on="on"
+                      rows="2"
+                      v-model="careers[0].description"
+                      :rules="fieldRules"
+                      maxlength="2000"
+                      v-bind="props"
+                      v-bind:label="$t('description')"
+                      required
+                      class="required_field"
+                      variant="outlined"
+                      counter="true"
+                    ></v-textarea>
+                  </template>
+                </v-tooltip>
+              </v-col>
             </v-row>
           </v-form>
         </v-window-item>
@@ -143,15 +146,17 @@
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
-               <v-col cols="4" sm="12" md="4">
+              <v-col cols="4" sm="12" md="4">
                 <v-tooltip :text="this.$t('store_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
                       v-bind="props"
                       v-model="careers[1].store_id"
-                       v-bind:label="$t('store_ar')"
+                      v-bind:label="$t('store_ar')"
                       variant="outlined"
                       density="compact"
+                      :rules="fieldRules"
+                      class="required_field rtl"
                       :items="stores_en"
                       item-title="name"
                       item-value="id"
@@ -214,26 +219,8 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="6">
-                <v-tooltip :text="this.$t('description_ar')" location="bottom">
-                  <template v-slot:activator="{ props }">
-                    <v-textarea
-                      v-on="on"
-                      rows="2"
-                      v-model="careers[1].description"
-                      :rules="fieldRules"
-                      maxlength="2000"
-                      v-bind="props"
-                      v-bind:label="$t('description_ar')"
-                      required
-                      class="required_field rtl"
-                      variant="outlined"
-                      counter="true"
-                    ></v-textarea>
-                  </template>
-                </v-tooltip>
-              </v-col>
-              <v-col md="6">
+
+              <v-col md="8">
                 <v-tooltip
                   :text="this.$t('meta_description_ar')"
                   location="bottom"
@@ -254,6 +241,25 @@
                     ></v-textarea>
                   </template>
                   <span>{{ $t("meta_description_ar") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col md="12">
+                <v-tooltip :text="this.$t('description_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-textarea
+                      v-on="on"
+                      rows="2"
+                      v-model="careers[1].description"
+                      :rules="fieldRules"
+                      maxlength="2000"
+                      v-bind="props"
+                      v-bind:label="$t('description_ar')"
+                      required
+                      class="required_field rtl"
+                      variant="outlined"
+                      counter="true"
+                    ></v-textarea>
+                  </template>
                 </v-tooltip>
               </v-col>
             </v-row>
@@ -328,8 +334,8 @@ export default {
         id: 0,
         title: "",
         description: "",
-        vacancy:"",
-        seq:"",
+        vacancy: "",
+        seq: "",
         meta_title: "",
         meta_description: "",
         lang: "en",
@@ -338,8 +344,8 @@ export default {
         id: 0,
         title: "",
         description: "",
-        vacancy:"",
-        seq:"",
+        vacancy: "",
+        seq: "",
         meta_title: "",
         meta_description: "",
         lang: "ar",
@@ -349,9 +355,11 @@ export default {
     items: [],
     stores_en: [],
     stores_ar: [],
+    role_array: []
   }),
- mounted() {
+  mounted() {
     this.get_stores();
+    this.fetchRoles();
   },
   computed: {
     fieldRules() {
@@ -362,9 +370,7 @@ export default {
       return [(v) => !!v || this.$t("number_required")];
     },
     vacancyRules() {
-      return [
-        (v) => (v >= 0 && v <= 9999) || this.$t("number_required"),
-      ];
+      return [(v) => (v >= 0 && v <= 9999) || this.$t("number_required")];
     },
   },
 
@@ -394,7 +400,20 @@ export default {
     },
   },
   methods: {
-     get_stores() {
+    fetchRoles() {
+      this.loader = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_reg_roles")
+        .then((response) => {
+          this.loader = false;
+          this.role_array = response.data.roles;
+        })
+        .catch((err) => {
+          this.loader = false;
+          console.log(err);
+        });
+    },
+    get_stores() {
       this.initval = true;
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-stores")
@@ -422,7 +441,7 @@ export default {
           console.log(err);
         });
     },
-        cancel() {
+    cancel() {
       this.$router.push({
         name: "careers",
       });
@@ -498,6 +517,4 @@ input.larger {
   border: 2px solid black;
   padding: 1px;
 }
-
-
 </style>

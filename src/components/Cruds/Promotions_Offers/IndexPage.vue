@@ -135,12 +135,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_en") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_en") }}</span
                   >
                 </v-btn>
               </td>
@@ -259,7 +259,7 @@
                   :color="getStatusColor(props.item.selectable.approval_status)"
                   variant="outlined"
                 >
-                  {{ props.item.selectable.approval_status }}
+                  {{ changeStatusAr(props.item.selectable.approval_status) }}
                 </v-chip>
               </td>
               <td>
@@ -275,12 +275,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_ar") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_ar") }}</span
                   >
                 </v-btn>
               </td>
@@ -425,7 +425,7 @@ export default {
           key: "phone",
         },
         {
-          title:  this.$t("email_en"),
+          title: this.$t("email_en"),
           key: "email",
         },
 
@@ -486,6 +486,18 @@ export default {
     },
   },
   methods: {
+    changeStatusAr(status) {
+      switch (status) {
+        case "Approved":
+          return this.$t("approved_ar");
+        case "In Review":
+          return this.$t("inreview_ar");
+        case "Rejected":
+          return this.$t("rejected_ar");
+        default:
+          return "";
+      }
+    },
     getStatusColor(status) {
       switch (status) {
         case "Approved":

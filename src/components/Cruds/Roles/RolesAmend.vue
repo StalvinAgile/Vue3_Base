@@ -54,7 +54,7 @@
               <v-btn
                 v-bind="props"
                 size="small"
-                @click="$router.go(-1)"
+                @click="cancel"
                 :disabled="loading"
                 class="ma-1"
                 color="cancel"
@@ -90,7 +90,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 export default {
@@ -165,8 +165,13 @@ export default {
     },
   },
   methods: {
+    cancel() {
+      this.$router.push({
+        name: "roles",
+      });
+    },
     submit() {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && this.valid == true) {
         this.isDisabled = true;
         this.isBtnLoading = true;
 
@@ -175,7 +180,6 @@ export default {
           this.$axios
             .post(process.env.VUE_APP_API_URL_ADMIN + "roles", this.fieldItem)
             .then((res) => {
-              this.btnloading = false;
               if (Array.isArray(res.data.message)) {
                 this.array_data = res.data.message.toString();
               } else {
@@ -192,10 +196,12 @@ export default {
               }
             })
             .catch((err) => {
-              this.isDisabled = false;
-              this.isBtnLoading = false;
               this.$toast.error(this.$t("something_went_wrong"));
               console.log("error", err);
+            })
+            .finally(() => {
+              this.isDisabled = false;
+              this.isBtnLoading = false;
             });
         } else {
           this.$axios
@@ -222,13 +228,14 @@ export default {
               }
             })
             .catch((err) => {
-              this.isDisabled = false;
               this.$toast.error(this.$t("something_went_wrong"));
               console.log("error", err);
+            })
+            .finally(() => {
+              this.isDisabled = false;
+              this.isBtnLoading = false;
             });
         }
-        this.isDisabled = false;
-        this.isBtnLoading = false;
       }
     },
     clear() {
@@ -238,4 +245,3 @@ export default {
 };
 </script>
 <style scoped></style>
-  

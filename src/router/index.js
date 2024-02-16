@@ -428,6 +428,7 @@ const routes = [
     // meta: { layout: "userpages" },
     component: () => import("../components/Cruds/CustomerNewsletter/IndexPage.vue"),
   },
+  
 ];
 
 const router = createRouter({

@@ -34,6 +34,7 @@
                       :items="stores_en"
                       item-title="name"
                       item-value="id"
+                      class="required_field"
                     ></v-autocomplete>
                   </template>
                 </v-tooltip>
@@ -85,6 +86,7 @@
                       required
                       variant="outlined"
                       density="compact"
+                      v-on:keypress="NumbersOnly"
                     ></v-text-field>
                   </template>
                 </v-tooltip>
@@ -198,6 +200,7 @@
                       density="compact"
                       :items="stores_ar"
                       item-title="name"
+                      class="required_field rtl"
                       item-value="id"
                     ></v-autocomplete>
                   </template>
@@ -247,12 +250,12 @@
                       v-bind="props"
                       v-model="products[1].seq"
                       maxlength="100"
-                      :rules="phoneRules"
                       v-bind:label="$t('sequence_ar')"
                       required
                       variant="outlined"
                       class="rtl"
                       density="compact"
+                      v-on:keypress="NumbersOnly"
                     ></v-text-field>
                   </template>
                 </v-tooltip>
@@ -507,6 +510,19 @@ export default {
     },
   },
   methods: {
+    NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
     cancel() {
       this.$router.push({
         name: "products",

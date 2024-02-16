@@ -48,11 +48,103 @@
       :items="store_timings"
       :search="search"
       :loading="initval"
+      :single-expand="singleExpand"
+      item-key="id"
+      class="mt-2"
       v-model:expanded="expanded"
-      show-expand
-      item-value="name"
-      v-bind:style="$route.params.lang == 'ar' ? 'direction:rtl' : ''"
+      :style="$route.params.lang == 'ar' ? 'direction:rtl' : ''"
+      :no-data-text="$t('no_data_available')"
+      :items-per-page-text="$t('rows_per_page')"
     >
+      <template v-slot:item="{ item }">
+        <!-- -{{ expanded }} -->
+        <tr>
+          <td>
+            <v-icon @click="toggleExpanded(item)">
+              {{
+                expanded.includes(item.selectable.id)
+                  ? "mdi-chevron-up"
+                  : "mdi-chevron-down"
+              }}
+            </v-icon>
+          </td>
+          <td>{{ item.selectable.name }}</td>
+          <td>{{ item.selectable.email }}</td>
+          <td>
+            <v-btn
+              v-if="item.selectable.store_timings[0]"
+              class="hover_shine btn mr-2"
+              :disabled="isDisabled"
+              @click="updateStatus(item.selectable.id)"
+              size="small"
+              v-bind:color="[
+                item.selectable.store_timings[0].status == 1
+                  ? 'success'
+                  : 'warning',
+              ]"
+            >
+              <span
+                v-if="item.selectable.store_timings[0].status == 1"
+                class="spanactivesize"
+                >{{ $t("active") }}</span
+              >
+              <span
+                v-if="item.selectable.store_timings[0].status == 0"
+                class="spanactivesize"
+                >{{ $t("inactive") }}</span
+              >
+            </v-btn>
+          </td>
+          <td>
+            <v-chip
+              :color="
+                getStatusColor(item.selectable.store_timings[0].approval_status)
+              "
+              variant="outlined"
+            >
+              {{ item.selectable.store_timings[0].approval_status }}
+            </v-chip>
+          </td>
+          <td class="text-center">
+            <router-link
+              small
+              :to="{
+                name: 'store-timing-amend',
+                query: { slug: item.selectable.slug },
+              }"
+            >
+              <v-tooltip :text="this.$t('edit')" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-icon v-bind="props" small class="mr-2 edit_btn icon_size"
+                    >mdi-pencil-outline</v-icon
+                  >
+                </template>
+                <span>{{ $t("edit") }}</span>
+              </v-tooltip>
+            </router-link>
+            <span @click="deleteItem(item.selectable.id)">
+              <v-tooltip :text="this.$t('delete')" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-icon color="error" type="button" v-bind="props" small
+                    >mdi-trash-can-outline</v-icon
+                  >
+                </template>
+                <span>{{ $t("delete") }}</span>
+              </v-tooltip>
+            </span>
+          </td>
+          <td>
+            <v-btn
+              size="small"
+              @click="viewStores(item.selectable.slug)"
+              :disabled="loading"
+              class="ma-1"
+              color="blue"
+              >{{ $t("view_en") }}</v-btn
+            >
+          </td>
+        </tr>
+      </template>
       <template v-slot:expanded-row="{ columns, item }">
         <tr>
           <td :colspan="columns.length" class="child_table p-4">
@@ -101,63 +193,6 @@
           </td>
         </tr>
       </template>
-      <!-- <template v-slot:item="{ props, columns }">
-        <tr class="vdatatable_tbody parent_row">
-          <td class="text-start" :colspan="columns.length">
-            More info about {{ props.item.selectable.name }}
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn icon v-if="isExpanded == false" v-on="on">
-                  <v-icon class="text-primary">mdi mdi-plus-circle</v-icon>
-                </v-btn>
-                <v-btn icon v-else>
-                  <v-icon class="text-danger">mdi mdi-minus-circle</v-icon>
-                </v-btn>
-              </template>
-              <span>{{ $t("view_extend_timing_details") }}</span>
-            </v-tooltip>
-          </td>
-          <td>{{ props.item.selectable.name }}</td>
-          <td>{{ props.item.selectable.email }}</td>
-          <td>{{ props.item.selectable.approval_status }}</td>
-          <td>{{ props.item.selectable.website }}</td>
-
-          <td class="text-center px-0">
-            <router-link
-              :to="{
-                name: 'store-timing-amend',
-                query: { slug: props.item.selectable.slug },
-              }"
-            >
-              <v-tooltip :text="this.$t('edit')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    v-on="on"
-                    small
-                    class="mr-2 edit_btn icon_size"
-                    v-bind="props"
-                    >mdi-pencil-outline</v-icon
-                  >
-                </template>
-              </v-tooltip>
-            </router-link>
-            <span @click="deleteItem(props.item.selectable.id)">
-              <v-tooltip :text="this.$t('delete')" location="bottom">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    class="delete_btn icon_size"
-                    v-bind="props"
-                    v-on="on"
-                    small
-                    type="button"
-                    >mdi-trash-can-outline</v-icon
-                  >
-                </template>
-              </v-tooltip>
-            </span>
-          </td>
-        </tr>
-      </template> -->
     </v-data-table>
     <ConfirmDialog
       :show="showStatusDialog"
@@ -215,13 +250,12 @@ export default {
     headers() {
       return [
         {
-          text: "",
-          align: "start",
-          sortable: false,
-          value: "store_timing_id",
+          title: " ",
+          align: "center",
+          key: "start",
         },
         {
-          title: this.$t("name_en"),
+          title: this.$t("name"),
           key: "name",
         },
         {
@@ -229,19 +263,24 @@ export default {
           key: "email",
         },
         {
-          title: this.$t("status_en"),
+          title: this.$t("status"),
           align: "left",
           sortable: false,
           key: "status",
         },
         {
-          title: this.$t("approval_en"),
+          title: this.$t("approval"),
           key: "approval_status",
         },
         {
-          title: this.$t("action_en"),
+          title: this.$t("action"),
           align: "center",
           key: "action",
+        },
+        {
+          title: " ",
+          align: "center",
+          key: "view",
         },
       ];
     },
@@ -270,6 +309,21 @@ export default {
     this.fetchStoreTimings();
   },
   methods: {
+    viewStores(slug) {
+      this.$router.push({
+        name: "store-timing-review",
+        query: { slug: slug },
+      });
+    },
+    toggleExpanded(item) {
+      const index = this.expanded.indexOf(item.selectable.id);
+      if (index > -1) {
+        this.expanded.splice(index, 1); // Collapse the row
+      } else {
+        console.log("item.id", item.selectable);
+        this.expanded = [item.selectable.id]; // Expand the row, collapse others
+      }
+    },
     getStatusColor(status) {
       switch (status) {
         case "Approved":
@@ -282,20 +336,6 @@ export default {
           return "";
       }
     },
-    cancel() {
-      this.showdeleteDialog = false;
-    },
-    confirm(id) {
-      this.deleteConfirm(id);
-      this.showdeleteDialog = false;
-    },
-    cancelStatus() {
-      this.showStatusDialog = false;
-    },
-    confirmStatus() {
-      this.statusUpdate();
-      this.showStatusDialog = false;
-    },
     fetchStoreTimings() {
       this.initval = true;
       this.$axios
@@ -304,7 +344,7 @@ export default {
           this.initval = false;
           let store_timing = [];
           res.data.store_timings.map((ele) => {
-            if (ele.header_id == ele.id) {
+            if (ele.store_timings) {
               console.log(ele);
               store_timing.push(ele);
             }
@@ -318,6 +358,13 @@ export default {
     },
     deleteConfirm() {
       this.deletestoretimings(this.delete_id);
+    },
+    cancel() {
+      this.showdeleteDialog = false;
+    },
+    confirm(id) {
+      this.deleteConfirm(id);
+      this.showdeleteDialog = false;
     },
     deleteItem($id) {
       this.delete_id = $id;
@@ -346,14 +393,21 @@ export default {
           console.log("this error" + err);
         });
     },
-    updateStoreTimingStatus(id) {
+    updateStatus(id) {
       this.status_id = id;
       this.showStatusDialog = true;
+    },
+    cancelStatus() {
+      this.showStatusDialog = false;
+    },
+    confirmStatus() {
+      this.statusUpdate();
+      this.showStatusDialog = false;
     },
     statusUpdate() {
       this.$axios
         .post(
-          process.env.VUE_APP_API_URL_ADMIN + "update_system_param_status",
+          process.env.VUE_APP_API_URL_ADMIN + "update-store-timing-status",
           {
             id: this.status_id,
           }

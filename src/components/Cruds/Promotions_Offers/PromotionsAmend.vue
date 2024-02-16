@@ -23,6 +23,23 @@
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
               <v-col cols="4" sm="12" md="4">
+                <v-tooltip :text="this.$t('store')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="promotions[0].store_id"
+                      v-bind:label="$t('store')"
+                      variant="outlined"
+                      density="compact"
+                      :items="stores_en"
+                      item-title="name"
+                      item-value="id"
+                      class="required_field"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="4" sm="12" md="4">
                 <v-tooltip :text="this.$t('title_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -53,6 +70,7 @@
                       variant="outlined"
                       density="compact"
                       maxlength="12"
+                      v-on:keypress="NumbersOnly"
                       required
                     ></v-text-field>
                   </template>
@@ -89,9 +107,9 @@
                       class="required_field"
                       required
                       index="id"
-                      :items="promotions_type"
-                      item-value="name"
-                      item-title="name"
+                      :items="p_type_en"
+                      item-value="shortname"
+                      item-title="longname"
                     ></v-select>
                   </template>
                 </v-tooltip>
@@ -139,6 +157,7 @@
                       v-bind:label="$t('meta_title_en')"
                       v-bind="props"
                       variant="outlined"
+                      class="required_field"
                       density="compact"
                       maxlength="100"
                     ></v-text-field>
@@ -153,6 +172,7 @@
                       rows="2"
                       v-model="promotions[0].description"
                       :rules="fieldRules"
+                      class="required_field"
                       maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('description_en')"
@@ -175,6 +195,8 @@
                       :rules="fieldRules"
                       maxlength="100"
                       v-bind="props"
+                                            class="required_field"
+
                       v-bind:label="$t('meta_description_en')"
                       variant="outlined"
                       counter="true"
@@ -194,6 +216,7 @@
                       required
                       variant="outlined"
                       density="compact"
+                      v-on:keypress="NumbersOnly"
                     ></v-text-field>
                   </template>
                 </v-tooltip>
@@ -229,7 +252,7 @@
                     </v-hover>
                   </div>
                   <a
-                    class="text-center pointer"
+                    class="text-center image_cursor"
                     @click="downloadImage(promotions[0].image_path)"
                   >
                     <span
@@ -257,6 +280,23 @@
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
+              <v-col cols="4" sm="12" md="4">
+                <v-tooltip :text="this.$t('store_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="promotions[1].store_id"
+                      v-bind:label="$t('store_ar')"
+                      variant="outlined"
+                      density="compact"
+                      :items="stores_ar"
+                      item-title="name"
+                      item-value="id"
+                      class="required_field rtl"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
               <v-col cols="4" sm="12" md="4">
                 <v-tooltip :text="this.$t('title_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
@@ -288,6 +328,7 @@
                       variant="outlined"
                       density="compact"
                       maxlength="12"
+                      v-on:keypress="NumbersOnly"
                       required
                     ></v-text-field>
                   </template>
@@ -324,9 +365,9 @@
                       class="required_field"
                       required
                       index="id"
-                      :items="promotions_type"
-                      item-value="name"
-                      item-title="name"
+                      :items="p_type_ar"
+                      item-value="shortname"
+                      item-title="longname"
                     ></v-select>
                   </template>
                 </v-tooltip>
@@ -435,6 +476,7 @@
                       required
                       variant="outlined"
                       density="compact"
+                      v-on:keypress="NumbersOnly"
                     ></v-text-field>
                   </template>
                 </v-tooltip>
@@ -470,7 +512,7 @@
                     </v-hover>
                   </div>
                   <a
-                    class="text-center pointer"
+                    class="text-center image_cursor"
                     @click="downloadImage(promotions[1].image_path)"
                   >
                     <span
@@ -559,18 +601,10 @@ export default {
     isDisabled: false,
     checkbox_value: false,
     uploadfile: false,
-    promotions_type: [
-      {
-        id: 1,
-        name: "promotions",
-        value: "Promotions",
-      },
-      {
-        id: 2,
-        name: "offers",
-        value: "Offers",
-      },
-    ],
+    p_type_en: [],
+    p_type_ar: [],
+    stores_en: [],
+    stores_ar: [],
     promotions: [
       {
         id: 0,
@@ -586,6 +620,7 @@ export default {
         meta_title: "",
         meta_description: "",
         lang: "en",
+        store_id: null,
       },
       {
         id: 0,
@@ -601,6 +636,7 @@ export default {
         meta_title: "",
         meta_description: "",
         lang: "ar",
+        store_id: null,
       },
     ],
 
@@ -636,8 +672,10 @@ export default {
     },
   },
   mounted() {
-    this.promotions[0].type = "promotions";
-    this.promotions[1].type = "promotions";
+    // this.promotions[0].type = "promotions";
+    // this.promotions[1].type = "promotions";
+    this.fetchLookup();
+    this.get_stores();
   },
   created() {},
   watch: {
@@ -665,6 +703,52 @@ export default {
     },
   },
   methods: {
+       downloadImage(image_url) {
+      window.open(this.envImagePath + image_url, "_blank");
+    },
+    get_stores() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-stores")
+        .then((response) => {
+          console.log(response);
+          this.stores_en = response.data.stores_en;
+          this.stores_ar = response.data.stores_ar;
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
+    fetchLookup() {
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_lang_lookup", {
+          params: {
+            lookup_type: "PROMOTION_TYPE",
+          },
+        })
+        .then((response) => {
+          this.p_type_en = response.data.lookup_en;
+          this.p_type_ar = response.data.lookup_ar;
+        })
+        .catch((err) => {
+          this.$toast.error(this.$t("something_went_wrong"));
+          console.log(err);
+        });
+    },
     uploaded_image(img_src) {
       //alert('uploaded image');
       //alert(img_src);
@@ -770,5 +854,8 @@ input.larger {
 .rtl :deep() input {
   text-align: right;
   direction: rtl;
+}
+.image_cursor{
+  cursor: pointer;
 }
 </style>
