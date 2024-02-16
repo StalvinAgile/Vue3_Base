@@ -1,6 +1,9 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="my-3 p-0"  v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+    <div
+      class="my-3 p-0"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+    >
       <page-title
         class="col-md-4 ml-2"
         :heading="$t('create_amend_home_slider')"
@@ -48,11 +51,8 @@
                         <v-text-field
                           v-bind="props"
                           v-model="home_slider[0].action"
-                          :rules="fieldRules"
-                          class="required_field"
                           maxlength="100"
                           v-bind:label="$t('action')"
-                          required
                           variant="outlined"
                           density="compact"
                         ></v-text-field>
@@ -64,6 +64,7 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          v-if="home_slider[0].action != ''"
                           v-model="home_slider[0].target"
                           v-bind:label="$t('target')"
                           variant="outlined"
@@ -123,6 +124,7 @@
                           maxlength="100"
                           v-bind:label="$t('sequence')"
                           required
+                          :rules="seqRules"
                           variant="outlined"
                           density="compact"
                         ></v-text-field>
@@ -190,7 +192,7 @@
               <v-layout>
                 <v-row class="px-6 mt-2">
                   <v-col cols="12" sm="12" md="4">
-                    <v-tooltip :text="$t('title')" location="bottom">
+                    <v-tooltip :text="$t('title_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
@@ -198,7 +200,7 @@
                           :rules="fieldRules"
                           class="required_field"
                           maxlength="100"
-                          v-bind:label="$t('title')"
+                          v-bind:label="$t('title_ar')"
                           required
                           variant="outlined"
                           density="compact"
@@ -207,16 +209,13 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
-                    <v-tooltip :text="$t('action')" location="bottom">
+                    <v-tooltip :text="$t('action_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
                           v-model="home_slider[1].action"
-                          :rules="fieldRules"
-                          class="required_field"
                           maxlength="100"
-                          v-bind:label="$t('action')"
-                          required
+                          v-bind:label="$t('action_ar')"
                           variant="outlined"
                           density="compact"
                         ></v-text-field>
@@ -224,16 +223,17 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
-                    <v-tooltip :text="$t('target')" location="bottom">
+                    <v-tooltip :text="$t('target_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                           v-if="home_slider[0].action != ''"
                           v-model="home_slider[1].target"
-                          v-bind:label="$t('target')"
+                          v-bind:label="$t('target_ar')"
                           variant="outlined"
                           density="compact"
                           :rules="fieldRules"
-                          class="required_field"
+                          class="required_field rtl"
                           :items="targets_ar"
                           item-title="shortname"
                           item-value="shortname"
@@ -287,6 +287,7 @@
                           maxlength="100"
                           v-bind:label="$t('sequence_ar')"
                           required
+                          :rules="seqRules"
                           variant="outlined"
                           density="compact"
                         ></v-text-field>
@@ -450,6 +451,8 @@ export default {
         title: "",
         description: "",
         image: "",
+        action: "",
+        target: "",
         header_id: 0,
         lang: "en",
         seq: null,
@@ -459,6 +462,8 @@ export default {
         title: "",
         description: "",
         image: "",
+        action: "",
+        blank: "",
         header_id: 0,
         lang: "ar",
         seq: null,
@@ -504,6 +509,11 @@ export default {
         (v) => (v >= 0 && v <= 999999999999) || this.$t("number_required"),
       ];
     },
+    seqRules() {
+      return [
+        (v) => (v >= 0 && v <= 9999) || this.$t("number_required"),
+      ];
+    },
   },
 
   created() {},
@@ -543,13 +553,14 @@ export default {
         }
       },
     },
-     '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
 
   methods: {
@@ -653,6 +664,9 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
+    },
+     downloadImage(image_url) {
+      window.open(this.envImagePath + image_url, "_blank");
     },
   },
 };
