@@ -97,8 +97,9 @@
                 <v-tooltip :text="this.$t('description_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea v-on="on" rows="2" v-model="promotions[0].description" :rules="fieldRules"
-                      class="required_field" maxlength="2000" v-bind="props" v-bind:label="$t('description_en')"
-                      variant="outlined" counter="true"></v-textarea>
+                      class="required_field"  maxlength="2000"
+                        counter="true" v-bind="props" v-bind:label="$t('description_en')"
+                      variant="outlined" ></v-textarea>
                   </template>
                 </v-tooltip>
               </v-col>
@@ -106,8 +107,9 @@
                 <v-tooltip :text="this.$t('meta_description_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-textarea v-on="on" rows="2" v-model="promotions[0].meta_description" :rules="fieldRules"
-                      maxlength="100" v-bind="props" class="required_field" v-bind:label="$t('meta_description_en')"
-                      variant="outlined" counter="true"></v-textarea>
+                    maxlength="2000"
+                        counter="true" v-bind="props" class="required_field" v-bind:label="$t('meta_description_en')"
+                      variant="outlined"></v-textarea>
                   </template>
                 </v-tooltip>
               </v-col>

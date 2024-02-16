@@ -327,7 +327,7 @@
                         v-bind="props"
                         variant="outlined"
                         density="compact"
-                        maxlength="250"
+                        maxlength="2000"
                         counter="true"
                         v-model="profile_details.description"
                         v-bind:label="$t('description')"

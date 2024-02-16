@@ -146,7 +146,7 @@
                     <v-tooltip :text="$t('address_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea rows="3" v-bind="props" variant="outlined" density="compact" class="required_field"
-                          maxlength="250" :rules="fieldRules" counter="true" v-model="stores[0].address"
+                          maxlength="2000" counter="true" :rules="fieldRules" v-model="stores[0].address"
                           v-bind:label="$t('address_en')" required></v-textarea>
                       </template>
                     </v-tooltip>
@@ -155,7 +155,7 @@
                     <v-tooltip :text="$t('description_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea rows="3" v-bind="props" variant="outlined" density="compact" class="required_field"
-                          maxlength="2000" :rules="descriptionRules" counter="true" v-model="stores[0].description"
+                          maxlength="2000" counter="true" :rules="descriptionRules" v-model="stores[0].description"
                           v-bind:label="$t('description_en')" required></v-textarea>
                       </template>
                     </v-tooltip>
@@ -198,7 +198,7 @@
                     <v-tooltip :text="$t('meta_description_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea rows="3" v-bind="props" variant="outlined" density="compact" :rules="descriptionRules"
-                          maxlength="160" class="required_field" counter="true" v-model="stores[0].meta_description"
+                          maxlength="2000" counter="true" class="required_field" v-model="stores[0].meta_description"
                           v-bind:label="$t('meta_description_en')" required></v-textarea>
                       </template>
                     </v-tooltip>
@@ -428,7 +428,7 @@
                   <v-col cols="12" md="4" xs="12" sm="12" lg="4">
                     <v-tooltip :text="$t('address_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-textarea rows="3" v-bind="props" variant="outlined" density="compact" maxlength="250"
+                        <v-textarea rows="3" v-bind="props" variant="outlined" density="compact" maxlength="2000"
                           counter="true" class="required_field rtl" :rules="fieldRulesAr" v-model="stores[1].address"
                           v-bind:label="$t('address_ar')" required></v-textarea>
                       </template>
@@ -438,7 +438,7 @@
                     <v-tooltip :text="$t('description_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea rows="3" v-bind="props" variant="outlined" density="compact" maxlength="2000"
-                          class="required_field rtl" :rules="descriptionRulesAr" counter="true"
+                          counter="true" class="required_field rtl" :rules="descriptionRulesAr"
                           v-model="stores[1].description" v-bind:label="$t('description_ar')" required></v-textarea>
                       </template>
                     </v-tooltip>
@@ -481,7 +481,7 @@
                     <v-tooltip :text="$t('meta_description_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea rows="3" v-bind="props" variant="outlined" density="compact"
-                          :rules="descriptionRulesAr" maxlength="160" counter="true" class="required_field rtl"
+                          :rules="descriptionRulesAr" maxlength="2000" counter="true" class="required_field rtl"
                           v-model="stores[1].meta_description" v-bind:label="$t('meta_description_ar')"
                           required></v-textarea>
                       </template>
@@ -1084,4 +1084,7 @@ input.larger {
   direction: rtl !important;
 }
 
+.arabdirection /deep/ .v-input {
+  direction: rtl !important;
+}
 </style>
