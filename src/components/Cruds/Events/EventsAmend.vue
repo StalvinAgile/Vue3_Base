@@ -49,6 +49,7 @@
               </v-row>
             </v-layout>
             <v-row class="mx-auto mt-2" max-width="344">
+<<<<<<< HEAD
               <v-col
                 cols="12"
                 sm="12"
@@ -57,6 +58,9 @@
                 xs="12"
                 v-if="user.rolename != 'StoreAdmin'"
               >
+=======
+              <v-col cols="3" sm="12" md="3">
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                 <v-tooltip :text="this.$t('store')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
@@ -93,7 +97,11 @@
                   </template>
                 </v-tooltip>
               </v-col>
+<<<<<<< HEAD
               <v-col cols="12" sm="12" :md="user.rolename === 'StoreAdmin' ? 4 : 3">
+=======
+              <v-col cols="3" sm="12" md="3">
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                 <v-tooltip :text="this.$t('start_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -111,7 +119,11 @@
                   <span>{{ $t("start_date_en") }}</span>
                 </v-tooltip>
               </v-col>
+<<<<<<< HEAD
               <v-col cols="12" sm="12" :md="user.rolename === 'StoreAdmin' ? 4 : 3">
+=======
+              <v-col cols="3" sm="12" md="3">
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                 <v-tooltip :text="this.$t('end_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -130,6 +142,7 @@
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="12" md="12">
+<<<<<<< HEAD
                 <v-card-title class="text-left" style="font-size: 17px">{{
                   $t("description_en")
                 }}</v-card-title>
@@ -156,10 +169,26 @@
                         >Field Required</small
                       >
                     </div>
+=======
+                <v-tooltip :text="this.$t('description')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-textarea
+                      v-on="on"
+                      rows="2"
+                      v-model="events[0].description"
+                      :rules="fieldRules"
+                      maxlength="2000"
+                      v-bind="props"
+                      v-bind:label="$t('description')"
+                      variant="outlined"
+                      counter="true"
+                      class="required_field"
+                    ></v-textarea>
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" md="6">
+              <v-col cols="6" sm="12" md="6">
                 <v-tooltip :text="this.$t('meta_title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -176,7 +205,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" md="6">
+              <v-col cols="6" sm="12" md="6">
                 <v-tooltip
                   :text="this.$t('meta_description')"
                   location="bottom"
@@ -198,7 +227,7 @@
                   <span>{{ $t("meta_description") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="3" md="3">
+              <v-col cols="3" sm="3" md="3">
                 <v-tooltip :text="$t('sequence')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -214,7 +243,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="6" md="6">
+              <v-col cols="6" sm="6" md="6">
                 <div>
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
@@ -223,23 +252,32 @@
                           v-bind:style="
                             isHovering == true ? 'filter: blur(1px);' : ''
                           "
+<<<<<<< HEAD
                           v-if="
                             events[0].image_path == '' ||
                             events[0].image_path == null
                           "
                           src="@/assets/images/upload_image_default.png"
+=======
+                          v-if="events[0].image_path != ''"
+                          :src="envImagePath + events[0].image_path"
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                           width="100"
+                          height="65
+                          "
+                          alt
                         />
                         <img
                           v-bind:style="
                             isHovering == true ? 'filter: blur(1px);' : ''
                           "
                           v-else
+<<<<<<< HEAD
                           :src="envImagePath + events[0].image_path"
+=======
+                          src="@/assets/images/upload_image_default.png"
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                           width="100"
-                          height="65
-                          "
-                          alt
                         />
                         <div v-show="isHovering" class="camera-icon">
                           <v-icon @click="uploadFile">mdi-camera</v-icon>
@@ -275,6 +313,7 @@
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
+<<<<<<< HEAD
                  <v-layout  v-if="user.rolename != 'StoreAdmin'">
               <!-- :disabled="$route.query.slug" -->
               <v-row class="px-6 mt-2">
@@ -301,6 +340,10 @@
             </v-layout>
             <v-row class="mx-auto mt-2 arabdirection" max-width="344">
               <v-col cols="12" sm="12" md="3">
+=======
+            <v-row class="mx-auto mt-2 arabdirection" max-width="344">
+              <v-col cols="3" sm="12" md="3">
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                 <v-tooltip :text="this.$t('store_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
@@ -319,7 +362,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" md="3">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -337,7 +380,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" md="3">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('start_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -355,7 +398,7 @@
                   <span>{{ $t("start_date_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" md="3">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('end_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -375,6 +418,7 @@
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="12" md="12">
+<<<<<<< HEAD
                 <v-card-title class="text-left" style="font-size: 17px">{{
                   $t("description_ar")
                 }}</v-card-title>
@@ -402,10 +446,27 @@
                         >Field Required</small
                       >
                     </div>
+=======
+                <v-tooltip :text="this.$t('description_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-textarea
+                      v-on="on"
+                      rows="2"
+                      v-model="events[1].description"
+                      :rules="fieldRulesAr"
+                      maxlength="2000"
+                      v-bind="props"
+                      v-bind:label="$t('description_ar')"
+                      required
+                      class="required_field rtl"
+                      variant="outlined"
+                      counter="true"
+                    ></v-textarea>
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" md="6">
+              <v-col cols="6" sm="12" md="6">
                 <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -423,7 +484,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" md="6">
+              <v-col cols="6" sm="12" md="6">
                 <v-tooltip
                   :text="this.$t('meta_description_ar')"
                   location="bottom"
@@ -446,7 +507,7 @@
                   <span>{{ $t("meta_description_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="3" md="3">
+              <v-col cols="3" sm="3" md="3">
                 <v-tooltip :text="$t('sequence_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -464,7 +525,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="3" md="3">
+              <v-col cols="3" sm="3" md="3">
                 <div>
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
@@ -473,23 +534,32 @@
                           v-bind:style="
                             isHovering == true ? 'filter: blur(1px);' : ''
                           "
+<<<<<<< HEAD
                           v-if="
                             events[1].image_path == '' ||
                             events[1].image_path == null
                           "
                           src="@/assets/images/upload_image_default.png"
+=======
+                          v-if="events[1].image_path != ''"
+                          :src="envImagePath + events[1].image_path"
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                           width="100"
+                          height="65
+                          "
+                          alt
                         />
                         <img
                           v-bind:style="
                             isHovering == true ? 'filter: blur(1px);' : ''
                           "
                           v-else
+<<<<<<< HEAD
                           :src="envImagePath + events[1].image_path"
+=======
+                          src="@/assets/images/upload_image_default.png"
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
                           width="100"
-                          height="65
-                          "
-                          alt
                         />
                         <div v-show="isHovering" class="camera-icon">
                           <v-icon @click="uploadFile">mdi-camera</v-icon>
@@ -569,9 +639,8 @@
 <script>
 import DatePicker from "../../CustomComponents/DatePicker.vue";
 import Imageupload from "../../CustomComponents/ImageUpload.vue";
-import { quillEditor } from "vue3-quill";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 export default {
+<<<<<<< HEAD
   components: { DatePicker, Imageupload, quillEditor },
   setup() {
     const onEditorFocus = () => {
@@ -589,16 +658,14 @@ export default {
 
     return { onEditorReady, onEditorFocus, onEditorFocusAR, onEditorReadyAR };
   },
+=======
+  components: { DatePicker, Imageupload },
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
   data: () => ({
     google_icon: {
       icon_name: "edit_note",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
-    },
-    editorOptions: {
-      theme: "snow",
-      direction: "rtl",
-      placeholder: "أدخل المحتوى هنا",
     },
     tabs: 1,
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
@@ -904,40 +971,17 @@ export default {
         //alert("Form is Invalid");
       }
     },
-    onEditorChange(event) {
-      if (event.text.length == 1) {
-        this.quill_item = true;
-      } else {
-        this.quill_item = false;
-      }
-    },
-    onEditorChangeAR(event) {
-      if (event.text.length == 1) {
-        this.quill_item = true;
-      } else {
-        this.quill_item = false;
-      }
-    },
-    onEditorBlur() {
-      // console.log(event.options);
-      if (this.events.description == "") {
-        this.quill_item = true;
-      }
-    },
-    onEditorBlurAR(event) {
-      console.log(event.options);
-      if (this.events.description_ar == "") {
-        this.quill_item = true;
-      }
-    },
     clear() {
       this.$refs.form.reset();
     },
+<<<<<<< HEAD
     cancel() {
       this.$router.push({
         name: "categories",
       });
     },
+=======
+>>>>>>> 103896767784be422370358bd6f6e89b8313c070
   },
 };
 </script>

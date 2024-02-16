@@ -35,21 +35,9 @@
             >
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="12" sm="6" md="3">
+                  <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("title_en") }}</div>
                     <div>{{ event.title }}</div>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="3">
-                    <div class="d-label">{{ $t("meta_title_en") }}</div>
-                    <div>{{ event.meta_title }}</div>
-                  </v-col>
-                  <v-col cols="12" sm="12" md="3">
-                    <div class="d-label">{{ $t("description_en") }}</div>
-                    <div v-html="event.description"></div>
-                  </v-col>
-                  <v-col cols="12" sm="12" md="3">
-                    <div class="d-label">{{ $t("meta_description_en") }}</div>
-                    <div>{{ event.meta_description }}</div>
                   </v-col>
                   <!-- <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("parent_event_en") }}</div>
@@ -59,7 +47,7 @@
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col> -->
 
-                  <v-col cols="12" sm="6" md="3">
+                  <v-col cols="12" sm="6" md="4">
                     <div
                       class="d-label"
                       v-if="event.approval_status == 'Rejected'"
@@ -72,7 +60,7 @@
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="3">
+                  <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("approval_status_en") }}</div>
                     <div>
                       <v-chip
@@ -85,10 +73,11 @@
                     </div>
                   </v-col>
 
+                  
                   <v-col
                     cols="12"
                     sm="12"
-                    md="4"
+                    md="12"
                     v-if="event.approval_status == 'Rejected'"
                   >
                     <div class="d-label">
@@ -101,29 +90,36 @@
                   </v-col>
                 </v-row>
               </v-layout>
-              <!-- <v-col cols="12" sm="12" md="4"> -->
-                <div
-                  class="d-flex justify-content-end"
-                  v-if="event.approval_status == 'In Review' && user_role != 'StoreAdmin'"
+                <v-col
+                    cols="12"
+                    sm="12"
+                    md="4"
+                   
+                  >
+
+              <div
+              
+                class="d-flex justify-content-end"
+                v-if="event.approval_status == 'In Review'"
+              >
+                <v-chip
+                  @click="statusOnChange('Approved', event.header_id)"
+                  variant="flat"
+                  color="green"
+                  class="mx-1"
                 >
-                  <v-chip
-                    @click="statusOnChange('Approved', event.header_id)"
-                    variant="flat"
-                    color="green"
-                    class="mx-1"
-                  >
-                    {{ $t("approve_en") }}
-                  </v-chip>
-                  <v-chip
-                    @click="statusOnChange('Rejected', event.header_id)"
-                    variant="flat"
-                    color="red"
-                    class="mx-1"
-                  >
-                    {{ $t("reject_en") }}
-                  </v-chip>
-                </div>
-              <!-- </v-col> -->
+                  {{ $t("approve_en") }}
+                </v-chip>
+                <v-chip
+                  @click="statusOnChange('Rejected', event.header_id)"
+                  variant="flat"
+                  color="red"
+                  class="mx-1"
+                >
+                  {{ $t("reject_en") }}
+                </v-chip>
+              </div>
+                </v-col>
             </v-card>
           </v-window-item>
           <!-- ENGLISH TAB END -->
@@ -138,7 +134,7 @@
             >
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="12" sm="6" md="3">
+                   <v-col cols="12" sm="6" md="3">
                     <div class="d-label">{{ $t("title_ar") }}</div>
                     <div>{{ event.title }}</div>
                   </v-col>
@@ -167,6 +163,8 @@
                     </div>
                   </v-col>
 
+                 
+
                   <v-col cols="12" sm="6" md="3">
                     <div
                       class="d-label"
@@ -180,11 +178,11 @@
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
-
+                  
                   <v-col
                     cols="12"
                     sm="12"
-                    md="3"
+                    md="12"
                     v-if="event.approval_status == 'Rejected'"
                   >
                     <div class="d-label">
@@ -196,7 +194,8 @@
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
                 </v-row>
-                <v-row class="px-6 mt-2"> </v-row>
+                <v-row class="px-6 mt-2">
+                </v-row>
               </v-layout>
               <div
                 class="d-flex justify-content-end"
