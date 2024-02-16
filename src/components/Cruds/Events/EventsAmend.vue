@@ -75,7 +75,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" :md="user.rolename === 'StoreAdmin' ? 4 : 3">
+              <v-col cols="12" sm="12" :md="user.rolename != 'StoreAdmin'? 4: 3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -93,7 +93,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" :md="user.rolename === 'StoreAdmin' ? 4 : 3">
+              <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('start_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -111,7 +111,7 @@
                   <span>{{ $t("start_date_en") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="12" sm="12" :md="user.rolename === 'StoreAdmin' ? 4 : 3">
+              <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('end_date_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -159,7 +159,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="6" sm="12" md="6">
+              <v-col cols="12" sm="12" md="6">
                 <v-tooltip :text="this.$t('meta_title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -176,7 +176,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="6" sm="12" md="6">
+              <v-col cols="12" sm="12" md="6">
                 <v-tooltip
                   :text="this.$t('meta_description')"
                   location="bottom"
@@ -198,7 +198,7 @@
                   <span>{{ $t("meta_description") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="3" md="3">
+              <v-col cols="12" sm="3" md="3">
                 <v-tooltip :text="$t('sequence')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -214,7 +214,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="6" sm="6" md="6">
+              <v-col cols="12" sm="6" md="6">
                 <div>
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
@@ -229,9 +229,6 @@
                           "
                           src="@/assets/images/upload_image_default.png"
                           width="100"
-                          height="65
-                          "
-                          alt
                         />
                         <img
                           v-bind:style="
@@ -240,6 +237,9 @@
                           v-else
                           :src="envImagePath + events[0].image_path"
                           width="100"
+                          height="65
+                          "
+                          alt
                         />
                         <div v-show="isHovering" class="camera-icon">
                           <v-icon @click="uploadFile">mdi-camera</v-icon>
@@ -319,7 +319,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="12" md="3">
+              <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -337,7 +337,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="12" md="3">
+              <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('start_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -355,7 +355,7 @@
                   <span>{{ $t("start_date_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="12" md="3">
+              <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('end_date_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <DatePicker
@@ -405,7 +405,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="6" sm="12" md="6">
+              <v-col cols="12" sm="12" md="6">
                 <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -423,7 +423,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="6" sm="12" md="6">
+              <v-col cols="12" sm="12" md="6">
                 <v-tooltip
                   :text="this.$t('meta_description_ar')"
                   location="bottom"
@@ -446,7 +446,7 @@
                   <span>{{ $t("meta_description_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="3" md="3">
+              <v-col cols="12" sm="3" md="3">
                 <v-tooltip :text="$t('sequence_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -464,7 +464,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="3" md="3">
+              <v-col cols="12" sm="3" md="3">
                 <div>
                   <div class="image-container">
                     <v-hover v-slot="{ isHovering, props }">
@@ -479,9 +479,6 @@
                           "
                           src="@/assets/images/upload_image_default.png"
                           width="100"
-                          height="65
-                          "
-                          alt
                         />
                         <img
                           v-bind:style="
@@ -490,6 +487,9 @@
                           v-else
                           :src="envImagePath + events[1].image_path"
                           width="100"
+                          height="65
+                          "
+                          alt
                         />
                         <div v-show="isHovering" class="camera-icon">
                           <v-icon @click="uploadFile">mdi-camera</v-icon>
@@ -569,6 +569,8 @@
 <script>
 import DatePicker from "../../CustomComponents/DatePicker.vue";
 import Imageupload from "../../CustomComponents/ImageUpload.vue";
+import { quillEditor } from "vue3-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 export default {
   components: { DatePicker, Imageupload, quillEditor },
   setup() {
@@ -592,6 +594,11 @@ export default {
       icon_name: "edit_note",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
+    },
+    editorOptions: {
+      theme: "snow",
+      direction: "rtl",
+      placeholder: "أدخل المحتوى هنا",
     },
     tabs: 1,
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
@@ -895,6 +902,32 @@ export default {
         this.loader = false;
       } else {
         //alert("Form is Invalid");
+      }
+    },
+    onEditorChange(event) {
+      if (event.text.length == 1) {
+        this.quill_item = true;
+      } else {
+        this.quill_item = false;
+      }
+    },
+    onEditorChangeAR(event) {
+      if (event.text.length == 1) {
+        this.quill_item = true;
+      } else {
+        this.quill_item = false;
+      }
+    },
+    onEditorBlur() {
+      // console.log(event.options);
+      if (this.events.description == "") {
+        this.quill_item = true;
+      }
+    },
+    onEditorBlurAR(event) {
+      console.log(event.options);
+      if (this.events.description_ar == "") {
+        this.quill_item = true;
       }
     },
     clear() {
