@@ -483,5 +483,7 @@
   "inreview_ar":"مقابلة",
   "rejected_ar":"مرفوض",
   "store_code_ar": "رمز المتجر",
-  "field_required_ar": "حقل مطلوب"
+  "field_required_ar": "حقل مطلوب",
+  "mall_admin_ar":"مشرف المركز التجاري",
+  "store_admin_ar":"مسؤول المتجر"
 }

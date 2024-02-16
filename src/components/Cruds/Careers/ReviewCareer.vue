@@ -98,7 +98,7 @@
               </v-layout>
               <div
                 class="d-flex justify-content-end"
-                v-if="career.approval_status == 'In Review'"
+                v-if="career.approval_status == 'In Review'  && user_role != 'StoreAdmin' "
               >
                 <v-chip
                   @click="statusOnChange('Approved', career.header_id)"
@@ -192,7 +192,7 @@
               </v-layout>
               <div
                 class="d-flex justify-content-end"
-                v-if="career.approval_status == 'In Review'"
+                v-if="career.approval_status == 'In Review' && user_role != 'StoreAdmin'"
               >
                 <v-chip
                   @click="statusOnChange('Approved', career.header_id)"
@@ -261,6 +261,7 @@ export default {
       icon: "material-symbols-outlined",
     },
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
+    user_role:"",
     valid: true,
     successmessage: "",
     message: "",
@@ -288,6 +289,7 @@ export default {
       handler() {
         if (this.$route.query.slug) {
           this.fetchcareerDetails();
+    this.user_role = JSON.parse(localStorage.getItem("user_data")).rolename;
         }
       },
     },

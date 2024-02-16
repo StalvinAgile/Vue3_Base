@@ -197,9 +197,10 @@
                   </div>
                 </div>
               </v-form>
+              <!-- {{valid}} -->
               <div>
                 <v-btn 
-                :disabled="btnloading || valid == false || !users.salutation || !users.name|| !users.lastname|| !users.gender|| !users.email|| !users.password|| !users.store_id|| !users.confirm_password"
+                :disabled="valid == false || !users.name|| !users.lastname|| !users.email|| !users.password|| !users.store_id|| !users.confirm_password"
                   v-bind="props"
                   :loading="isDisabled"
                   block
@@ -247,7 +248,7 @@ export default {
       salutation: "",
       name: "",
       lastname: "",
-      gender: "",
+      // gender: "",
       email: "",
       password: "",
       role_id: 2,

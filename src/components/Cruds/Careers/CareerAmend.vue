@@ -7,7 +7,6 @@
         :google_icon="google_icon"
       ></page-title>
     </div>
-    {{role_array}}
     <div class="card-body">
       <content-loader v-if="loader"></content-loader>
       <v-tabs v-model="tabs" color="blue">
@@ -22,8 +21,32 @@
         <!-- ENGLISH TAB STARTS -->
         <v-window-item :value="1">
           <v-form ref="form" v-model="valid">
+            <v-layout>
+              <v-row class="px-6 mt-2">
+                <v-col xs="12" md="12" lg="12">
+                  <!-- :disabled="$route.query.slug" -->
+                  <v-radio-group
+                    v-model="careers[0].stor_type"
+                    inline
+                    class="radio_item"
+                    @change="updateType(careers[0].stor_type)"
+                  >
+                    <v-radio
+                      v-for="(role_data, rindex) in role_array"
+                      :key="rindex"
+                      :label="role_data.rolename"
+                      :value="role_data.rolename"
+                      class="text--primary"
+                    >
+                    </v-radio>
+                    <!-- <v-radio :label="$t('mall')" value="Mall"></v-radio>
+                    <v-radio value="Store" :label="$t('store')"></v-radio> -->
+                  </v-radio-group>
+                </v-col>
+              </v-row>
+            </v-layout>
             <v-row class="mx-auto mt-2" max-width="344">
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="4" sm="12" md="4" v-if="!user.store_id">
                 <v-tooltip :text="this.$t('store')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
@@ -37,6 +60,7 @@
                       :items="stores_en"
                       item-title="name"
                       item-value="id"
+                      @update:model-value="updateStore(careers[0].store_id)"
                     ></v-autocomplete>
                   </template>
                 </v-tooltip>
@@ -88,7 +112,7 @@
                       v-bind:label="$t('meta_title')"
                       v-bind="props"
                       required
-                      class="required_field rtl"
+                      class="required_field"
                       variant="outlined"
                       density="compact"
                       maxlength="100"
@@ -145,8 +169,32 @@
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
+            <v-layout>
+              <!-- :disabled="$route.query.slug" -->
+              <v-row class="px-6 mt-2">
+                <v-col xs="12" md="12" lg="12">
+                  <v-radio-group
+                    v-model="careers[1].stor_type"
+                    inline
+                    class="radio_item"
+                    @change="updateType(careers[1].stor_type)"
+                  >
+                    <v-radio
+                      v-for="(role_data, rindex) in role_array"
+                      :key="rindex"
+                      :label="changeStatusAr(role_data.rolename)"
+                      :value="role_data.rolename"
+                      class="text--primary"
+                    >
+                    </v-radio>
+                    <!-- <v-radio :label="$t('mall')" value="Mall"></v-radio>
+                    <v-radio value="Store" :label="$t('store')"></v-radio> -->
+                  </v-radio-group>
+                </v-col>
+              </v-row>
+            </v-layout>
             <v-row class="mx-auto mt-2" max-width="344">
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="4" sm="12" md="4" v-if="!user.store_id">
                 <v-tooltip :text="this.$t('store_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
@@ -160,6 +208,7 @@
                       :items="stores_en"
                       item-title="name"
                       item-value="id"
+                      @update:model-value="updateStore(careers[1].store_id)"
                     ></v-autocomplete>
                   </template>
                 </v-tooltip>
@@ -338,7 +387,9 @@ export default {
         seq: "",
         meta_title: "",
         meta_description: "",
+        stor_type: "",
         lang: "en",
+        store_id: null,
       },
       {
         id: 0,
@@ -348,14 +399,17 @@ export default {
         seq: "",
         meta_title: "",
         meta_description: "",
+        stor_type: "",
         lang: "ar",
+        store_id: null,
       },
     ],
     noimagepreview: "",
     items: [],
     stores_en: [],
     stores_ar: [],
-    role_array: []
+    role_array: [],
+    user: "",
   }),
   mounted() {
     this.get_stores();
@@ -374,7 +428,13 @@ export default {
     },
   },
 
-  created() {},
+  created() {
+    this.user = JSON.parse(localStorage.getItem("user_data"));
+    if (this.user.store_id) {
+      this.careers[0].store_id = this.user.store_id;
+      this.careers[1].store_id = this.user.store_id;
+    }
+  },
   watch: {
     "$route.query.slug": {
       immediate: true,
@@ -400,6 +460,32 @@ export default {
     },
   },
   methods: {
+    changeStatusAr(status) {
+      switch (status) {
+        case "MallAdmin":
+          return this.$t("mall_admin_ar");
+        case "StoreAdmin":
+          return this.$t("store_admin_ar");
+        // case "Rejected":
+        //   return this.$t("rejected_ar");
+        default:
+          return "";
+      }
+    },
+    updateType(stor_type) {
+      if (this.tabs == 1) {
+        this.careers[1].stor_type = stor_type;
+      } else {
+        this.careers[0].stor_type = stor_type;
+      }
+    },
+    updateStore(stor_type) {
+      if (this.tabs == 1) {
+        this.careers[1].store_id = stor_type;
+      } else {
+        this.careers[0].store_id = stor_type;
+      }
+    },
     fetchRoles() {
       this.loader = true;
       this.$axios
@@ -407,6 +493,10 @@ export default {
         .then((response) => {
           this.loader = false;
           this.role_array = response.data.roles;
+          if (!this.$route.query.slug) {
+            this.careers[0].stor_type = this.role_array[0].rolename;
+            this.careers[1].stor_type = this.role_array[0].rolename;
+          }
         })
         .catch((err) => {
           this.loader = false;
