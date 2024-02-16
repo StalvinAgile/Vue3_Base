@@ -1,6 +1,6 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="my-3 p-0">
+    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
       <page-title
         class="col-md-4 ml-2"
         :heading="$t('create_career')"
@@ -409,6 +409,7 @@ export default {
     stores_en: [],
     stores_ar: [],
     role_array: [],
+    sel_lang: "",
     user: "",
   }),
   mounted() {
@@ -458,6 +459,13 @@ export default {
         }
       },
     },
+    '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.sel_lang = 'ar';
+      } else {''
+        this.sel_lang = 'en';
+      }
+    }
   },
   methods: {
     changeStatusAr(status) {

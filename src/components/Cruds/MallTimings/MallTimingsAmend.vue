@@ -1,6 +1,6 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="my-3 p-0">
+    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
       <page-title
         class="col-md-4 ml-2"
         :heading="$t('create_ammend_mall_timing')"
@@ -400,6 +400,7 @@ export default {
         description: "",
       },
     ],
+    sel_lang:""
   }),
 
   computed: {
@@ -450,6 +451,13 @@ export default {
         }
       },
     },
+    '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.sel_lang = 'ar';
+      } else {''
+        this.sel_lang = 'en';
+      }
+    }
   },
 
   methods: {

@@ -4,6 +4,7 @@
       flat
       color="white"
       class="row py-5 pl-5 align-items-center component_app_bar"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]"
     >
       <page-title
         class="col-md-3"
@@ -45,7 +46,7 @@
               }}</v-btn>
             </router-link>
           </template>
-        </v-tooltip>
+        </v-tooltip>&nbsp;
         <v-tooltip :text="this.$t('back')" location="bottom">
           <template v-slot:activator="{ props }">
             <router-link
@@ -305,7 +306,8 @@ export default {
     initval: false,
     valid: false,
     message: "",
-    parent_lookup:[]
+    parent_lookup:[],
+    sel_lang:""
     
   }),
   computed: {
@@ -375,7 +377,15 @@ export default {
         }
       },
     },
+    '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.sel_lang = 'ar';
+      } else {''
+        this.sel_lang = 'en';
+      }
+    }
   },
+
   mounted() {},
   methods: {
     cancel() {

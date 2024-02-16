@@ -4,6 +4,7 @@
       flat
       color="white"
       class="row py-5 pl-5 align-items-center component_app_bar position-relative"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]"
     >
       <page-title
         class="col-md-3"
@@ -367,10 +368,21 @@ export default {
     message: "",
     user: "",
     showStatusDialog: false,
+    sel_lang:""
   }),
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user"));
     this.fetchCareers();
+  },
+    watch: {
+    
+    '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.sel_lang = 'ar';
+      } else {''
+        this.sel_lang = 'en';
+      }
+    }
   },
   computed: {
     formTitle() {

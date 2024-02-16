@@ -1,6 +1,6 @@
 <template>
   <div class="main-20 position-relative">
-    <div flat color="white" class="row py-5 pl-5 align-items-center">
+    <div flat color="white" class="row py-5 pl-5 align-items-center component_app_bar" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
       <page-title
         class="col-md-3"
         :heading="$t('mall_timings')"
@@ -249,6 +249,7 @@ export default {
     status_id: null,
     showStatusDialog: false,
     tabs: 1,
+    sel_lang:""
   }),
 
   computed: {
@@ -327,6 +328,13 @@ export default {
     dialog(val) {
       val || this.close();
     },
+    '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.sel_lang = 'ar';
+      } else {''
+        this.sel_lang = 'en';
+      }
+    }
   },
 
   created() {},

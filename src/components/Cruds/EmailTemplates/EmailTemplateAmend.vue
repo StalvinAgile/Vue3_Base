@@ -1,6 +1,6 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="text-center">
+    <div class="text-center" v-bind:class="[is_arabic ? 'rtl-page-title' : '',]">
       <page-title class="col-md-4" :heading="$t('amend_email_template')" :google_icon="google_icon"></page-title>
     </div>
     <div class="mb-3">

@@ -4,6 +4,7 @@
       flat
       color="white"
       class="row py-5 pl-5 align-items-center component_app_bar"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]"
     >
       <page-title
         class="col-md-3"
@@ -234,6 +235,7 @@ export default {
     statename: "",
     cities_en:[],
     cities_ar:[],
+    sel_lang:"",
     json_fields: [
       {
         label: "Name",
@@ -276,6 +278,13 @@ export default {
         }
       },
     },
+     '$i18n.locale'(newLocale) {
+      if (newLocale === 'ar') {
+        this.sel_lang = 'ar';
+      } else {''
+        this.sel_lang = 'en';
+      }
+    }
   },
   mounted() {
     this.fetchcities();
