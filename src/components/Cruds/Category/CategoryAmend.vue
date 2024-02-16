@@ -46,7 +46,7 @@
               </v-col>
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="6" sm="12" md="4">
+                  <v-col cols="6" lg="6" sm="12" md="4">
                     <v-tooltip :text="$t('name_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
@@ -66,7 +66,7 @@
                     </v-tooltip>
                   </v-col>
 
-                  <v-col cols="6" sm="12" md="4">
+                  <v-col cols="6" lg="6" sm="12" md="4">
                     <v-tooltip :text="$t('name_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
@@ -112,6 +112,7 @@
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
                           <quill-editor
+                          style="direction: ltr;"
                             class="hide_quill_input"
                             v-bind:id="
                               quill_item == true
