@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position: relative">
     <v-dialog v-model="dialogVisible" max-width="500px" persistent>
       <content-loader v-if="loader"></content-loader>
 
@@ -57,6 +57,11 @@
       style="display: none"
       id="file"
     />
+    <div v-if="no_image" class="v-messages__message error_trans_msg"
+    role="alert" aria-live="polite" id="input-10-messages">
+    <div class="v-messages__message" v-if="no_image_trans == 'en'">{{$t('image_required_en')}}</div>
+    <div class="v-messages__message" v-else>{{$t('image_required_ar')}}</div>
+  </div>
   </div>
 </template>
 
@@ -77,6 +82,14 @@ export default {
     resizeheight: {
       type: Number,
       default: 0.2,
+    },
+    no_image: {
+      type: Boolean,
+      default: false,
+    },
+    no_image_trans: {
+      type: String,
+      default: 'en',
     },
     viewmodeslider: {
       type: Number,
@@ -219,5 +232,11 @@ export default {
 .cropper-container .cropper-face {
   min-width: 200px !important; /* Set your desired minimum width here */
   min-height: 10px !important; /* Set your desired minimum width here */
+}
+.error_trans_msg{
+  color: red;
+    position: absolute;
+    bottom: 8px;
+    font-size: 12px;
 }
 </style>

@@ -502,6 +502,8 @@
   "file_required_ar":"الملف مطلوب",
   "file_preview_ar" : "الوصف مطلو",
   "image_preview_ar":"معاينة الصورة",
-  "number_required_ar": "الرقم المطلوب"
+  "number_required_ar": "الرقم المطلوب",
+  "image_required_en" : "Image Required",
+  "image_required_ar" : "الصورة مطلوبة"
 
 }
