@@ -127,6 +127,7 @@
                           :rules="seqRules"
                           variant="outlined"
                           density="compact"
+                          v-on:keypress="NumbersOnly"
                         ></v-text-field>
                       </template>
                     </v-tooltip>
@@ -189,7 +190,7 @@
           </v-window-item>
           <!-- ENGLISH TAB END -->
           <!-- ARABIC TAB STARTS -->
-          <v-window-item :value="2">
+          <v-window-item :value="2" style="direction:rtl">
             <v-form ref="form" v-model="valid">
               <v-layout>
                 <v-row class="px-6 mt-2">
@@ -248,7 +249,7 @@
               <v-layout>
                 <v-row class="px-6 pt-0">
                   <v-col cols="12" md="12" lg="12" sm="12" class="pt-0">
-                    <v-card-title class="text-left" style="font-size: 17px">{{
+                    <v-card-title class="text-right" style="font-size: 17px">{{
                       $t("description_ar")
                     }}</v-card-title>
                     <v-tooltip :text="$t('description_ar')" location="top">
@@ -292,6 +293,7 @@
                           :rules="seqRules"
                           variant="outlined"
                           density="compact"
+                          v-on:keypress="NumbersOnly"
                         ></v-text-field>
                       </template>
                     </v-tooltip>
@@ -567,6 +569,19 @@ export default {
   },
 
   methods: {
+    NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
     uploaded_image(img_src) {
       if (this.tabs == 1) {
         this.home_slider[0].image = img_src;

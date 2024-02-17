@@ -61,7 +61,7 @@
           :items="home_sliders_en"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available_en')"
+          :no-data-text="$t('no_data_available_en')"
           :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
@@ -155,7 +155,7 @@
           :loading="initval"
           class="rtl-direction"
           :no-data-text="$t('no_data_available_ar')"
-          :items-per-page-text="$t('rows_per_page')"
+          :items-per-page-text="$t('rows_per_page_ar')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -231,7 +231,7 @@
                   :disabled="loading"
                   class="ma-1"
                   color="blue"
-                  >{{ $t("view_en") }}</v-btn
+                  >{{ $t("view_ar") }}</v-btn
                 >
               </td>
             </tr>
@@ -352,6 +352,10 @@ export default {
           align: "center",
           key: "actions",
         },
+        {
+          title:" ",
+          align: "center",
+        },
       ];
     },
     headers_ar() {
@@ -385,6 +389,10 @@ export default {
           title: this.$t("action_ar"),
           align: "center",
           key: "actions",
+        },
+        {
+          title:" ",
+          align: "center",
         },
       ];
     },

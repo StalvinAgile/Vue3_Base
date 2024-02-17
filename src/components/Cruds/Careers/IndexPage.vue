@@ -59,10 +59,8 @@
           :items="careers_data_en"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available_en')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+         :no-data-text="$t('no_data_available_en')"
+          :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -184,11 +182,9 @@
           :items="careers_data_ar"
           :search="search"
           :loading="initval"
-           class="rtl-direction"
-          v-bind:no-data-text="$t('no_data_available_ar')"
-          :footer-props="{
-            'items-per-page-text': $t('rows_per_page'),
-          }"
+          class="rtl-direction"
+          :no-data-text="$t('no_data_available_ar')"
+          :items-per-page-text="$t('rows_per_page_ar')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
