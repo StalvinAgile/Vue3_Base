@@ -10,6 +10,7 @@
       :close-on-content-click="false"
       :return-value="show_date"
     >
+    {{ rules }}
       <template v-slot:activator="{ props }">
         <v-text-field
           density="compact"
@@ -57,6 +58,7 @@ export default {
     "label",
     "max",
     "min",
+    "translation",
     "stored_date",
     "rules",
     "class_required",
@@ -66,8 +68,14 @@ export default {
   ],
   computed: {
     fieldRules() {
-      return [(v) => !!v || !this.rules || this.$t("field_required")];
+      if(this.translation == 'arabic'){
+        return [(v) => !!v || !this.rules || this.$t("field_required_ar")];
+      }
+      else{
+        return [(v) => !!v || !this.rules || this.$t("field_required")];
+      }
     },
+
 
     DateFormatted() {
       if (this.array_index != null) {
