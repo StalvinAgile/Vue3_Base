@@ -160,7 +160,7 @@
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
-              <td>{{ props.item.selectable.stor_type }}</td>
+              <td>{{ arType(props.item.selectable.stor_type) }}</td>
               <td>{{ props.item.selectable.name }}</td>
               <td>{{ props.item.selectable.email }}</td>
               <td>{{ props.item.selectable.phone }}</td>
@@ -417,6 +417,16 @@ export default {
   },
 
   methods: {
+    arType(type){
+       switch (type) {
+        case "Mall":
+          return this.$t("mall_ar");
+        case "Store":
+          return this.$t("store_ar");
+        default:
+          return "";
+      }
+    },
     changeStatusAr(status) {
       switch (status) {
         case "Approved":
