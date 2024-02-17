@@ -4,7 +4,7 @@
       flat
       color="white"
       class="row py-5 pl-5 align-items-center component_app_bar"
-      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
     >
       <page-title
         class="col-md-3"
@@ -88,6 +88,8 @@
           :items="cities_en"
           :search="search"
           :loading="initval"
+          :no-data-text="$t('no_data_available_en')"
+          :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -136,10 +138,13 @@
       <!-- ARABIC TAB STARTS -->
       <v-window-item :value="2">
         <v-data-table
-          :headers="headers"
+          :headers="headers_ar"
           :items="cities_ar"
           :search="search"
           :loading="initval"
+          class="rtl-direction"
+          :no-data-text="$t('no_data_available_ar')"
+          :items-per-page-text="$t('rows_per_page_ar')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -213,8 +218,8 @@ export default {
   },
   data: () => ({
     cities: [],
-    s_country:"",
-    s_state:"",
+    s_country: "",
+    s_state: "",
     showdeleteDialog: false,
     delete_id: null,
     status_id: null,
@@ -233,9 +238,9 @@ export default {
     message: "",
     countryname: "",
     statename: "",
-    cities_en:[],
-    cities_ar:[],
-    sel_lang:"",
+    cities_en: [],
+    cities_ar: [],
+    sel_lang: "",
     json_fields: [
       {
         label: "Name",
@@ -247,13 +252,29 @@ export default {
     headers() {
       return [
         {
-          title: this.$t("name"),
+          title: this.$t("name_en"),
           align: "left",
           sortable: true,
-          key: this.tabs == 1 ? "name" : "name_ar",
+          key: "name",
         },
         {
-          title: this.$t("actions"),
+          title: this.$t("actions_en"),
+          // key: "name",
+          align: "center",
+          sortable: false,
+        },
+      ];
+    },
+    headers_ar() {
+      return [
+        {
+          title: this.$t("name_ar"),
+          align: "left",
+          sortable: true,
+          key: "name",
+        },
+        {
+          title: this.$t("actions_ar"),
           // key: "name",
           align: "center",
           sortable: false,
@@ -278,13 +299,14 @@ export default {
         }
       },
     },
-     '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
   mounted() {
     this.fetchcities();
