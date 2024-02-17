@@ -100,7 +100,7 @@
               </v-layout>
               <div
                 class="d-flex justify-content-end"
-                v-if="event.approval_status == 'In Review'"
+                v-if="event.approval_status == 'In Review'&& user_role != 'StoreAdmin'"
               >
                 <v-chip
                   @click="statusOnChange('Approved', event.header_id)"
@@ -194,7 +194,7 @@
               </v-layout>
               <div
                 class="d-flex justify-content-end"
-                v-if="event.approval_status == 'In Review'"
+                v-if="event.approval_status == 'In Review' && user_role != 'StoreAdmin'"
               >
                 <v-chip
                   @click="statusOnChange('Approved', event.header_id)"
@@ -277,6 +277,8 @@ export default {
     events_en: [],
     events_ar: [],
     showApprovalDialog: false,
+        user_role:"",
+
     selected: {
       header_id: null,
       approval_status: "",
@@ -291,6 +293,8 @@ export default {
       handler() {
         if (this.$route.query.slug) {
           this.fetcheventDetails();
+              this.user_role = JSON.parse(localStorage.getItem("user_data")).rolename;
+
         }
       },
     },

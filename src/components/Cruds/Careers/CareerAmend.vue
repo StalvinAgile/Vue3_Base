@@ -1,6 +1,9 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+    <div
+      class="my-3 p-0"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+    >
       <page-title
         class="col-md-4 ml-2"
         :heading="$t('create_career')"
@@ -21,7 +24,8 @@
         <!-- ENGLISH TAB STARTS -->
         <v-window-item :value="1">
           <v-form ref="form" v-model="valid">
-            <v-layout>
+            <!-- {{careers}} -->
+            <v-layout v-if="user.rolename != 'StoreAdmin'">
               <v-row class="px-6 mt-2">
                 <v-col xs="12" md="12" lg="12">
                   <!-- :disabled="$route.query.slug" -->
@@ -34,7 +38,7 @@
                     <v-radio
                       v-for="(role_data, rindex) in role_array"
                       :key="rindex"
-                      :label="role_data.rolename"
+                      :label="changeRoleName(role_data.rolename)"
                       :value="role_data.rolename"
                       class="text--primary"
                     >
@@ -46,7 +50,12 @@
               </v-row>
             </v-layout>
             <v-row class="mx-auto mt-2" max-width="344">
-              <v-col cols="4" sm="12" md="4" v-if="!user.store_id">
+              <v-col
+                cols="4"
+                sm="12"
+                md="4"
+                v-if="user.rolename != 'StoreAdmin'"
+              >
                 <v-tooltip :text="this.$t('store')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
@@ -120,7 +129,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="8">
+              <v-col :md="user.rolename === 'StoreAdmin' ? 12 : 8">
                 <v-tooltip
                   :text="this.$t('meta_description')"
                   location="bottom"
@@ -131,7 +140,7 @@
                       rows="2"
                       v-model="careers[0].meta_description"
                       :rules="fieldRules"
-                      maxlength="1000"
+                      maxlength="160"
                       v-bind="props"
                       v-bind:label="$t('meta_description')"
                       required
@@ -169,9 +178,9 @@
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
           <v-form ref="form" v-model="valid">
-            <v-layout>
+            <v-layout v-if="user.rolename != 'StoreAdmin'">
               <!-- :disabled="$route.query.slug" -->
-              <v-row class="px-6 mt-2">
+              <v-row class="px-6 mt-2 arabdirection">
                 <v-col xs="12" md="12" lg="12">
                   <v-radio-group
                     v-model="careers[1].stor_type"
@@ -193,8 +202,13 @@
                 </v-col>
               </v-row>
             </v-layout>
-            <v-row class="mx-auto mt-2" max-width="344">
-              <v-col cols="4" sm="12" md="4" v-if="!user.store_id">
+            <v-row class="mx-auto mt-2 arabdirection" max-width="344">
+              <v-col
+                cols="4"
+                sm="12"
+                md="4"
+                v-if="user.rolename != 'StoreAdmin'"
+              >
                 <v-tooltip :text="this.$t('store_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
@@ -269,7 +283,7 @@
                 </v-tooltip>
               </v-col>
 
-              <v-col md="8">
+              <v-col :md="user.rolename === 'StoreAdmin' ? 12 : 8">
                 <v-tooltip
                   :text="this.$t('meta_description_ar')"
                   location="bottom"
@@ -280,7 +294,7 @@
                       rows="2"
                       v-model="careers[1].meta_description"
                       :rules="fieldRules"
-                      maxlength="100"
+                      maxlength="160"
                       v-bind="props"
                       v-bind:label="$t('meta_description_ar')"
                       required
@@ -404,17 +418,23 @@ export default {
         store_id: null,
       },
     ],
+    mall_stores_array_en: [],
+    mall_stores_array_ar: [],
     noimagepreview: "",
     items: [],
     stores_en: [],
     stores_ar: [],
+    mal_data_en: [],
+    mal_data_er: [],
     role_array: [],
+    stores_data_ar: [],
+    stores_data_en: [],
     sel_lang: "",
     user: "",
   }),
   mounted() {
     this.get_stores();
-    this.fetchRoles();
+    this.fetchMall();
   },
   computed: {
     fieldRules() {
@@ -430,11 +450,8 @@ export default {
   },
 
   created() {
+    this.fetchRoles();
     this.user = JSON.parse(localStorage.getItem("user_data"));
-    if (this.user.store_id) {
-      this.careers[0].store_id = this.user.store_id;
-      this.careers[1].store_id = this.user.store_id;
-    }
   },
   watch: {
     "$route.query.slug": {
@@ -454,20 +471,35 @@ export default {
               console.log("CALLED IN ROUTE");
               console.log(res);
               this.careers = res.data.careers;
+              this.assignType(this.careers[0].stor_type);
+
               this.loader = false;
             });
         }
       },
     },
-    '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
   methods: {
+    changeRoleName(role_name) {
+      switch (role_name) {
+        case "MallAdmin":
+          return this.$t("mall");
+        case "StoreAdmin":
+          return this.$t("store");
+        // case "Rejected":
+        //   return this.$t("rejected_ar");
+        default:
+          return "";
+      }
+    },
     changeStatusAr(status) {
       switch (status) {
         case "MallAdmin":
@@ -481,11 +513,35 @@ export default {
       }
     },
     updateType(stor_type) {
-      if (this.tabs == 1) {
-        this.careers[1].stor_type = stor_type;
-      } else {
-        this.careers[0].stor_type = stor_type;
-      }
+      this.careers[1].store_id = null;
+      this.careers[0].store_id = null;
+      this.assignType(stor_type);
+    },
+    assignType(stor_type) {
+      setTimeout(() => {
+        if (this.tabs == 1) {
+          this.careers[1].stor_type = stor_type;
+          if (stor_type == "MallAdmin") {
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else {
+            // alert("asdsad");
+
+            this.stores_en = this.stores_data_en;
+            this.stores_ar = this.stores_data_ar;
+            // console.log("asdasd", this.stores_data_en);
+          }
+        } else {
+          this.careers[0].stor_type = stor_type;
+          if (stor_type == "MallAdmin") {
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else {
+            this.stores_en = this.stores_data_en;
+            this.stores_ar = this.stores_data_ar;
+          }
+        }
+      }, 1000);
     },
     updateStore(stor_type) {
       if (this.tabs == 1) {
@@ -501,10 +557,32 @@ export default {
         .then((response) => {
           this.loader = false;
           this.role_array = response.data.roles;
-          if (!this.$route.query.slug) {
+          if (!this.$route.query.slug && this.user.rolename == "SuperUser") {
             this.careers[0].stor_type = this.role_array[0].rolename;
             this.careers[1].stor_type = this.role_array[0].rolename;
+            this.updateType(this.careers[0].stor_type);
+          } else if (
+            this.user.rolename === "MallAdmin" &&
+            !this.$route.query.slug
+          ) {
+            this.role_array = response.data.roles.filter(
+              (role) => role.rolename == "StoreAdmin"
+            );
+            this.careers[0].stor_type = this.role_array[0].rolename;
+            this.careers[1].stor_type = this.role_array[0].rolename;
+            this.updateType(this.careers[0].stor_type);
+          } else if (
+            this.user.rolename === "MallAdmin" &&
+            this.$route.query.slug
+          ) {
+            this.role_array = response.data.roles.filter(
+              (role) => role.rolename == "StoreAdmin"
+            );
+            this.assignType(this.careers[0].stor_type);
           }
+          // if (!this.$route.query.slug) {
+
+          // }
         })
         .catch((err) => {
           this.loader = false;
@@ -512,13 +590,40 @@ export default {
         });
     },
     get_stores() {
-      this.initval = true;
+      // this.initval = true;
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-stores")
         .then((response) => {
           console.log(response);
-          this.stores_en = response.data.stores_en;
-          this.stores_ar = response.data.stores_ar;
+          this.stores_data_en = response.data.stores_en;
+          this.stores_data_ar = response.data.stores_ar;
+          if (this.user.rolename == "MallAdmin") {
+            //      this.role_array = response.data.roles.filter(
+            //   (role) => role.rolename == "StoreAdmin"
+            // );
+            this.stores_data_en = this.stores_data_en.filter((x) => {
+              console.log("x", x);
+              return x.mall_name == this.user.store_id;
+            });
+            this.user.store_id;
+            this.stores_data_ar = this.stores_data_ar.filter((x) => {
+              return x.mall_name == this.user.store_id;
+            });
+          }
+          // this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    fetchMall() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-malls")
+        .then((response) => {
+          console.log(response);
+          this.mal_data_en = response.data.malls_en;
+          this.mal_data_ar = response.data.malls_ar;
 
           // const default_en = {
           //   id: 0,
@@ -554,8 +659,12 @@ export default {
         this.isDisabled = true;
         this.isBtnLoading = true;
         this.loader = true;
-        console.log(this.careers);
-        // Form is valid, process
+        if (this.user.rolename == "StoreAdmin") {
+          this.careers[0].store_id = this.user.store_id;
+          this.careers[1].store_id = this.user.store_id;
+          this.careers[0].stor_type = this.user.rolename;
+          this.careers[1].stor_type = this.user.rolename;
+        } // Form is valid, process
         this.$axios
           .post(
             process.env.VUE_APP_API_URL_ADMIN + "save_careers",
@@ -614,5 +723,16 @@ input.larger {
 .image-width {
   border: 2px solid black;
   padding: 1px;
+}
+.arabdirection /deep/ .v-field {
+  direction: rtl;
+}
+
+.arabdirection /deep/ .v-input {
+  direction: rtl !important;
+}
+
+.arabdirection /deep/ .v-input {
+  direction: rtl !important;
 }
 </style>
