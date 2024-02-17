@@ -98,7 +98,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="careers[0].vacancy"
-                      :rules="vacancyRules"
+                      :rules="[...fieldRules,...vacancyRules]"
                       v-bind:label="$t('vacancy')"
                       v-bind="props"
                       required
@@ -251,7 +251,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="careers[1].vacancy"
-                      :rules="vacancyRules"
+                      :rules="[...fieldRulesAR,...vacancyRulesAR]"
                       v-bind:label="$t('vacancy_ar')"
                       v-bind="props"
                       required
@@ -451,6 +451,9 @@ export default {
     },
     vacancyRules() {
       return [(v) => (v >= 0 && v <= 9999) || this.$t("number_required")];
+    },
+    vacancyRulesAR() {
+      return [(v) => (v >= 0 && v <= 9999) || this.$t("number_required_ar")];
     },
   },
 

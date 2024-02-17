@@ -97,7 +97,7 @@
                   <v-col xs="4" md="4" lg="4">
                     <v-tooltip :text="this.$t('mall_timing_categories_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].mall_timing_categories" :rules="fieldRules"
+                        <v-autocomplete v-bind="props" v-model="fieldItem[1].mall_timing_categories" :rules="fieldRulesAR"
                           v-bind:label="$t('mall_timing_categories_ar')" variant="outlined" density="compact"
                           class="required_field" required index="id" :items="categories_ar" item-value="header_id"
                           item-title="name"></v-autocomplete>
@@ -107,7 +107,7 @@
                   <v-col xs="4" md="4" lg="4">
                     <v-tooltip :text="this.$t('from_day_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].from_day" :rules="fieldRules"
+                        <v-autocomplete v-bind="props" v-model="fieldItem[1].from_day" :rules="fieldRulesAR"
                           v-bind:label="$t('from_day_ar')" variant="outlined" density="compact" class="required_field"
                           required index="id" :items="weekdays_ar" item-value="shortname"
                           item-title="shortname"></v-autocomplete>
@@ -117,7 +117,7 @@
                   <v-col xs="4" md="4" lg="4">
                     <v-tooltip :text="this.$t('to_day_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].to_day" :rules="fieldRules"
+                        <v-autocomplete v-bind="props" v-model="fieldItem[1].to_day" :rules="fieldRulesAR"
                           v-bind:label="$t('to_day_ar')" variant="outlined" density="compact" class="required_field"
                           required index="id" :items="weekdays_ar" item-value="shortname"
                           item-title="shortname"></v-autocomplete>
@@ -127,7 +127,7 @@
                   <v-col xs="4" md="4" lg="4">
                     <v-tooltip :text="this.$t('from_time_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].from_time" :rules="fieldRules"
+                        <v-autocomplete v-bind="props" v-model="fieldItem[1].from_time" :rules="fieldRulesAR"
                           v-bind:label="$t('from_time_ar')" variant="outlined" density="compact" class="required_field"
                           required index="id" :items="mall_time_ar" item-value="shortname"
                           item-title="shortname"></v-autocomplete>
@@ -137,7 +137,7 @@
                   <v-col xs="4" md="4" lg="4">
                     <v-tooltip :text="this.$t('to_time_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].to_time" :rules="fieldRules"
+                        <v-autocomplete v-bind="props" v-model="fieldItem[1].to_time" :rules="fieldRulesAR"
                           v-bind:label="$t('to_time_ar')" variant="outlined" density="compact" class="required_field"
                           required index="id" :items="mall_time_ar" item-value="shortname"
                           item-title="shortname"></v-autocomplete>
@@ -152,7 +152,7 @@
                     <v-tooltip :text="this.$t('description_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-textarea v-on="on" rows="2" v-model="fieldItem[1].description" v-bind="props"
-                          :rules="descriptionRules" v-bind:label="$t('description_ar')" required
+                          :rules="descriptionRulesAR" v-bind:label="$t('description_ar')" required
                           class="required_field rtl" variant="outlined" maxlength="2000" counter="true"></v-textarea>
                       </template>
                     </v-tooltip>
@@ -246,9 +246,14 @@ export default {
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
     },
-
+    fieldRulesAR() {
+      return [(v) => !!v || this.$t("field_required_ar")];
+    },
     descriptionRules() {
       return [(v) => !!v || this.$t("description_required")];
+    },
+    descriptionRulesAR() {
+      return [(v) => !!v || this.$t("description_required_ar")];
     },
   },
 
@@ -364,6 +369,9 @@ export default {
 <style scoped>
 .arabdirection .v-field {
   direction: rtl !important;
+}
+.arabdirection /deep/ .v-messages__message {
+  text-align: right !important;
 }
 </style>
     

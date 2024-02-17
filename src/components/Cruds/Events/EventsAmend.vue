@@ -351,6 +351,7 @@
                       :stored_date="events[1].start_date"
                       @formatted_date="formatted_start_date_ar"
                       dense
+                      :translation = "'arabic'"
                       :class_required="'RequiredField rtl'"
                       :rules="fieldRulesAr"
                       v-on="on"
@@ -366,6 +367,7 @@
                       v-bind="props"
                       :label="$t('end_date_ar')"
                       :rules="fieldRulesAr"
+                      :translation = "'arabic'"
                       :min="new Date().toISOString().substr(0, 10)"
                       :stored_date="events[1].end_date"
                       @formatted_date="formatted_end_date_ar"
