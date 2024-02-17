@@ -55,7 +55,7 @@
                     <div>{{ event.meta_description }}</div>
                   </v-col> -->
                   <v-col cols="12" sm="6" md="4">
-                    <div class="d-label">{{ $t("approval_status_en") }}</div>
+                    <div class="d-label">{{ $t("image_preview_en") }}</div>
                     <img
                               v-bind:style="
                                 isHovering == true ? 'filter: blur(1px);' : ''
@@ -171,7 +171,7 @@
                     <div v-html="event.description"></div>
                   </v-col>
                    <v-col cols="12" sm="6" md="3">
-                    <div class="d-label">{{ $t("approval_status_en") }}</div>
+                    <div class="d-label">{{ $t("image_preview_ar") }}</div>
                     <img
                               v-bind:style="
                                 isHovering == true ? 'filter: blur(1px);' : ''
