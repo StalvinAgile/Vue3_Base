@@ -205,7 +205,7 @@
                           @input="clearUploadErrors"
                           prepend-icon=""
                           append-inner-icon="mdi mdi-file-document-plus"
-                          accept="*"
+                          accept="image/*,.pdf"
                           required
                           class="required_field"
                           variant="outlined"
@@ -469,7 +469,7 @@
                           @input="clearUploadErrors"
                           prepend-icon=""
                           append-inner-icon="mdi mdi-file-document-plus"
-                          accept="*"
+                          accept="image/*,.pdf"
                           required
                           class="required_field"
                           variant="outlined"
@@ -675,7 +675,7 @@ export default {
       return [(v) => !!v || this.$t("description_required")];
     },
     fileRules() {
-      return [(v) => v.length > 0 || this.$t("field_required")];
+      return [(v) => v.length > 0 || this.$t("file_required")];
     },
   },
 
@@ -905,7 +905,6 @@ export default {
       this.sel_file_index = index;
     },
     onFileChange(e) {
-      console.log("evnrnt target", this.sel_file_index);
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
       this.createImage(files[0]);
@@ -913,9 +912,7 @@ export default {
       const lastDot = filename.lastIndexOf(".");
       const fileNameWithoutExt = filename.substring(0, lastDot);
       const ext = filename.substring(lastDot + 1);
-      console.log("FileName => " + fileNameWithoutExt);
       this.filename = fileNameWithoutExt;
-      console.log("Extension => " + ext);
       this.extension = ext;
     },
     createImage(file) {

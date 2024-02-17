@@ -495,5 +495,6 @@
   "description_required_ar": "الوصف مطلوب",
   "postcode_valid_ar": "يجب أن يتكون الرمز البريدي من 6 أرقام",
   "enter_the_content_here_en" : "Enter the content here",
-  "display_in_header_menu_ar" :"عرض في القائمة الرئيسية"
+  "display_in_header_menu_ar" :"عرض في القائمة الرئيسية",
+  "file_required":"File Required"
 }
