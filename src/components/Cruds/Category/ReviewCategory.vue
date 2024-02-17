@@ -1,6 +1,9 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+    <div
+      class="my-3 p-0"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+    >
       <page-title
         class="col-md-4 ml-2"
         :heading="$t('category')"
@@ -20,6 +23,7 @@
             <span>{{ $t("arabic") }}</span>
           </v-tab>
         </v-tabs>
+
         <v-window v-model="tabs">
           <!-- ENGLISH TAB STARTS -->
           <v-window-item :value="1" class="p-3">
@@ -75,7 +79,6 @@
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
 
-                  
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("meta_title_en") }}</div>
                     <div>{{ category.meta_title }}</div>
@@ -101,6 +104,28 @@
                       {{ category.review_comment }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">{{ $t("image_preview_en") }}</div>
+                    <img
+                      v-bind:style="
+                        isHovering == true ? 'filter: blur(1px);' : ''
+                      "
+                      v-if="category.image_path == '' || category.image_path == null"
+                      src="@/assets/images/no_image.png"
+                      width="100"
+                    />
+                    <img
+                      v-bind:style="
+                        isHovering == true ? 'filter: blur(1px);' : ''
+                      "
+                      v-else
+                      :src="envImagePath + category.image_path"
+                      width="100"
+                      height="65
+                          "
+                      alt
+                    />
                   </v-col>
                 </v-row>
               </v-layout>
@@ -182,7 +207,6 @@
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
 
-                  
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("meta_title_ar") }}</div>
                     <div>{{ category.meta_title }}</div>
@@ -208,6 +232,28 @@
                       {{ category.review_comment }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="3">
+                    <div class="d-label">{{ $t("image_preview_ar") }}</div>
+                    <img
+                      v-bind:style="
+                        isHovering == true ? 'filter: blur(1px);' : ''
+                      "
+                      v-if="category.image_path == '' || category.image_path == null"
+                      src="@/assets/images/no_image.png"
+                      width="100"
+                    />
+                    <img
+                      v-bind:style="
+                        isHovering == true ? 'filter: blur(1px);' : ''
+                      "
+                      v-else
+                      :src="envImagePath + category.image_path"
+                      width="100"
+                      height="65
+                          "
+                      alt
+                    />
                   </v-col>
                 </v-row>
               </v-layout>
@@ -318,13 +364,14 @@ export default {
         }
       },
     },
-     '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
 
   methods: {
