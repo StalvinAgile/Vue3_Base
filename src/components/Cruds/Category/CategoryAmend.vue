@@ -277,7 +277,7 @@
                         item-title="name"
                         item-value="header_id"
                         class="required_field"
-                        :rules="fieldRules"
+                        :rules="fieldRulesAR"
                         required
                       ></v-autocomplete>
                     </template>
@@ -313,7 +313,7 @@
                         <v-text-field
                           v-bind="props"
                           v-model="category[1].name"
-                          :rules="fieldRules"
+                          :rules="fieldRulesAR"
                           class="required_field rtl"
                           maxlength="100"
                           v-bind:label="$t('name_ar')"
@@ -330,7 +330,7 @@
                         <v-text-field
                           v-bind="props"
                           v-model="category[1].title"
-                          :rules="fieldRules"
+                          :rules="fieldRulesAR"
                           class="required_field rtl"
                           maxlength="100"
                           v-bind:label="$t('title_ar')"
@@ -389,7 +389,7 @@
                         <v-text-field
                           v-bind="props"
                           v-model="category[1].meta_title"
-                          :rules="fieldRules"
+                          :rules="fieldRulesAR"
                           class="required_field rtl"
                           maxlength="70"
                           counter="true"
@@ -412,7 +412,7 @@
                           rows="2"
                           v-model="category[1].meta_description"
                           v-bind="props"
-                          :rules="descriptionRules"
+                          :rules="descriptionRulesAr"
                           v-bind:label="$t('meta_description_ar')"
                           required
                           class="required_field rtl"
@@ -680,9 +680,14 @@ export default {
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
     },
-
+    fieldRulesAR() {
+      return [(v) => !!v || this.$t("field_required_ar")];
+    },
     descriptionRules() {
       return [(v) => !!v || this.$t("description_required")];
+    },
+    descriptionRulesAr() {
+      return [(v) => !!v || this.$t("description_required_ar")];
     },
   },
 
@@ -955,5 +960,8 @@ export default {
 }
 .arabclassquill /deep/ .ql-editor {
   text-align: justify !important;
+}
+.arabdirection /deep/ .v-messages__message {
+  text-align: right !important;
 }
 </style>
