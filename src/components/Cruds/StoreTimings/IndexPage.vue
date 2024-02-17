@@ -4,7 +4,7 @@
       flat
       color="white"
       class="row py-5 pl-5 align-items-center component_app_bar position-relative"
-      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
     >
       <page-title
         class="col-md-3"
@@ -71,7 +71,7 @@
           </td>
           <td>{{ item.selectable.name }}</td>
           <td>{{ item.selectable.email }}</td>
-          <td>
+          <!-- <td>
             <v-btn
               v-if="item.selectable.store_timings[0]"
               class="hover_shine btn mr-2"
@@ -95,7 +95,7 @@
                 >{{ $t("inactive") }}</span
               >
             </v-btn>
-          </td>
+          </td> -->
           <td>
             <v-chip
               :color="
@@ -103,7 +103,9 @@
               "
               variant="outlined"
             >
-              {{ item.selectable.store_timings[0].approval_status }}
+              {{
+                getArStatus(item.selectable.store_timings[0].approval_status)
+              }}
             </v-chip>
           </td>
           <td class="text-center">
@@ -123,7 +125,7 @@
                 <span>{{ $t("edit") }}</span>
               </v-tooltip>
             </router-link>
-            <span @click="deleteItem(item.selectable.id)">
+            <span @click="deleteItem(item.selectable.header_id)">
               <v-tooltip :text="this.$t('delete')" location="top">
                 <template v-slot:activator="{ props }">
                   <v-icon color="error" type="button" v-bind="props" small
@@ -141,7 +143,7 @@
               :disabled="loading"
               class="ma-1"
               color="blue"
-              >{{ $t("view_en") }}</v-btn
+              >{{ $t("view") }}</v-btn
             >
           </td>
         </tr>
@@ -179,12 +181,12 @@
                       <span
                         v-if="props.item.selectable.is_holiday == 1"
                         class="spanactivesize"
-                        >{{ $t("Yes") }}</span
+                        >{{ $t("yes") }}</span
                       >
                       <span
                         v-if="props.item.selectable.is_holiday == 0"
                         class="spanactivesize"
-                        >{{ $t("No") }}</span
+                        >{{ $t("no") }}</span
                       >
                     </v-chip>
                   </td>
@@ -228,7 +230,7 @@ export default {
     status_id: null,
     isDisabled: false,
     initval: false,
-    sel_lang:"",
+    sel_lang: "",
     expanded: [],
     singleExpand: false,
     isExpanded: false,
@@ -244,14 +246,15 @@ export default {
     valid: false,
     message: "",
   }),
-  watch:{
-    '$i18n.locale'(newLocale) {
-        if (newLocale === 'ar') {
-          this.sel_lang = 'ar';
-        } else {''
-          this.sel_lang = 'en';
-        }
+  watch: {
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
+    },
   },
   computed: {
     formTitle() {
@@ -272,12 +275,12 @@ export default {
           title: this.$t("email"),
           key: "email",
         },
-        {
-          title: this.$t("status"),
-          align: "left",
-          sortable: false,
-          key: "status",
-        },
+        // {
+        //   title: this.$t("status"),
+        //   align: "left",
+        //   sortable: false,
+        //   key: "status",
+        // },
         {
           title: this.$t("approval"),
           key: "approval_status",
@@ -316,6 +319,7 @@ export default {
     },
   },
   mounted() {
+    this.sel_lang = this.$i18n.locale;
     this.fetchStoreTimings();
   },
   methods: {
@@ -342,6 +346,24 @@ export default {
           return "orange";
         case "Rejected":
           return "red";
+        default:
+          return "";
+      }
+    },
+    getArStatus(status) {
+      switch (status) {
+        case "Approved":
+          return this.sel_lang == "en"
+            ? this.$t("approved_en")
+            : this.$t("approved_ar");
+        case "In Review":
+          return this.sel_lang == "en"
+            ? this.$t("inreview_en")
+            : this.$t("inreview_ar");
+        case "Rejected":
+          return this.sel_lang == "en"
+            ? this.$t("rejected_en")
+            : this.$t("rejected_ar");
         default:
           return "";
       }
@@ -462,5 +484,8 @@ export default {
 .child_table {
   border: 2px solid #8080808a !important;
   padding: 5px;
+}
+.child_table /deep/ .v-data-table-footer {
+  display: none;
 }
 </style>

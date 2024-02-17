@@ -1,9 +1,7 @@
 <template>
   <div class="mx-2 mt-3 p-0">
     <div
-      flat
-      color="white"
-      class="row py-5 pl-5 align-items-center component_app_bar position-relative"
+      class="my-3 p-0"
       v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
     >
       <page-title
@@ -12,6 +10,7 @@
         :google_icon="google_icon"
       ></page-title>
     </div>
+    <br />
     <content-loader v-if="loader"></content-loader>
     <div class="mb-3 mx-auto">
       <div class="card-body">
@@ -19,30 +18,35 @@
           <v-layot v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']">
             <v-row class="px-6">
               <v-col cols="12" xs="12" sm="12" md="4" lg="4">
-                <v-tooltip :text="this.$t('store_name')" location="bottom">
+                <v-tooltip :text="$t('store_name')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-autocomplete
+                      ref="container"
                       v-bind="props"
                       v-model="store_timing_id"
                       @update:modelValue="(value) => updateStoreId(value)"
-                      :rules="fieldRules"
                       v-bind:label="$t('store_name')"
                       variant="outlined"
                       density="compact"
-                      class="required_field"
-                      required
                       index="id"
-                      :items="stores_en"
+                      :items="sel_lang == 'en' ? stores_en : stores_ar"
                       :disabled="$route.query.slug"
                       item-value="header_id"
                       item-title="name"
+                      :error="v_store"
+                      :rules="fieldReq"
+                      class="required_field"
                     ></v-autocomplete>
                   </template>
                 </v-tooltip>
+                <span v-if="v_store" class="req-field">{{
+                  $t("field_required")
+                }}</span>
               </v-col>
             </v-row>
           </v-layot>
-          <v-layot v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']">
+          <div v-if="weekdays_en.length == 0" class="fetch-container">{{$t('fetch_data_wait')}}</div>
+          <v-layot>
             <v-row
               class="px-6"
               v-for="(day, day_index) in weekdays_en"
@@ -56,6 +60,7 @@
                   color="green"
                   :value="1"
                   hide-details
+                  @update:modelValue="updateTimingRules(day_index)"
                 ></v-checkbox>
               </v-col>
               <v-col cols="12" xs="12" sm="12" lg="2" md="2">
@@ -88,9 +93,12 @@
                       v-bind="props"
                       v-model="store_timings[day_index].from_time"
                       v-bind:label="$t('from_time')"
+                      class="required_field"
                       variant="outlined"
                       density="compact"
                       index="id"
+                      required
+                      :rules="store_timings[day_index].from_time_rules"
                       :items="store_time"
                       item-value="shortname"
                       item-title="shortname"
@@ -142,9 +150,11 @@
                     <v-autocomplete
                       v-bind="props"
                       v-model="store_timings[day_index].to_time"
+                      :rules="store_timings[day_index].to_time_rules"
                       v-bind:label="$t('to_time')"
                       variant="outlined"
                       density="compact"
+                      class="required_field"
                       required
                       index="id"
                       :items="store_time"
@@ -220,7 +230,7 @@
               <v-btn
                 v-bind="props"
                 size="small"
-                @click="cancel"
+                @click="cancel()"
                 :disabled="isDisabled"
                 class="ma-1"
                 color="cancel"
@@ -287,10 +297,18 @@ export default {
         shortname: "PM",
       },
     ],
+    v_store: false,
   }),
 
   computed: {
-    fieldRules() {
+    fieldRules: [
+      (v) => {
+        const isValid = !!v;
+        console.log("Validation check:", isValid);
+        return isValid || this.$t("field_required");
+      },
+    ],
+    fieldReq() {
       return [(v) => !!v || this.$t("field_required")];
     },
 
@@ -311,9 +329,17 @@ export default {
   mounted() {
     this.get_stores();
     this.$i18n.locale = localStorage.getItem("pref_lang");
-    // this.sel_lang = this.$i18n.locale;
+    this.sel_lang = this.$i18n.locale;
   },
   watch: {
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
+      }
+    },
     "$route.query.slug": {
       immediate: true,
       handler() {
@@ -334,22 +360,8 @@ export default {
         }
       },
     },
-
-    "$i18n.locale"(newLocale) {
-      if (newLocale === "ar") {
-        this.sel_lang = "ar";
-      } else {
-        ("");
-        this.sel_lang = "en";
-      }
-    },
   },
   methods: {
-     cancel() {
-      this.$router.push({
-        name: "store-timings",
-      });
-    },
     NumbersOnly(evt) {
       evt = evt ? evt : window.event;
       var charCode = evt.which ? evt.which : evt.keyCode;
@@ -375,8 +387,22 @@ export default {
           to_time: null,
           to_meridiem: "AM",
           seq: null,
+          from_time_rules: this.timingRules(false),
+          to_time_rules: this.timingRules(false),
         });
       });
+    },
+    updateTimingRules(dayIndex) {
+      const isHoliday = this.store_timings[dayIndex].is_holiday;
+      this.store_timings[dayIndex].from_time_rules =
+        this.timingRules(isHoliday);
+      this.store_timings[dayIndex].to_time_rules = this.timingRules(isHoliday);
+    },
+    timingRules(isHoliday) {
+      if (isHoliday) {
+        return [];
+      }
+      return [(v) => !!v || this.$t("field_required")];
     },
     updateStoreId(strore_id) {
       this.store_timings.forEach((element) => {
@@ -431,42 +457,62 @@ export default {
     },
 
     submit() {
-      if (this.$refs.form.validate() && this.valid == true) {
-        this.isDisabled = true;
-        this.isBtnLoading = true;
-        // Form is valid, process
-        this.$axios
-          .post(
-            process.env.VUE_APP_API_URL_ADMIN + "save-store-timings",
-            this.store_timings
-          )
-          .then((res) => {
-            this.btnloading = false;
-            if (Array.isArray(res.data.message)) {
-              this.array_data = res.data.message.toString();
-            } else {
-              this.array_data = res.data.message;
-            }
-            if (res.data.status == "S") {
-              this.$toast.success(this.array_data);
-              this.message = res.data.message;
-              this.$router.push({
-                name: "store-timings",
-              });
-            } else if (res.data.status == "E") {
-              this.$toast.error(this.array_data);
+      // store_timing_id
+      // v_store
+
+      if (this.$refs.form.validate() && this.valid) {
+        if (!this.store_timing_id) {
+          this.$refs.container.scrollIntoView({ behavior: "smooth" });
+          this.v_store = true;
+        } else {
+          this.v_store = false;
+
+          this.isDisabled = true;
+          this.isBtnLoading = true;
+
+          this.$axios
+            .post(
+              process.env.VUE_APP_API_URL_ADMIN + "save-store-timings",
+              this.store_timings
+            )
+            .then((res) => {
+              this.btnloading = false;
+              if (Array.isArray(res.data.message)) {
+                this.array_data = res.data.message.toString();
+              } else {
+                this.array_data = res.data.message;
+              }
+              if (res.data.status == "S") {
+                this.$toast.success(this.array_data);
+                this.message = res.data.message;
+                this.$router.push({
+                  name: "store-timings",
+                });
+              } else if (res.data.status == "E") {
+                this.$toast.error(this.array_data);
+                this.isBtnLoading = false;
+                this.isDisabled = false;
+              } else {
+                this.isBtnLoading = false;
+                this.$toast.error(this.array_data);
+              }
+            })
+            .catch((err) => {
+              this.btnloading = false;
+              console.log(err);
+            })
+            .finally(() => {
+              this.btnloading = false;
               this.isBtnLoading = false;
               this.isDisabled = false;
-            } else {
-              this.isBtnLoading = false;
-              this.$toast.error(this.array_data);
-            }
-          })
-          .catch((err) => {
-            this.btnloading = false;
-            console.log(err);
-          });
+            });
+        }
       }
+    },
+    cancel() {
+      this.$router.push({
+        name: "store-timings",
+      });
     },
 
     clear() {
@@ -483,4 +529,19 @@ input.larger {
 .disable {
   display: none;
 }
+
+.req-field {
+  color: #b71734;
+  font-size: 12px;
+  position: relative;
+  bottom: 22px;
+}
+.fetch-container{
+  height: 400px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: gray;
+}
 </style>
+

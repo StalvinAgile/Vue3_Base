@@ -504,6 +504,12 @@
   "image_preview_ar":"معاينة الصورة",
   "number_required_ar": "الرقم المطلوب",
   "image_required_en" : "Image Required",
-  "image_required_ar" : "الصورة مطلوبة"
+  "image_required_ar" : "الصورة مطلوبة",
+  "fetch_data_wait":"Fetching data please wait.",
+  "yes":"Yes",
+  "no":"No",
+  "inreview_en":"In Review",
+  "rejected_en":"Rejected",
+  "approved_en":"Approved"
 
 }

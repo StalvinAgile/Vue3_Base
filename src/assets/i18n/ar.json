@@ -461,7 +461,10 @@
   "file_required_ar":"الملف مطلوب",
   "number_required_ar": "الرقم المطلوب",
   "image_required_en" : "Image Required",
-  "image_required_ar" : "الصورة مطلوبة"
+  "image_required_ar" : "الصورة مطلوبة",
+  "fetch_data_wait":"جارٍ جلب البيانات، يرجى الانتظار.",
+  "yes":"نعم",
+  "no":"لا"
 
 
 
