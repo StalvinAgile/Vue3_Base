@@ -38,6 +38,10 @@
                 <v-layout>
                   <v-row class="px-6 mt-2">
                     <v-col cols="6" xs="12" sm="12" md="4">
+                      <div class="d-label">{{ $t("store_en") }}</div>
+                      <div>{{ data_array[0].store_detail.name }}</div>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="4">
                       <div class="d-label">{{ $t("approval_status_en") }}</div>
                       <div>
                         <v-chip
@@ -51,65 +55,73 @@
                         </v-chip>
                       </div>
                     </v-col>
-                  </v-row>
-                </v-layout>
-                <v-layout
-                  v-for="(store_time, index1) in data_array"
-                  :key="index1"
-                >
-                  <v-row class="px-6 mt-2">
-                    <v-col cols="6" xs="12" sm="12" md="4">
-                      <div class="d-label">{{ $t("title_en") }}</div>
-                      <div>{{ store_time.store_detail.name }}</div>
-                    </v-col>
-                    <v-col cols="6" xs="12" sm="12" md="4">
-                      <div class="d-label">{{ $t("week_day") }}</div>
-                      <div>{{ store_time.week_day }}</div>
-                    </v-col>
-                    <v-col cols="6" xs="12" sm="12" md="4">
-                      <div class="d-label">{{ $t("from_time_en") }}</div>
-                      <div>
-                        {{ store_time.from_time }}
-                        {{ store_time.from_meridiem }}
-                      </div>
-                    </v-col>
-                    <v-col cols="6" xs="12" sm="12" md="4">
-                      <div class="d-label">{{ $t("to_time_en") }}</div>
-                      <div>
-                        {{ store_time.to_time }} {{ store_time.to_meridiem }}
-                      </div>
-                    </v-col>
-                    <v-col cols="6" xs="12" sm="12" md="4">
+                    <v-col cols="12" sm="12" md="4">
                       <div
                         class="d-label"
-                        v-if="store_time.approval_status == 'Rejected'"
+                        v-if="data_array[0].approval_status == 'Rejected'"
                       >
                         {{ $t("rejected_by_en") }}
                       </div>
                       <div class="d-label" v-else>
                         {{ $t("approved_by_en") }}
                       </div>
-                      <div v-if="store_time.review_by">
-                        {{ store_time.review_by }}
+                      <div v-if="data_array[0].review_by">
+                        {{ data_array[0].review_by }}
                       </div>
                       <div v-else>{{ $t("not_applicable") }}</div>
                     </v-col>
                     <v-col
-                      cols="6"
-                      xs="12"
+                      cols="12"
                       sm="12"
-                      md="4"
-                      v-if="store_time.approval_status == 'Rejected'"
+                      md="12"
+                      v-if="data_array[0].approval_status == 'Rejected'"
                     >
                       <div class="d-label">
                         {{ $t("reason_for_rejection_en") }}
                       </div>
-                      <div v-if="store_time.review_comment">
-                        {{ store_time.review_comment }}
+                      <div v-if="data_array[0].review_comment">
+                        {{ data_array[0].review_comment }}
                       </div>
                       <div v-else>{{ $t("not_applicable") }}</div>
                     </v-col>
-                    <v-divider></v-divider>
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div class="d-label">{{ $t("week_day") }}</div>
+                    </v-col>
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div class="d-label">{{ $t("from_time_en") }}</div>
+                    </v-col>
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div class="d-label">{{ $t("to_time_en") }}</div>
+                    </v-col>
+                  </v-row>
+                </v-layout>
+                <v-layout
+                  class="mt-1 mx-5"
+                  v-for="(store_time, index1) in data_array"
+                  :key="index1"
+                >
+                  <v-row class="px-6 mt-2 weekday-box">
+                    <!-- <v-divider class="my-0"></v-divider> -->
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div>{{ store_time.week_day }}</div>
+                    </v-col>
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div v-if="store_time.is_holiday == 0">
+                        {{ store_time.from_time }}
+                        {{ store_time.from_meridiem }}
+                      </div>
+                      <div v-else>
+                        {{ $t("holiday") }}
+                      </div>
+                    </v-col>
+                    <v-col cols="4" xs="4" sm="4" md="4" class="pl-5">
+                      <div v-if="store_time.is_holiday == 0">
+                        {{ store_time.to_time }} {{ store_time.to_meridiem }}
+                      </div>
+                      <div v-else>
+                        {{ $t("holiday") }}
+                      </div>
+                    </v-col>
                   </v-row>
                 </v-layout>
                 <div
@@ -155,7 +167,11 @@
               >
                 <v-layout>
                   <v-row class="px-6 mt-2">
-                    <v-col cols="6" xs="12" sm="12" md="4">
+                    <v-col cols="12" sm="4" md="4">
+                      <div class="d-label">{{ $t("store_ar") }}</div>
+                      <div>{{ data_array[0].store_detail.name }}</div>
+                    </v-col>
+                    <v-col cols="12" sm="4" md="4">
                       <div class="d-label">{{ $t("approval_status_ar") }}</div>
                       <div>
                         <v-chip
@@ -165,69 +181,79 @@
                           "
                           variant="outlined"
                         >
-                          {{ data_array[index].approval_status }}
+                          {{
+                            changeStatusAr(data_array[index].approval_status)
+                          }}
                         </v-chip>
                       </div>
                     </v-col>
-                  </v-row>
-                </v-layout>
-                <v-layout
-                  v-for="(store_time, index2) in data_array"
-                  :key="index2"
-                >
-                  <v-row class="px-6 mt-2">
-                    <v-col cols="6" xs="12" sm="12" md="4">
-                      <div class="d-label">{{ $t("title_ar") }}</div>
-                      <div>{{ store_time.store_detail.name }}</div>
-                    </v-col>
-                    <v-col cols="6" xs="12" sm="12" md="4">
-                      <div class="d-label">{{ $t("week_day_ar") }}</div>
-                      <div>{{ store_time.week_day }}</div>
-                    </v-col>
-                    <v-col cols="6" xs="12" sm="12" md="4">
-                      <div class="d-label">{{ $t("from_time_ar") }}</div>
-                      <div>
-                        {{ store_time.from_time }}
-                        {{ store_time.from_meridiem }}
-                      </div>
-                    </v-col>
-                    <v-col cols="6" xs="12" sm="12" md="4">
-                      <div class="d-label">{{ $t("to_time_ar") }}</div>
-                      <div>
-                        {{ store_time.to_time }} {{ store_time.to_meridiem }}
-                      </div>
-                    </v-col>
-                    <v-col cols="6" xs="12" sm="12" md="4">
+                    <v-col cols="12" sm="12" md="4">
                       <div
                         class="d-label"
-                        v-if="store_time.approval_status == 'Rejected'"
+                        v-if="data_array[0].approval_status == 'Rejected'"
                       >
                         {{ $t("rejected_by_ar") }}
                       </div>
                       <div class="d-label" v-else>
                         {{ $t("approved_by_ar") }}
                       </div>
-                      <div v-if="store_time.review_by">
-                        {{ store_time.review_by }}
+                      <div v-if="data_array[0].review_by">
+                        {{ data_array[0].review_by }}
                       </div>
                       <div v-else>{{ $t("not_applicable") }}</div>
                     </v-col>
                     <v-col
-                      cols="6"
-                      xs="12"
+                      cols="12"
                       sm="12"
-                      md="4"
-                      v-if="store_time.approval_status == 'Rejected'"
+                      md="12"
+                      v-if="data_array[0].approval_status == 'Rejected'"
                     >
                       <div class="d-label">
                         {{ $t("reason_for_rejection_ar") }}
                       </div>
-                      <div v-if="store_time.review_comment">
-                        {{ store_time.review_comment }}
+                      <div v-if="data_array[0].review_comment">
+                        {{ data_array[0].review_comment }}
                       </div>
                       <div v-else>{{ $t("not_applicable") }}</div>
                     </v-col>
-                    <v-divider></v-divider>
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div class="d-label">{{ $t("week_day_ar") }}</div>
+                    </v-col>
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div class="d-label">{{ $t("from_time_ar") }}</div>
+                    </v-col>
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div class="d-label">{{ $t("to_time_ar") }}</div>
+                    </v-col>
+                  </v-row>
+                </v-layout>
+                <v-layout
+                  class="mt-1 mx-5"
+                  v-for="(store_time, index2) in data_array"
+                  :key="index2"
+                >
+                  <v-row class="px-6 mt-2 weekday-box">
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div>{{ changeArWeekday(store_time.week_day) }}</div>
+                    </v-col>
+                    <v-col cols="4" xs="4" sm="4" md="4">
+                      <div v-if="store_time.is_holiday == 0">
+                        {{ store_time.from_time }}
+                        {{ changeArMeridian(store_time.from_meridiem) }}
+                      </div>
+                      <div v-else>
+                        {{ $t("holiday_ar") }}
+                      </div>
+                    </v-col>
+                    <v-col cols="4" xs="4" sm="4" md="4" class="pl-5">
+                      <div v-if="store_time.is_holiday == 0">
+                        {{ store_time.to_time }}
+                        {{ changeArMeridian(store_time.to_meridiem) }}
+                      </div>
+                      <div v-else>
+                        {{ $t("holiday_ar") }}
+                      </div>
+                    </v-col>
                   </v-row>
                 </v-layout>
                 <div
@@ -347,6 +373,48 @@ export default {
   },
 
   methods: {
+    changeArWeekday(day) {
+      switch (day) {
+        case "Monday":
+          return this.$t("monday_ar");
+        case "Tuesday":
+          return this.$t("tuesday_ar");
+        case "Wednesday":
+          return this.$t("wednesday_ar");
+        case "Thursday":
+          return this.$t("thursday_ar");
+        case "Friday":
+          return this.$t("friday_ar");
+        case "Saturday":
+          return this.$t("saturday_ar");
+        case "Sunday":
+          return this.$t("sunday_ar");
+        default:
+          return "";
+      }
+    },
+    changeStatusAr(status) {
+      switch (status) {
+        case "Approved":
+          return this.$t("approved_ar");
+        case "In Review":
+          return this.$t("inreview_ar");
+        case "Rejected":
+          return this.$t("rejected_ar");
+        default:
+          return "";
+      }
+    },
+    changeArMeridian(data) {
+      switch (data) {
+        case "AM":
+          return this.$t("am_ar");
+        case "PM":
+          return this.$t("pm_ar");
+        default:
+          return "";
+      }
+    },
     fetchStoreTimeDetails() {
       this.loader = true;
       this.$axios
@@ -487,6 +555,11 @@ export default {
 .card-border {
   border-style: solid;
   border-width: 1px;
+}
+.weekday-box {
+  background: #80808012;
+  padding: 5px 0px;
+  border-radius: 10px;
 }
 </style>
     

@@ -510,6 +510,17 @@
   "no":"No",
   "inreview_en":"In Review",
   "rejected_en":"Rejected",
-  "approved_en":"Approved"
+  "approved_en":"Approved",
+  "sunday_ar":"الأحد",
+  "monday_ar":"الأثنين",
+  "tuesday_ar":"الثلاثاء",
+  "wednesday_ar":"الأربعاء",
+  "thursday_ar":"الخميس",
+  "friday_ar":"الجمعه",
+  "saturday_ar":"السبت",
+  "holiday_ar":"عطلة",
+  "holiday":"Holiday",
+  "am_ar":"صباحًا",
+  "pm_ar":"مساءً"
 
 }

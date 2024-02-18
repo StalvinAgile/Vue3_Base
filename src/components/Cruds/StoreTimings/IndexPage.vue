@@ -160,17 +160,33 @@
             >
               <template v-slot:item="props">
                 <tr class="vdatatable_tbody">
-                  <td>{{ props.item.selectable.week_day }}</td>
                   <td>
+                    <span v-if="sel_lang == 'ar'">
+                      {{
+                        changeArWeekday(props.item.selectable.week_day)
+                      }}</span
+                    >
+                    <span v-else>{{ props.item.selectable.week_day }}</span>
+                  </td>
+                  <td v-if="props.item.selectable.is_holiday == 0">
                     {{ props.item.selectable.from_time }}
-                    {{ props.item.selectable.from_meridiem }}
+                    <span v-if="sel_lang == 'ar'">{{
+                      changeArMeridian(props.item.selectable.from_meridiem)
+                    }}</span>
+                    <span v-else>{{ props.item.selectable.from_meridiem }}</span>
                   </td>
-                  <td>
+                  <td v-else>{{ $t("holiday") }}</td>
+                  <td v-if="props.item.selectable.is_holiday == 0">
                     {{ props.item.selectable.to_time }}
-                    {{ props.item.selectable.to_meridiem }}
+                    <span v-if="sel_lang == 'ar'">{{
+                      changeArMeridian(props.item.selectable.to_meridiem)
+                    }}</span>
+                    <span v-else>{{ props.item.selectable.to_meridiem }}</span>
                   </td>
+                  <td v-else>{{ $t("holiday") }}</td>
                   <td>
                     <v-chip
+                      size="small"
                       v-bind:color="[
                         props.item.selectable.is_holiday == 1
                           ? 'success'
@@ -268,7 +284,7 @@ export default {
           key: "start",
         },
         {
-          title: this.$t("name"),
+          title: this.$t("store_name"),
           key: "name",
         },
         {
@@ -323,6 +339,36 @@ export default {
     this.fetchStoreTimings();
   },
   methods: {
+    changeArWeekday(day) {
+      switch (day) {
+        case "Monday":
+          return this.$t("monday_ar");
+        case "Tuesday":
+          return this.$t("tuesday_ar");
+        case "Wednesday":
+          return this.$t("wednesday_ar");
+        case "Thursday":
+          return this.$t("thursday_ar");
+        case "Friday":
+          return this.$t("friday_ar");
+        case "Saturday":
+          return this.$t("saturday_ar");
+        case "Sunday":
+          return this.$t("sunday_ar");
+        default:
+          return "";
+      }
+    },
+    changeArMeridian(data) {
+      switch (data) {
+        case "AM":
+          return this.$t("am_ar");
+        case "PM":
+          return this.$t("pm_ar");
+        default:
+          return "";
+      }
+    },
     viewStores(slug) {
       this.$router.push({
         name: "store-timing-review",

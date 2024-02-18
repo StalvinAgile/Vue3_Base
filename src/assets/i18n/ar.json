@@ -464,7 +464,18 @@
   "image_required_ar" : "الصورة مطلوبة",
   "fetch_data_wait":"جارٍ جلب البيانات، يرجى الانتظار.",
   "yes":"نعم",
-  "no":"لا"
+  "no":"لا",
+  "sunday_ar":"الأحد",
+  "monday_ar":"الأثنين",
+  "tuesday_ar":"الثلاثاء",
+  "wednesday_ar":"الأربعاء",
+  "thursday_ar":"الخميس",
+  "friday_ar":"الجمعه",
+  "saturday_ar":"السبت",
+  "holiday_ar":"عطلة",
+  "holiday":"Holiday",
+  "am_ar":"صباحًا",
+  "pm_ar":"مساءً"
 
 
 
