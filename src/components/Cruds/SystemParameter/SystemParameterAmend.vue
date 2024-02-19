@@ -1,6 +1,9 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+    <div
+      class="my-3 p-0"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+    >
       <page-title
         class="col-md-4 ml-2"
         :heading="$t('create_system_parameter')"
@@ -115,6 +118,21 @@
                     >{{ $t("download") }}</span
                   >
                 </a>
+                <span
+                  v-if="
+                    system_params.parameter_value &&
+                    system_params.parameter_name == 'APP_LOGO' &&
+                    system_params.is_file_upload == true
+                  "
+                >
+                  <v-icon
+                    v-on="on"
+                    small
+                    class="mr-2 edit_btn icon_size delete_icon"
+                    @click="removeImage"
+                    >mdi mdi-trash-can-outline</v-icon
+                  ></span
+                >
               </div>
               <br />
               <Imageupload
@@ -173,7 +191,12 @@
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block">
               <v-btn
-                :disabled="isDisabled"
+                :disabled="
+                  system_params.parameter_value == '' ||
+                  system_params.parameter_value == null
+                    ? isSubmitDisabled == false
+                    : isSubmitDisabled == true
+                "
                 :loading="isDisabled"
                 @click="submit"
                 size="small"
@@ -209,6 +232,7 @@ export default {
     isBtnLoading: false,
     showupload: "",
     isDisabled: false,
+    isSubmitDisabled: false,
     checkbox_value: false,
     system_params: {
       id: 0,
@@ -220,7 +244,7 @@ export default {
     noimagepreview: "",
     uploadfile: false,
     items: [],
-    sel_lang:""
+    sel_lang: "",
   }),
 
   computed: {
@@ -253,18 +277,18 @@ export default {
         }
       },
     },
-     '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
-    
+    },
   },
   methods: {
-    cancel(){
-  this.$router.push({
+    cancel() {
+      this.$router.push({
         name: "system_parameter",
       });
     },
@@ -345,6 +369,13 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
+    removeImage() {
+      this.system_params.parameter_value = null;
+      this.isSubmitDisabled = false;
+      this.$router.push({
+        name: "system_parameter_amend",
+      });
+    },
   },
 };
 </script>
@@ -379,5 +410,10 @@ input.larger {
 .image-width {
   border: 2px solid black;
   padding: 1px;
+}
+.delete_icon {
+  position: relative;
+  left: 40px;
+  bottom: 90px;
 }
 </style>
