@@ -261,6 +261,15 @@
                       >{{ $t("download") }}</span
                     >
                   </a>
+                  <span>
+                    <v-icon
+                      small
+                      v-if="events[0].image_path"
+                      class="mr-2 edit_btn icon_size delete_icon"
+                      @click="removeImage(0)"
+                      >mdi mdi-trash-can-outline</v-icon
+                    >
+                  </span>
                 </div>
 
                 <br />
@@ -516,16 +525,27 @@
                       </div>
                     </v-hover>
                   </div>
-                  <a
-                    class="text-center pointer"
-                    @click="downloadImage(events[1].image_path)"
-                  >
-                    <span
-                      v-if="events[1].image_path"
-                      class="download_btn_color"
-                      >{{ $t("download") }}</span
+                  <div class="text-right">
+                    <a
+                      class="text-center pointer"
+                      @click="downloadImage(events[1].image_path)"
                     >
-                  </a>
+                      <span
+                        v-if="events[1].image_path"
+                        class="download_btn_color"
+                        >{{ $t("download") }}</span
+                      >
+                    </a>
+                    <span>
+                      <v-icon
+                        small
+                        v-if="events[1].image_path"
+                        class="mr-2 edit_btn icon_size delete_icon_ar"
+                        @click="removeImage(1)"
+                        >mdi mdi-trash-can-outline</v-icon
+                      >
+                    </span>
+                  </div>
                 </div>
 
                 <br />
@@ -969,14 +989,14 @@ export default {
     formatted_start_date(formatted_date) {
       this.events[0].start_date = formatted_date;
       this.events[1].start_date = formatted_date;
-      this.events[0].end_date = '';
-      this.events[1].end_date = '';
+      this.events[0].end_date = "";
+      this.events[1].end_date = "";
     },
     formatted_start_date_ar(formatted_date) {
       this.events[1].start_date = formatted_date;
       this.events[0].start_date = formatted_date;
-      this.events[0].end_date = '';
-      this.events[1].end_date = '';
+      this.events[0].end_date = "";
+      this.events[1].end_date = "";
     },
     formatted_end_date(formatted_date) {
       this.events[0].end_date = formatted_date;
@@ -1064,6 +1084,13 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
+    removeImage(index) {
+      if (index == 1) {
+        this.events[1].image_path = null;
+      } else {
+        this.events[0].image_path = null;
+      }
+    },
     cancel() {
       this.$router.push({
         name: "categories",
@@ -1106,5 +1133,15 @@ input.larger {
 
 .arabdirection /deep/ .v-input {
   direction: rtl !important;
+}
+.delete_icon_ar {
+  position: relative;
+  right: 35px;
+  bottom: 90px;
+}
+.delete_icon {
+  position: relative;
+  left: 45px;
+  bottom: 90px;
 }
 </style>
