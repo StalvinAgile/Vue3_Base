@@ -60,7 +60,7 @@
                     <v-autocomplete
                       v-bind="props"
                       v-model="products[0].store_id"
-                     :label="labelText"
+                      :label="labelText"
                       variant="outlined"
                       density="compact"
                       :items="stores_en"
@@ -205,6 +205,15 @@
                       >{{ $t("download") }}</span
                     >
                   </a>
+                  <span>
+                    <v-icon
+                      small
+                      v-if="products[0].image_path"
+                      class="mr-2 edit_btn icon_size delete_icon"
+                      @click="removeImage(0)"
+                      >mdi mdi-trash-can-outline</v-icon
+                    >
+                  </span>
                 </div>
                 <br />
                 <Imageupload
@@ -221,7 +230,11 @@
         <!-- ENGLISH TAB STOPS -->
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
-          <v-form ref="form" v-model="valid" style="direction:rtl; text-align:end">
+          <v-form
+            ref="form"
+            v-model="valid"
+            style="direction: rtl; text-align: end"
+          >
             <v-layout v-if="user.rolename != 'StoreAdmin'">
               <!-- :disabled="$route.query.slug" -->
               <v-row class="px-6 mt-2 arabdirection">
@@ -258,7 +271,7 @@
                     <v-autocomplete
                       v-bind="props"
                       v-model="products[1].store_id"
-                     :label="label_text_ar"
+                      :label="label_text_ar"
                       variant="outlined"
                       density="compact"
                       :rules="fieldRulesAR"
@@ -397,16 +410,27 @@
                       </div>
                     </v-hover>
                   </div>
-                  <a
-                    class="text-center pointer"
-                    @click="downloadImage(products[1].image_path)"
-                  >
-                    <span
-                      v-if="products[1].image_path"
-                      class="download_btn_color"
-                      >{{ $t("download") }}</span
+                  <div class="text-right">
+                    <a
+                      class="text-center pointer"
+                      @click="downloadImage(products[1].image_path)"
                     >
-                  </a>
+                      <span
+                        v-if="products[1].image_path"
+                        class="download_btn_color"
+                        >{{ $t("download") }}</span
+                      >
+                    </a>
+                    <span>
+                      <v-icon
+                        small
+                        v-if="products[1].image_path"
+                        class="mr-2 edit_btn icon_size delete_icon_ar"
+                        @click="removeImage(1)"
+                        >mdi mdi-trash-can-outline</v-icon
+                      >
+                    </span>
+                  </div>
                 </div>
                 <br />
                 <Imageupload
@@ -414,7 +438,7 @@
                   :resizewidth="0.4"
                   :resizeheight="0.1"
                   @uploaded_image="uploaded_image"
-                  :upload_profile="uploadfile"
+                  :upload_profile="uploadfilear"
                 />
               </v-col>
             </v-row>
@@ -487,14 +511,15 @@ export default {
     isDisabled: false,
     checkbox_value: false,
     uploadfile: false,
+    uploadfilear: false,
     mal_data_en: [],
     mal_data_er: [],
     role_array: [],
     stores_data_ar: [],
     stores_data_en: [],
     user: "",
-    label_text_ar:'مجمع تجاري',
-    labelText:"Mall",
+    label_text_ar: "مجمع تجاري",
+    labelText: "Mall",
     products: [
       {
         id: 0,
@@ -606,6 +631,13 @@ export default {
   },
 
   methods: {
+    removeImage(index) {
+      if (index == 1) {
+        this.products[1].image_path = null;
+      } else {
+        this.products[0].image_path = null;
+      }
+    },
     changeRoleName(role_name) {
       switch (role_name) {
         case "MallAdmin":
@@ -785,12 +817,20 @@ export default {
         this.products[1].image_path = img_src;
       }
     },
+
     uploadFile() {
-      //alert('hai');
-      if (this.uploadfile == false) {
-        this.uploadfile = true;
+      if (this.tabs == 1) {
+        if (this.uploadfile == false) {
+          this.uploadfile = true;
+        } else {
+          this.uploadfile = false;
+        }
       } else {
-        this.uploadfile = false;
+        if (this.uploadfilear == false) {
+          this.uploadfilear = true;
+        } else {
+          this.uploadfilear = false;
+        }
       }
     },
     formatted_start_date(formatted_date) {
@@ -893,5 +933,15 @@ input.larger {
 
 .arabdirection /deep/ .v-input {
   direction: rtl !important;
+}
+.delete_icon_ar {
+  position: relative;
+  right: 35px;
+  bottom: 90px;
+}
+.delete_icon {
+  position: relative;
+  left: 45px;
+  bottom: 90px;
 }
 </style>
