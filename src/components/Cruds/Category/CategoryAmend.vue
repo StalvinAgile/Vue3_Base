@@ -242,6 +242,15 @@
                           >{{ $t("download_en") }}</span
                         >
                       </a>
+                      <span>
+                        <v-icon
+                          small
+                          v-if="category[0].image_path"
+                          class="mr-2 edit_btn icon_size delete_icon"
+                          @click="removeImage(0)"
+                          >mdi mdi-trash-can-outline</v-icon
+                        >
+                      </span>
                     </div>
 
                     <br />
@@ -470,6 +479,7 @@
                           </div>
                         </v-hover>
                       </div>
+                      <!-- <div class="text-right"> -->
                       <a
                         class="text-center pointer"
                         style="cursor: pointer"
@@ -481,15 +491,24 @@
                           >{{ $t("download_ar") }}</span
                         >
                       </a>
+                      <span>
+                        <v-icon
+                          small
+                          v-if="category[1].image_path"
+                          class="mr-2 edit_btn icon_size delete_icon_ar"
+                          @click="removeImage(1)"
+                          >mdi mdi-trash-can-outline</v-icon
+                        >
+                      </span>
+                      <!-- </div> -->
                     </div>
-
                     <br />
                     <Imageupload
                       :folder="'category'"
                       :resizewidth="0.4"
                       :resizeheight="0.1"
                       @uploaded_image="uploaded_image"
-                      :upload_profile="uploadfile"
+                      :upload_profile="uploadfilear"
                     />
                   </v-col>
                 </v-row>
@@ -640,6 +659,7 @@ export default {
     category_en: [],
     category_ar: [],
     uploadfile: false,
+    uploadfilear: false,
     category: [
       {
         id: 0,
@@ -748,6 +768,13 @@ export default {
   },
 
   methods: {
+    removeImage(index) {
+      if (index == 1) {
+        this.category[1].image_path = null;
+      } else {
+        this.category[0].image_path = null;
+      }
+    },
     updateMall(categories) {
       if (this.tabs == 1) {
         this.category[1].store_id = categories;
@@ -808,11 +835,18 @@ export default {
       }
     },
     uploadFile() {
-      //alert('hai');
-      if (this.uploadfile == false) {
-        this.uploadfile = true;
+      if (this.tabs == 1) {
+        if (this.uploadfile == false) {
+          this.uploadfile = true;
+        } else {
+          this.uploadfile = false;
+        }
       } else {
-        this.uploadfile = false;
+        if (this.uploadfilear == false) {
+          this.uploadfilear = true;
+        } else {
+          this.uploadfilear = false;
+        }
       }
     },
     updateParent(lang, value) {
@@ -964,5 +998,15 @@ export default {
 }
 .arabdirection /deep/ .v-messages__message {
   text-align: right !important;
+}
+.delete_icon_ar {
+  position: relative;
+  left: 75px;
+  bottom: 90px;
+}
+.delete_icon {
+  position: relative;
+  left: 45px;
+  bottom: 90px;
 }
 </style>
