@@ -127,8 +127,9 @@
                           v-model="home_slider[0].seq"
                           maxlength="100"
                           v-bind:label="$t('sequence_en')"
+                          class="required_field rtl"
                           required
-                          :rules="seqRules"
+                          :rules="[...fieldRules,...seqRules]"
                           variant="outlined"
                           density="compact"
                           v-on:keypress="NumbersOnly"
@@ -203,14 +204,14 @@
           <v-window-item :value="2" style="direction: rtl">
             <v-form ref="form" v-model="valid">
               <v-layout>
-                <v-row class="px-6 mt-2">
+                <v-row class="px-6 mt-2 arabdirection">
                   <v-col cols="12" sm="12" md="4">
                     <v-tooltip :text="$t('title_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind="props"
                           v-model="home_slider[1].title"
-                          :rules="fieldRules"
+                          :rules="fieldRulesAR"
                           class="required_field rtl"
                           maxlength="100"
                           v-bind:label="$t('title_ar')"
@@ -241,12 +242,12 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
-                          v-if="home_slider[0].action != ''"
+                          v-if="home_slider[1].action != ''"
                           v-model="home_slider[1].target"
                           v-bind:label="$t('target_ar')"
                           variant="outlined"
                           density="compact"
-                          :rules="fieldRules"
+                          :rules="fieldRulesAR"
                           class="required_field rtl"
                           :items="targets_ar"
                           item-title="shortname"
@@ -258,7 +259,7 @@
                 </v-row>
               </v-layout>
               <v-layout>
-                <v-row class="px-6 pt-0">
+                <v-row class="px-6 pt-0 arabdirection">
                   <v-col cols="12" md="12" lg="12" sm="12" class="pt-0">
                     <v-card-title class="text-right" style="font-size: 17px">{{
                       $t("description_ar")
@@ -291,7 +292,7 @@
                 </v-row>
               </v-layout>
               <v-layout>
-                <v-row class="mt-2 px-6" max-width="344">
+                <v-row class="mt-2 px-6 arabdirection" max-width="344">
                   <v-col cols="12" sm="2" md="2">
                     <v-tooltip :text="$t('sequence_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
@@ -302,7 +303,7 @@
                           v-bind:label="$t('sequence_ar')"
                           required
                           class="required_field rtl"
-                          :rules="seqRules"
+                          :rules="[...fieldRulesAR,...seqRulesAR]"
                           variant="outlined"
                           density="compact"
                           v-on:keypress="NumbersOnly"
@@ -524,7 +525,9 @@ export default {
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
     },
-
+    fieldRulesAR() {
+      return [(v) => !!v || this.$t("field_required_ar")];
+    },
     descriptionRules() {
       return [(v) => !!v || this.$t("description_required")];
     },
@@ -535,7 +538,10 @@ export default {
       ];
     },
     seqRules() {
-      return [(v) => (v >= 0 && v <= 9999) || this.$t("number_required")];
+      return [(v) => (v >= 0 && v <= 9999999) || this.$t("number_required")];
+    },
+    seqRulesAR() {
+      return [(v) => (v >= 0 && v <= 9999999) || this.$t("number_required_ar")];
     },
   },
 
@@ -630,58 +636,55 @@ export default {
       if (this.home_slider.description_ar == "") {
         this.quill_item_ar = true;
       }
-      if (
-        (this.tabs == 1 &&
-          (this.home_slider[0].image == "" ||
-            this.home_slider[0].image == null)) ||
-        (this.tabs == 2 &&
-          (this.home_slider[1].image == "" ||
-            this.home_slider[1].image == null))
+      if ((this.$refs.form.validate() && this.valid == true) &&
+        ((this.tabs == 1 && (this.home_slider[0].image != '' && this.home_slider[0].image != null)) ||
+          (this.tabs == 2 && (this.home_slider[1].image != '' && this.home_slider[1].image != null)))
       ) {
-        this.have_noimage = true;
-      } else {
+        if (
+          this.home_slider.description == "" ||
+          this.home_slider.description_ar == ""
+        ) {
+          return;
+        }
         this.have_noimage = false;
-        if (this.$refs.form.validate() && this.valid == true) {
-          if (
-            this.home_slider.description == "" ||
-            this.home_slider.description_ar == ""
-          ) {
-            return;
-          }
-          this.isDisabled = true;
-          this.isBtnLoading = true;
-          // Form is valid, process
-          this.$axios
-            .post(
-              process.env.VUE_APP_API_URL_ADMIN + "save-home_slider",
-              this.home_slider
-            )
-            .then((res) => {
-              if (Array.isArray(res.data.message)) {
-                this.array_data = res.data.message.toString();
-              } else {
-                this.array_data = res.data.message;
-              }
-              if (res.data.status == "S") {
-                this.$toast.success(this.array_data);
-                this.message = res.data.message;
-                this.$router.push({
-                  name: "home-sliders",
-                });
-              } else {
-                this.$toast.error(this.array_data);
-              }
-            })
-            .catch((err) => {
-              this.isDisabled = false;
-              this.isBtnLoading = false;
-              this.$toast.error(this.$t("something_went_wrong"));
-              console.log("error", err);
-            })
-            .finally(() => {
-              this.isDisabled = false;
-              this.isBtnLoading = false;
-            });
+        this.isDisabled = true;
+        this.isBtnLoading = true;
+        // Form is valid, process
+        this.$axios
+          .post(
+            process.env.VUE_APP_API_URL_ADMIN + "save-home_slider",
+            this.home_slider
+          )
+          .then((res) => {
+            if (Array.isArray(res.data.message)) {
+              this.array_data = res.data.message.toString();
+            } else {
+              this.array_data = res.data.message;
+            }
+            if (res.data.status == "S") {
+              this.$toast.success(this.array_data);
+              this.message = res.data.message;
+              this.$router.push({
+                name: "home-sliders",
+              });
+            } else {
+              this.$toast.error(this.array_data);
+            }
+          })
+          .catch((err) => {
+            this.isDisabled = false;
+            this.isBtnLoading = false;
+            this.$toast.error(this.$t("something_went_wrong"));
+            console.log("error", err);
+          })
+          .finally(() => {
+            this.isDisabled = false;
+            this.isBtnLoading = false;
+          });
+      }
+      else {
+        if ((this.tabs == 1 && (this.home_slider[0].image == '' || this.home_slider[0].image == null)) || (this.tabs == 2 && (this.home_slider[1].image == '' || this.home_slider[1].image == null))) {
+          this.have_noimage = true;
         }
       }
     },
@@ -771,5 +774,11 @@ input.larger {
 .errorborder {
   border: solid red 2px;
   text-align: center;
+}
+.arabdirection /deep/ .v-messages__message {
+  text-align: right !important;
+}
+.arabdirection /deep/ .v-field {
+  direction: rtl !important;
 }
 </style>
