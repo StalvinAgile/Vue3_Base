@@ -1,6 +1,11 @@
 <template>
   <div class="main-20 position-relative">
-    <div flat color="white" class="row py-5 pl-5 align-items-center component_app_bar" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+    <div
+      flat
+      color="white"
+      class="row py-5 pl-5 align-items-center component_app_bar"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+    >
       <page-title
         class="col-md-3"
         :heading="$t('e_magazine')"
@@ -66,7 +71,8 @@
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>{{ props.item.selectable.title }}</td>
-              <td>{{ props.item.selectable.description }}</td>
+              <!-- {{props.item.selectable.description}} -->
+              <td><span v-html="props.item.selectable.description"></span></td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -157,7 +163,7 @@
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>{{ props.item.selectable.title }}</td>
-              <td>{{ props.item.selectable.description }}</td>
+              <td><span v-html="props.item.selectable.description"></span></td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -252,8 +258,8 @@
     />
   </div>
 </template>
-    
-  <script>
+
+<script>
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import ConfirmDialog from "../../CustomComponents/ConfirmDialog.vue";
 export default {
@@ -304,8 +310,8 @@ export default {
           align: "center",
           key: "email",
         },
-         {
-          title:" ",
+        {
+          title: " ",
           align: "center",
         },
       ];
@@ -333,8 +339,8 @@ export default {
           align: "center",
           key: "email",
         },
-         {
-          title:" ",
+        {
+          title: " ",
           align: "center",
         },
       ];
@@ -345,13 +351,14 @@ export default {
     dialog(val) {
       val || this.close();
     },
-     '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
 
   created() {},
@@ -360,7 +367,7 @@ export default {
   },
 
   methods: {
-      changeStatusAr(status) {
+    changeStatusAr(status) {
       switch (status) {
         case "Approved":
           return this.$t("approved_ar");
@@ -493,7 +500,7 @@ export default {
   },
 };
 </script>
-  <style scoped>
+<style scoped>
 .list_item {
   cursor: pointer;
 }

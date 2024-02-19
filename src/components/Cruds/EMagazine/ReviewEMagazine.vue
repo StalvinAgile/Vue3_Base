@@ -86,7 +86,7 @@
                           isHovering == true ? 'filter: blur(1px);' : ''
                         "
                         v-else
-                        src="@/assets/images/upload_image_default.png"
+                        src="@/assets/images/no_image.png"
                         width="100"
                       />
                     </div>
@@ -216,7 +216,7 @@
                           isHovering == true ? 'filter: blur(1px);' : ''
                         "
                         v-else
-                        src="@/assets/images/upload_image_default.png"
+                        src="@/assets/images/no_image.png"
                         width="100"
                       />
                     </div>

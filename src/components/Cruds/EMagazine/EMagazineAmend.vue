@@ -38,6 +38,7 @@
                       <v-radio
                         v-for="(role_data, rindex) in role_array"
                         :key="rindex"
+                        :disabled="this.$route.query.slug"
                         :label="changeRoleName(role_data.rolename)"
                         :value="role_data.rolename"
                         class="text--primary"
@@ -67,6 +68,10 @@
                           class="required_field"
                           :rules="fieldRules"
                           density="compact"
+                          :disabled="
+                            user.rolename == 'MallAdmin' &&
+                            e_magazine[0].stor_type == 'MallAdmin'
+                          "
                           :items="stores_en"
                           item-title="name"
                           item-value="header_id"
@@ -296,7 +301,11 @@
           <!-- ENGLISH TAB END -->
           <!-- ARABIC TAB STARTS -->
           <v-window-item :value="2">
-            <v-form ref="form" v-model="valid" style="direction:rtl; text-align:end">
+            <v-form
+              ref="form"
+              v-model="valid"
+              style="direction: rtl; text-align: end"
+            >
               <v-layout v-if="user.rolename != 'StoreAdmin'">
                 <!-- :disabled="$route.query.slug" -->
                 <v-row class="px-6 mt-2 arabdirection">
@@ -310,6 +319,7 @@
                       <v-radio
                         v-for="(role_data, rindex) in role_array"
                         :key="rindex"
+                        :disabled="this.$route.query.slug"
                         :label="changeStatusAr(role_data.rolename)"
                         :value="role_data.rolename"
                         class="text--primary"
@@ -338,6 +348,10 @@
                           class="required_field rtl"
                           :rules="fieldRulesAR"
                           variant="outlined"
+                          :disabled="
+                            user.rolename == 'MallAdmin' &&
+                            e_magazine[1].stor_type == 'MallAdmin'
+                          "
                           density="compact"
                           :items="stores_ar"
                           item-title="name"
@@ -646,6 +660,7 @@ export default {
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },
+    mall_id: null,
     labelText: "Mall",
     label_text_ar: "مجمع تجاري",
     valid: true,
@@ -754,6 +769,7 @@ export default {
             )
             .then((res) => {
               this.e_magazine = res.data.e_magazine;
+              this.assignType(this.e_magazine[0].stor_type);
 
               //   if (Array.isArray(res.data.message)) {
               //     this.e_magazine = res.data.message.toString();
@@ -795,6 +811,15 @@ export default {
           console.log(response);
           this.mal_data_en = response.data.malls_en;
           this.mal_data_ar = response.data.malls_ar;
+          if (this.user.rolename == "MallAdmin" && !this.$route.query.slug) {
+            this.mal_data_en.filter((ele) => {
+              if (ele.header_id === this.user.store_id) {
+                this.e_magazine[0].store_id = ele.header_id;
+                this.e_magazine[1].store_id = ele.header_id;
+                this.mall_id = ele.header_id;
+              }
+            });
+          }
           this.initval = false;
         })
         .catch((err) => {
@@ -810,21 +835,43 @@ export default {
       setTimeout(() => {
         if (this.tabs == 1) {
           this.e_magazine[1].stor_type = stor_type;
-          if (stor_type == "MallAdmin") {
+          if (stor_type == "MallAdmin" && this.user.rolename == "MallAdmin") {
+            // alert(stor_type);
+            if (!this.$route.query.slug) {
+              this.e_magazine[1].store_id = this.mall_id;
+              this.e_magazine[0].store_id = this.mall_id;
+            }
+            this.labelText = this.$t("mall");
+            this.label_text_ar = this.$t("mall_ar");
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else if (stor_type == "MallAdmin") {
             this.labelText = this.$t("mall");
             this.label_text_ar = this.$t("mall_ar");
             this.stores_en = this.mal_data_en;
             this.stores_ar = this.mal_data_ar;
           } else {
+            // alert("sadasd");
             this.labelText = this.$t("store");
             this.label_text_ar = this.$t("store_ar");
             this.stores_en = this.stores_data_en;
-            console.log("dfsdf", this.stores_data_en);
             this.stores_ar = this.stores_data_ar;
           }
         } else {
           this.e_magazine[0].stor_type = stor_type;
-          if (stor_type == "MallAdmin") {
+          if (stor_type == "MallAdmin" && this.user.rolename == "MallAdmin") {
+            console.log("asdasd", this.stores_en);
+            if (!this.$route.query.slug) {
+              this.e_magazine[1].store_id = this.mall_id;
+              this.e_magazine[0].store_id = this.mall_id;
+            }
+            this.labelText = this.$t("mall");
+            this.label_text_ar = this.$t("mall_ar");
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else if (stor_type == "MallAdmin") {
+            // this.e_magazine[1].store_id = this.mall_id;
+            // this.e_magazine[0].store_id = this.mall_id;
             this.labelText = this.$t("mall");
             this.label_text_ar = this.$t("mall_ar");
             this.stores_en = this.mal_data_en;
@@ -836,7 +883,7 @@ export default {
             this.stores_ar = this.stores_data_ar;
           }
         }
-      }, 1000);
+      }, 1500);
     },
     changeRoleName(role_name) {
       switch (role_name) {
@@ -884,9 +931,9 @@ export default {
             this.user.rolename === "MallAdmin" &&
             !this.$route.query.slug
           ) {
-            this.role_array = response.data.roles.filter(
-              (role) => role.rolename !== "MallAdmin"
-            );
+            // this.role_array = response.data.roles.filter(
+            //   (role) => role.rolename == "StoreAdmin"
+            // );
             this.e_magazine[0].stor_type = this.role_array[0].rolename;
             this.e_magazine[1].stor_type = this.role_array[0].rolename;
             this.updateType(this.e_magazine[0].stor_type);
@@ -894,9 +941,6 @@ export default {
             this.user.rolename === "MallAdmin" &&
             this.$route.query.slug
           ) {
-            this.role_array = response.data.roles.filter(
-              (role) => role.rolename == "StoreAdmin"
-            );
             this.assignType(this.e_magazine[0].stor_type);
           }
         })

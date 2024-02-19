@@ -38,6 +38,7 @@
                     <v-radio
                       v-for="(role_data, rindex) in role_array"
                       :key="rindex"
+                      :disabled="this.$route.query.slug"
                       :label="changeRoleName(role_data.rolename)"
                       :value="role_data.rolename"
                       class="text--primary"
@@ -65,6 +66,10 @@
                       class="required_field"
                       :label="labelText"
                       variant="outlined"
+                      :disabled="
+                        user.rolename == 'MallAdmin' &&
+                        careers[0].stor_type == 'MallAdmin'
+                      "
                       density="compact"
                       :items="stores_en"
                       item-title="name"
@@ -98,7 +103,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="careers[0].vacancy"
-                      :rules="[...fieldRules,...vacancyRules]"
+                      :rules="[...fieldRules, ...vacancyRules]"
                       v-bind:label="$t('vacancy')"
                       v-bind="props"
                       required
@@ -177,7 +182,11 @@
         <!-- ENGLISH TAB STOPS -->
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
-          <v-form ref="form" v-model="valid" style="direction:rtl; text-align:end">
+          <v-form
+            ref="form"
+            v-model="valid"
+            style="direction: rtl; text-align: end"
+          >
             <v-layout v-if="user.rolename != 'StoreAdmin'">
               <!-- :disabled="$route.query.slug" -->
               <v-row class="px-6 mt-2 arabdirection">
@@ -192,6 +201,7 @@
                       v-for="(role_data, rindex) in role_array"
                       :key="rindex"
                       :label="changeStatusAr(role_data.rolename)"
+                      :disabled="this.$route.query.slug"
                       :value="role_data.rolename"
                       class="text--primary"
                     >
@@ -217,6 +227,10 @@
                       :label="label_text_ar"
                       variant="outlined"
                       density="compact"
+                      :disabled="
+                        user.rolename == 'MallAdmin' &&
+                        careers[1].stor_type == 'MallAdmin'
+                      "
                       :rules="fieldRulesAR"
                       class="required_field rtl"
                       :items="stores_en"
@@ -251,7 +265,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="careers[1].vacancy"
-                      :rules="[...fieldRulesAR,...vacancyRulesAR]"
+                      :rules="[...fieldRulesAR, ...vacancyRulesAR]"
                       v-bind:label="$t('vacancy_ar')"
                       v-bind="props"
                       required
@@ -394,6 +408,7 @@ export default {
     careers_ar: [],
     labelText: "Mall",
     label_text_ar: "مجمع تجاري",
+    mall_id: null,
     careers: [
       {
         id: 0,
@@ -529,22 +544,43 @@ export default {
       setTimeout(() => {
         if (this.tabs == 1) {
           this.careers[1].stor_type = stor_type;
-          if (stor_type == "MallAdmin") {
+          if (stor_type == "MallAdmin" && this.user.rolename == "MallAdmin") {
+            // alert(stor_type);
+            if (!this.$route.query.slug) {
+              this.careers[1].store_id = this.mall_id;
+              this.careers[0].store_id = this.mall_id;
+            }
+            this.labelText = this.$t("mall");
+            this.label_text_ar = this.$t("mall_ar");
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else if (stor_type == "MallAdmin") {
             this.labelText = this.$t("mall");
             this.label_text_ar = this.$t("mall_ar");
             this.stores_en = this.mal_data_en;
             this.stores_ar = this.mal_data_ar;
           } else {
-            // alert("asdsad");
+            // alert("sadasd");
             this.labelText = this.$t("store");
             this.label_text_ar = this.$t("store_ar");
             this.stores_en = this.stores_data_en;
             this.stores_ar = this.stores_data_ar;
-            // console.log("asdasd", this.stores_data_en);
           }
         } else {
           this.careers[0].stor_type = stor_type;
-          if (stor_type == "MallAdmin") {
+          if (stor_type == "MallAdmin" && this.user.rolename == "MallAdmin") {
+            console.log("asdasd", this.stores_en);
+            if (!this.$route.query.slug) {
+              this.careers[1].store_id = this.mall_id;
+              this.careers[0].store_id = this.mall_id;
+            }
+            this.labelText = this.$t("mall");
+            this.label_text_ar = this.$t("mall_ar");
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else if (stor_type == "MallAdmin") {
+            // this.careers[1].store_id = this.mall_id;
+            // this.careers[0].store_id = this.mall_id;
             this.labelText = this.$t("mall");
             this.label_text_ar = this.$t("mall_ar");
             this.stores_en = this.mal_data_en;
@@ -556,7 +592,7 @@ export default {
             this.stores_ar = this.stores_data_ar;
           }
         }
-      }, 1000);
+      }, 1500);
     },
     updateStore(stor_type) {
       if (this.tabs == 1) {
@@ -580,9 +616,9 @@ export default {
             this.user.rolename === "MallAdmin" &&
             !this.$route.query.slug
           ) {
-            this.role_array = response.data.roles.filter(
-              (role) => role.rolename == "StoreAdmin"
-            );
+            // this.role_array = response.data.roles.filter(
+            //   (role) => role.rolename == "StoreAdmin"
+            // );
             this.careers[0].stor_type = this.role_array[0].rolename;
             this.careers[1].stor_type = this.role_array[0].rolename;
             this.updateType(this.careers[0].stor_type);
@@ -590,9 +626,6 @@ export default {
             this.user.rolename === "MallAdmin" &&
             this.$route.query.slug
           ) {
-            this.role_array = response.data.roles.filter(
-              (role) => role.rolename == "StoreAdmin"
-            );
             this.assignType(this.careers[0].stor_type);
           }
           // if (!this.$route.query.slug) {
@@ -639,6 +672,15 @@ export default {
           console.log(response);
           this.mal_data_en = response.data.malls_en;
           this.mal_data_ar = response.data.malls_ar;
+          if (this.user.rolename == "MallAdmin" && !this.$route.query.slug) {
+            this.mal_data_en.filter((ele) => {
+              if (ele.header_id === this.user.store_id) {
+                this.careers[0].store_id = ele.header_id;
+                this.careers[1].store_id = ele.header_id;
+                this.mall_id = ele.header_id;
+              }
+            });
+          }
 
           // const default_en = {
           //   id: 0,

@@ -24,7 +24,10 @@
         <!-- ENGLISH TAB STARTS -->
         <v-window-item :value="1">
           <v-form ref="form" v-model="valid">
-            <v-layout v-if="user.rolename != 'StoreAdmin'" style="direction:rtl">
+            <v-layout
+              v-if="user.rolename != 'StoreAdmin'"
+              style="direction: rtl"
+            >
               <v-row class="px-6 mt-2">
                 <v-col xs="12" md="12" lg="12">
                   <!-- :disabled="$route.query.slug" -->
@@ -320,7 +323,11 @@
         <!-- ENGLISH TAB STOPS -->
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
-          <v-form ref="form" v-model="valid" style="direction:rtl; text-align:end">
+          <v-form
+            ref="form"
+            v-model="valid"
+            style="direction: rtl; text-align: end"
+          >
             <v-layout v-if="user.rolename != 'StoreAdmin'">
               <!-- :disabled="$route.query.slug" -->
               <v-row class="px-6 mt-2 arabdirection">
@@ -894,24 +901,33 @@ export default {
         });
     },
     updateType(stor_type) {
-      // alert(stor_type)
-      this.promotions[1].store_id = null;
-      this.promotions[0].store_id = null;
-
+      // this.promotions[1].store_id = null;
+      // this.promotions[0].store_id = null;
       this.assignType(stor_type);
     },
     assignType(stor_type) {
       setTimeout(() => {
         if (this.tabs == 1) {
           this.promotions[1].stor_type = stor_type;
-          if (stor_type == "MallAdmin" && stor_type == "MallAdmin") {
-            this.promotions[1].store_id = this.mall_id;
-            this.promotions[0].store_id = this.mall_id;
+          if (stor_type == "MallAdmin" && this.user.rolename == "MallAdmin") {
+            // alert(stor_type);
+            if (!this.$route.query.slug) {
+              this.promotions[1].store_id = this.mall_id;
+              this.promotions[0].store_id = this.mall_id;
+            }
+            this.labelText = this.$t("mall");
+            this.label_text_ar = this.$t("mall_ar");
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else if (stor_type == "MallAdmin") {
+            // this.promotions[1].store_id = this.mall_id;
+            // this.promotions[0].store_id = this.mall_id;
             this.labelText = this.$t("mall");
             this.label_text_ar = this.$t("mall_ar");
             this.stores_en = this.mal_data_en;
             this.stores_ar = this.mal_data_ar;
           } else {
+            // alert("sadasd");
             this.labelText = this.$t("store");
             this.label_text_ar = this.$t("store_ar");
             this.stores_en = this.stores_data_en;
@@ -920,10 +936,19 @@ export default {
           }
         } else {
           this.promotions[0].stor_type = stor_type;
-          if (stor_type == "MallAdmin" && stor_type == "MallAdmin") {
+          if (stor_type == "MallAdmin" && this.user.rolename == "MallAdmin") {
             console.log("asdasd", this.stores_en);
-            this.promotions[1].store_id = this.mall_id;
-            this.promotions[0].store_id = this.mall_id;
+            if (!this.$route.query.slug) {
+              this.promotions[1].store_id = this.mall_id;
+              this.promotions[0].store_id = this.mall_id;
+            }
+            this.labelText = this.$t("mall");
+            this.label_text_ar = this.$t("mall_ar");
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else if (stor_type == "MallAdmin") {
+            // this.promotions[1].store_id = this.mall_id;
+            // this.promotions[0].store_id = this.mall_id;
             this.labelText = this.$t("mall");
             this.label_text_ar = this.$t("mall_ar");
             this.stores_en = this.mal_data_en;
