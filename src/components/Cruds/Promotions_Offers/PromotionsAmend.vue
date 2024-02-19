@@ -146,7 +146,7 @@
                     <v-select
                       v-bind="props"
                       v-model="promotions[0].type"
-                      @update:modelValue="(value) => updateType(value)"
+                    
                       v-bind:label="$t('type_en')"
                       variant="outlined"
                       density="compact"
@@ -443,7 +443,7 @@
                     <v-select
                       v-bind="props"
                       v-model="promotions[1].type"
-                      @update:modelValue="(value) => updateType(value)"
+                      
                       :rules="fieldRules"
                       v-bind:label="$t('type_ar')"
                       variant="outlined"
