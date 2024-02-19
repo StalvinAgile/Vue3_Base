@@ -94,6 +94,7 @@
                 <v-col cols="12" md="3" sm="3" lg="3">
                   <DatePicker
                     :label="$t('dob')"
+                    :max="new Date().toISOString().substr(0, 10)"
                     :stored_date="profile_details.dob"
                     @formatted_date="formatted_from_date"
                     dense

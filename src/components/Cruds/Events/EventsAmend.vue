@@ -121,7 +121,7 @@
                     <DatePicker
                       v-bind="props"
                       :label="$t('end_date_en')"
-                      :min="new Date().toISOString().substr(0, 10)"
+                      :min="events[0].start_date"
                       :stored_date="events[0].end_date"
                       @formatted_date="formatted_end_date"
                       dense
@@ -969,10 +969,14 @@ export default {
     formatted_start_date(formatted_date) {
       this.events[0].start_date = formatted_date;
       this.events[1].start_date = formatted_date;
+      this.events[0].end_date = '';
+      this.events[1].end_date = '';
     },
     formatted_start_date_ar(formatted_date) {
       this.events[1].start_date = formatted_date;
       this.events[0].start_date = formatted_date;
+      this.events[0].end_date = '';
+      this.events[1].end_date = '';
     },
     formatted_end_date(formatted_date) {
       this.events[0].end_date = formatted_date;
