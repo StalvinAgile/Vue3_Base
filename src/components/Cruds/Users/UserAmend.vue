@@ -338,7 +338,6 @@
                 </v-col>
               </v-row>
             </div>
-
             <div class="col-md-2 pb-8 pr-8">
               <center>
                 <div>
@@ -349,19 +348,22 @@
                           v-bind:style="
                             isHovering == true ? 'filter: blur(1px);' : ''
                           "
-                          v-if="profile_details.image_url != null"
-                          :src="envImagePath + profile_details.image_url"
+                          v-if="
+                            profile_details.image_url == '' ||
+                            profile_details.image_url == null
+                          "
+                          src="@/assets/images/upload_image_default.png"
                           width="100"
-                          height="100"
-                          alt
                         />
                         <img
                           v-bind:style="
                             isHovering == true ? 'filter: blur(1px);' : ''
                           "
                           v-else
-                          src="@/assets/images/avatars/default.png"
+                          :src="envImagePath + profile_details.image_url"
                           width="100"
+                          height="100"
+                          alt
                         />
                         <div v-show="isHovering" class="camera-icon">
                           <v-icon @click="uploadFile">mdi-camera</v-icon>
@@ -369,6 +371,31 @@
                       </div>
                     </v-hover>
                   </div>
+                  <a
+                    class="text-center pointer"
+                    @click="downloadImage(profile_details.image_url)"
+                  >
+                    <span
+                      v-if="profile_details.image_url"
+                      class="download_btn_color"
+                      >{{ $t("download") }}</span
+                    >
+                  </a>
+                  <span
+                    v-if="
+                      profile_details.image_url == '' ||
+                      profile_details.image_url == null
+                    "
+                  >
+                  </span>
+                  <span v-else>
+                    <v-icon
+                      small
+                      class="mr-2 edit_btn icon_size delete_icon"
+                      @click="removeImage"
+                      >mdi mdi-trash-can-outline</v-icon
+                    >
+                  </span>
                 </div>
                 <br />
                 <Imageupload
@@ -748,6 +775,13 @@ export default {
         name: "users",
       });
     },
+    removeImage() {
+      this.profile_details.image_url = null;
+    },
+
+    downloadImage(image_url) {
+      window.open(this.envImagePath + image_url, "_blank");
+    },
   },
 };
 </script>
@@ -762,6 +796,17 @@ export default {
   bottom: 40px;
   left: 40px;
   animation: fadeInUp 0.5s forwards;
+}
+.delete_icon {
+  position: relative;
+  left: 40px;
+  bottom: 120px;
+}
+.download_btn_color {
+  color: blue;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>
   
