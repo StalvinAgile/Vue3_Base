@@ -285,6 +285,15 @@
                           >{{ $t("download") }}</span
                         >
                       </a>
+                      <span>
+                        <v-icon
+                          small
+                          v-if="e_magazine[0].image_path"
+                          class="mr-2 edit_btn icon_size delete_icon"
+                          @click="removeImage(0)"
+                          >mdi mdi-trash-can-outline</v-icon
+                        >
+                      </span>
                     </div>
                     <br />
                     <Imageupload
@@ -528,7 +537,7 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="4" sm="4" md="4">
+                  <v-col cols="6" sm="6" md="6">
                     <div>
                       <div class="image-container">
                         <v-hover v-slot="{ isHovering, props }">
@@ -558,16 +567,27 @@
                           </div>
                         </v-hover>
                       </div>
-                      <a
-                        class="text-center pointer"
-                        @click="downloadImage(e_magazine[1].image_path)"
-                      >
-                        <span
-                          v-if="e_magazine[1].image_path"
-                          class="download_btn_color"
-                          >{{ $t("download") }}</span
+                      <div class="text-right">
+                        <a
+                          class="text-center pointer"
+                          @click="downloadImage(e_magazine[1].image_path)"
                         >
-                      </a>
+                          <span
+                            v-if="e_magazine[1].image_path"
+                            class="download_btn_color"
+                            >{{ $t("download") }}</span
+                          >
+                        </a>
+                        <span>
+                          <v-icon
+                            small
+                            v-if="e_magazine[1].image_path"
+                            class="mr-2 edit_btn icon_size delete_icon_ar"
+                            @click="removeImage(1)"
+                            >mdi mdi-trash-can-outline</v-icon
+                          >
+                        </span>
+                      </div>
                     </div>
                     <br />
                     <Imageupload
@@ -1153,6 +1173,13 @@ export default {
     clear() {
       this.$refs.form.reset();
     },
+    removeImage(index) {
+      if (index == 1) {
+        this.e_magazine[1].image_path = null;
+      } else {
+        this.e_magazine[0].image_path = null;
+      }
+    },
   },
 };
 </script>
@@ -1210,5 +1237,15 @@ input.larger {
 
 .arabdirection /deep/ .v-input {
   direction: rtl !important;
+}
+.delete_icon_ar {
+  position: relative;
+  right: 35px;
+  bottom: 90px;
+}
+.delete_icon {
+  position: relative;
+  left: 45px;
+  bottom: 90px;
 }
 </style>

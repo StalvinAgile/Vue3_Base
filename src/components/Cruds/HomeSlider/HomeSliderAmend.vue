@@ -320,7 +320,7 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="12" sm="2" md="2">
+                  <v-col cols="6" sm="6" md="6">
                     <div>
                       <div
                         class="image-container"
