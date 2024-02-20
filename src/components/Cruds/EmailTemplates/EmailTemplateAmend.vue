@@ -107,7 +107,7 @@
                             : 'quill_item_border1'
                             " v-model:value="fieldItem.template_signature" v-bind:label="$t('body')"
                           @change="onEditorChangeSignature($event)" @blur="onEditorBlurSign($event)" />
-                        <small v-if="quill_sign" class="text-danger ml-5 required_item shake"><span v-if="tabs==2">{{ $t('field_required_ar') }}</span>
+                        <small v-if="quill_sign" class="text-danger ml-3 required_item shake"><span v-if="tabs==2">{{ $t('field_required_ar') }}</span>
                           <span v-else>{{ $t('field_required') }}</span></small>
                         <!-- <QuillEditor theme="snow" v-model:content="fieldItem.template_signature"
                     contentType="html" name="template_body" v-bind:label="$t('body')" />-->

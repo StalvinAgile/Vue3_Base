@@ -1,14 +1,7 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div
-      class="my-3 p-0"
-      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
-    >
-      <page-title
-        class="col-md-4 ml-2"
-        :heading="$t('create_amend_category')"
-        :google_icon="google_icon"
-      ></page-title>
+    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']">
+      <page-title class="col-md-4 ml-2" :heading="$t('create_amend_category')" :google_icon="google_icon"></page-title>
     </div>
     <div class="mb-3 mx-auto">
       <div class="card-body">
@@ -29,21 +22,10 @@
               <v-col cols="12" sm="12" md="4" class="ml-3 pr-5">
                 <v-tooltip :text="this.$t('mall_en')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-autocomplete
-                      v-if="user_role == 'SuperUser'"
-                      v-bind="props"
-                      v-model="category[0].store_id"
-                      @update:modelValue="(value) => updateMall(value)"
-                      v-bind:label="$t('mall_en')"
-                      variant="outlined"
-                      density="compact"
-                      :items="malls_en"
-                      item-title="name"
-                      item-value="header_id"
-                      class="required_field"
-                      :rules="fieldRules"
-                      required
-                    ></v-autocomplete>
+                    <v-autocomplete v-if="user_role == 'SuperUser'" v-bind="props" v-model="category[0].store_id"
+                      @update:modelValue="(value) => updateMall(value)" v-bind:label="$t('mall_en')" variant="outlined"
+                      density="compact" :items="malls_en" item-title="name" item-value="header_id" class="required_field"
+                      :rules="fieldRules" required></v-autocomplete>
                   </template>
                 </v-tooltip>
               </v-col>
@@ -52,19 +34,10 @@
                   <v-col cols="12" sm="12" md="4">
                     <v-tooltip :text="$t('name_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete
-                          v-bind="props"
-                          @update:modelValue="
-                            (value) => updateParent('en', value)
-                          "
-                          v-model="category[0].parent_id"
-                          v-bind:label="$t('parent_category_en')"
-                          variant="outlined"
-                          density="compact"
-                          :items="category_en"
-                          item-title="name"
-                          item-value="header_id"
-                        ></v-autocomplete>
+                        <v-autocomplete v-bind="props" @update:modelValue="(value) => updateParent('en', value)
+                          " v-model="category[0].parent_id" v-bind:label="$t('parent_category_en')" variant="outlined"
+                          density="compact" :items="category_en" item-title="name"
+                          item-value="header_id"></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -72,34 +45,18 @@
                   <v-col cols="12" sm="12" md="4">
                     <v-tooltip :text="$t('name_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[0].name"
-                          :rules="fieldRules"
-                          class="required_field"
-                          maxlength="100"
-                          v-bind:label="$t('name_en')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
+                        <v-text-field v-bind="props" v-model="category[0].name" :rules="fieldRules" class="required_field"
+                          maxlength="100" v-bind:label="$t('name_en')" required variant="outlined"
+                          density="compact"></v-text-field>
                       </template>
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
                     <v-tooltip :text="$t('title_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[0].title"
-                          :rules="fieldRules"
-                          class="required_field"
-                          maxlength="100"
-                          v-bind:label="$t('title_en')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
+                        <v-text-field v-bind="props" v-model="category[0].title" :rules="fieldRules"
+                          class="required_field" maxlength="100" v-bind:label="$t('title_en')" required variant="outlined"
+                          density="compact"></v-text-field>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -114,25 +71,14 @@
                     <v-tooltip :text="$t('description_en')" location="top">
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
-                          <quill-editor
-                            :options="editorOptions_en"
-                            class="hide_quill_input"
-                            v-bind:id="
-                              quill_item == true
-                                ? 'quill_item'
-                                : 'quill_item_border'
-                            "
-                            v-model:value="category[0].description"
-                            @blur="onEditorBlur($event)"
-                            @focus="onEditorFocus($event)"
-                            @ready="onEditorReady($event)"
-                            @change="onEditorChange($event)"
-                          />
-                          <small
-                            v-if="quill_item"
-                            class="text-danger ml-5 required_item shake"
-                            >Field Required</small
-                          >
+                          <quill-editor :options="editorOptions_en" class="hide_quill_input" v-bind:id="quill_item == true
+                            ? 'quill_item'
+                            : 'quill_item_border'
+                            " v-model:value="category[0].description" @blur="onEditorBlur($event)"
+                            @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
+                            @change="onEditorChange($event)" />
+                          <small v-if="quill_item"
+                            class="text-danger ml-2 required_item shake">{{ $t('field_required') }}</small>
                         </div>
                       </template>
                     </v-tooltip>
@@ -142,62 +88,29 @@
               <v-layout>
                 <v-row class="mt-2 px-6" max-width="344">
                   <v-col md="12">
-                    <v-tooltip
-                      :text="this.$t('meta_title_en')"
-                      location="bottom"
-                    >
+                    <v-tooltip :text="this.$t('meta_title_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[0].meta_title"
-                          :rules="fieldRules"
-                          class="required_field"
-                          maxlength="70"
-                          counter="true"
-                          v-bind:label="$t('meta_title_en')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
+                        <v-text-field v-bind="props" v-model="category[0].meta_title" :rules="fieldRules"
+                          class="required_field" maxlength="70" counter="true" v-bind:label="$t('meta_title_en')" required
+                          variant="outlined" density="compact"></v-text-field>
                       </template>
                     </v-tooltip>
                   </v-col>
                   <v-col md="12">
-                    <v-tooltip
-                      :text="this.$t('meta_description_en')"
-                      location="bottom"
-                    >
+                    <v-tooltip :text="this.$t('meta_description_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-textarea
-                          v-on="on"
-                          rows="2"
-                          v-model="category[0].meta_description"
-                          v-bind="props"
-                          :rules="descriptionRules"
-                          v-bind:label="$t('meta_description_en')"
-                          required
-                          class="required_field"
-                          variant="outlined"
-                          maxlength="160"
-                          counter="true"
-                        ></v-textarea>
+                        <v-textarea v-on="on" rows="2" v-model="category[0].meta_description" v-bind="props"
+                          :rules="descriptionRules" v-bind:label="$t('meta_description_en')" required
+                          class="required_field" variant="outlined" maxlength="160" counter="true"></v-textarea>
                       </template>
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" sm="2" md="2">
                     <v-tooltip :text="$t('sequence_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[0].seq"
-                          maxlength="100"
-                          :rules="phoneRules"
-                          v-bind:label="$t('sequence_en')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                          v-on:keypress="NumbersOnly"
-                        ></v-text-field>
+                        <v-text-field v-bind="props" v-model="category[0].seq" maxlength="100" :rules="phoneRules"
+                          v-bind:label="$t('sequence_en')" required variant="outlined" density="compact"
+                          v-on:keypress="NumbersOnly"></v-text-field>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -206,61 +119,30 @@
                       <div class="image-container">
                         <v-hover v-slot="{ isHovering, props }">
                           <div style="position: relative" v-bind="props">
-                            <img
-                              v-bind:style="
-                                isHovering == true ? 'filter: blur(1px);' : ''
-                              "
-                              v-if="category[0].image_path != null"
-                              :src="envImagePath + category[0].image_path"
-                              width="100"
-                              height="65
-                          "
-                              alt
-                            />
-                            <img
-                              v-bind:style="
-                                isHovering == true ? 'filter: blur(1px);' : ''
-                              "
-                              v-else
-                              src="@/assets/images/upload_image_default.png"
-                              width="100"
-                            />
+                            <img v-bind:style="isHovering == true ? 'filter: blur(1px);' : ''
+                              " v-if="category[0].image_path != null" :src="envImagePath + category[0].image_path"
+                              width="100" height="65
+                          " alt />
+                            <img v-bind:style="isHovering == true ? 'filter: blur(1px);' : ''
+                              " v-else src="@/assets/images/upload_image_default.png" width="100" />
                             <div v-show="isHovering" class="camera-icon">
                               <v-icon @click="uploadFile">mdi-camera</v-icon>
                             </div>
                           </div>
                         </v-hover>
                       </div>
-                      <a
-                        class="text-center"
-                        style="cursor: pointer"
-                        @click="downloadImage(category[0].image_path)"
-                      >
-                        <span
-                          v-if="category[0].image_path"
-                          class="download_btn_color"
-                          >{{ $t("download_en") }}</span
-                        >
+                      <a class="text-center" style="cursor: pointer" @click="downloadImage(category[0].image_path)">
+                        <span v-if="category[0].image_path" class="download_btn_color">{{ $t("download_en") }}</span>
                       </a>
                       <span>
-                        <v-icon
-                          small
-                          v-if="category[0].image_path"
-                          class="mr-2 edit_btn icon_size delete_icon"
-                          @click="removeImage(0)"
-                          >mdi mdi-trash-can-outline</v-icon
-                        >
+                        <v-icon small v-if="category[0].image_path" class="mr-2 edit_btn icon_size delete_icon"
+                          @click="removeImage(0)">mdi mdi-trash-can-outline</v-icon>
                       </span>
                     </div>
 
                     <br />
-                    <Imageupload
-                      :folder="'category'"
-                      :resizewidth="150"
-                      :resizeheight="100"
-                      @uploaded_image="uploaded_image"
-                      :upload_profile="uploadfile"
-                    />
+                    <Imageupload :folder="'category'" :resizewidth="150" :resizeheight="100"
+                      @uploaded_image="uploaded_image" :upload_profile="uploadfile" />
                   </v-col>
                 </v-row>
               </v-layout>
@@ -274,79 +156,39 @@
                 <v-col cols="12" sm="12" md="4" class="pr-5">
                   <v-tooltip :text="this.$t('mall_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-autocomplete
-                        v-if="user_role == 'SuperUser'"
-                        v-bind="props"
-                        v-model="category[1].store_id"
-                        @update:modelValue="(value) => updateMall(value)"
-                        v-bind:label="$t('mall_ar')"
-                        variant="outlined"
-                        density="compact"
-                        :items="malls_ar"
-                        item-title="name"
-                        item-value="header_id"
-                        class="required_field"
-                        :rules="fieldRulesAR"
-                        required
-                      ></v-autocomplete>
+                      <v-autocomplete v-if="user_role == 'SuperUser'" v-bind="props" v-model="category[1].store_id"
+                        @update:modelValue="(value) => updateMall(value)" v-bind:label="$t('mall_ar')" variant="outlined"
+                        density="compact" :items="malls_ar" item-title="name" item-value="header_id"
+                        class="required_field" :rules="fieldRulesAR" required></v-autocomplete>
                     </template>
-                  </v-tooltip> </v-col
-              ></v-row>
+                  </v-tooltip> </v-col></v-row>
               <v-layout>
                 <v-row class="px-6 mt-2 arabdirection">
                   <v-col cols="12" sm="12" md="4">
-                    <v-tooltip
-                      :text="$t('parent_category_ar')"
-                      location="bottom"
-                    >
+                    <v-tooltip :text="$t('parent_category_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete
-                          @update:modelValue="
-                            (value) => updateParent('ar', value)
-                          "
-                          v-bind="props"
-                          v-model="category[1].parent_id"
-                          v-bind:label="$t('parent_category_ar')"
-                          variant="outlined"
-                          density="compact"
-                          :items="category_ar"
-                          item-title="name"
-                          item-value="header_id"
-                        ></v-autocomplete>
+                        <v-autocomplete @update:modelValue="(value) => updateParent('ar', value)
+                          " v-bind="props" v-model="category[1].parent_id" v-bind:label="$t('parent_category_ar')"
+                          variant="outlined" density="compact" :items="category_ar" item-title="name"
+                          item-value="header_id"></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
                     <v-tooltip :text="$t('name_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[1].name"
-                          :rules="fieldRulesAR"
-                          class="required_field rtl"
-                          maxlength="100"
-                          v-bind:label="$t('name_ar')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
+                        <v-text-field v-bind="props" v-model="category[1].name" :rules="fieldRulesAR"
+                          class="required_field rtl" maxlength="100" v-bind:label="$t('name_ar')" required
+                          variant="outlined" density="compact"></v-text-field>
                       </template>
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
                     <v-tooltip :text="$t('title_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[1].title"
-                          :rules="fieldRulesAR"
-                          class="required_field rtl"
-                          maxlength="100"
-                          v-bind:label="$t('title_ar')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
+                        <v-text-field v-bind="props" v-model="category[1].title" :rules="fieldRulesAR"
+                          class="required_field rtl" maxlength="100" v-bind:label="$t('title_ar')" required
+                          variant="outlined" density="compact"></v-text-field>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -362,25 +204,15 @@
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
                           <!-- @ready="setRtlDirection" -->
-                          <quill-editor
-                            :options="editorOptions"
-                            class="arabclassquill"
-                            v-bind:id="
-                              quill_item == true
-                                ? 'quill_item'
-                                : 'quill_item_border'
-                            "
-                            v-model:value="category[1].description"
-                            @blur="onEditorBlurAR($event)"
-                            @focus="onEditorFocusAR($event)"
-                            @ready="setRtlDirection"
-                            @change="onEditorChangeAR($event)"
-                          />
-                          <small
-                            v-if="quill_item"
-                            class="text-danger ml-5 required_item shake"
-                            >Field Required</small
-                          >
+                          <quill-editor :options="editorOptions" class="arabclassquill" v-bind:id="quill_item_ar == true
+                            ? 'quill_item'
+                            : 'quill_item_border'
+                            " v-model:value="category[1].description" @blur="onEditorBlurAR($event)"
+                            @focus="onEditorFocusAR($event)" @ready="setRtlDirection"
+                            @change="onEditorChangeAR($event)" />
+                          <small v-if="quill_item_ar" class="row text-danger mr-2 text-right required_item shake">
+                            <span> {{ $t('field_required_ar') }}</span>
+                          </small>
                         </div>
                       </template>
                     </v-tooltip>
@@ -390,62 +222,29 @@
               <v-layout>
                 <v-row class="mt-2 px-6 arabdirection" max-width="344">
                   <v-col md="12">
-                    <v-tooltip
-                      :text="this.$t('meta_title_ar')"
-                      location="bottom"
-                    >
+                    <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[1].meta_title"
-                          :rules="fieldRulesAR"
-                          class="required_field rtl"
-                          maxlength="70"
-                          counter="true"
-                          v-bind:label="$t('meta_title_ar')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
+                        <v-text-field v-bind="props" v-model="category[1].meta_title" :rules="fieldRulesAR"
+                          class="required_field rtl" maxlength="70" counter="true" v-bind:label="$t('meta_title_ar')"
+                          required variant="outlined" density="compact"></v-text-field>
                       </template>
                     </v-tooltip>
                   </v-col>
                   <v-col md="12">
-                    <v-tooltip
-                      :text="this.$t('meta_description_ar')"
-                      location="bottom"
-                    >
+                    <v-tooltip :text="this.$t('meta_description_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-textarea
-                          v-on="on"
-                          rows="2"
-                          v-model="category[1].meta_description"
-                          v-bind="props"
-                          :rules="descriptionRulesAr"
-                          v-bind:label="$t('meta_description_ar')"
-                          required
-                          class="required_field rtl"
-                          variant="outlined"
-                          maxlength="160"
-                          counter="true"
-                        ></v-textarea>
+                        <v-textarea v-on="on" rows="2" v-model="category[1].meta_description" v-bind="props"
+                          :rules="descriptionRulesAr" v-bind:label="$t('meta_description_ar')" required
+                          class="required_field rtl" variant="outlined" maxlength="160" counter="true"></v-textarea>
                       </template>
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" sm="2" md="2">
                     <v-tooltip :text="$t('sequence_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[1].seq"
-                          maxlength="100"
-                          :rules="phoneRules"
-                          v-bind:label="$t('sequence_ar')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                          v-on:keypress="NumbersOnly"
-                        ></v-text-field>
+                        <v-text-field v-bind="props" v-model="category[1].seq" maxlength="100" :rules="phoneRules"
+                          v-bind:label="$t('sequence_ar')" required variant="outlined" density="compact"
+                          v-on:keypress="NumbersOnly"></v-text-field>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -454,25 +253,12 @@
                       <div class="image-container">
                         <v-hover v-slot="{ isHovering, props }">
                           <div style="position: relative" v-bind="props">
-                            <img
-                              v-bind:style="
-                                isHovering == true ? 'filter: blur(1px);' : ''
-                              "
-                              v-if="category[1].image_path != null"
-                              :src="envImagePath + category[1].image_path"
-                              width="100"
-                              height="65
-                          "
-                              alt
-                            />
-                            <img
-                              v-bind:style="
-                                isHovering == true ? 'filter: blur(1px);' : ''
-                              "
-                              v-else
-                              src="@/assets/images/upload_image_default.png"
-                              width="100"
-                            />
+                            <img v-bind:style="isHovering == true ? 'filter: blur(1px);' : ''
+                              " v-if="category[1].image_path != null" :src="envImagePath + category[1].image_path"
+                              width="100" height="65
+                          " alt />
+                            <img v-bind:style="isHovering == true ? 'filter: blur(1px);' : ''
+                              " v-else src="@/assets/images/upload_image_default.png" width="100" />
                             <div v-show="isHovering" class="camera-icon">
                               <v-icon @click="uploadFile">mdi-camera</v-icon>
                             </div>
@@ -480,36 +266,19 @@
                         </v-hover>
                       </div>
                       <!-- <div class="text-right"> -->
-                      <a
-                        class="text-center pointer"
-                        style="cursor: pointer"
-                        @click="downloadImage(category[1].image_path)"
-                      >
-                        <span
-                          v-if="category[1].image_path"
-                          class="download_btn_color"
-                          >{{ $t("download_ar") }}</span
-                        >
+                      <a class="text-center pointer" style="cursor: pointer"
+                        @click="downloadImage(category[1].image_path)">
+                        <span v-if="category[1].image_path" class="download_btn_color">{{ $t("download_ar") }}</span>
                       </a>
                       <span>
-                        <v-icon
-                          small
-                          v-if="category[1].image_path"
-                          class="mr-2 edit_btn icon_size delete_icon_ar"
-                          @click="removeImage(1)"
-                          >mdi mdi-trash-can-outline</v-icon
-                        >
+                        <v-icon small v-if="category[1].image_path" class="mr-2 edit_btn icon_size delete_icon_ar"
+                          @click="removeImage(1)">mdi mdi-trash-can-outline</v-icon>
                       </span>
                       <!-- </div> -->
                     </div>
                     <br />
-                    <Imageupload
-                      :folder="'category'"
-                      :resizewidth="0.4"
-                      :resizeheight="0.1"
-                      @uploaded_image="uploaded_image"
-                      :upload_profile="uploadfilear"
-                    />
+                    <Imageupload :folder="'category'" :resizewidth="0.4" :resizeheight="0.1"
+                      @uploaded_image="uploaded_image" :upload_profile="uploadfilear" />
                   </v-col>
                 </v-row>
               </v-layout>
@@ -522,32 +291,18 @@
         <v-row class="mt-2 px-6" max-width="344">
           <v-col md="12">
             <div>
-              <v-tooltip
-                :text="
-                  tabs == 1
-                    ? $t('display_in_header_menu')
-                    : $t('display_in_header_menu_ar')
-                "
-                location="bottom"
-              >
+              <v-tooltip :text="tabs == 1
+                ? $t('display_in_header_menu')
+                : $t('display_in_header_menu_ar')
+                " location="bottom">
                 <template v-slot:activator="{ props }">
-                  <v-switch
-                    v-bind:style="tabs == 1 ? 'direction:ltr' : 'direction:rtl'"
-                    v-bind="props"
-                    color="blue"
-                    :model-value="category[0].display_header_menu === 1"
-                    @update:model-value="
-                      (value) =>
-                        (category[0].display_header_menu = value ? 1 : 0)
-                    "
-                    hide-details
-                    inset
-                    :label="
-                      tabs == 1
-                        ? $t('display_in_header_menu')
-                        : $t('display_in_header_menu_ar')
-                    "
-                  ></v-switch>
+                  <v-switch v-bind:style="tabs == 1 ? 'direction:ltr' : 'direction:rtl'" v-bind="props" color="blue"
+                    :model-value="category[0].display_header_menu === 1" @update:model-value="(value) =>
+                      (category[0].display_header_menu = value ? 1 : 0)
+                      " hide-details inset :label="tabs == 1
+    ? $t('display_in_header_menu')
+    : $t('display_in_header_menu_ar')
+    "></v-switch>
                 </template>
               </v-tooltip>
             </div>
@@ -559,15 +314,8 @@
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block mr-2">
               <router-link :to="{ name: 'categories' }">
-                <v-btn
-                  v-bind="props"
-                  size="small"
-                  @click="cancel()"
-                  :disabled="loading"
-                  class="ma-1"
-                  color="cancel"
-                  >{{ $t("cancel") }}</v-btn
-                >
+                <v-btn v-bind="props" size="small" @click="cancel()" :disabled="loading" class="ma-1" color="cancel">{{
+                  $t("cancel") }}</v-btn>
               </router-link>
             </div>
           </template>
@@ -575,22 +323,10 @@
         <v-tooltip :text="this.$t('submit')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block">
-              <v-btn
-                :disabled="isDisabled"
-                @click="submit"
-                size="small"
-                class="mr-2"
-                color="success"
-              >
+              <v-btn :disabled="isDisabled" @click="submit" size="small" class="mr-2" color="success">
                 {{ $t("submit") }}
-                <v-progress-circular
-                  v-if="isBtnLoading"
-                  indeterminate
-                  width="1"
-                  color="cancel"
-                  size="x-small"
-                  class="ml-2"
-                ></v-progress-circular>
+                <v-progress-circular v-if="isBtnLoading" indeterminate width="1" color="cancel" size="x-small"
+                  class="ml-2"></v-progress-circular>
               </v-btn>
             </div>
           </template>
@@ -630,6 +366,8 @@ export default {
   data: () => ({
     malls_en: [],
     malls_ar: [],
+    quill_item_ar: false,
+    quill_item: false,
     google_icon: {
       icon_name: "edit_note",
       color: "google_icon_gradient",
@@ -732,8 +470,8 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-                "edit-category/" +
-                this.$route.query.slug
+              "edit-category/" +
+              this.$route.query.slug
             )
             .then((res) => {
               if (Array.isArray(res.data.message)) {
@@ -883,24 +621,23 @@ export default {
         });
     },
     submit() {
-      this.isBtnLoading = true;
-      this.isDisabled = true;
-      this.loading = true;
-      if (this.category.description == "") {
+
+      if (this.tabs == 1 && (this.category[0].description == "" || this.category[0].description == null)) {
         this.quill_item = true;
       }
-      if (this.category.description_ar == "") {
+      if (this.tabs == 2 && (this.category[1].description_ar == "" || this.category[1].description_ar == null)) {
         this.quill_item_ar = true;
       }
       if (this.$refs.form.validate() && this.valid == true) {
         if (
-          this.category.description == "" ||
-          this.category.description_ar == ""
+          this.category[1].description == "" ||
+          this.category[1].description_ar == ""
         ) {
           return;
         }
-        this.isDisabled = true;
         this.isBtnLoading = true;
+        this.isDisabled = true;
+        this.loading = true;
         // Form is valid, process
         this.$axios
           .post(
@@ -934,6 +671,8 @@ export default {
             this.isBtnLoading = false;
             this.isDisabled = false;
             this.loading = false;
+            this.quill_item = false;
+            this.quill_item_ar = false;
           });
       }
     },
@@ -946,21 +685,21 @@ export default {
     },
     onEditorChangeAR(event) {
       if (event.text.length == 1) {
-        this.quill_item = true;
+        this.quill_item_ar = true;
       } else {
-        this.quill_item = false;
+        this.quill_item_ar = false;
       }
     },
     onEditorBlur() {
       // console.log(event.options);
-      if (this.category.description == "") {
+      if (this.category[0].description == "") {
         this.quill_item = true;
       }
     },
     onEditorBlurAR(event) {
       console.log(event.options);
-      if (this.category.description_ar == "") {
-        this.quill_item = true;
+      if (this.category[1].description_ar == "") {
+        this.quill_item_ar = true;
       }
     },
     clear() {
@@ -978,9 +717,11 @@ export default {
 #quill_item {
   border: 1px solid #b00020;
 }
+
 #quill_item_border {
   border: 1px solid #d1d5db;
 }
+
 .ql-container.ql-snow {
   direction: rtl;
   text-align: right;
@@ -990,20 +731,25 @@ export default {
   direction: rtl !important;
   text-align: right !important;
 }
+
 .arabdirection /deep/ .v-field {
   direction: rtl !important;
 }
+
 .arabclassquill /deep/ .ql-editor {
   text-align: justify !important;
 }
+
 .arabdirection /deep/ .v-messages__message {
   text-align: right !important;
 }
+
 .delete_icon_ar {
   position: relative;
   left: 75px;
   bottom: 90px;
 }
+
 .delete_icon {
   position: relative;
   left: 45px;
