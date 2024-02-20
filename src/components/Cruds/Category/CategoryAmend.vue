@@ -141,7 +141,7 @@
               </v-layout>
               <v-layout>
                 <v-row class="mt-2 px-6" max-width="344">
-                  <v-col md="12">
+                  <v-col cols="12" sm="12" md="12">
                     <v-tooltip
                       :text="this.$t('meta_title_en')"
                       location="bottom"
@@ -162,7 +162,7 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col md="12">
+                  <v-col cols="12" sm="12" md="12">
                     <v-tooltip
                       :text="this.$t('meta_description_en')"
                       location="bottom"
@@ -184,22 +184,7 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="12" sm="4" md="4">
-                    <v-tooltip :text="$t('icon_en')" location="bottom">
-                      <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[0].icon"
-                          maxlength="100"
-                          v-bind:label="$t('icon_en')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
-                      </template>
-                    </v-tooltip>
-                  </v-col>
-                  <v-col cols="12" sm="2" md="2">
+                  <v-col cols="12" sm="12" md="4">
                     <v-tooltip :text="$t('sequence_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
@@ -216,7 +201,21 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col md="6">
+                  <v-col cols="12" sm="12" md="4" class="icon_style">
+                    <v-tooltip :text="$t('icon_en')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <Vue3IconPicker
+                          v-bind="props"
+                          placeholder="Select icon"
+                          v-model="category[0].icon"
+                          v-bind:label="$t('icon_en')"
+                          variant="outlined"
+                          density="compact"
+                        ></Vue3IconPicker>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="4">
                     <div>
                       <div class="image-container">
                         <v-hover v-slot="{ isHovering, props }">
@@ -447,22 +446,7 @@
                 </v-col>
               </v-row>
               <v-row class="mt-2 px-6 arabdirection" max-width="344">
-                <v-col cols="12" sm="4" md="4">
-                    <v-tooltip :text="$t('icon_ar')" location="bottom">
-                      <template v-slot:activator="{ props }">
-                        <v-text-field
-                          v-bind="props"
-                          v-model="category[1].icon"
-                          maxlength="100"
-                          v-bind:label="$t('icon_ar')"
-                          required
-                          variant="outlined"
-                          density="compact"
-                        ></v-text-field>
-                      </template>
-                    </v-tooltip>
-                  </v-col>
-                <v-col cols="12" sm="2" md="2">
+                <v-col cols="12" sm="12" md="4">
                   <v-tooltip :text="$t('sequence_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-text-field
@@ -479,7 +463,21 @@
                     </template>
                   </v-tooltip>
                 </v-col>
-                <v-col md="6" cols="12">
+                <v-col cols="12" sm="12" md="4" class="icon_style">
+                  <v-tooltip :text="$t('icon_ar')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <Vue3IconPicker
+                        v-bind="props"
+                        placeholder="Select icon"
+                        v-model="category[1].icon"
+                        v-bind:label="$t('icon_ar')"
+                        variant="outlined"
+                        density="compact"
+                      ></Vue3IconPicker>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="12" sm="12" md="4">
                   <div>
                     <div class="image-container">
                       <v-hover v-slot="{ isHovering, props }">
@@ -634,11 +632,14 @@ import Imageupload from "../../CustomComponents/ImageUpload.vue";
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import { quillEditor } from "vue3-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import { Vue3IconPicker } from "vue3-icon-picker";
+import "vue3-icon-picker/dist/style.css";
 export default {
   components: {
     PageTitle,
     Imageupload,
     quillEditor,
+    Vue3IconPicker,
   },
   setup() {
     const onEditorFocus = () => {
@@ -1061,5 +1062,8 @@ export default {
   position: relative;
   left: 45px;
   bottom: 90px;
+}
+.icon_style {
+  height: 320px;
 }
 </style>
