@@ -71,6 +71,18 @@
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>{{ props.item.selectable.title }}</td>
+              <td v-if="this.role === 'SuperUser'">
+                <span v-if="props.item.selectable.store_name.stor_type">
+                  {{ props.item.selectable.store_name.stor_type }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td v-if="this.role === 'SuperUser'">
+                <span v-if="props.item.selectable.store_name.name">
+                  {{ props.item.selectable.store_name.name }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
               <!-- {{props.item.selectable.description}} -->
               <td><span v-html="props.item.selectable.description"></span></td>
               <td>
@@ -163,6 +175,18 @@
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>{{ props.item.selectable.title }}</td>
+              <td v-if="this.role === 'SuperUser'">
+                <span v-if="props.item.selectable.store_name.stor_type">
+                  {{ props.item.selectable.store_name.stor_type }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td v-if="this.role === 'SuperUser'">
+                <span v-if="props.item.selectable.store_name.name">
+                  {{ props.item.selectable.store_name.name }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
               <td><span v-html="props.item.selectable.description"></span></td>
               <td>
                 <v-btn
@@ -281,6 +305,7 @@ export default {
     showStatusDialog: false,
     tabs: 1,
     sel_lang: "",
+    role: "",
   }),
 
   computed: {
@@ -288,7 +313,7 @@ export default {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
     headers_en() {
-      return [
+      let headers = [
         {
           title: this.$t("title_en"),
           key: "title",
@@ -315,9 +340,15 @@ export default {
           align: "center",
         },
       ];
+      if (this.role === "SuperUser") {
+        headers.splice(1, 0, { title: this.$t("store_type_en"), key: "store_name.stor_type" });
+        headers.splice(2, 0, { title: this.$t("mall/store_en"), key: "stor_type.name" });
+      }
+
+      return headers;
     },
     headers_ar() {
-      return [
+      let headers = [
         {
           title: this.$t("title_ar"),
           key: "title_ar",
@@ -344,6 +375,12 @@ export default {
           align: "center",
         },
       ];
+      if (this.role === "SuperUser") {
+        headers.splice(1, 0, { title: this.$t("store_type_ar"), key: "store_name.stor_type" });
+        headers.splice(2, 0, { title: this.$t("mall/store_ar"), key: "stor_type.name" });
+      }
+
+      return headers;
     },
   },
 
@@ -363,6 +400,7 @@ export default {
 
   created() {},
   mounted() {
+    this.role = JSON.parse(localStorage.getItem("user_data")).rolename;
     this.fetchEMagazine();
   },
 
