@@ -219,7 +219,7 @@
                   </v-col>
                 </v-row>
               </v-layout>
-              <v-layout>
+           
                 <v-row class="mt-2 px-6 arabdirection" max-width="344">
                   <v-col md="12">
                     <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
@@ -239,6 +239,8 @@
                       </template>
                     </v-tooltip>
                   </v-col>
+                  </v-row>
+                  <v-row class="mt-2 px-6 arabdirection" max-width="344">
                   <v-col cols="12" sm="2" md="2">
                     <v-tooltip :text="$t('sequence_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
@@ -248,7 +250,7 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col md="6">
+                  <v-col md="6" cols="12">
                     <div>
                       <div class="image-container">
                         <v-hover v-slot="{ isHovering, props }">
@@ -281,7 +283,7 @@
                       @uploaded_image="uploaded_image" :upload_profile="uploadfilear" />
                   </v-col>
                 </v-row>
-              </v-layout>
+             
             </v-form>
           </v-window-item>
           <!-- ARABIC TAB END -->
@@ -735,6 +737,9 @@ export default {
 .arabdirection /deep/ .v-field {
   direction: rtl !important;
 }
+.arabdirection  {
+  direction: rtl !important;
+}
 
 .arabclassquill /deep/ .ql-editor {
   text-align: justify !important;
@@ -746,7 +751,7 @@ export default {
 
 .delete_icon_ar {
   position: relative;
-  left: 75px;
+  right: 66px;
   bottom: 90px;
 }
 
