@@ -527,5 +527,7 @@
   "pm_ar":"مساءً",
   "email_required_ar": "البريد الإلكتروني (مطلوب",
   "store_type_en": "Store Type",
-  "floor_ar":"أرضية"
+  "floor_ar":"أرضية",
+  "from_meridiem_ar": "من الجنوب",
+  "to_meridiem_ar": "إلى الجنوب"
 }

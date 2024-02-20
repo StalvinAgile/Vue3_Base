@@ -1,8 +1,14 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
-      <page-title class="col-md-4 ml-2" :heading="$t('create_ammend_mall_timing')"
-        :google_icon="google_icon"></page-title>
+    <div
+      class="my-3 p-0"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+    >
+      <page-title
+        class="col-md-4 ml-2"
+        :heading="$t('create_ammend_mall_timing')"
+        :google_icon="google_icon"
+      ></page-title>
     </div>
     <div class="mb-3 mx-auto">
       <div class="card-body">
@@ -21,53 +27,153 @@
             <v-form ref="form" v-model="valid">
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col xs="4" md="4" lg="4">
-                    <v-tooltip :text="this.$t('mall_timing_categories_en')" location="bottom">
+                  <v-col cols="12" sm="12" xs="6" md="4" lg="4">
+                    <v-tooltip
+                      :text="this.$t('mall_timing_categories_en')"
+                      location="bottom"
+                    >
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[0].mall_timing_categories" :rules="fieldRules"
-                          v-bind:label="$t('mall_timing_categories_en')" variant="outlined" density="compact"
-                          class="required_field" required index="id" :items="categories_en" item-value="header_id"
-                          item-title="name"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[0].mall_timing_categories"
+                          @update:modelValue="
+                            (value) => updateCategories(value)
+                          "
+                          :rules="fieldRules"
+                          v-bind:label="$t('mall_timing_categories_en')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="categories_en"
+                          item-value="header_id"
+                          item-title="name"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col xs="4" md="4" lg="4">
+                  <v-col cols="12" sm="6" xs="6" md="4" lg="4">
                     <v-tooltip :text="this.$t('from_day_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[0].from_day" :rules="fieldRules"
-                          v-bind:label="$t('from_day_en')" variant="outlined" density="compact" class="required_field"
-                          required index="id" :items="weekdays_en" item-value="shortname"
-                          item-title="shortname"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[0].from_day"
+                          :rules="fieldRules"
+                          v-bind:label="$t('from_day_en')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="weekdays_en"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col xs="4" md="4" lg="4">
+                  <v-col cols="12" sm="6" xs="6" md="4" lg="4">
                     <v-tooltip :text="this.$t('to_day_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[0].to_day" :rules="fieldRules"
-                          v-bind:label="$t('to_day_en')" variant="outlined" density="compact" class="required_field"
-                          required index="id" :items="weekdays_ar" item-value="shortname"
-                          item-title="shortname"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[0].to_day"
+                          :rules="fieldRules"
+                          v-bind:label="$t('to_day_en')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="weekdays_en"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col xs="4" md="4" lg="4">
-                    <v-tooltip :text="this.$t('from_time_en')" location="bottom">
+                  <v-col cols="6" sm="4" xs="12" md="4" lg="4">
+                    <v-tooltip
+                      :text="this.$t('from_time_en')"
+                      location="bottom"
+                    >
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[0].from_time" :rules="fieldRules"
-                          v-bind:label="$t('from_time_en')" variant="outlined" density="compact" class="required_field"
-                          required index="id" :items="mall_time_en" item-value="shortname"
-                          item-title="shortname"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[0].from_time"
+                          :rules="fieldRules"
+                          v-bind:label="$t('from_time_en')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="mall_time_en"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col xs="4" md="4" lg="4">
+                  <v-col cols="6" sm="2" xs="12" md="2" lg="2">
+                    <v-tooltip
+                      :text="this.$t('from_meridiem')"
+                      location="bottom"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[0].from_meridiem"
+                          :rules="fieldRules"
+                          variant="outlined"
+                          density="compact"
+                          v-bind:label="$t('from_meridiem')"
+                          required
+                          index="id"
+                          :items="meridiem"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="6" sm="4" xs="12" md="4" lg="4">
                     <v-tooltip :text="this.$t('to_time_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[0].to_time" :rules="fieldRules"
-                          v-bind:label="$t('to_time_en')" variant="outlined" density="compact" class="required_field"
-                          required index="id" :items="mall_time_en" item-value="shortname"
-                          item-title="shortname"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[0].to_time"
+                          :rules="fieldRules"
+                          v-bind:label="$t('to_time_en')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="mall_time_en"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="6" sm="2" xs="12" md="2" lg="2">
+                    <v-tooltip :text="this.$t('to_meridiem')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[0].to_meridiem"
+                          :rules="fieldRules"
+                          variant="outlined"
+                          v-bind:label="$t('to_meridiem')"
+                          density="compact"
+                          required
+                          index="id"
+                          :items="meridiem"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -75,12 +181,25 @@
               </v-layout>
               <v-layout>
                 <v-row class="mt-2 px-6" max-width="344">
-                  <v-col md="12">
-                    <v-tooltip :text="this.$t('description_en')" location="bottom">
+                  <v-col cols="12" sm="12" xs="12" md="12" lg="12">
+                    <v-tooltip
+                      :text="this.$t('description_en')"
+                      location="bottom"
+                    >
                       <template v-slot:activator="{ props }">
-                        <v-textarea v-on="on" rows="2" v-model="fieldItem[0].description" v-bind="props"
-                          :rules="descriptionRules" v-bind:label="$t('description_en')" required class="required_field"
-                          variant="outlined" maxlength="2000" counter="true"></v-textarea>
+                        <v-textarea
+                          v-on="on"
+                          rows="2"
+                          v-model="fieldItem[0].description"
+                          v-bind="props"
+                          :rules="descriptionRules"
+                          v-bind:label="$t('description_en')"
+                          required
+                          class="required_field"
+                          variant="outlined"
+                          maxlength="2000"
+                          counter="true"
+                        ></v-textarea>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -91,56 +210,163 @@
           <!-- ENGLISH TAB END -->
           <!-- ARABIC TAB STARTS -->
           <v-window-item :value="2">
-            <v-form ref="form" v-model="valid" style="direction:rtl; text-align:end">
+            <v-form
+              ref="form"
+              v-model="valid"
+              style="direction: rtl; text-align: end"
+            >
               <v-layout>
                 <v-row class="px-6 mt-2 arabdirection">
-                  <v-col xs="4" md="4" lg="4">
-                    <v-tooltip :text="this.$t('mall_timing_categories_ar')" location="bottom">
+                  <v-col cols="12" sm="12" xs="6" md="4" lg="4">
+                    <v-tooltip
+                      :text="this.$t('mall_timing_categories_ar')"
+                      location="bottom"
+                    >
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].mall_timing_categories" :rules="fieldRulesAR"
-                          v-bind:label="$t('mall_timing_categories_ar')" variant="outlined" density="compact"
-                          class="required_field" required index="id" :items="categories_ar" item-value="header_id"
-                          item-title="name"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[1].mall_timing_categories"
+                          @update:modelValue="
+                            (value) => updateCategories(value)
+                          "
+                          :rules="fieldRulesAR"
+                          v-bind:label="$t('mall_timing_categories_ar')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="categories_ar"
+                          item-value="header_id"
+                          item-title="name"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col xs="4" md="4" lg="4">
+                  <v-col cols="12" sm="6" xs="6" md="4" lg="4">
                     <v-tooltip :text="this.$t('from_day_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].from_day" :rules="fieldRulesAR"
-                          v-bind:label="$t('from_day_ar')" variant="outlined" density="compact" class="required_field"
-                          required index="id" :items="weekdays_ar" item-value="shortname"
-                          item-title="shortname"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[1].from_day"
+                          :rules="fieldRulesAR"
+                          v-bind:label="$t('from_day_ar')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="weekdays_ar"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col xs="4" md="4" lg="4">
+                  <v-col cols="12" sm="6" xs="6" md="4" lg="4">
                     <v-tooltip :text="this.$t('to_day_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].to_day" :rules="fieldRulesAR"
-                          v-bind:label="$t('to_day_ar')" variant="outlined" density="compact" class="required_field"
-                          required index="id" :items="weekdays_ar" item-value="shortname"
-                          item-title="shortname"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[1].to_day"
+                          :rules="fieldRulesAR"
+                          v-bind:label="$t('to_day_ar')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="weekdays_ar"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col xs="4" md="4" lg="4">
-                    <v-tooltip :text="this.$t('from_time_ar')" location="bottom">
+                  <v-col cols="6" sm="4" xs="4" md="4" lg="4">
+                    <v-tooltip
+                      :text="this.$t('from_time_ar')"
+                      location="bottom"
+                    >
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].from_time" :rules="fieldRulesAR"
-                          v-bind:label="$t('from_time_ar')" variant="outlined" density="compact" class="required_field"
-                          required index="id" :items="mall_time_ar" item-value="shortname"
-                          item-title="shortname"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[1].from_time"
+                          :rules="fieldRulesAR"
+                          v-bind:label="$t('from_time_ar')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="mall_time_ar"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col xs="4" md="4" lg="4">
+                  <v-col cols="6" sm="2" xs="2" md="2" lg="2">
+                    <v-tooltip
+                      :text="this.$t('from_meridiem_ar')"
+                      location="bottom"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[1].from_meridiem"
+                          :rules="fieldRules"
+                          variant="outlined"
+                          density="compact"
+                          v-bind:label="$t('from_meridiem_ar')"
+                          required
+                          index="id"
+                          :items="meridiem"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="6" sm="4" xs="4" md="4" lg="4">
                     <v-tooltip :text="this.$t('to_time_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="fieldItem[1].to_time" :rules="fieldRulesAR"
-                          v-bind:label="$t('to_time_ar')" variant="outlined" density="compact" class="required_field"
-                          required index="id" :items="mall_time_ar" item-value="shortname"
-                          item-title="shortname"></v-autocomplete>
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[1].to_time"
+                          :rules="fieldRulesAR"
+                          v-bind:label="$t('to_time_ar')"
+                          variant="outlined"
+                          density="compact"
+                          class="required_field"
+                          required
+                          index="id"
+                          :items="mall_time_ar"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="6" sm="2" xs="2" md="2" lg="2">
+                    <v-tooltip
+                      :text="this.$t('to_meridiem_ar')"
+                      location="bottom"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          v-bind="props"
+                          v-model="fieldItem[1].to_meridiem"
+                          :rules="fieldRules"
+                          variant="outlined"
+                          v-bind:label="$t('to_meridiem_ar')"
+                          density="compact"
+                          required
+                          index="id"
+                          :items="meridiem"
+                          item-value="shortname"
+                          item-title="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -148,12 +374,25 @@
               </v-layout>
               <v-layout>
                 <v-row class="mt-2 px-6 arabdirection" max-width="344">
-                  <v-col md="12">
-                    <v-tooltip :text="this.$t('description_ar')" location="bottom">
+                  <v-col cols="12" sm="12" xs="12" md="12" lg="12">
+                    <v-tooltip
+                      :text="this.$t('description_ar')"
+                      location="bottom"
+                    >
                       <template v-slot:activator="{ props }">
-                        <v-textarea v-on="on" rows="2" v-model="fieldItem[1].description" v-bind="props"
-                          :rules="descriptionRulesAR" v-bind:label="$t('description_ar')" required
-                          class="required_field rtl" variant="outlined" maxlength="2000" counter="true"></v-textarea>
+                        <v-textarea
+                          v-on="on"
+                          rows="2"
+                          v-model="fieldItem[1].description"
+                          v-bind="props"
+                          :rules="descriptionRulesAR"
+                          v-bind:label="$t('description_ar')"
+                          required
+                          class="required_field rtl"
+                          variant="outlined"
+                          maxlength="2000"
+                          counter="true"
+                        ></v-textarea>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -168,18 +407,37 @@
         <v-tooltip :text="this.$t('cancel')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block mr-2">
-              <v-btn v-bind="props" size="small" @click="$router.go(-1)" :disabled="loading" class="ma-1"
-                color="cancel">{{ $t("cancel") }}</v-btn>
+              <v-btn
+                v-bind="props"
+                size="small"
+                @click="$router.go(-1)"
+                :disabled="loading"
+                class="ma-1"
+                color="cancel"
+                >{{ $t("cancel") }}</v-btn
+              >
             </div>
           </template>
         </v-tooltip>
         <v-tooltip :text="this.$t('submit')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block">
-              <v-btn :disabled="isDisabled" @click="submit" size="small" class="mr-2" color="success">
+              <v-btn
+                :disabled="isDisabled"
+                @click="submit"
+                size="small"
+                class="mr-2"
+                color="success"
+              >
                 {{ $t("submit") }}
-                <v-progress-circular v-if="isBtnLoading" indeterminate width="1" color="cancel" size="x-small"
-                  class="ml-2"></v-progress-circular>
+                <v-progress-circular
+                  v-if="isBtnLoading"
+                  indeterminate
+                  width="1"
+                  color="cancel"
+                  size="x-small"
+                  class="ml-2"
+                ></v-progress-circular>
               </v-btn>
             </div>
           </template>
@@ -227,6 +485,8 @@ export default {
         from_time: "",
         to_time: "",
         description: "",
+        from_meridiem: "AM",
+        to_meridiem: "AM",
       },
       {
         id: 0,
@@ -237,9 +497,21 @@ export default {
         from_time: "",
         to_time: "",
         description: "",
+        from_meridiem: "AM",
+        to_meridiem: "AM",
       },
     ],
-    sel_lang: ""
+    sel_lang: "",
+    meridiem: [
+      {
+        id: 0,
+        shortname: "AM",
+      },
+      {
+        id: 0,
+        shortname: "PM",
+      },
+    ],
   }),
 
   computed: {
@@ -270,8 +542,8 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-              "edit-mall-timings/" +
-              this.$route.query.slug
+                "edit-mall-timings/" +
+                this.$route.query.slug
             )
             .then((res) => {
               if (Array.isArray(res.data.message)) {
@@ -295,17 +567,24 @@ export default {
         }
       },
     },
-    '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
       } else {
-        ''
-        this.sel_lang = 'en';
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
 
   methods: {
+    updateCategories(categories) {
+      if (this.tabs == 1) {
+        this.fieldItem[1].mall_timing_categories = categories;
+      } else {
+        this.fieldItem[0].mall_timing_categories = categories;
+      }
+    },
     fetchWeekdaysAandTime() {
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-weekdays-and-time")
