@@ -69,7 +69,6 @@
               <td>{{ props.item.selectable.name }}</td>
               <td>{{ props.item.selectable.email }}</td>
               <td>{{ props.item.selectable.phone }}</td>
-              <td>{{ props.item.selectable.address }}</td>
               <td>{{ props.item.selectable.seq }}</td>
               <td>
                 <v-chip
@@ -164,7 +163,6 @@
               <td>{{ props.item.selectable.name }}</td>
               <td>{{ props.item.selectable.email }}</td>
               <td>{{ props.item.selectable.phone }}</td>
-              <td>{{ props.item.selectable.address }}</td>
               <td>{{ props.item.selectable.seq }}</td>
               <td>
                 <v-chip
@@ -325,10 +323,6 @@ export default {
           key: "phone",
         },
         {
-          title: this.$t("address_en"),
-          key: "address",
-        },
-        {
           title: this.$t("sequence_en"),
           key: "seq",
         },
@@ -368,10 +362,6 @@ export default {
         {
           title: this.$t("phone_ar"),
           key: "phone",
-        },
-        {
-          title: this.$t("address_ar"),
-          key: "address",
         },
         {
           title: this.$t("sequence_ar"),

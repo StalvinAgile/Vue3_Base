@@ -79,8 +79,14 @@
               </td>
               <td>{{ props.item.selectable.from_day }}</td>
               <td>{{ props.item.selectable.to_day }}</td>
-              <td>{{ props.item.selectable.from_time }}</td>
-              <td>{{ props.item.selectable.to_time }}</td>
+              <td>
+                {{ props.item.selectable.from_time }}
+                {{ props.item.selectable.from_meridiem }}
+              </td>
+              <td>
+                {{ props.item.selectable.to_time }}
+                {{ props.item.selectable.to_meridiem }}
+              </td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -160,8 +166,14 @@
               </td>
               <td>{{ props.item.selectable.from_day }}</td>
               <td>{{ props.item.selectable.to_day }}</td>
-              <td>{{ props.item.selectable.from_time }}</td>
-              <td>{{ props.item.selectable.to_time }}</td>
+              <td>
+                {{ props.item.selectable.from_time }}
+                {{ props.item.selectable.from_meridiem }}
+              </td>
+              <td>
+                {{ props.item.selectable.to_time }}
+                {{ props.item.selectable.to_meridiem }}
+              </td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
