@@ -70,6 +70,18 @@
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
+              <td v-if="this.role === 'SuperUser'">
+                <span v-if="props.item.selectable.store_name.stor_type">
+                  {{ props.item.selectable.store_name.stor_type }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td v-if="this.role === 'SuperUser'">
+                <span v-if="props.item.selectable.store_name.name">
+                  {{ props.item.selectable.store_name.name }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
               <td>
                 <span v-if="props.item.selectable.description">
                   {{ props.item.selectable.description }}</span
@@ -191,6 +203,18 @@
               <td>
                 <span v-if="props.item.selectable.title">
                   {{ props.item.selectable.title }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td v-if="this.role === 'SuperUser'">
+                <span v-if="props.item.selectable.store_name.stor_type">
+                  {{ props.item.selectable.store_name.stor_type }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
+              <td v-if="this.role === 'SuperUser'">
+                <span v-if="props.item.selectable.store_name.name">
+                  {{ props.item.selectable.store_name.name }}</span
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
@@ -331,6 +355,7 @@ export default {
     status_id: null,
     isDisabled: false,
     showConfirmDialog: false,
+    role: "",
     delete_id: "",
     tabs: 1,
     careers_data_en: [],
@@ -368,6 +393,7 @@ export default {
     sel_lang:""
   }),
   mounted() {
+    this.role = JSON.parse(localStorage.getItem("user_data")).rolename;
     this.user = JSON.parse(localStorage.getItem("user"));
     this.fetchCareers();
   },
@@ -386,7 +412,7 @@ export default {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
     headers_en() {
-      return [
+      let headers = [
         {
           title: this.$t("title_en"),
           align: "left",
@@ -416,9 +442,15 @@ export default {
           key: "action",
         },
       ];
+      if (this.role === "SuperUser") {
+        headers.splice(1, 0, { title: this.$t("store_type_en"), key: "store_name.stor_type" });
+        headers.splice(2, 0, { title: this.$t("mall/store_en"), key: "stor_type.name" });
+      }
+
+      return headers;
     },
     headers_ar() {
-      return [
+      let headers = [
         {
           title: this.$t("title_ar"),
           align: "left",
@@ -449,6 +481,12 @@ export default {
           key: "action",
         },
       ];
+      if (this.role === "SuperUser") {
+        headers.splice(1, 0, { title: this.$t("store_type_ar"), key: "store_name.stor_type" });
+        headers.splice(2, 0, { title: this.$t("mall/store_ar"), key: "stor_type.name" });
+      }
+
+      return headers;
     },
   },
   methods: {
