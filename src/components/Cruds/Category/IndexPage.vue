@@ -175,12 +175,11 @@
                 {{ props.item.selectable.subcategories[0].name }}
               </td>
               <td v-else>{{ $t("not_appllicable") }}</td>
-
-              <td>{{ props.item.selectable.title }}</td>
               <td v-if="role == 'SuperUser'">
                 <span v-if="props.item.selectable.store_name.length>0"> {{ props.item.selectable.store_name[0].name }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
+              <td>{{ props.item.selectable.title }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
