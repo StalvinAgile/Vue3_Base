@@ -487,5 +487,6 @@
   "mall/store_en": "Mall/Store",
   "mall/store_ar": "مجمع تجاري/محل",
   "delete_en": "Delete",
-  "products_services":"المنتجات والخدمات"
+  "products_services":"المنتجات والخدمات",
+  "create_products_services":"إنشاء/تعديل المنتجات والخدمات"
 }

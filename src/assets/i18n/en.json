@@ -534,5 +534,7 @@
   "mall/store_en": "Mall/Store",
   "mall/store_ar": "مجمع تجاري/محل",
   "delete_ar": "يمسح",
-  "products_services":"Products/Services"
+  "products_services":"Products/Services",
+  "create_products_services":"Create/Amend Products & Services"
+
 }
