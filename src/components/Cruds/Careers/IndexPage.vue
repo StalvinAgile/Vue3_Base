@@ -144,7 +144,7 @@
                 <router-link
                   :to="{
                     name: 'career_amend',
-                    query: { slug: props.item.selectable.slug, s_tab: tab },
+                    query: { slug: props.item.selectable.slug, 's_tab': tab },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit')" location="bottom">
@@ -280,7 +280,7 @@
                 <router-link
                   :to="{
                     name: 'career_amend',
-                    query: { slug: props.item.selectable.slug, s_tab: tab },
+                    query: { slug: props.item.selectable.slug, 's_tab': tab },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit')" location="bottom">
