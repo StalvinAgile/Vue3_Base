@@ -48,7 +48,6 @@
                           variant="outlined"
                           density="compact"
                           :disabled="user.rolename == 'MallAdmin'"
-                          :loading="store_loader"
                           :items="stores_en"
                           item-title="name"
                           item-value="header_id"
@@ -258,7 +257,6 @@
                           variant="outlined"
                           density="compact"
                           :disabled="user.rolename == 'MallAdmin'"
-                          :loading="store_loader"
                           :items="stores_ar"
                           item-title="name"
                           item-value="header_id"
@@ -547,7 +545,6 @@ export default {
     uploadfile: false,
     uploadfilear: false,
     user: "",
-    store_loader: false,
     mall_id: null,
     stores_en: [],
     stores_ar: [],
@@ -844,7 +841,6 @@ export default {
     },
     fetchMall() {
       this.initval = true;
-      this.store_loader = true;
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-malls")
         .then((response) => {
@@ -859,7 +855,6 @@ export default {
                 this.mall_id = ele.header_id;
               }
             });
-            this.store_loader = false;
           }
         })
         .catch((err) => {
