@@ -268,12 +268,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_ar") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_ar") }}</span
                   >
                 </v-btn>
               </td>
@@ -327,7 +327,7 @@
                   :disabled="loading"
                   class="ma-1"
                   color="blue"
-                  >{{ $t("view_en") }}</v-btn
+                  >{{ $t("view_ar") }}</v-btn
                 >
               </td>
             </tr>

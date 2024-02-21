@@ -137,7 +137,7 @@
                     <span>{{ $t("edit") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
@@ -221,6 +221,7 @@
                 </v-chip>
               </td>
               <td class="text-center">
+                {{props.item.selectable.slug}}
                 <router-link
                   small
                   :to="{
@@ -240,7 +241,7 @@
                     <span>{{ $t("edit") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
@@ -422,7 +423,7 @@ export default {
     viewEMagzine(slug) {
       this.$router.push({
         name: "e-magazine-review",
-        query: { slug: slug },
+        query: { slug: slug, 's_tab': this.tabs },
       });
     },
     getStatusColor(status) {

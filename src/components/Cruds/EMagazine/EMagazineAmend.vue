@@ -774,10 +774,6 @@ export default {
     this.get_stores();
     this.fetchMall();
     this.user = JSON.parse(localStorage.getItem("user_data"));
-    // if (this.user.store_id && this.user.rolename == "StoreAdmin") {
-    //   this.e_magazine[0].store_id = this.user.store_id;
-    //   this.e_magazine[1].store_id = this.user.store_id;
-    // }
   },
   watch: {
     "$route.query.slug": {
@@ -792,31 +788,15 @@ export default {
                 this.$route.query.slug
             )
             .then((res) => {
-              this.e_magazine = res.data.e_magazine;
-              this.assignType(this.e_magazine[0].stor_type);
-
-              //   if (Array.isArray(res.data.message)) {
-              //     this.e_magazine = res.data.message.toString();
-              //   } else {
-              //     this.e_magazine = res.data.message;
-              //   }
-              //   if (res.data.status == "S") {
-              //     this.e_magazine = res.data.e_magazine;
-              //     this.loader = false;
-              //   } else {
-              //     this.$toast.error(this.$t("something_went_wrong"));
-              //     this.loader = false;
-              //   }
-              // })
-              // .catch((err) => {
-              //   this.loader = false;
-              //   this.$toast.error(this.$t("something_went_wrong"));
-              //   console.log(err);
+           
+                this.e_magazine = res.data.e_magazine;
+                this.assignType(this.e_magazine[0].stor_type);
+           
             });
         }
       },
     },
-       "$route.query.s_tab": {
+    "$route.query.s_tab": {
       immediate: true,
       handler() {
         if (this.$route.query.s_tab) {
@@ -896,7 +876,7 @@ export default {
             this.stores_ar = this.stores_data_ar;
           }
         } else {
-          this.e_magazine[0].stor_type = stor_type;
+          this.e_magazine[1].stor_type = stor_type;
           if (stor_type == "MallAdmin" && this.user.rolename == "MallAdmin") {
             console.log("asdasd", this.stores_en);
             if (!this.$route.query.slug) {
