@@ -486,5 +486,6 @@
   "floor_ar": "أرضية",
   "mall/store_en": "Mall/Store",
   "mall/store_ar": "مجمع تجاري/محل",
-  "delete_en": "Delete"
+  "delete_en": "Delete",
+  "products_services":"المنتجات والخدمات"
 }

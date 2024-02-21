@@ -6,7 +6,7 @@
     >
       <page-title
         class="col-md-4 ml-2"
-        :heading="$t('create_products')"
+        :heading="$t('create_products_services')"
         :google_icon="google_icon"
       ></page-title>
     </div>

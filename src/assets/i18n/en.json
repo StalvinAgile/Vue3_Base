@@ -533,5 +533,6 @@
   "to_meridiem_ar": "إلى الجنوب",
   "mall/store_en": "Mall/Store",
   "mall/store_ar": "مجمع تجاري/محل",
-  "delete_ar": "يمسح"
+  "delete_ar": "يمسح",
+  "products_services":"Products/Services"
 }
