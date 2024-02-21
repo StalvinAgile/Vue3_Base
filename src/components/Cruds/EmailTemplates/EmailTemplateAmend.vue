@@ -237,7 +237,7 @@ export default {
   computed: {
   
     fieldRules() {
-      return [(v) => (!!v && !!v.trim()) || this.$t("field_required")];
+      return [(v) => !!v || this.$t("field_required")];
     },
     fieldRulesAR() {
       return [(v) => !!v || this.$t("field_required_ar")];

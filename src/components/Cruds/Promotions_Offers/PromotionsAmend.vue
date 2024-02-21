@@ -1127,14 +1127,16 @@ export default {
     formatted_start_date(formatted_date) {
       this.promotions[0].start_date = formatted_date;
       this.promotions[1].start_date = formatted_date;
-      this.promotions[1].end_date = "";
-      this.promotions[0].end_date = "";
+      if(this.promotions[0].end_date < formatted_date){
+        this.promotions[0].end_date = "";
+      }
     },
     formatted_start_date_ar(formatted_date) {
       this.promotions[1].start_date = formatted_date;
       this.promotions[0].start_date = formatted_date;
-      this.promotions[1].end_date = "";
-      this.promotions[0].end_date = "";
+      if(this.promotions[1].end_date < formatted_date){
+        this.promotions[1].end_date = "";
+      }
     },
     formatted_end_date(formatted_date) {
       this.promotions[0].end_date = formatted_date;
