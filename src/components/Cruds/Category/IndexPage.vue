@@ -71,12 +71,12 @@
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>{{ props.item.selectable.name }}</td>
-              <td v-if="props.item.selectable.parent_category">
-                {{ props.item.selectable.parent_category }}
+              <td v-if="props.item.selectable.subcategories.length>0">
+                {{ props.item.selectable.subcategories[0].name }}
               </td>
               <td v-else>{{ $t("not_appllicable") }}</td>
               <td v-if="role == 'SuperUser'">
-                <span v-if="props.item.selectable.store_name[0]"> {{ props.item.selectable.store_name[0].name }}</span>
+                <span v-if="props.item.selectable.store_name.length>0"> {{ props.item.selectable.store_name[0].name }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td>{{ props.item.selectable.title }}</td>
@@ -171,14 +171,14 @@
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>{{ props.item.selectable.name }}</td>
-              <td v-if="props.item.selectable.parent_category">
-                {{ props.item.selectable.parent_category }}
+              <td v-if="props.item.selectable.subcategories.length>0">
+                {{ props.item.selectable.subcategories[0].name }}
               </td>
               <td v-else>{{ $t("not_appllicable") }}</td>
 
               <td>{{ props.item.selectable.title }}</td>
               <td v-if="role == 'SuperUser'">
-                <span v-if="props.item.selectable.store_name[0]"> {{ props.item.selectable.store_name[0].name }}</span>
+                <span v-if="props.item.selectable.store_name.length>0"> {{ props.item.selectable.store_name[0].name }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td>
