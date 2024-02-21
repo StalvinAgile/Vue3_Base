@@ -76,7 +76,8 @@
               </td>
               <td v-else>{{ $t("not_appllicable") }}</td>
               <td v-if="role == 'SuperUser'">
-                {{ props.item.selectable.mall_name }}
+                <span v-if="props.item.selectable.store_name[0]"> {{ props.item.selectable.store_name[0].name }}</span>
+                <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td>{{ props.item.selectable.title }}</td>
               <td>
@@ -177,7 +178,8 @@
 
               <td>{{ props.item.selectable.title }}</td>
               <td v-if="role == 'SuperUser'">
-                {{ props.item.selectable.mall_name }}
+                <span v-if="props.item.selectable.store_name[0]"> {{ props.item.selectable.store_name[0].name }}</span>
+                <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td>
                 <v-btn
