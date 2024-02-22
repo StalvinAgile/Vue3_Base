@@ -403,17 +403,17 @@ export default {
     getArStatus(status) {
       switch (status) {
         case "Approved":
-          return this.sel_lang == "en"
-            ? this.$t("approved_en")
-            : this.$t("approved_ar");
+          return this.sel_lang == "ar"
+            ? this.$t("approved_ar")
+            : this.$t("approved_en");
         case "In Review":
-          return this.sel_lang == "en"
-            ? this.$t("inreview_en")
-            : this.$t("inreview_ar");
+          return this.sel_lang == "ar"
+            ? this.$t("inreview_ar")
+            : this.$t("inreview_en");
         case "Rejected":
-          return this.sel_lang == "en"
-            ? this.$t("rejected_en")
-            : this.$t("rejected_ar");
+          return this.sel_lang == "ar"
+            ? this.$t("rejected_ar")
+            : this.$t("rejected_en");
         default:
           return "";
       }
