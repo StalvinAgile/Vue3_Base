@@ -211,6 +211,7 @@
   "not_applicable": "-",
   "show_file": "Show File",
   "remove_file": "Remove File",
+  "remove_file_en": "Remove File",
   "doc_type": "Document Type",
   "select": "Select",
   "enter_here": "Enter here",
@@ -539,5 +540,7 @@
   "mall/store_ar": "مجمع تجاري/محل",
   "delete_ar": "يمسح",
   "w_image_ar": "صورة الويب",
-  "m_image_ar": "صورة الجوال"
+  "m_image_ar": "صورة الجوال",
+  "remove_file_ar": "إزالة الملف"
+
 }
