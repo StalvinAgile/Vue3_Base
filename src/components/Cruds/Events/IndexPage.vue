@@ -393,7 +393,7 @@ export default {
       },
     ],
     google_icon: {
-      icon_name: "group",
+      icon_name: "event_available",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

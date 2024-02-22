@@ -254,7 +254,7 @@ export default {
       },
     ],
     google_icon: {
-      icon_name: "group",
+      icon_name: "work",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

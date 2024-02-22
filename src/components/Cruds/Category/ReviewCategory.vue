@@ -326,7 +326,7 @@ export default {
   data: () => ({
     user_role: "",
     google_icon: {
-      icon_name: "category",
+      icon_name: "apps",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

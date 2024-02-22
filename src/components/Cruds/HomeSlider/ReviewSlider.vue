@@ -306,7 +306,7 @@ export default {
   },
   data: () => ({
     google_icon: {
-      icon_name: "sliders",
+      icon_name: "masked_transitions",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

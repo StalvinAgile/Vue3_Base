@@ -327,7 +327,7 @@ export default {
   },
   data: () => ({
     google_icon: {
-      icon_name: "store",
+      icon_name: "punch_clock",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

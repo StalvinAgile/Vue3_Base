@@ -256,7 +256,7 @@ export default {
   },
   data: () => ({
     google_icon: {
-      icon_name: "careers",
+      icon_name: "work",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

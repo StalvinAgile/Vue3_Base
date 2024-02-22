@@ -420,7 +420,7 @@ export default {
     ],
 
     google_icon: {
-      icon_name: "group",
+      icon_name: "heap_snapshot_large",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

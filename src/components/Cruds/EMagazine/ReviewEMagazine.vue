@@ -333,7 +333,7 @@ export default {
   },
   data: () => ({
     google_icon: {
-      icon_name: "event",
+      icon_name: "menu_book",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

@@ -419,7 +419,7 @@ export default {
   },
   data: () => ({
     google_icon: {
-      icon_name: "store",
+      icon_name: "storefront",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

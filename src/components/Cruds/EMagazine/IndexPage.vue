@@ -300,7 +300,7 @@ export default {
     e_magazine_ar: [],
     initval: true,
     google_icon: {
-      icon_name: "auto_stories",
+      icon_name: "menu_book",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

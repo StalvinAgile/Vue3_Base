@@ -345,7 +345,7 @@ export default {
     sel_lang: "",
     tabs: 1,
     google_icon: {
-      icon_name: "group",
+      icon_name: "view_module",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },

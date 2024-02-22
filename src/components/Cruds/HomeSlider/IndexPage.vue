@@ -283,7 +283,7 @@ export default {
     home_sliders_ar: [],
     initval: true,
     google_icon: {
-      icon_name: "transition_push",
+      icon_name: "masked_transitions",
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },
