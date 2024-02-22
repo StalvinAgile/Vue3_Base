@@ -33,7 +33,10 @@
       <div class="add_new_button">
         <v-tooltip :text="this.$t('add_new')" location="bottom">
           <template v-slot:activator="{ props }">
-            <router-link :to="{ name: 'events_amend', query:{ 's_tab': tabs } }"  style="color: white">
+            <router-link
+              :to="{ name: 'events_amend', query: { s_tab: tabs } }"
+              style="color: white"
+            >
               <v-btn size="small" class="mb-2 green_btn_color" v-bind="props">{{
                 $t("add_new")
               }}</v-btn>
@@ -146,8 +149,7 @@
                 <router-link
                   :to="{
                     name: 'events_amend',
-                    query: { slug: props.item.selectable.slug,
-                    's_tab': tabs  },
+                    query: { slug: props.item.selectable.slug, s_tab: tabs },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit')" location="bottom">
@@ -214,7 +216,9 @@
               </td>
               <td v-if="this.role === 'SuperUser'">
                 <span v-if="props.item.selectable.store_name">
-                  {{ changeName(props.item.selectable.store_name.stor_type) }}</span
+                  {{
+                    changeName(props.item.selectable.store_name.stor_type)
+                  }}</span
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
@@ -281,7 +285,7 @@
                 <router-link
                   :to="{
                     name: 'events_amend',
-                    query: { slug: props.item.selectable.slug,'s_tab': tabs  },
+                    query: { slug: props.item.selectable.slug, s_tab: tabs },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit')" location="bottom">
@@ -365,7 +369,7 @@ export default {
     events_en: [],
     events_ar: [],
     initval: false,
-    role: '',
+    role: "",
     status_id: null,
     isDisabled: false,
     showConfirmDialog: false,
@@ -406,6 +410,9 @@ export default {
   mounted() {
     this.role = JSON.parse(localStorage.getItem("user_data")).rolename;
     this.user = JSON.parse(localStorage.getItem("user"));
+     if (this.$route.query.s_tab) {
+    this.tabs = this.$route.query.s_tab == 1 ? 1 : 2;
+  }
     this.fetchEvents();
   },
   watch: {
@@ -417,6 +424,15 @@ export default {
         this.sel_lang = "en";
       }
     },
+    // "$route.query.s_tab": {
+    //   immediate: true,
+    //   handler(s_tab_value) {
+    //     if (this.$route.query.s_tab) {
+    //       this.tabs = s_tab_value == 1 ? 1 : 2;
+    //     }
+       
+    //   },
+    // },
   },
   computed: {
     formTitle() {
@@ -463,8 +479,14 @@ export default {
       ];
 
       if (this.role === "SuperUser") {
-        headers.splice(1, 0, { title: this.$t("store_type_en"), key: "store_name.stor_type" });
-        headers.splice(2, 0, { title: this.$t("mall/store_en"), key: "stor_type.name" });
+        headers.splice(1, 0, {
+          title: this.$t("store_type_en"),
+          key: "store_name.stor_type",
+        });
+        headers.splice(2, 0, {
+          title: this.$t("mall/store_en"),
+          key: "stor_type.name",
+        });
       }
 
       return headers;
@@ -510,21 +532,27 @@ export default {
       ];
 
       if (this.role === "SuperUser") {
-        headers.splice(1, 0, { title: this.$t("store_type_ar"), key: "store_name.stor_type" });
-        headers.splice(2, 0, { title: this.$t("mall/store_ar"), key: "stor_type.name" });
+        headers.splice(1, 0, {
+          title: this.$t("store_type_ar"),
+          key: "store_name.stor_type",
+        });
+        headers.splice(2, 0, {
+          title: this.$t("mall/store_ar"),
+          key: "stor_type.name",
+        });
       }
 
       return headers;
     },
   },
   methods: {
-        changeName(store){
- switch (store) {
+    changeName(store) {
+      switch (store) {
         case "Mall":
           return this.$t("mall_ar");
         case "Store":
           return this.$t("store_ar");
-    }
+      }
     },
     changeStatusAr(status) {
       switch (status) {
@@ -642,8 +670,7 @@ export default {
     viewEvents(slug) {
       this.$router.push({
         name: "events-review",
-        query: { slug: slug ,
-        's_tab': this.tabs },
+        query: { slug: slug, s_tab: this.tabs },
       });
     },
   },

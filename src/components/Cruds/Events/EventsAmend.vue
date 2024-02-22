@@ -597,7 +597,12 @@
             <v-btn
               v-bind="props"
               size="small"
-              @click="$router.push('events')"
+              @click="
+                $router.push({
+                  name: 'events',
+                  query: { 's_tab': this.$route.query.s_tab },
+                })
+              "
               :disabled="loading"
               class="ma-1"
               color="cancel"
@@ -1087,6 +1092,9 @@ export default {
               this.message = res.data.message;
               this.$router.push({
                 name: "events",
+                query: {
+                  s_tab: this.$route.query.s_tab,
+                },
               });
             } else if (res.data.status == "E") {
               this.$toast.error(this.array_data);
@@ -1144,6 +1152,9 @@ export default {
     cancel() {
       this.$router.push({
         name: "categories",
+        query: {
+          s_tab: this.$route.query.s_tab,
+        },
       });
     },
   },
