@@ -484,6 +484,7 @@ export default {
     cancel() {
       this.$router.push({
         name: "promotions_offers",
+        query: { 's_tab': this.$route.query.s_tab },
       });
     },
     closeReviewComment() {

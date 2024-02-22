@@ -685,7 +685,10 @@
             <v-btn
               v-bind="props"
               size="small"
-              @click="$router.push('promotions_offers')"
+              @click="  $router.push({
+                    name: 'promotions_offers',
+                    query: { 's_tab': this.$route.query.s_tab },
+                  })"
               :disabled="loading"
               class="ma-1"
               color="cancel"
@@ -1189,6 +1192,7 @@ export default {
               this.message = res.data.message;
               this.$router.push({
                 name: "promotions_offers",
+                query: { 's_tab': this.$route.query.s_tab },
               });
             } else if (res.data.status == "E") {
               this.$toast.error(this.array_data);

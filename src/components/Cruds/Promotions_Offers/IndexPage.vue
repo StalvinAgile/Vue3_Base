@@ -163,7 +163,7 @@
                 <router-link
                   :to="{
                     name: 'promotions_amend',
-                    query: { slug: props.item.selectable.slug, s_tab: tabs },
+                    query: { slug: props.item.selectable.slug, 's_tab': tabs },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit')" location="bottom">
@@ -319,7 +319,7 @@
                 <router-link
                   :to="{
                     name: 'promotions_amend',
-                    query: { slug: props.item.selectable.slug },
+                    query: { slug: props.item.selectable.slug,'s_tab': tabs  },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit')" location="bottom">
@@ -447,6 +447,9 @@ export default {
   mounted() {
     this.role = JSON.parse(localStorage.getItem("user_data")).rolename;
     this.user = JSON.parse(localStorage.getItem("user"));
+    if (this.$route.query.s_tab) {
+    this.tabs = this.$route.query.s_tab == 1 ? 1 : 2;
+  }
     this.fetchPromotions();
   },
   computed: {
