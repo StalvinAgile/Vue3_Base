@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-2 mt-3 p-0">
+  <div class="mx-2 mt-3 p-0" v-bind:class="[is_arabic ? 'arabicclass' : '']">
     <div class="container my-3 p-0">
       <page-title
         class="col-md-4 ml-2"
@@ -8,11 +8,11 @@
       ></page-title>
     </div>
 
-    <v-card elevation="7" width="700" class="ml-7">
+    <v-card elevation="7" width="700" class="mx-6">
       <v-form autocomplete="off" ref="form" v-model="valid" v-bind:class="[is_arabic ? 'arabicclass' : '']">
         <v-container>
           <v-row class="mx-auto mt-2" max-width="344">
-            <v-col    md="11" class="emailclass">
+            <v-col   md="12" class="emailclass">
               <strong>{{ $t("email") }}:</strong>
               &nbsp;&nbsp;
               {{ userprofile.email }}
@@ -20,7 +20,7 @@
           </v-row>
           <br />
           <v-row class="mx-auto mt-2" max-width="344">
-            <v-col    md="11">
+            <v-col   md="12">
               <v-tooltip :text="this.$t('current_password')" location="bottom">
                 <template v-slot:activator="{ props }">
                   <v-text-field
@@ -41,7 +41,7 @@
             </v-col>
           </v-row>
           <v-row class="mx-auto mt-2" max-width="344">
-            <v-col    md="11">
+            <v-col   md="12">
               <v-tooltip :text="this.$t('new_password')" location="bottom">
                 <template v-slot:activator="{ props }">
                   <v-text-field
@@ -61,7 +61,7 @@
               </v-tooltip>
             </v-col> </v-row
           ><v-row class="mx-auto mt-2" max-width="344">
-            <v-col    md="11">
+            <v-col   md="12">
               <v-tooltip :text="this.$t('confirm_password')" location="bottom">
                 <template v-slot:activator="{ props }">
                   <v-text-field
@@ -87,7 +87,9 @@
           </v-row>
         </v-container>
       </v-form>
-      <div class="d-block mr-4 mt-3 pb-3 text-right">
+      <div class="d-block mx-4 mt-3 pb-3"
+      v-bind:class="[is_arabic ? ' text-left' : ' text-right']"
+      >
       <v-tooltip :text="this.$t('cancel')" location="bottom">
         <template v-slot:activator="{ props }">
           <div v-bind="props" class="d-inline-block mr-2">
@@ -259,10 +261,13 @@ export default {
 };
 </script>
 <style scoped>
-.arabicclass /deep/ .v-field-label{
+.arabicclass /deep/ .v-field{
   direction: rtl;
 }
 .arabicclass .emailclass{
+  direction: rtl;
+}
+.arabicclass{
   direction: rtl;
 }
 </style>
