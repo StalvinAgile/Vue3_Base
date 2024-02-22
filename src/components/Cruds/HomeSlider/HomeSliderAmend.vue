@@ -239,8 +239,8 @@
                     <br />
                     <Imageupload
                       :folder="'home_slider'"
-                      :resizewidth="'2000px'"
-                      :resizeheight="'400px'"
+                      :resizewidth="resizewidth"
+                      :resizeheight="resizeheight"
                       :no_image_trans="'en'"
                       :no_image="have_noimage"
                       @uploaded_image="uploaded_image"
@@ -322,8 +322,8 @@
                     <br />
                     <Imageupload
                       :folder="'home_slider'"
-                      :resizewidth="'2000px'"
-                      :resizeheight="'400px'"
+                      :resizewidth="resizewidth"
+                      :resizeheight="resizeheight"
                       :no_image_trans="'en'"
                       :no_image="have_noimage"
                       @uploaded_image="uploaded_image"
@@ -550,8 +550,8 @@
                     <br />
                     <Imageupload
                       :folder="'home_slider'"
-                      :resizewidth="'2000px'"
-                      :resizeheight="'400px'"
+                      :resizewidth="resizewidth"
+                      :resizeheight="resizeheight"
                       :no_image_trans="'ar'"
                       :no_image="have_noimage"
                       :viewmodeslider="3"
@@ -634,8 +634,8 @@
                     <br />
                     <Imageupload
                       :folder="'home_slider'"
-                      :resizewidth="'2000px'"
-                      :resizeheight="'400px'"
+                      :resizewidth="resizewidth"
+                      :resizeheight="resizeheight"
                       :no_image_trans="'ar'"
                       :no_image="have_noimage"
                       @uploaded_image="uploaded_image"
@@ -696,7 +696,7 @@
 </template>
 
 <script>
-import Imageupload from "../../CustomComponents/ImageUploadSlider.vue";
+import Imageupload from "../../CustomComponents/ImageUpload.vue";
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import { quillEditor } from "vue3-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
@@ -746,6 +746,8 @@ export default {
     upload_file_ar: false,
     upload_file_mob_ar: false,
     user: "",
+    resizewidth: "",
+    resizeheight: "",
     image_upload_from: "",
     mall_id: null,
     stores_en: [],
@@ -939,12 +941,16 @@ export default {
       if (this.tabs == 1) {
         this.image_upload_from = img_type;
         if (img_type == "website") {
+          this.resizewidth = 600;
+          this.resizeheight = 300;
           if (this.uploadfile == false) {
             this.uploadfile = true;
           } else {
             this.uploadfile = false;
           }
         } else {
+          this.resizewidth = 500;
+          this.resizeheight = 300;
           if (this.upload_mob_file == false) {
             this.upload_mob_file = true;
           } else {
@@ -954,12 +960,16 @@ export default {
       } else {
         this.image_upload_from = img_type;
         if (img_type == "website") {
+          this.resizewidth = 600;
+          this.resizeheight = 300;
           if (this.upload_file_ar == false) {
             this.upload_file_ar = true;
           } else {
             this.upload_file_ar = false;
           }
         } else {
+          this.resizewidth = 500;
+          this.resizeheight = 300;
           if (this.upload_file_mob_ar == false) {
             this.upload_file_mob_ar = true;
           } else {
