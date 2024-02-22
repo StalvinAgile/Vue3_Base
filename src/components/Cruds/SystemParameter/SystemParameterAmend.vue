@@ -104,7 +104,7 @@
                     </div>
                   </v-hover>
                 </div>
-                <v-tooltip :text="this.$t('download_en')" location="bottom">
+                <v-tooltip :text="this.$t('download')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <a class="text-center pointer download_icon">
                       <span
@@ -130,7 +130,7 @@
                     system_params.is_file_upload == true
                   "
                 >
-                  <v-tooltip :text="this.$t('delete_en')" location="bottom">
+                  <v-tooltip :text="this.$t('delete')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-on="on"
