@@ -74,15 +74,11 @@
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td v-if="this.role === 'SuperUser'">
-                <span v-if="props.item.selectable.store_name">
-                  {{ props.item.selectable.store_name.stor_type }}</span
-                >
+                <span v-if="props.item.selectable.store_name.length>0"> {{ props.item.selectable.store_name[0].stor_type }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td v-if="this.role === 'SuperUser'">
-                <span v-if="props.item.selectable.store_name">
-                  {{ props.item.selectable.store_name.name }}</span
-                >
+                <span v-if="props.item.selectable.store_name.length>0"> {{ props.item.selectable.store_name[0].name }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td>
@@ -233,15 +229,12 @@
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td v-if="this.role === 'SuperUser'">
-                <span v-if="props.item.selectable.store_name">
-                  {{ props.item.selectable.store_name.stor_type }}</span
-                >
+                <span v-if="props.item.selectable.store_name.length>0">
+                   {{ changeStoreType(props.item.selectable.store_name[0].stor_type) }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td v-if="this.role === 'SuperUser'">
-                <span v-if="props.item.selectable.store_name">
-                  {{ props.item.selectable.store_name.name }}</span
-                >
+                <span v-if="props.item.selectable.store_name.length>0"> {{ props.item.selectable.store_name[0].name }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
               <td>
@@ -579,6 +572,17 @@ export default {
     },
   },
   methods: {
+    changeStoreType(type) {
+      switch (type) {
+        case "Mall":
+          return this.$t("mall_ar");
+        case "Store":
+          return this.$t("store_ar");
+        default:
+          return "";
+      }
+      
+    },
     changeStatusAr(status) {
       switch (status) {
         case "Approved":
