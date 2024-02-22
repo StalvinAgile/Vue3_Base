@@ -8,7 +8,7 @@
       ></page-title>
     </div>
 
-    <v-card elevation="15" width="800" class="ml-7">
+    <v-card elevation="7" width="700" class="ml-7">
       <v-form autocomplete="off" ref="form" v-model="valid" v-bind:class="[is_arabic ? 'arabicclass' : '']">
         <v-container>
           <v-row class="mx-auto mt-2" max-width="344">
