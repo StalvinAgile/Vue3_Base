@@ -251,25 +251,40 @@
                           </div>
                         </v-hover>
                       </div>
-                      <a
-                        class="text-center"
-                        style="cursor: pointer"
-                        @click="downloadImage(category[0].image_path)"
+                      <v-tooltip
+                        :text="this.$t('download_en')"
+                        location="bottom"
                       >
-                        <span
-                          v-if="category[0].image_path"
-                          class="download_btn_color"
-                          >{{ $t("download_en") }}</span
-                        >
-                      </a>
+                        <template v-slot:activator="{ props }">
+                          <a class="text-center pointer download_icon">
+                            <span
+                              ><v-icon
+                                v-if="category[0].image_path"
+                                v-bind="props"
+                                class="mr-2"
+                                @click="downloadImage(category[0].image_path)"
+                                >mdi mdi-download</v-icon
+                              ></span
+                            >
+                          </a>
+                        </template>
+                      </v-tooltip>
                       <span>
-                        <v-icon
-                          small
-                          v-if="category[0].image_path"
-                          class="mr-2 edit_btn icon_size delete_icon"
-                          @click="removeImage(0)"
-                          >mdi mdi-trash-can-outline</v-icon
+                        <v-tooltip
+                          :text="this.$t('delete_en')"
+                          location="bottom"
                         >
+                          <template v-slot:activator="{ props }">
+                            <v-icon
+                              small
+                              v-bind="props"
+                              v-if="category[0].image_path"
+                              class="mr-2 edit_btn icon_size delete_icon"
+                              @click="removeImage(0)"
+                              >mdi mdi-trash-can-outline</v-icon
+                            >
+                          </template>
+                        </v-tooltip>
                       </span>
                     </div>
 
@@ -521,25 +536,34 @@
                       </v-hover>
                     </div>
                     <!-- <div class="text-right"> -->
-                    <a
-                      class="text-center pointer"
-                      style="cursor: pointer"
-                      @click="downloadImage(category[1].image_path)"
-                    >
-                      <span
-                        v-if="category[1].image_path"
-                        class="download_btn_color"
-                        >{{ $t("download_ar") }}</span
-                      >
-                    </a>
+                    <v-tooltip :text="this.$t('download_ar')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <a class="text-center pointer download_icon_ar">
+                          <span
+                            ><v-icon
+                              v-if="category[1].image_path"
+                              v-bind="props"
+                              class="mr-2"
+                              @click="downloadImage(category[1].image_path)"
+                              >mdi mdi-download</v-icon
+                            ></span
+                          >
+                        </a>
+                      </template>
+                    </v-tooltip>
                     <span>
-                      <v-icon
-                        small
-                        v-if="category[1].image_path"
-                        class="mr-2 edit_btn icon_size delete_icon_ar"
-                        @click="removeImage(1)"
-                        >mdi mdi-trash-can-outline</v-icon
-                      >
+                      <v-tooltip :text="this.$t('delete_ar')" location="bottom">
+                        <template v-slot:activator="{ props }">
+                          <v-icon
+                            small
+                            v-bind="props"
+                            v-if="category[1].image_path"
+                            class="mr-2 edit_btn icon_size delete_icon_ar"
+                            @click="removeImage(1)"
+                            >mdi mdi-trash-can-outline</v-icon
+                          >
+                        </template>
+                      </v-tooltip>
                     </span>
                     <!-- </div> -->
                   </div>
@@ -816,8 +840,8 @@ export default {
       immediate: true,
       handler() {
         if (this.$route.query.s_tab == 1) {
-         this.tabs = 1;
-        }else{
+          this.tabs = 1;
+        } else {
           this.tabs = 2;
         }
       },
@@ -1077,16 +1101,25 @@ export default {
 
 .delete_icon_ar {
   position: relative;
-  right: 66px;
+  right: 76px;
   bottom: 90px;
 }
-
 .delete_icon {
   position: relative;
-  left: 45px;
+  left: 85px;
   bottom: 90px;
 }
 .icon_style {
   height: 320px;
+}
+.download_icon {
+  position: relative;
+  left: 116px;
+  bottom: 52px;
+}
+.download_icon_ar {
+  position: relative;
+  bottom: 45px;
+  right: 110px;
 }
 </style>
