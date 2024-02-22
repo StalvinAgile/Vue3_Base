@@ -7,11 +7,12 @@
         :google_icon="google_icon"
       ></page-title>
     </div>
-    <div class="card-body">
+
+    <v-card elevation="15" width="800" class="ml-7">
       <v-form autocomplete="off" ref="form" v-model="valid" v-bind:class="[is_arabic ? 'arabicclass' : '']">
         <v-container>
           <v-row class="mx-auto mt-2" max-width="344">
-            <v-col md="6" class="emailclass">
+            <v-col  md="10" class="emailclass">
               <strong>{{ $t("email") }}:</strong>
               &nbsp;&nbsp;
               {{ userprofile.email }}
@@ -19,7 +20,7 @@
           </v-row>
           <br />
           <v-row class="mx-auto mt-2" max-width="344">
-            <v-col md="6">
+            <v-col  md="10">
               <v-tooltip :text="this.$t('current_password')" location="bottom">
                 <template v-slot:activator="{ props }">
                   <v-text-field
@@ -40,7 +41,7 @@
             </v-col>
           </v-row>
           <v-row class="mx-auto mt-2" max-width="344">
-            <v-col md="6">
+            <v-col  md="10">
               <v-tooltip :text="this.$t('new_password')" location="bottom">
                 <template v-slot:activator="{ props }">
                   <v-text-field
@@ -60,7 +61,7 @@
               </v-tooltip>
             </v-col> </v-row
           ><v-row class="mx-auto mt-2" max-width="344">
-            <v-col md="6">
+            <v-col  md="10">
               <v-tooltip :text="this.$t('confirm_password')" location="bottom">
                 <template v-slot:activator="{ props }">
                   <v-text-field
@@ -86,8 +87,7 @@
           </v-row>
         </v-container>
       </v-form>
-    </div>
-    <div class="d-block mr-4 mt-3 pb-3 text-right">
+      <div class="d-block mr-4 mt-3 pb-3 text-right">
       <v-tooltip :text="this.$t('cancel')" location="bottom">
         <template v-slot:activator="{ props }">
           <div v-bind="props" class="d-inline-block mr-2">
@@ -127,6 +127,8 @@
         </template>
       </v-tooltip>
     </div>
+    </v-card>
+ 
   </div>
 </template>
 
