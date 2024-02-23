@@ -69,6 +69,10 @@
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">{{ $t("vacancy_en") }}</div>
+                    <div>{{ career.vacancy }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("meta_title_en") }}</div>
                     <div>{{ career.meta_title }}</div>
                   </v-col>
@@ -165,6 +169,10 @@
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("meta_title_ar") }}</div>
                     <div>{{ career.meta_title }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">{{ $t("meta_title_ar") }}</div>
+                    <div>{{ career.vacancy }}</div>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <div class="d-label">{{ $t("description_ar") }}</div>
