@@ -100,8 +100,8 @@
                   <v-col cols="12" sm="4" md="4">
                     <v-tooltip :text="$t('media_type_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="home_slider[0].media_type"
-                          @update:modelValue="clearimage_n_video(0)" v-bind:label="$t('media_type_en')" variant="outlined"
+                        <v-autocomplete v-bind="props" v-model="home_slider[0].media_type" v-if="mediatype_en.length>0"
+                        @update:modelValue="(value) => clearimage_n_video(0 , value)" v-bind:label="$t('media_type_en')" variant="outlined"
                           density="compact" :items="mediatype_en" :rules="fieldRules" class="required_field"
                           item-title="longname" item-value="shortname"></v-autocomplete>
                       </template>
@@ -292,8 +292,9 @@
                   <v-col cols="12" sm="4" md="4">
                     <v-tooltip :text="$t('media_type_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-autocomplete v-bind="props" v-model="home_slider[1].media_type"
-                          @update:modelValue="clearimage_n_video(1)" v-bind:label="$t('media_type_ar')" variant="outlined"
+                        <v-autocomplete v-bind="props" v-model="home_slider[1].media_type" v-if="mediatype_ar.length>0"
+                        @update:modelValue="(value) => clearimage_n_video(1 , value)"
+                          v-bind:label="$t('media_type_ar')" variant="outlined"
                           density="compact" :items="mediatype_ar" :rules="fieldRulesAR" class="required_field"
                           item-title="longname" item-value="shortname"></v-autocomplete>
                       </template>
@@ -393,9 +394,7 @@
                     </v-tooltip>
                   </v-col>
                 </v-row>
-              </v-layout>
-
-           
+              </v-layout>           
             </v-form>
           </v-window-item>
           <!-- ARABIC TAB END -->
@@ -465,6 +464,7 @@ export default {
     valid: true,
     successmessage: "",
     message: "",
+    selected_media_type : "",
     showurlAR: false,
     showurl: false,
     have_noimage: false,
@@ -670,10 +670,25 @@ export default {
        }
         return urlPattern.test(url);
     },
-    clearimage_n_video(index) {
-      this.home_slider[index].video = "";
-      this.home_slider[index].m_image = "";
-      this.home_slider[index].image = "";
+    clearimage_n_video(index,value) {
+      this.home_slider[0].video = "";
+      this.home_slider[0].m_image = "";
+      this.home_slider[0].image = "";
+      this.home_slider[1].video = "";
+      this.home_slider[1].m_image = "";
+      this.home_slider[1].image = "";
+      if (index == 0) {
+        var header = this.mediatype_en.find(item => item.shortname === value);
+        var arabicheader = this.mediatype_ar.find(item => item.header_id === header.header_id);
+        this.home_slider[1].media_type = arabicheader.shortname;
+        this.selected_media_type=header.shortname;
+      } 
+      else{
+        var arheader = this.mediatype_ar.find(item => item.shortname === value);
+        var englishheader = this.mediatype_en.find(item => item.header_id === arheader.header_id);
+        this.home_slider[0].media_type = englishheader.shortname;
+        this.selected_media_type = englishheader.shortname;
+      }
     },
     removeImage(index, type) {
       if (index == 1) {
@@ -762,7 +777,8 @@ export default {
       }
     },
     submit() {
-      if (this.home_slider.description == "") {
+      if(this.selected_media_type == 'Image'){
+        if (this.home_slider.description == "") {
         this.quill_item = true;
       }
       if (this.home_slider.description_ar == "") {
@@ -831,6 +847,51 @@ export default {
           this.have_noimage = true;
         }
       }
+      }
+      else{
+        if (this.home_slider.description == "") {
+         this.quill_item = true;
+      }
+      if (this.home_slider.description_ar == "") {
+        this.quill_item_ar = true;
+      }
+      if (this.$refs.form.validate() && this.valid == true) {
+        if (this.home_slider.description == "" || this.home_slider.description_ar == "") {
+          return;
+        }
+        this.isDisabled = true;
+        this.isBtnLoading = true;
+        this.$axios
+          .post(
+            process.env.VUE_APP_API_URL_ADMIN + "save-home-slider",
+            this.home_slider
+          )
+          .then((res) => {
+            if (Array.isArray(res.data.message)) {
+              this.array_data = res.data.message.toString();
+            } else {
+              this.array_data = res.data.message;
+            }
+            if (res.data.status == "S") {
+              this.$toast.success(this.array_data);
+              this.message = res.data.message;
+              this.$router.push({
+                name: "home-sliders",
+              });
+            } else {
+              this.$toast.error(this.array_data);
+            }
+          })
+          .catch((err) => {
+            this.isDisabled = false;
+            this.isBtnLoading = false;
+            this.$toast.error(this.$t("something_went_wrong"));
+            console.log("error", err);
+          })
+          .finally(() => {
+            this.isDisabled = false;
+            this.isBtnLoading = false;
+          }); }}
     },
     gotourl(url){
       window.open(url, '_blank');
