@@ -198,7 +198,7 @@
                          @click:appendInner="gotourl(home_slider[0].video)"
                           v-bind:label="$t('video_url_en')" required variant="outlined" density="compact"
                           class="required_field"
-                          :rules="[...fieldRules, ...URLRules]"></v-text-field>
+                          :rules="[...fieldRules,...URLRules]"></v-text-field>
                       </template>
                     </v-tooltip>
                   </v-col>
