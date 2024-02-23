@@ -68,6 +68,7 @@
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>{{ props.item.selectable.name }}</td>
+              <td>{{ props.item.selectable.mobile_code }}</td>
               <td class="text-center px-0">
                 <router-link
                   :to="{
@@ -149,6 +150,7 @@
                     : $t("not_appllicable")
                 }}
               </td>
+              <td>{{ props.item.selectable.mobile_code }}</td>
               <td class="text-center px-0">
                 <router-link
                   :to="{
@@ -272,6 +274,12 @@ export default {
           key: "name",
         },
         {
+          title: this.$t("mobile_code_en"),
+          align: "left",
+          sortable: true,
+          key: "mobile_code",
+        },
+        {
           title: this.$t("actions_en"),
           // key: "name",
           align: "center",
@@ -286,6 +294,12 @@ export default {
           align: "left",
           sortable: true,
           key: "name",
+        },
+        {
+          title: this.$t("mobile_code_ar"),
+          align: "left",
+          sortable: true,
+          key: "mobile_code",
         },
         {
           title: this.$t("actions_ar"),

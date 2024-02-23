@@ -438,6 +438,7 @@
   "mall_en": "Mall",
   "download_en": "Download",
   "mall/store_en": "Mall/Store",
+  "mobile_code_en": "Mobile Code",
   "start_arabic_translation": "---------------Arabic translation start---------------------------",
   "arabic": "عربي",
   "enter_the_content_here_ar": "أدخل المحتوى هنا",
@@ -541,6 +542,7 @@
   "delete_ar": "يمسح",
   "w_image_ar": "صورة الويب",
   "m_image_ar": "صورة الجوال",
-  "remove_file_ar": "إزالة الملف"
+  "remove_file_ar": "إزالة الملف",
+  "mobile_code_ar": "كود الجوال"
 
 }
