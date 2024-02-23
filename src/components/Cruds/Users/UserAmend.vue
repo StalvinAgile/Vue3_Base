@@ -201,8 +201,28 @@
                     </template>
                   </v-tooltip>
                 </v-col>
-
-                <v-col cols="12" md="3" lg="3" sm="3" px-2>
+                <v-col cols="12" md="3" sm="3" lg="3">
+                  <v-tooltip :text="$t('mobile_code')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-autocomplete
+                        v-bind:label="$t('mobile_code')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                        index="id"
+                        item-key="header_id"
+                        item-value="header_id"
+                        item-title="mobile_code"
+                        v-model="profile_details.mobile_code"
+                        @update:model-value="
+                          changeCountry(profile_details.mobile_code)
+                        "
+                        :items="country_array_en"
+                      ></v-autocomplete>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="12" md="4" lg="4" sm="4" px-2>
                   <v-tooltip :text="$t('phone_number')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-text-field
@@ -211,7 +231,7 @@
                         v-bind="props"
                         variant="outlined"
                         density="compact"
-                        maxlength="12"
+                        :maxlength="phonelength"
                         v-model="profile_details.phone"
                         @keypress="isNumber($event)"
                         required
@@ -372,31 +392,42 @@
                       </div>
                     </v-hover>
                   </div>
-                  <a
-                    class="text-center pointer"
-                    @click="downloadImage(profile_details.image_url)"
-                  >
-                    <span
-                      v-if="profile_details.image_url"
-                      class="download_btn_color"
-                      >{{ $t("download") }}</span
-                    >
-                  </a>
-                  <span
-                    v-if="
-                      profile_details.image_url == '' ||
-                      profile_details.image_url == null
-                    "
-                  >
-                  </span>
-                  <span v-else>
-                    <v-icon
-                      small
-                      class="mr-2 edit_btn icon_size delete_icon"
-                      @click="removeImage"
-                      >mdi mdi-trash-can-outline</v-icon
-                    >
-                  </span>
+                  <v-tooltip :text="this.$t('download')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <a class="text-center pointer download_icon">
+                        <span
+                          ><v-icon
+                            v-if="profile_details.image_url"
+                            v-bind="props"
+                            class="mr-2"
+                            @click="downloadImage(profile_details.image_url)"
+                            >mdi mdi-download</v-icon
+                          ></span
+                        >
+                      </a>
+                    </template>
+                  </v-tooltip>
+                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <span
+                        v-bind="props"
+                        v-if="
+                          profile_details.image_url == '' ||
+                          profile_details.image_url == null
+                        "
+                      >
+                      </span>
+                      <span v-else>
+                        <v-icon
+                          v-bind="props"
+                          small
+                          class="mr-2 edit_btn icon_size delete_icon"
+                          @click="removeImage"
+                          >mdi mdi-trash-can-outline</v-icon
+                        >
+                      </span>
+                    </template>
+                  </v-tooltip>
                 </div>
                 <br />
                 <Imageupload
@@ -468,7 +499,6 @@ export default {
       icon: "material-symbols-outlined",
     },
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
-
     valid: false,
     valid_error: false,
     message: "",
@@ -499,11 +529,13 @@ export default {
       description: "",
       role_id: null,
       phone: "",
+      mobile_code: null,
       store_id: null,
     },
     role_array_view_profile: [],
     uploadfile: false,
     user: "",
+    phonelength: "10",
     role_array: [],
     salutation_array_en: [],
     gender_array_en: [],
@@ -593,6 +625,12 @@ export default {
     },
   },
   methods: {
+    changeCountry(header_id) {
+      this.profile_details.country = header_id;
+      this.fetchStates(this.profile_details.country);
+      this.profile_details.state = null;
+      this.profile_details.city = null;
+    },
     get_stores() {
       this.initval = true;
       this.$axios
@@ -648,6 +686,7 @@ export default {
         });
     },
     fetchStates(country_id) {
+      this.profile_details.mobile_code = country_id;
       this.initval = true;
       this.$axios
         .get(
@@ -800,7 +839,7 @@ export default {
 }
 .delete_icon {
   position: relative;
-  left: 40px;
+  left: 70px;
   bottom: 120px;
 }
 .download_btn_color {
@@ -808,6 +847,11 @@ export default {
 }
 .pointer {
   cursor: pointer;
+}
+.download_icon {
+  position: relative;
+  left: 103px;
+  bottom: 70px;
 }
 </style>
   

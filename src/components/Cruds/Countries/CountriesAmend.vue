@@ -1,7 +1,10 @@
 <template>
   <div class="mx-2 mt-3 p-0">
     <div class="main-card mb-3 card">
-      <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+      <div
+        class="my-3 p-0"
+        v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+      >
         <page-title
           class="col-md-4 ml-2"
           :heading="$t('create_country')"
@@ -9,7 +12,6 @@
         ></page-title>
       </div>
       <div class="card-body">
-        
         <content-loader v-if="loader"></content-loader>
         <v-tabs v-model="tabs" color="blue">
           <v-tab :value="1" @click="checkUploadImage">
@@ -24,7 +26,7 @@
           <v-window-item :value="1">
             <v-form ref="form" v-model="valid">
               <v-row class="mx-auto mt-2" max-width="344">
-                <v-col md="6">
+                <v-col cols="6" sm="6" md="6">
                   <v-tooltip :text="this.$t('name')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-text-field
@@ -32,6 +34,27 @@
                         v-model="country[0].name"
                         :rules="fieldRules"
                         v-bind:label="$t('name')"
+                        required
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="6" sm="6" md="6">
+                  <v-tooltip
+                    :text="this.$t('mobile_code_en')"
+                    location="bottom"
+                  >
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        v-model="country[0].mobile_code"
+                        maxlength="5"
+                        :rules="fieldRules"
+                        v-bind:label="$t('mobile_code_en')"
                         required
                         v-bind="props"
                         class="required_field"
@@ -55,11 +78,32 @@
                       <v-text-field
                         v-on="on"
                         v-model="country[1].name"
-                        :rules="fieldRules"
+                        :rules="fieldRulesAr"
                         v-bind:label="$t('name_ar')"
                         required
                         v-bind="props"
                         class="rtl required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="6" sm="6" md="6">
+                  <v-tooltip
+                    :text="this.$t('mobile_code_ar')"
+                    location="bottom"
+                  >
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-on="on"
+                        v-model="country[1].mobile_code"
+                        :rules="fieldRulesAr"
+                        maxlength="5"
+                        v-bind:label="$t('mobile_code_ar')"
+                        required
+                        v-bind="props"
+                        class="required_field"
                         variant="outlined"
                         density="compact"
                       ></v-text-field>
@@ -134,16 +178,18 @@ export default {
     showupload: "",
     isDisabled: false,
     checkbox_value: false,
-    sel_lang:"",
+    sel_lang: "",
     country: [
       {
-        id:0,
+        id: 0,
         name: "",
+        mobile_code: "",
         lang: "en",
       },
       {
-        id:0,
+        id: 0,
         name: "",
+        mobile_code: "",
         lang: "ar",
       },
     ],
@@ -154,6 +200,9 @@ export default {
   computed: {
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
+    },
+    fieldRulesAr() {
+      return [(v) => !!v || this.$t("field_required_ar")];
     },
 
     numberRules() {
@@ -181,13 +230,14 @@ export default {
         }
       },
     },
-     '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
   methods: {
     onFileChanged(e) {
@@ -261,7 +311,7 @@ input.larger {
   border: 2px solid black;
   padding: 1px;
 }
-.arabdirection /deep/ .v-field{
-  direction:rtl;
+.arabdirection /deep/ .v-field {
+  direction: rtl;
 }
 </style>

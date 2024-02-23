@@ -103,7 +103,26 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="6" md="2" sm="2" lg="2">
+                <v-tooltip :text="$t('mobile_code_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind:label="$t('mobile_code_en')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      index="id"
+                      item-key="mobile_code"
+                      item-value="mobile_code"
+                      item-title="mobile_code"
+                      v-model="promotions[0].mobile_code"
+                      @update:modelValue="(value) => updateMobileCode(value)"
+                      :items="country_array_en"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="6" sm="2" md="2">
                 <v-tooltip :text="this.$t('phone_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -314,24 +333,34 @@
                       </div>
                     </v-hover>
                   </div>
-                  <a
-                    class="text-center image_cursor"
-                    @click="downloadImage(promotions[0].image_path)"
-                  >
-                    <span
-                      v-if="promotions[0].image_path"
-                      class="download_btn_color"
-                      >{{ $t("download_en") }}</span
-                    >
-                  </a>
+                  <v-tooltip :text="this.$t('download_en')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <a class="text-center pointer download_icon">
+                        <span
+                          ><v-icon
+                            v-if="promotions[0].image_path"
+                            v-bind="props"
+                            class="mr-2"
+                            @click="downloadImage(promotions[0].image_path)"
+                            >mdi mdi-download</v-icon
+                          ></span
+                        >
+                      </a>
+                    </template>
+                  </v-tooltip>
                   <span>
-                    <v-icon
-                      small
-                      v-if="promotions[0].image_path"
-                      class="mr-2 edit_btn icon_size delete_icon"
-                      @click="removeImage(0)"
-                      >mdi mdi-trash-can-outline</v-icon
-                    >
+                    <v-tooltip :text="this.$t('delete_en')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-icon
+                          small
+                          v-bind="props"
+                          v-if="promotions[0].image_path"
+                          class="mr-2 edit_btn icon_size delete_icon"
+                          @click="removeImage(0)"
+                          >mdi mdi-trash-can-outline</v-icon
+                        >
+                      </template>
+                    </v-tooltip>
                   </span>
                 </div>
 
@@ -428,7 +457,26 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="6" md="2" sm="2" lg="2">
+                <v-tooltip :text="$t('mobile_code_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind:label="$t('mobile_code_ar')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      index="id"
+                      item-key="mobile_code"
+                      item-value="mobile_code"
+                      item-title="mobile_code"
+                      v-model="promotions[1].mobile_code"
+                      @update:modelValue="(value) => updateMobileCode(value)"
+                      :items="country_array_ar"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="6" md="2" sm="2" lg="2">
                 <v-tooltip :text="this.$t('phone_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -642,24 +690,34 @@
                     </v-hover>
                   </div>
                   <div class="text-right">
-                    <a
-                      class="text-center image_cursor"
-                      @click="downloadImage(promotions[1].image_path)"
-                    >
-                      <span
-                        v-if="promotions[1].image_path"
-                        class="download_btn_color"
-                        >{{ $t("download_ar") }}</span
-                      >
-                    </a>
+                    <v-tooltip :text="this.$t('download_ar')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <a class="text-center pointer download_icon_ar">
+                          <span
+                            ><v-icon
+                              v-if="promotions[1].image_path"
+                              v-bind="props"
+                              class="mr-2"
+                              @click="downloadImage(promotions[1].image_path)"
+                              >mdi mdi-download</v-icon
+                            ></span
+                          >
+                        </a>
+                      </template>
+                    </v-tooltip>
                     <span>
-                      <v-icon
-                        small
-                        v-if="promotions[1].image_path"
-                        class="mr-2 edit_btn icon_size delete_icon_ar"
-                        @click="removeImage(1)"
-                        >mdi mdi-trash-can-outline</v-icon
-                      >
+                      <v-tooltip :text="this.$t('delete_ar')" location="bottom">
+                        <template v-slot:activator="{ props }">
+                          <v-icon
+                            small
+                            v-bind="props"
+                            v-if="promotions[1].image_path"
+                            class="mr-2 edit_btn icon_size delete_icon_ar"
+                            @click="removeImage(1)"
+                            >mdi mdi-trash-can-outline</v-icon
+                          >
+                        </template>
+                      </v-tooltip>
                     </span>
                   </div>
                 </div>
@@ -685,10 +743,12 @@
             <v-btn
               v-bind="props"
               size="small"
-              @click="  $router.push({
-                    name: 'promotions_offers',
-                    query: { 's_tab': this.$route.query.s_tab },
-                  })"
+              @click="
+                $router.push({
+                  name: 'promotions_offers',
+                  query: { s_tab: this.$route.query.s_tab },
+                })
+              "
               :disabled="loading"
               class="ma-1"
               color="cancel"
@@ -757,6 +817,8 @@ export default {
     role_array: [],
     stores_data_ar: [],
     stores_data_en: [],
+    country_array_en: [],
+    country_array_ar: [],
     user: "",
     labelText: "Mall",
     label_text_ar: "مجمع تجاري",
@@ -767,6 +829,7 @@ export default {
         title: "",
         description: "",
         phone: "",
+        mobile_code: "",
         email: "",
         type: "",
         start_date: "",
@@ -785,6 +848,7 @@ export default {
         title: "",
         description: "",
         phone: "",
+        mobile_code: "",
         email: "",
         type: "",
         start_date: "",
@@ -850,6 +914,7 @@ export default {
     this.fetchLookup();
     this.get_stores();
     this.fetchMall();
+    this.get_countries();
   },
   created() {
     this.fetchRoles();
@@ -1067,6 +1132,13 @@ export default {
         this.promotions[0].store_id = promo;
       }
     },
+    updateMobileCode(mobile_code) {
+      if (this.tabs == 1) {
+        this.promotions[1].mobile_code = mobile_code;
+      } else {
+        this.promotions[0].mobile_code = mobile_code;
+      }
+    },
     downloadImage(image_url) {
       window.open(this.envImagePath + image_url, "_blank");
     },
@@ -1192,7 +1264,7 @@ export default {
               this.message = res.data.message;
               this.$router.push({
                 name: "promotions_offers",
-                query: { 's_tab': this.$route.query.s_tab },
+                query: { s_tab: this.$route.query.s_tab },
               });
             } else if (res.data.status == "E") {
               this.$toast.error(this.array_data);
@@ -1210,6 +1282,20 @@ export default {
       } else {
         //alert("Form is Invalid");
       }
+    },
+    get_countries() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_countries")
+        .then((response) => {
+          console.log(response);
+          this.country_array_en = response.data.countries_en;
+          this.country_array_ar = response.data.countries_ar;
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     clear() {
       this.$refs.form.reset();
@@ -1258,13 +1344,23 @@ input.larger {
 }
 .delete_icon_ar {
   position: relative;
-  right: 65px;
+  right: 79px;
   bottom: 90px;
 }
 .delete_icon {
   position: relative;
-  left: 45px;
+  left: 82px;
   bottom: 90px;
+}
+.download_icon {
+  position: relative;
+  left: 116px;
+  bottom: 52px;
+}
+.download_icon_ar {
+  position: relative;
+  bottom: 45px;
+  right: 110px;
 }
 /* .arabdirection /deep/ .v-input {
   direction: rtl !important;
