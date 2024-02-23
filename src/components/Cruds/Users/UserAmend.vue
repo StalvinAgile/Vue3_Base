@@ -201,8 +201,29 @@
                     </template>
                   </v-tooltip>
                 </v-col>
+                <v-col cols="12" md="3" sm="3" lg="3">
+                  <v-tooltip :text="$t('mobile_code')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-autocomplete
+                        v-bind:label="$t('mobile_code')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                        index="id"
+                        item-key="header_id"
+                        item-value="header_id"
+                        item-title="mobile_code"
+                        v-model="profile_details.mobile_code"
+                        @update:model-value="
+                          changeCountry(profile_details.mobile_code)
+                        "
+                        :items="country_array_en"
+                      ></v-autocomplete>
+                    </template>
+                  </v-tooltip>
+                </v-col>
 
-                <v-col cols="12" md="3" lg="3" sm="3" px-2>
+                <v-col cols="12" md="4" lg="4" sm="4" px-2>
                   <v-tooltip :text="$t('phone_number')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-text-field
@@ -510,6 +531,7 @@ export default {
       description: "",
       role_id: null,
       phone: "",
+      mobile_code: "",
       store_id: null,
     },
     role_array_view_profile: [],
@@ -604,6 +626,9 @@ export default {
     },
   },
   methods: {
+    changeCountry(header_id) {
+      this.profile_details.country = header_id;
+    },
     get_stores() {
       this.initval = true;
       this.$axios
@@ -659,6 +684,7 @@ export default {
         });
     },
     fetchStates(country_id) {
+      this.profile_details.mobile_code == country_id;
       this.initval = true;
       this.$axios
         .get(

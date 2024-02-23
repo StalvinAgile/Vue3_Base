@@ -103,7 +103,26 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="6" md="2" sm="2" lg="2">
+                <v-tooltip :text="$t('mobile_code_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind:label="$t('mobile_code_en')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      index="id"
+                      item-key="mobile_code"
+                      item-value="mobile_code"
+                      item-title="mobile_code"
+                      v-model="promotions[0].mobile_code"
+                      @update:modelValue="(value) => updateMobileCode(value)"
+                      :items="country_array_en"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="6" sm="2" md="2">
                 <v-tooltip :text="this.$t('phone_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -438,7 +457,26 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="6" md="2" sm="2" lg="2">
+                <v-tooltip :text="$t('mobile_code_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind:label="$t('mobile_code_ar')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      index="id"
+                      item-key="mobile_code"
+                      item-value="mobile_code"
+                      item-title="mobile_code"
+                      v-model="promotions[1].mobile_code"
+                      @update:modelValue="(value) => updateMobileCode(value)"
+                      :items="country_array_ar"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="6" md="2" sm="2" lg="2">
                 <v-tooltip :text="this.$t('phone_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -779,6 +817,8 @@ export default {
     role_array: [],
     stores_data_ar: [],
     stores_data_en: [],
+    country_array_en: [],
+    country_array_ar: [],
     user: "",
     labelText: "Mall",
     label_text_ar: "مجمع تجاري",
@@ -789,6 +829,7 @@ export default {
         title: "",
         description: "",
         phone: "",
+        mobile_code: "",
         email: "",
         type: "",
         start_date: "",
@@ -807,6 +848,7 @@ export default {
         title: "",
         description: "",
         phone: "",
+        mobile_code: "",
         email: "",
         type: "",
         start_date: "",
@@ -872,6 +914,7 @@ export default {
     this.fetchLookup();
     this.get_stores();
     this.fetchMall();
+    this.get_countries();
   },
   created() {
     this.fetchRoles();
@@ -1089,6 +1132,13 @@ export default {
         this.promotions[0].store_id = promo;
       }
     },
+    updateMobileCode(mobile_code) {
+      if (this.tabs == 1) {
+        this.promotions[1].mobile_code = mobile_code;
+      } else {
+        this.promotions[0].mobile_code = mobile_code;
+      }
+    },
     downloadImage(image_url) {
       window.open(this.envImagePath + image_url, "_blank");
     },
@@ -1232,6 +1282,20 @@ export default {
       } else {
         //alert("Form is Invalid");
       }
+    },
+    get_countries() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_countries")
+        .then((response) => {
+          console.log(response);
+          this.country_array_en = response.data.countries_en;
+          this.country_array_ar = response.data.countries_ar;
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     clear() {
       this.$refs.form.reset();

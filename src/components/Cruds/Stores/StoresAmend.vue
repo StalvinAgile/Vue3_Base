@@ -127,7 +127,7 @@
                   <v-col
                     cols="12"
                     xs="12"
-                    sm="12"
+                    sm="6"
                     :md="stores[0].stor_type == 'Store' ? 3 : 6"
                   >
                     <v-tooltip :text="$t('name_en')" location="bottom">
@@ -146,7 +146,7 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="12" xs="12" sm="12" md="3">
+                  <v-col cols="12" xs="12" sm="6" md="3">
                     <v-tooltip :text="$t('email_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
@@ -166,7 +166,31 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="12" xs="12" sm="12" md="3">
+                  <v-col cols="12" xs="12" sm="2" md="1">
+                    <v-tooltip :text="$t('mobile_code_en')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          v-bind:label="$t('mobile_code_en')"
+                          v-bind="props"
+                          variant="outlined"
+                          density="compact"
+                          :rules="fieldRules"
+                          class="required_field"
+                          required
+                          index="id"
+                          item-key="header_id"
+                          item-value="header_id"
+                          item-title="mobile_code"
+                          v-model="stores[0].mobile_code"
+                          @update:modelValue="
+                            (value) => updateMobileCode(value, 0)
+                          "
+                          :items="country_array_en"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="12" xs="12" sm="4" md="2">
                     <v-tooltip :text="$t('phone_en')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
@@ -673,7 +697,12 @@
               </v-layout>
               <v-layout>
                 <v-row class="px-6 mt-2 arabdirection">
-                  <v-col cols="12" xs="12" sm="12" md="3">
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="12"
+                    :md="stores[0].stor_type == 'Store' ? 3 : 6"
+                  >
                     <v-tooltip :text="$t('name_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
@@ -710,7 +739,31 @@
                       </template>
                     </v-tooltip>
                   </v-col>
-                  <v-col cols="12" xs="12" sm="12" md="3">
+                  <v-col cols="12" xs="12" sm="2" md="1">
+                    <v-tooltip :text="$t('mobile_code_ar')" location="bottom">
+                      <template v-slot:activator="{ props }">
+                        <v-autocomplete
+                          v-bind:label="$t('mobile_code_ar')"
+                          v-bind="props"
+                          variant="outlined"
+                          density="compact"
+                          :rules="fieldRulesAr"
+                          class="required_field"
+                          required
+                          index="id"
+                          item-key="header_id"
+                          item-value="header_id"
+                          item-title="mobile_code"
+                          v-model="stores[1].mobile_code"
+                          @update:modelValue="
+                            (value) => updateMobileCode(value, 1)
+                          "
+                          :items="country_array_ar"
+                        ></v-autocomplete>
+                      </template>
+                    </v-tooltip>
+                  </v-col>
+                  <v-col cols="12" xs="12" sm="4" md="2">
                     <v-tooltip :text="$t('phone_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
                         <v-text-field
@@ -1260,6 +1313,7 @@ export default {
         background_image: "",
         store_code: "",
         website: "",
+        mobile_code: "",
         seq: null,
       },
       {
@@ -1268,6 +1322,7 @@ export default {
         stor_type: "Mall",
         categories: [],
         store_code: "",
+        mobile_code: "",
         mall_name: "",
         icon: null,
         background_image: "",
@@ -1476,6 +1531,13 @@ export default {
     },
     updateMallSCode(value, index) {
       this.stores[index].store_code = value;
+    },
+    updateMobileCode(mobile_code) {
+      if (this.tabs == 1) {
+        this.stores[1].mobile_code = mobile_code;
+      } else {
+        this.stores[0].mobile_code = mobile_code;
+      }
     },
     cancel() {
       if (this.user.rolename == "StoreAdmin") {
