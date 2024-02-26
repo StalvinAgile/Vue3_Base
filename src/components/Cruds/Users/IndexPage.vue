@@ -130,7 +130,7 @@
               :disabled="loading"
               class="ma-1"
               color="blue"
-              >{{ $t("view_en") }}</v-btn
+              >{{ $t("view") }}</v-btn
             >
           </td>
         </tr>
@@ -184,12 +184,11 @@ export default {
     user: "",
     showStatusDialog: false,
   }),
-  created(){
-  this.user = JSON.parse(localStorage.getItem("user_data"));
-   console.log("asdasd", this.user)
+  created() {
+    this.user = JSON.parse(localStorage.getItem("user_data"));
+    console.log("asdasd", this.user);
   },
   mounted() {
- 
     this.selectedLang();
     this.fetchUsers();
   },
@@ -319,7 +318,7 @@ export default {
         .then((res) => {
           this.allUsers = res.data.usersdata;
           this.allUsers = this.allUsers.filter((elem) => {
-            console.log("dsaasd",this.user);
+            console.log("dsaasd", this.user);
             return elem.id !== this.user.id;
           });
           this.initval = false;
