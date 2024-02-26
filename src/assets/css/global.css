@@ -342,7 +342,9 @@ input::placeholder {
 .mdi-pencil-outline {
   min-height: 30px;
 }
-
+.arabdirectionalert {
+  direction: rtl;
+}
 .mdi-trash-can-outline:hover {
   animation: shake 0.4s;
 }
