@@ -5,7 +5,7 @@
       flat
       color="white"
       class="row py-5 pl-5 align-items-center component_app_bar position-relative"
-      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
     >
       <page-title
         class="col-md-3"
@@ -81,7 +81,7 @@
                   }}
                 </div>
               </td>
-              <td >
+              <td>
                 <v-btn
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
@@ -111,7 +111,7 @@
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                  <v-tooltip :text="this.$t('edit_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -135,7 +135,7 @@
                   }"
                 >
                   <v-tooltip
-                    :text="this.$t('child_look_ups')"
+                    :text="this.$t('child_lookup_en')"
                     location="bottom"
                   >
                     <template v-slot:activator="{ props }">
@@ -146,11 +146,11 @@
                         >mdi-sitemap</v-icon
                       >
                     </template>
-                    <span>{{ $t("child_look_ups") }}</span>
+                    <span>{{ $t("child_lookup_en") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span @click="deleteItem(props.item.selectable.header_id)">
-                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                  <v-tooltip :text="this.$t('delete_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -161,7 +161,7 @@
                         >mdi-trash-can-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("delete") }}</span>
+                    <span>{{ $t("delete_en") }}</span>
                   </v-tooltip>
                 </span>
               </td>
@@ -231,7 +231,7 @@
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                  <v-tooltip :text="this.$t('edit_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -255,7 +255,7 @@
                   }"
                 >
                   <v-tooltip
-                    :text="this.$t('child_look_ups')"
+                    :text="this.$t('child_lookup_ar')"
                     location="bottom"
                   >
                     <template v-slot:activator="{ props }">
@@ -266,11 +266,14 @@
                         >mdi-sitemap</v-icon
                       >
                     </template>
-                    <span>{{ $t("child_look_ups") }}</span>
+                    <span>{{ $t("child_lookup_ar") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.header_id)" class="mr-2">
-                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                <span
+                  @click="deleteItem(props.item.selectable.header_id)"
+                  class="mr-2"
+                >
+                  <v-tooltip :text="this.$t('delete_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -281,7 +284,7 @@
                         >mdi-trash-can-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("delete") }}</span>
+                    <span>{{ $t("delete_ar") }}</span>
                   </v-tooltip>
                 </span>
               </td>
@@ -353,20 +356,21 @@ export default {
         field: "status",
       },
     ],
-    sel_lang:'',
+    sel_lang: "",
   }),
   mounted() {
     this.initialize();
   },
- watch: {
-   '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+  watch: {
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
- },
+    },
+  },
   computed: {
     headers_en() {
       return [

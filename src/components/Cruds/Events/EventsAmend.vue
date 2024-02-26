@@ -209,7 +209,7 @@
                       v-bind="props"
                       v-model="events[0].seq"
                       v-on:keypress="NumbersOnly"
-                      maxlength="100"
+                      maxlength="5"
                       :rules="phoneRules"
                       v-bind:label="$t('sequence')"
                       variant="outlined"
@@ -504,7 +504,7 @@
                     <v-text-field
                       v-bind="props"
                       v-model="events[1].seq"
-                      maxlength="100"
+                      maxlength="5"
                       :rules="phoneRules"
                       v-bind:label="$t('sequence_ar')"
                       v-on:keypress="NumbersOnly"

@@ -207,6 +207,7 @@
                           v-model="store_timings[day_index].seq"
                           :rules="phoneRules"
                           v-bind="props"
+                          maxlength="5"
                           v-bind:label="$t('sequence')"
                           required
                           v-on:keypress="NumbersOnly"

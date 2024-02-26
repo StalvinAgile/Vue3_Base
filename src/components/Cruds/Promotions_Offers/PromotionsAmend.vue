@@ -292,7 +292,7 @@
                     <v-text-field
                       v-bind="props"
                       v-model="promotions[0].seq"
-                      maxlength="15"
+                      maxlength="5"
                       :rules="phoneRules"
                       v-bind:label="$t('sequence_en')"
                       required
@@ -648,7 +648,7 @@
                     <v-text-field
                       v-bind="props"
                       v-model="promotions[1].seq"
-                      maxlength="15"
+                      maxlength="5"
                       :rules="phoneRules"
                       v-bind:label="$t('sequence_ar')"
                       required

@@ -562,5 +562,9 @@
   "please_fill_required_fields_ar": "يرجى ملء كافة الحقول المطلوبة",
   "validation_error_en": "Validation error",
   "validation_error_ar": "خطئ في التحقق",
-  "org_email_ar": "البريد الإلكتروني للمنظمة"
+  "org_email_ar": "البريد الإلكتروني للمنظمة",
+  "edit_en": "Edit",
+  "edit_ar": "يحرر",
+  "child_lookup_en": "Child Lookups",
+  "child_lookup_ar": "عمليات بحث الطفل"
 }

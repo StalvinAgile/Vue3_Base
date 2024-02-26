@@ -516,5 +516,9 @@
   "validation_error_en": "Validation error",
   "validation_error_ar": "خطئ في التحقق",
   "background_image_en": "Background Image",
-  "org_email_en": "Organisation E-mail"
+  "org_email_en": "Organisation E-mail",
+  "edit_en": "Edit",
+  "edit_ar": "يحرر",
+  "child_lookup_en": "Child Lookups",
+  "child_lookup_ar": "عمليات بحث الطفل"
 }

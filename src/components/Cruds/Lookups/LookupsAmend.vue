@@ -273,6 +273,8 @@ export default {
       immediate: true,
       handler() {
         if (this.$route.query.slug) {
+          this.valid = true;
+          this.validAR = true;
           this.loader = true;
           this.$axios
             .get(

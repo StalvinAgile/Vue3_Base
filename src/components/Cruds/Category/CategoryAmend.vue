@@ -208,7 +208,7 @@
                         <v-text-field
                           v-bind="props"
                           v-model="category[0].seq"
-                          maxlength="100"
+                          maxlength="5"
                           :rules="phoneRules"
                           v-bind:label="$t('sequence_en')"
                           required
@@ -488,7 +488,7 @@
                       <v-text-field
                         v-bind="props"
                         v-model="category[1].seq"
-                        maxlength="100"
+                        maxlength="5"
                         :rules="phoneRules"
                         v-bind:label="$t('sequence_ar')"
                         required
@@ -499,7 +499,7 @@
                     </template>
                   </v-tooltip>
                 </v-col>
-                <v-col cols="12" sm="12" md="3" >
+                <v-col cols="12" sm="12" md="3">
                   <v-tooltip :text="$t('icon_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-text-field
@@ -809,6 +809,8 @@ export default {
       immediate: true,
       handler() {
         if (this.$route.query.slug) {
+          this.valid = true;
+          this.validAR = true;
           this.loader = true;
           this.$axios
             .get(
@@ -1232,8 +1234,6 @@ export default {
   bottom: 90px;
 }
 
-
-
 .download_icon {
   position: relative;
   left: 116px;
@@ -1244,8 +1244,5 @@ export default {
   position: relative;
   bottom: 45px;
   right: 110px;
-}
-.arabdirectionalert {
-  direction: rtl;
 }
 </style>
