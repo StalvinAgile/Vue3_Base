@@ -555,8 +555,8 @@
   "comments":"Comments",
   "accept/reject":"Accept/Reject",
   "newsletter_subscriptions":"Newsletter Subscriptions",
-  "please_fill_required_fields_en" : "Please fill all the required fields in both language",
-  "please_fill_required_fields_ar" : "برجاء ملء كافة الحقول المطلوبة باللغتين",
+  "please_fill_required_fields_en" : "Please fill all the required fields",
+  "please_fill_required_fields_ar" : "يرجى ملء كافة الحقول المطلوبة",
   "validation_error_en" : "Validation error",
   "validation_error_ar" : "خطئ في التحقق"
 
