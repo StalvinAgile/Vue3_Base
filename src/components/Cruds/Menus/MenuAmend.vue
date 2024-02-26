@@ -1,6 +1,9 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="my-3 p-0 " v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+    <div
+      class="my-3 p-0"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+    >
       <page-title
         class="col-md-4 ml-2"
         :heading="$t('create_menu')"
@@ -89,16 +92,16 @@
               <v-tooltip :text="this.$t('sequence')" location="bottom">
                 <template v-slot:activator="{ props }">
                   <v-text-field
-                    type="number"
                     v-bind="props"
                     v-model="fieldItem.seq"
                     :rules="numberRules"
+                    maxlength="5"
+                    v-on:keypress="NumbersOnly"
                     variant="outlined"
                     density="compact"
                     v-bind:label="$t('sequence')"
                     required
                     class="required_field"
-                    maxlength="11"
                   ></v-text-field>
                 </template>
               </v-tooltip>
@@ -235,13 +238,14 @@ export default {
         }
       },
     },
-    '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
   methods: {
     cancel() {
@@ -249,8 +253,21 @@ export default {
         name: "menus",
       });
     },
+    NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
     submit() {
-      if (this.$refs.form.validate()) {
+      if (this.$refs.form.validate() && this.valid) {
         if (this.fieldItem.id == 0) {
           this.isDisabled = true;
           this.$axios
