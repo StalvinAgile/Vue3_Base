@@ -3,7 +3,7 @@
     <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']">
       <page-title class="col-md-4 ml-2" :heading="$t('create_amend_home_slider')" :google_icon="google_icon"></page-title>
     </div>
-   <div class="mb-3 mx-auto">
+    <div class="mb-3 mx-auto">
       <div class="card-body">
         <content-loader v-if="loader"></content-loader>
         <v-tabs v-model="tabs" color="blue" @update:modelValue="have_noimage = false">
@@ -279,7 +279,8 @@
                             " v-model:value="home_slider[1].description" @blur="onEditorBlurAR($event)"
                             @focus="onEditorFocusAR($event)" @ready="onEditorReadyAR($event)"
                             @change="onEditorChangeAR($event)" />
-                          <small v-if="quill_item_ar" class="text-danger ml-5 required_item shake">{{$t('field_required_ar')}}</small>
+                          <small v-if="quill_item_ar"
+                            class="text-danger ml-5 required_item shake">{{ $t('field_required_ar') }}</small>
                         </div>
                       </template>
                     </v-tooltip>
@@ -867,7 +868,7 @@ export default {
     //   }
     presubmitvalidation() {
       if (this.tabs == 1) {
-        if (this.home_slider[0].description == "" ||  this.home_slider[0].description == null ) {
+        if (this.home_slider[0].description == "" || this.home_slider[0].description == null) {
           this.quill_item = true;
         } else {
           this.quill_item = false;
@@ -876,26 +877,26 @@ export default {
           if (this.home_slider[0].image == "" || this.home_slider[0].image == null) {
             this.have_noimage = true;
           }
-          else{
+          else {
             this.have_noimage = false;
           }
         }
-        else{
+        else {
           this.have_noimage = false;
         }
         if (this.$refs.form.validate() && this.valid == true && this.have_noimage == false && this.quill_item == false && this.quill_item_ar == false && this.validAR == true) {
           this.error_valid = false;
           this.submit();
         }
-        else{
+        else {
           if (this.valid == true && this.have_noimage == false && this.quill_item == false) {
-                this.error_valid = true;
-                this.tabs = 2;
-              }
+            this.error_valid = true;
+            this.tabs = 2;
+          }
         }
       }
-      else{
-        if (this.home_slider[1].description == "" ||  this.home_slider[1].description == null ) {
+      else {
+        if (this.home_slider[1].description == "" || this.home_slider[1].description == null) {
           this.quill_item_ar = true;
         } else {
           this.quill_item_ar = false;
@@ -904,22 +905,22 @@ export default {
           if (this.home_slider[1].image == "" || this.home_slider[1].image == null) {
             this.have_noimage = true;
           }
-          else{
+          else {
             this.have_noimage = false;
           }
         }
-        else{
+        else {
           this.have_noimage = false;
         }
         if (this.$refs.form.validate() && this.validAR == true && this.have_noimage == false && this.quill_item_ar == false && this.quill_item == false && this.valid == true) {
           this.error_valid = false;
           this.submit();
         }
-        else{
+        else {
           if (this.validAR == true && this.have_noimage == false && this.quill_item_ar == false) {
-                this.error_valid = true;
-                this.tabs = 1;
-              }
+            this.error_valid = true;
+            this.tabs = 1;
+          }
         }
       }
     },
