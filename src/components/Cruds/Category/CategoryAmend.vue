@@ -304,7 +304,7 @@
           <!-- ENGLISH TAB END -->
           <!-- ARABIC TAB STARTS -->
           <v-window-item :value="2">
-            <v-form ref="form" v-model="valid">
+            <v-form ref="form" v-model="validAR">
               <v-row class="arabdirection" style="direction: rtl">
                 <v-col cols="12" sm="12" md="4" class="pr-5">
                   <v-tooltip :text="this.$t('mall_ar')" location="bottom">
@@ -715,7 +715,8 @@ export default {
     },
 
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
-    valid: true,
+    valid: false,
+    validAR: false,
     successmessage: "",
     message: "",
     valid_error: false,
@@ -980,7 +981,7 @@ export default {
       } else {
         this.quill_item_ar = false;
       }
-      if (this.$refs.form.validate() && this.valid == true) {
+      if(this.$refs.form.validate() && this.valid == true && this.validAR == true){
         if (
           this.category[1].description == "" ||
           this.category[1].description == ""
@@ -1026,6 +1027,14 @@ export default {
             this.quill_item = false;
             this.quill_item_ar = false;
           });
+      }
+      else{
+       if(this.valid!=true){
+        this.tabs = 1;
+       }
+       else{
+        this.tabs = 2;
+       }
       }
     },
     onEditorChange(event) {
