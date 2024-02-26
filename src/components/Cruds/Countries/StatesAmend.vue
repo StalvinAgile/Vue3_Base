@@ -1,7 +1,10 @@
 <template>
   <div class="mx-2 mt-3 p-0">
     <div class="main-card mb-3 card">
-      <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+      <div
+        class="my-3 p-0"
+        v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+      >
         <page-title
           class="col-md-4 ml-2"
           :heading="$t('create_state')"
@@ -18,26 +21,38 @@
             <span>{{ $t("arabic") }}</span>
           </v-tab>
         </v-tabs>
-        <v-alert closable close-label="Close Alert" density="compact" color="rgb(var(--v-theme-error))" v-if="error_valid"
-        variant="tonal" @click:close="error_valid = false" class="my-3"
-        v-bind:class="[tabs == 1 ? '' : 'arabdirectionalert']" :title="tabs == 1 ? $t('validation_error_en') : $t('validation_error_ar')
-          " :text="tabs == 1
-      ? $t('please_fill_required_fields_en')
-      : $t('please_fill_required_fields_ar')
-    "></v-alert>
+        <v-alert
+          closable
+          close-label="Close Alert"
+          density="compact"
+          color="rgb(var(--v-theme-error))"
+          v-if="error_valid"
+          variant="tonal"
+          @click:close="error_valid = false"
+          class="my-3"
+          v-bind:class="[tabs == 1 ? '' : 'arabdirectionalert']"
+          :title="
+            tabs == 1 ? $t('validation_error_en') : $t('validation_error_ar')
+          "
+          :text="
+            tabs == 1
+              ? $t('please_fill_required_fields_en')
+              : $t('please_fill_required_fields_ar')
+          "
+        ></v-alert>
         <v-window v-model="tabs">
           <!-- ENGLISH TAB STARTS -->
           <v-window-item :value="1">
             <v-form ref="form" v-model="valid">
-              <v-row class="mx-auto mt-2 " max-width="344">
+              <v-row class="mx-auto mt-2" max-width="344">
                 <v-col cols="12" md="6">
-                  <v-tooltip :text="this.$t('country')" location="bottom">
+                  <v-tooltip :text="this.$t('country_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-text-field
                         v-on="on"
                         readonly="isReadOnly"
                         v-model="country[0].name"
-                        v-bind:label="$t('country')"
+                        v-bind:label="$t('country_en')"
                         v-bind="props"
                         variant="outlined"
                         density="compact"
@@ -46,13 +61,13 @@
                   </v-tooltip>
                 </v-col>
                 <v-col md="6">
-                  <v-tooltip :text="this.$t('state')" location="bottom">
+                  <v-tooltip :text="this.$t('state_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-text-field
                         v-on="on"
                         v-model="state[0].name"
                         :rules="fieldRules"
-                        v-bind:label="$t('state')"
+                        v-bind:label="$t('state_en')"
                         required
                         v-bind="props"
                         class="required_field"
@@ -172,7 +187,7 @@ export default {
     isDisabled: false,
     checkbox_value: false,
     country_slug: "",
-    sel_lang:"",
+    sel_lang: "",
     state: [
       {
         id: 0,
@@ -260,13 +275,14 @@ export default {
         }
       },
     },
-     '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
   methods: {
     onFileChanged(e) {
@@ -276,7 +292,10 @@ export default {
     },
     presubmitvalidation() {
       if (this.tabs == 1) {
-        if (this.$refs.form.validate() & this.valid == true && this.validAR == true) {
+        if (
+          this.$refs.form.validate() & (this.valid == true) &&
+          this.validAR == true
+        ) {
           this.error_valid = false;
           this.submit();
         } else {
@@ -286,7 +305,11 @@ export default {
           }
         }
       } else {
-        if (this.$refs.form.validate() && this.validAR == true && this.valid == true) {
+        if (
+          this.$refs.form.validate() &&
+          this.validAR == true &&
+          this.valid == true
+        ) {
           this.error_valid = false;
           this.submit();
         } else {
@@ -332,7 +355,7 @@ export default {
           .catch((err) => {
             console.log(err);
           });
-      } 
+      }
     },
     clear() {
       this.$refs.form.reset();
@@ -366,7 +389,7 @@ input.larger {
   border: 2px solid black;
   padding: 1px;
 }
-.arabdirection /deep/ .v-field{
-  direction:rtl;
+.arabdirection /deep/ .v-field {
+  direction: rtl;
 }
 </style>

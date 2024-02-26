@@ -76,7 +76,7 @@
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                  <v-tooltip :text="this.$t('edit_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-on="on"
@@ -98,7 +98,7 @@
                     },
                   }"
                 >
-                  <v-tooltip :text="this.$t('states')" location="bottom">
+                  <v-tooltip :text="this.$t('states_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -107,11 +107,11 @@
                         >mdi-sitemap</v-icon
                       >
                     </template>
-                    <span>{{ $t("states") }}</span>
+                    <span>{{ $t("states_en") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span @click="deleteItem(props.item.selectable.id)">
-                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                  <v-tooltip :text="this.$t('delete_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         class="delete_btn icon_size"
@@ -158,7 +158,7 @@
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                  <v-tooltip :text="this.$t('edit_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-on="on"
@@ -172,7 +172,7 @@
                 </router-link>
                 <router-link
                   small
-                  class="mr-2"
+                  class="ml-2"
                   :to="{
                     name: 'states',
                     query: {
@@ -180,7 +180,7 @@
                     },
                   }"
                 >
-                  <v-tooltip :text="this.$t('states')" location="bottom">
+                  <v-tooltip :text="this.$t('states_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -189,11 +189,11 @@
                         >mdi-sitemap</v-icon
                       >
                     </template>
-                    <span>{{ $t("states") }}</span>
+                    <span>{{ $t("states_ar") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span @click="deleteItem(props.item.selectable.header_id)">
-                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                  <v-tooltip :text="this.$t('delete_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         class="delete_btn icon_size"

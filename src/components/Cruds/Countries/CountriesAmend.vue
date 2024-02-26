@@ -1,8 +1,15 @@
 <template>
   <div class="mx-2 mt-3 p-0">
     <div class="main-card mb-3 card">
-      <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']">
-        <page-title class="col-md-4 ml-2" :heading="$t('create_country')" :google_icon="google_icon"></page-title>
+      <div
+        class="my-3 p-0"
+        v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+      >
+        <page-title
+          class="col-md-4 ml-2"
+          :heading="$t('create_country')"
+          :google_icon="google_icon"
+        ></page-title>
       </div>
       <div class="card-body">
         <content-loader v-if="loader"></content-loader>
@@ -14,13 +21,25 @@
             <span>{{ $t("arabic") }}</span>
           </v-tab>
         </v-tabs>
-        <v-alert closable close-label="Close Alert" density="compact" color="rgb(var(--v-theme-error))" v-if="error_valid"
-          variant="tonal" @click:close="error_valid = false" class="my-3"
-          v-bind:class="[tabs == 1 ? '' : 'arabdirectionalert']" :title="tabs == 1 ? $t('validation_error_en') : $t('validation_error_ar')
-            " :text="tabs == 1
-    ? $t('please_fill_required_fields_en')
-    : $t('please_fill_required_fields_ar')
-    "></v-alert>
+        <v-alert
+          closable
+          close-label="Close Alert"
+          density="compact"
+          color="rgb(var(--v-theme-error))"
+          v-if="error_valid"
+          variant="tonal"
+          @click:close="error_valid = false"
+          class="my-3"
+          v-bind:class="[tabs == 1 ? '' : 'arabdirectionalert']"
+          :title="
+            tabs == 1 ? $t('validation_error_en') : $t('validation_error_ar')
+          "
+          :text="
+            tabs == 1
+              ? $t('please_fill_required_fields_en')
+              : $t('please_fill_required_fields_ar')
+          "
+        ></v-alert>
         <v-window v-model="tabs">
           <!-- ENGLISH TAB STARTS -->
           <v-window-item :value="1">
@@ -29,18 +48,38 @@
                 <v-col cols="6" sm="6" md="6">
                   <v-tooltip :text="this.$t('name')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" v-model="country[0].name" :rules="fieldRules" v-bind:label="$t('name')"
-                        required v-bind="props" class="required_field" variant="outlined"
-                        density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        v-model="country[0].name"
+                        :rules="fieldRules"
+                        v-bind:label="$t('name_en')"
+                        required
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
                 <v-col cols="6" sm="6" md="6">
-                  <v-tooltip :text="this.$t('mobile_code_en')" location="bottom">
+                  <v-tooltip
+                    :text="this.$t('mobile_code_en')"
+                    location="bottom"
+                  >
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" v-model="country[0].mobile_code" maxlength="5" :rules="fieldRules"
-                        v-bind:label="$t('mobile_code_en')" required v-bind="props" class="required_field"
-                        variant="outlined" density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        v-model="country[0].mobile_code"
+                        maxlength="5"
+                        :rules="fieldRules"
+                        v-bind:label="$t('mobile_code_en')"
+                        required
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
@@ -55,18 +94,38 @@
                 <v-col md="6">
                   <v-tooltip :text="this.$t('name_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" v-model="country[1].name" :rules="fieldRulesAr" v-bind:label="$t('name_ar')"
-                        required v-bind="props" class="rtl required_field" variant="outlined"
-                        density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        v-model="country[1].name"
+                        :rules="fieldRulesAr"
+                        v-bind:label="$t('name_ar')"
+                        required
+                        v-bind="props"
+                        class="rtl required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
                 <v-col cols="6" sm="6" md="6">
-                  <v-tooltip :text="this.$t('mobile_code_ar')" location="bottom">
+                  <v-tooltip
+                    :text="this.$t('mobile_code_ar')"
+                    location="bottom"
+                  >
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" v-model="country[1].mobile_code" :rules="fieldRulesAr" maxlength="5"
-                        v-bind:label="$t('mobile_code_ar')" required v-bind="props" class="required_field"
-                        variant="outlined" density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        v-model="country[1].mobile_code"
+                        :rules="fieldRulesAr"
+                        maxlength="5"
+                        v-bind:label="$t('mobile_code_ar')"
+                        required
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
@@ -81,18 +140,37 @@
         <v-tooltip :text="this.$t('cancel')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block mr-2">
-              <v-btn v-bind="props" size="small" @click="$router.go(-1)" :disabled="loading" class="ma-1"
-                color="cancel">{{ $t("cancel") }}</v-btn>
+              <v-btn
+                v-bind="props"
+                size="small"
+                @click="$router.go(-1)"
+                :disabled="loading"
+                class="ma-1"
+                color="cancel"
+                >{{ $t("cancel") }}</v-btn
+              >
             </div>
           </template>
         </v-tooltip>
         <v-tooltip :text="this.$t('submit')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block">
-              <v-btn :disabled="isBtnLoading" @click="presubmitvalidation" size="small" class="mr-2" color="success">
+              <v-btn
+                :disabled="isBtnLoading"
+                @click="presubmitvalidation"
+                size="small"
+                class="mr-2"
+                color="success"
+              >
                 {{ $t("submit") }}
-                <v-progress-circular v-if="isBtnLoading" indeterminate width="1" color="cancel" size="x-small"
-                  class="ml-2"></v-progress-circular>
+                <v-progress-circular
+                  v-if="isBtnLoading"
+                  indeterminate
+                  width="1"
+                  color="cancel"
+                  size="x-small"
+                  class="ml-2"
+                ></v-progress-circular>
               </v-btn>
             </div>
           </template>
@@ -153,7 +231,7 @@ export default {
     },
   },
 
-  created() { },
+  created() {},
   watch: {
     "$route.query.slug": {
       immediate: true,
@@ -165,8 +243,8 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-              "edit_countries/" +
-              this.$route.query.slug
+                "edit_countries/" +
+                this.$route.query.slug
             )
             .then((res) => {
               this.country = res.data.countries;
@@ -192,7 +270,10 @@ export default {
     },
     presubmitvalidation() {
       if (this.tabs == 1) {
-        if (this.$refs.form.validate() & this.valid == true && this.validAR == true) {
+        if (
+          this.$refs.form.validate() & (this.valid == true) &&
+          this.validAR == true
+        ) {
           this.error_valid = false;
           this.submit();
         } else {
@@ -202,7 +283,11 @@ export default {
           }
         }
       } else {
-        if (this.$refs.form.validate() && this.validAR == true && this.valid == true) {
+        if (
+          this.$refs.form.validate() &&
+          this.validAR == true &&
+          this.valid == true
+        ) {
           this.error_valid = false;
           this.submit();
         } else {

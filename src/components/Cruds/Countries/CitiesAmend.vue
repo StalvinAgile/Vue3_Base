@@ -1,8 +1,15 @@
 <template>
   <div class="mx-2 mt-3 p-0">
     <div class="main-card mb-3 card">
-      <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
-        <page-title class="col-md-4 ml-2" :heading="$t('create_suburb')" :google_icon="google_icon"></page-title>
+      <div
+        class="my-3 p-0"
+        v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+      >
+        <page-title
+          class="col-md-4 ml-2"
+          :heading="$t('create_suburb')"
+          :google_icon="google_icon"
+        ></page-title>
       </div>
       <div class="card-body">
         <content-loader v-if="loader"></content-loader>
@@ -14,42 +21,76 @@
             <span>{{ $t("arabic") }}</span>
           </v-tab>
         </v-tabs>
-        <v-alert closable close-label="Close Alert" density="compact" color="rgb(var(--v-theme-error))" v-if="error_valid"
-          variant="tonal" @click:close="error_valid = false" class="my-3"
-          v-bind:class="[tabs == 1 ? '' : 'arabdirectionalert']" :title="tabs == 1 ? $t('validation_error_en') : $t('validation_error_ar')
-            " :text="tabs == 1
-    ? $t('please_fill_required_fields_en')
-    : $t('please_fill_required_fields_ar')
-    "></v-alert>
+        <v-alert
+          closable
+          close-label="Close Alert"
+          density="compact"
+          color="rgb(var(--v-theme-error))"
+          v-if="error_valid"
+          variant="tonal"
+          @click:close="error_valid = false"
+          class="my-3"
+          v-bind:class="[tabs == 1 ? '' : 'arabdirectionalert']"
+          :title="
+            tabs == 1 ? $t('validation_error_en') : $t('validation_error_ar')
+          "
+          :text="
+            tabs == 1
+              ? $t('please_fill_required_fields_en')
+              : $t('please_fill_required_fields_ar')
+          "
+        ></v-alert>
         <v-window v-model="tabs">
           <!-- ENGLISH TAB STARTS -->
           <v-window-item :value="1">
             <v-form ref="form" v-model="valid">
               <v-row class="mx-auto mt-2" max-width="344">
                 <v-col cols="12" md="6">
-                  <v-tooltip :text="this.$t('country')" location="bottom">
+                  <v-tooltip :text="this.$t('country_en')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" readonly="isReadOnly" v-model="country[0].name" v-bind:label="$t('country')"
-                        v-bind="props" variant="outlined" density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        readonly="isReadOnly"
+                        v-model="country[0].name"
+                        v-bind:label="$t('country_en')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
                 <v-col cols="12" md="6">
-                  <v-tooltip :text="this.$t('state')" location="bottom">
+                  <v-tooltip :text="this.$t('state_en')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" v-model="state[0].name" readonly="isReadOnly" v-bind:label="$t('state')"
-                        v-bind="props" variant="outlined" density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        v-model="state[0].name"
+                        readonly="isReadOnly"
+                        v-bind:label="$t('state_en')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
               </v-row>
               <v-row class="mx-auto mt-2" max-width="344">
                 <v-col cols="12" md="6">
-                  <v-tooltip :text="this.$t('city')" location="bottom">
+                  <v-tooltip :text="this.$t('city_en')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" v-model="city[0].name" :rules="fieldRules" v-bind:label="$t('city')"
-                        required v-bind="props" class="required_field" variant="outlined"
-                        density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        v-model="city[0].name"
+                        :rules="fieldRules"
+                        v-bind:label="$t('city_en')"
+                        required
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
@@ -64,17 +105,30 @@
                 <v-col cols="12" md="6">
                   <v-tooltip :text="this.$t('country_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" readonly="isReadOnly" v-model="country[1].name"
-                        v-bind:label="$t('country_ar')" v-bind="props" variant="outlined"
-                        density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        readonly="isReadOnly"
+                        v-model="country[1].name"
+                        v-bind:label="$t('country_ar')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
                 <v-col cols="12" md="6">
                   <v-tooltip :text="this.$t('state_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" v-model="state[1].name" readonly="isReadOnly" v-bind:label="$t('state_ar')"
-                        v-bind="props" variant="outlined" density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        v-model="state[1].name"
+                        readonly="isReadOnly"
+                        v-bind:label="$t('state_ar')"
+                        v-bind="props"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
@@ -83,9 +137,17 @@
                 <v-col cols="12" md="6">
                   <v-tooltip :text="this.$t('city_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-on="on" v-model="city[1].name" :rules="fieldRules" v-bind:label="$t('city_ar')"
-                        required v-bind="props" class="required_field" variant="outlined"
-                        density="compact"></v-text-field>
+                      <v-text-field
+                        v-on="on"
+                        v-model="city[1].name"
+                        :rules="fieldRules"
+                        v-bind:label="$t('city_ar')"
+                        required
+                        v-bind="props"
+                        class="required_field"
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
@@ -99,18 +161,37 @@
         <v-tooltip :text="this.$t('cancel')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block mr-2">
-              <v-btn v-bind="props" size="small" @click="cancel()" :disabled="isBtnLoading" class="ma-1" color="cancel">{{
-                $t("cancel") }}</v-btn>
+              <v-btn
+                v-bind="props"
+                size="small"
+                @click="cancel()"
+                :disabled="isBtnLoading"
+                class="ma-1"
+                color="cancel"
+                >{{ $t("cancel") }}</v-btn
+              >
             </div>
           </template>
         </v-tooltip>
         <v-tooltip :text="this.$t('submit')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block">
-              <v-btn :disabled="isBtnLoading" @click="presubmitvalidation" size="small" class="mr-2" color="success">
+              <v-btn
+                :disabled="isBtnLoading"
+                @click="presubmitvalidation"
+                size="small"
+                class="mr-2"
+                color="success"
+              >
                 {{ $t("submit") }}
-                <v-progress-circular v-if="isBtnLoading" indeterminate width="1" color="cancel" size="x-small"
-                  class="ml-2"></v-progress-circular>
+                <v-progress-circular
+                  v-if="isBtnLoading"
+                  indeterminate
+                  width="1"
+                  color="cancel"
+                  size="x-small"
+                  class="ml-2"
+                ></v-progress-circular>
               </v-btn>
             </div>
           </template>
@@ -193,7 +274,7 @@ export default {
     },
   },
 
-  created() { },
+  created() {},
   watch: {
     "$route.query.countryslug": {
       immediate: true,
@@ -204,8 +285,8 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-              "edit_countries/" +
-              this.$route.query.countryslug
+                "edit_countries/" +
+                this.$route.query.countryslug
             )
             .then((res) => {
               this.country = res.data.countries;
@@ -226,8 +307,8 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-              "edit_states/" +
-              this.$route.query.statesslug
+                "edit_states/" +
+                this.$route.query.statesslug
             )
             .then((res) => {
               this.state = res.data.state;
@@ -249,8 +330,8 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-              "edit_cities/" +
-              this.$route.query.slug
+                "edit_cities/" +
+                this.$route.query.slug
             )
             .then((res) => {
               this.city = res.data.city;
@@ -263,14 +344,14 @@ export default {
         }
       },
     },
-    '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
       } else {
-        ''
-        this.sel_lang = 'en';
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
   methods: {
     onFileChanged(e) {
@@ -280,7 +361,10 @@ export default {
     },
     presubmitvalidation() {
       if (this.tabs == 1) {
-        if (this.$refs.form.validate() & this.valid == true && this.validAR == true) {
+        if (
+          this.$refs.form.validate() & (this.valid == true) &&
+          this.validAR == true
+        ) {
           this.error_valid = false;
           this.submit();
         } else {
@@ -290,7 +374,11 @@ export default {
           }
         }
       } else {
-        if (this.$refs.form.validate() && this.validAR == true && this.valid == true) {
+        if (
+          this.$refs.form.validate() &&
+          this.validAR == true &&
+          this.valid == true
+        ) {
           this.error_valid = false;
           this.submit();
         } else {

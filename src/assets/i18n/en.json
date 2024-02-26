@@ -566,5 +566,8 @@
   "edit_en": "Edit",
   "edit_ar": "يحرر",
   "child_lookup_en": "Child Lookups",
-  "child_lookup_ar": "عمليات بحث الطفل"
+  "child_lookup_ar": "عمليات بحث الطفل",
+  "states_en": "States",
+  "states_ar": "تنص على",
+  "city_en_ar": "تنص على"
 }

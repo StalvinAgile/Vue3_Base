@@ -57,7 +57,7 @@
             >
               <v-btn
                 size="small"
-                class="mb-2 ml-2"
+                class="mb-2 ml-2 mr-2"
                 color="cancel"
                 v-bind="props"
                 >{{ $t("back") }}</v-btn
@@ -98,7 +98,7 @@
                     },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                  <v-tooltip :text="this.$t('edit_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-on="on"
@@ -121,7 +121,7 @@
                     },
                   }"
                 >
-                  <v-tooltip :text="this.$t('city')" location="bottom">
+                  <v-tooltip :text="this.$t('city_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -130,11 +130,11 @@
                         >mdi-sitemap</v-icon
                       >
                     </template>
-                    <span>{{ $t("city") }}</span>
+                    <span>{{ $t("city_en") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span @click="deleteItem(props.item.selectable.header_id)">
-                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                  <v-tooltip :text="this.$t('delete_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         class="delete_btn icon_size"
@@ -182,7 +182,7 @@
                     },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="bottom">
+                  <v-tooltip :text="this.$t('edit_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-on="on"
@@ -205,7 +205,7 @@
                     },
                   }"
                 >
-                  <v-tooltip :text="this.$t('city')" location="bottom">
+                  <v-tooltip :text="this.$t('city_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -214,11 +214,11 @@
                         >mdi-sitemap</v-icon
                       >
                     </template>
-                    <span>{{ $t("city") }}</span>
+                    <span>{{ $t("city_ar") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span @click="deleteItem(props.item.selectable.header_id)">
-                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                  <v-tooltip :text="this.$t('delete_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         class="delete_btn icon_size"
