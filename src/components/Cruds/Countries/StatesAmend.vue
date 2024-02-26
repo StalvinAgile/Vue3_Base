@@ -18,6 +18,13 @@
             <span>{{ $t("arabic") }}</span>
           </v-tab>
         </v-tabs>
+        <v-alert closable close-label="Close Alert" density="compact" color="rgb(var(--v-theme-error))" v-if="error_valid"
+        variant="tonal" @click:close="error_valid = false" class="my-3"
+        v-bind:class="[tabs == 1 ? '' : 'arabdirectionalert']" :title="tabs == 1 ? $t('validation_error_en') : $t('validation_error_ar')
+          " :text="tabs == 1
+      ? $t('please_fill_required_fields_en')
+      : $t('please_fill_required_fields_ar')
+    "></v-alert>
         <v-window v-model="tabs">
           <!-- ENGLISH TAB STARTS -->
           <v-window-item :value="1">
@@ -61,7 +68,7 @@
           <!-- ENGLISH TAB STOPS -->
           <!-- ARABIC TAB STARTS -->
           <v-window-item :value="2">
-            <v-form ref="form" v-model="valid">
+            <v-form ref="form" v-model="validAR">
               <v-row class="mx-auto mt-2 arabdirection" max-width="344">
                 <v-col cols="12" md="6">
                   <v-tooltip :text="this.$t('country_ar')" location="bottom">
@@ -123,7 +130,7 @@
             <div v-bind="props" class="d-inline-block">
               <v-btn
                 :disabled="isBtnLoading"
-                @click="submit"
+                @click="presubmitvalidation"
                 size="small"
                 class="mr-2"
                 color="success"
@@ -155,7 +162,9 @@ export default {
       icon: "material-symbols-outlined",
     },
     envPath: process.env.VUE_APP_IMAGE_DOWNLOAD_URL,
-    valid: true,
+    valid: false,
+    validAR: false,
+    error_valid: false,
     loader: false,
     file: "",
     isBtnLoading: false,
@@ -209,6 +218,8 @@ export default {
       immediate: true,
       handler() {
         if (this.$route.query.countryslug) {
+          this.valid = true;
+          this.validAR = true;
           this.loader = true;
           this.$axios
             .get(
@@ -263,8 +274,31 @@ export default {
 
       // Do whatever you need with the file, liek reading it with FileReader
     },
+    presubmitvalidation() {
+      if (this.tabs == 1) {
+        if (this.$refs.form.validate() & this.valid == true && this.validAR == true) {
+          this.error_valid = false;
+          this.submit();
+        } else {
+          if (this.valid == true) {
+            this.error_valid = true;
+            this.tabs = 2;
+          }
+        }
+      } else {
+        if (this.$refs.form.validate() && this.validAR == true && this.valid == true) {
+          this.error_valid = false;
+          this.submit();
+        } else {
+          if (this.validAR == true) {
+            this.error_valid = true;
+            this.tabs = 1;
+          }
+        }
+      }
+    },
     submit() {
-      if (this.$refs.form.validate() && this.valid == true) {
+      if (this.validAR == true && this.valid == true) {
         this.isDisabled = true;
         this.isBtnLoading = true;
         // Form is valid, process
@@ -298,9 +332,7 @@ export default {
           .catch((err) => {
             console.log(err);
           });
-      } else {
-        //alert("Form is Invalid");
-      }
+      } 
     },
     clear() {
       this.$refs.form.reset();
