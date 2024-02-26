@@ -569,5 +569,7 @@
   "child_lookup_ar": "عمليات بحث الطفل",
   "states_en": "States",
   "states_ar": "تنص على",
-  "city_en_ar": "تنص على"
+  "city_en_ar": "تنص على",
+  "send_otp":"Send OTP",
+  "confirm_email":"Confirm Your Email"
 }
