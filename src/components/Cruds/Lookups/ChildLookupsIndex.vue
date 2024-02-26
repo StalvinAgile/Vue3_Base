@@ -4,7 +4,7 @@
       flat
       color="white"
       class="row py-5 pl-5 align-items-center component_app_bar"
-      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
     >
       <page-title
         class="col-md-3"
@@ -45,8 +45,8 @@
                 $t("add_new")
               }}</v-btn>
             </router-link>
-          </template>
-        </v-tooltip>&nbsp;
+          </template> </v-tooltip
+        >&nbsp;
         <v-tooltip :text="this.$t('back')" location="bottom">
           <template v-slot:activator="{ props }">
             <router-link
@@ -67,9 +67,16 @@
         </v-tooltip>
       </div>
     </div>
-    <div class="px-4 d-flex justify-content-between" v-if="parent_lookup.length > 0">
-      <div class="parent-name">{{ $t("parent_lookup_en") }} : {{ parent_lookup[0].longname }}</div>
-      <div class="rtl-direction parent-name">{{ $t("parent_lookup_ar") }} : {{ parent_lookup[1].longname }}</div>
+    <div
+      class="px-4 d-flex justify-content-between"
+      v-if="parent_lookup.length > 0"
+    >
+      <div class="parent-name">
+        {{ $t("parent_lookup_en") }} : {{ parent_lookup[0].longname }}
+      </div>
+      <div class="rtl-direction parent-name">
+        {{ $t("parent_lookup_ar") }} : {{ parent_lookup[1].longname }}
+      </div>
     </div>
     <v-tabs v-model="tabs" color="blue">
       <v-tab :value="1" @click="checkUploadImage">
@@ -115,12 +122,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_en") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_en") }}</span
                   >
                 </v-btn>
               </td>
@@ -132,7 +139,7 @@
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
-                  <v-tooltip :text="this.$t('add_new')" location="bottom">
+                  <v-tooltip :text="this.$t('edit_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         small
@@ -142,11 +149,11 @@
                         >mdi-pencil-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("edit") }}</span>
+                    <span>{{ $t("edit_en") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span @click="deleteItem(props.item.selectable.header_id)">
-                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                  <v-tooltip :text="this.$t('delete_en')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         class="delete_btn icon_size"
@@ -209,12 +216,12 @@
                   <span
                     v-if="props.item.selectable.status == 1"
                     class="spanactivesize"
-                    >{{ $t("active") }}</span
+                    >{{ $t("active_ar") }}</span
                   >
                   <span
                     v-if="props.item.selectable.status == 0"
                     class="spanactivesize"
-                    >{{ $t("inactive") }}</span
+                    >{{ $t("inactive_ar") }}</span
                   >
                 </v-btn>
               </td>
@@ -226,7 +233,7 @@
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
-                  <v-tooltip :text="this.$t('add_new')" location="bottom">
+                  <v-tooltip :text="this.$t('edit_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         small
@@ -236,11 +243,11 @@
                         >mdi-pencil-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("edit") }}</span>
+                    <span>{{ $t("edit_ar") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span @click="deleteItem(props.item.selectable.header_id)">
-                  <v-tooltip :text="this.$t('delete')" location="bottom">
+                  <v-tooltip :text="this.$t('delete_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         class="delete_btn icon_size"
@@ -306,9 +313,8 @@ export default {
     initval: false,
     valid: false,
     message: "",
-    parent_lookup:[],
-    sel_lang:""
-    
+    parent_lookup: [],
+    sel_lang: "",
   }),
   computed: {
     headers_en() {
@@ -317,7 +323,7 @@ export default {
           title: this.$t("shortname_en"),
           align: "left",
           sortable: true,
-          key:"shortname",
+          key: "shortname",
         },
         {
           title: this.$t("longname_en"),
@@ -345,7 +351,7 @@ export default {
           title: this.$t("shortname_ar"),
           align: "left",
           sortable: true,
-          key:"shortname",
+          key: "shortname",
         },
         {
           title: this.$t("longname_ar"),
@@ -377,13 +383,14 @@ export default {
         }
       },
     },
-    '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
 
   mounted() {},
@@ -415,12 +422,10 @@ export default {
           }
           if (res.data.status == "S") {
             this.$toast.success(this.array_data);
-            
           } else if (res.data.status == "E") {
             this.$toast.error(this.array_data);
           } else {
             this.$toast.error(this.array_data);
-            
           }
         })
         .catch((err) => {
@@ -430,7 +435,6 @@ export default {
         .finally(() => {
           this.initialize();
         });
-
     },
     deleteLookup(id) {
       this.$axios
@@ -565,7 +569,7 @@ export default {
   min-width: 90px !important;
 }
 
-.parent-name{
+.parent-name {
   font-size: 18px;
   font-weight: 500;
 }

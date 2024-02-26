@@ -26,14 +26,14 @@
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
               <v-col md="6">
-                <v-tooltip :text="this.$t('shortname')" location="bottom">
+                <v-tooltip :text="this.$t('shortname_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
                       v-model="lookup[0].shortname"
                       v-bind="props"
                       :rules="fieldRules"
-                      v-bind:label="$t('shortname')"
+                      v-bind:label="$t('shortname_en')"
                       required
                       class="required_field"
                       variant="outlined"
@@ -44,14 +44,14 @@
                 </v-tooltip>
               </v-col>
               <v-col md="6">
-                <v-tooltip :text="this.$t('longname')" location="bottom">
+                <v-tooltip :text="this.$t('longname_en')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
                       v-model="lookup[0].longname"
                       v-bind="props"
                       :rules="fieldRules"
-                      v-bind:label="$t('longname')"
+                      v-bind:label="$t('longname_en')"
                       required
                       class="required_field"
                       variant="outlined"
@@ -65,14 +65,17 @@
             <v-layout>
               <v-row class="mx-auto mt-2" max-width="344">
                 <v-col md="12">
-                  <v-tooltip :text="this.$t('description')" location="bottom">
+                  <v-tooltip
+                    :text="this.$t('description_en')"
+                    location="bottom"
+                  >
                     <template v-slot:activator="{ props }">
                       <v-textarea
                         v-on="on"
                         rows="2"
                         v-model="lookup[0].description"
                         v-bind="props"
-                        v-bind:label="$t('description')"
+                        v-bind:label="$t('description_en')"
                         required
                         variant="outlined"
                         maxlength="100"
@@ -162,14 +165,14 @@
           <v-form ref="form" v-model="valid">
             <v-row class="mx-auto mt-2" max-width="344">
               <v-col md="6">
-                <v-tooltip :text="this.$t('shortname')" location="bottom">
+                <v-tooltip :text="this.$t('shortname_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
                       v-model="lookup[1].shortname"
                       v-bind="props"
                       :rules="fieldRules"
-                      v-bind:label="$t('shortname')"
+                      v-bind:label="$t('shortname_ar')"
                       required
                       class="required_field rtl"
                       variant="outlined"
@@ -180,14 +183,14 @@
                 </v-tooltip>
               </v-col>
               <v-col md="6">
-                <v-tooltip :text="this.$t('longname')" location="bottom">
+                <v-tooltip :text="this.$t('longname_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
                       v-model="lookup[1].longname"
                       v-bind="props"
                       :rules="fieldRules"
-                      v-bind:label="$t('longname')"
+                      v-bind:label="$t('longname_ar')"
                       required
                       class="required_field rtl"
                       variant="outlined"
@@ -201,14 +204,17 @@
             <v-layout>
               <v-row class="mx-auto mt-2" max-width="344">
                 <v-col md="12">
-                  <v-tooltip :text="this.$t('description')" location="bottom">
+                  <v-tooltip
+                    :text="this.$t('description_ar')"
+                    location="bottom"
+                  >
                     <template v-slot:activator="{ props }">
                       <v-textarea
                         v-on="on"
                         rows="2"
                         v-model="lookup[1].description"
                         v-bind="props"
-                        v-bind:label="$t('description')"
+                        v-bind:label="$t('description_ar')"
                         required
                         class="rtl"
                         variant="outlined"
