@@ -118,10 +118,10 @@
                   small
                   :to="{
                     name: 'stores-amend',
-                    query: { slug: props.item.selectable.slug, 's_tab': tabs},
+                    query: { slug: props.item.selectable.slug, s_tab: tabs },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="top">
+                  <v-tooltip :text="this.$t('edit_en')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -130,20 +130,20 @@
                         >mdi-pencil-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("edit") }}</span>
+                    <span>{{ $t("edit_en") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span
                   @click="deleteItem(props.item.selectable.header_id)"
                   v-if="!props.item.selectable.have_child"
                 >
-                  <v-tooltip :text="this.$t('delete')" location="top">
+                  <v-tooltip :text="this.$t('delete_en')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
                         >mdi-trash-can-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("delete") }}</span>
+                    <span>{{ $t("delete_en") }}</span>
                   </v-tooltip>
                 </span>
                 <span v-else>
@@ -220,10 +220,10 @@
                   small
                   :to="{
                     name: 'stores-amend',
-                    query: { slug: props.item.selectable.slug, 's_tab': tabs},
+                    query: { slug: props.item.selectable.slug, s_tab: tabs },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="top">
+                  <v-tooltip :text="this.$t('edit_ar')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -232,20 +232,20 @@
                         >mdi-pencil-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("edit") }}</span>
+                    <span>{{ $t("edit_ar") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span
                   @click="deleteItem(props.item.selectable.header_id)"
                   v-if="!props.item.selectable.have_child"
                 >
-                  <v-tooltip :text="this.$t('delete')" location="top">
+                  <v-tooltip :text="this.$t('delete_ar')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
                         >mdi-trash-can-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("delete") }}</span>
+                    <span>{{ $t("delete_ar") }}</span>
                   </v-tooltip>
                 </span>
                 <span v-else>
@@ -435,8 +435,8 @@ export default {
   mounted() {
     this.fetchStores();
     if (this.$route.query.s_tab) {
-    this.tabs = this.$route.query.s_tab == 1 ? 1 : 2;
-  }
+      this.tabs = this.$route.query.s_tab == 1 ? 1 : 2;
+    }
   },
 
   methods: {
@@ -477,7 +477,7 @@ export default {
     viewStores(slug) {
       this.$router.push({
         name: "stores-review",
-        query: { slug: slug, 's_tab': this.tabs },
+        query: { slug: slug, s_tab: this.tabs },
       });
     },
     cancel() {
