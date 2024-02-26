@@ -362,7 +362,8 @@ export default {
     presubmitvalidation() {
       if (this.tabs == 1) {
         if (
-          this.$refs.form.validate() & (this.valid == true) &&
+          this.$refs.form.validate() &&
+          this.valid == true &&
           this.validAR == true
         ) {
           this.error_valid = false;

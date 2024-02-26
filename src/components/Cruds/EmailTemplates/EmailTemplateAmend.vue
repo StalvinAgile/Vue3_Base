@@ -1,25 +1,44 @@
 <template>
   <div class="mx-2 mt-3 p-0">
-    <div class="text-center" v-bind:class="[is_arabic ? 'rtl-page-title' : '',]">
-      <page-title class="col-md-4" :heading="$t('amend_email_template')" :google_icon="google_icon"></page-title>
+    <div class="text-center" v-bind:class="[is_arabic ? 'rtl-page-title' : '']">
+      <page-title
+        class="col-md-4"
+        :heading="$t('amend_email_template')"
+        :google_icon="google_icon"
+      ></page-title>
     </div>
     <div class="mb-3">
       <content-loader v-if="loader"></content-loader>
       <div class="card-body" style="box-shadow: none !important">
         <v-form ref="form" v-model="valid">
-          <v-row class="px-6 mt-4" v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''">
+          <v-row
+            class="px-6 mt-4"
+            v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''"
+          >
             <v-col cols="12" sm="6" md="6">
-              <v-tooltip 
-              v-bind:text="fieldItem.lang == 'en' ? $t('name') : $t('name_ar')"
-              location="bottom">
+              <v-tooltip
+                v-bind:text="
+                  fieldItem.lang == 'en' ? $t('name') : $t('name_ar')
+                "
+                location="bottom"
+              >
                 <template v-slot:activator="{ props }">
-                  <v-text-field :disabled="fieldItem.id == 0 ? disabled : ''" v-bind="props" maxlength="100"
-                  class="required_field"
-                    v-model="fieldItem.template_name" 
-                    v-bind:rules="fieldItem.lang == 'en' ? fieldRules : fieldRulesAR"
-                    v-bind:label="fieldItem.lang == 'en' ? $t('name') : $t('name_ar')"
+                  <v-text-field
+                    :disabled="fieldItem.id == 0 ? disabled : ''"
+                    v-bind="props"
+                    maxlength="100"
+                    class="required_field"
+                    v-model="fieldItem.template_name"
+                    v-bind:rules="
+                      fieldItem.lang == 'en' ? fieldRules : fieldRulesAR
+                    "
+                    v-bind:label="
+                      fieldItem.lang == 'en' ? $t('name') : $t('name_ar')
+                    "
                     required
-                    variant="outlined" density="compact"></v-text-field>
+                    variant="outlined"
+                    density="compact"
+                  ></v-text-field>
                 </template>
               </v-tooltip>
             </v-col>
@@ -34,56 +53,130 @@
           </v-tabs>
           <div>
             <div>
-              <v-row class="px-6 mt-4" v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''">
+              <v-row
+                class="px-6 mt-4"
+                v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''"
+              >
                 <v-col cols="12" sm="12" md="4">
-                  <v-tooltip :text="fieldItem.lang == 'en' ? $t('select_mode_en') : $t('select_mode_ar')"
-                    location="bottom">
+                  <v-tooltip
+                    :text="
+                      fieldItem.lang == 'en'
+                        ? $t('select_mode_en')
+                        : $t('select_mode_ar')
+                    "
+                    location="bottom"
+                  >
                     <template v-slot:activator="{ props }">
-                      <v-autocomplete class="rtl-dir required_field" v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''"
-                        v-bind:rules="fieldItem.lang == 'en' ? fieldRules : fieldRulesAR"
-                        v-bind:label="fieldItem.lang == 'en' ? $t('select_mode_en') : $t('select_mode_ar')"
-                        item-value="header_id" item-title="shortname" density="compact" variant="outlined" v-bind="props"
-                        index="id" v-model="fieldItem.template_type_id"
-                        :items="tabs == 1 ? temp_type_en : temp_type_ar" outlined required dense></v-autocomplete>
+                      <v-autocomplete
+                        class="rtl-dir required_field"
+                        v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''"
+                        v-bind:rules="
+                          fieldItem.lang == 'en' ? fieldRules : fieldRulesAR
+                        "
+                        v-bind:label="
+                          fieldItem.lang == 'en'
+                            ? $t('select_mode_en')
+                            : $t('select_mode_ar')
+                        "
+                        item-value="header_id"
+                        item-title="shortname"
+                        density="compact"
+                        variant="outlined"
+                        v-bind="props"
+                        index="id"
+                        v-model="fieldItem.template_type_id"
+                        :items="tabs == 1 ? temp_type_en : temp_type_ar"
+                        outlined
+                        required
+                        dense
+                      ></v-autocomplete>
                     </template>
                   </v-tooltip>
                 </v-col>
                 <v-col cols="12" sm="12" md="8">
-                  <v-tooltip :text="fieldItem.lang == 'en' ? $t('subject_en') : $t('subject_ar')" location="bottom">
+                  <v-tooltip
+                    :text="
+                      fieldItem.lang == 'en'
+                        ? $t('subject_en')
+                        : $t('subject_ar')
+                    "
+                    location="bottom"
+                  >
                     <template v-slot:activator="{ props }">
-                      <v-text-field v-bind="props" v-model="fieldItem.template_subject" 
-                      v-bind:rules="fieldItem.lang == 'en' ? fieldRules : fieldRulesAR"
-                        v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''" maxlength="100"
+                      <v-text-field
+                        v-bind="props"
+                        v-model="fieldItem.template_subject"
+                        v-bind:rules="
+                          fieldItem.lang == 'en' ? fieldRules : fieldRulesAR
+                        "
+                        v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''"
+                        maxlength="100"
                         class="required_field"
-                        v-bind:label="fieldItem.lang == 'en' ? $t('subject_en') : $t('subject_ar')" required
-                        variant="outlined" density="compact"></v-text-field>
+                        v-bind:label="
+                          fieldItem.lang == 'en'
+                            ? $t('subject_en')
+                            : $t('subject_ar')
+                        "
+                        required
+                        variant="outlined"
+                        density="compact"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
               </v-row>
               <v-row class="px-6 pt-0">
-                <v-col cols="12" md="12" lg="12" sm="12" class="pt-0"
-                  v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''">
-                  <v-card-title v-bind:class="fieldItem.lang == 'ar' ? 'text-right' : 'text-left'"
-                    style="font-size: 17px">
+                <v-col
+                  cols="12"
+                  md="12"
+                  lg="12"
+                  sm="12"
+                  class="pt-0"
+                  v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''"
+                >
+                  <v-card-title
+                    v-bind:class="
+                      fieldItem.lang == 'ar' ? 'text-right' : 'text-left'
+                    "
+                    style="font-size: 17px"
+                  >
                     <span v-if="fieldItem.lang == 'ar'">
                       {{ $t("body_ar") }}
                     </span>
                     <span v-else> {{ $t("body_en") }}</span>
                   </v-card-title>
-                  <v-tooltip :text="fieldItem.lang == 'en' ? $t('body_en') : $t('body_ar')" location="top">
+                  <v-tooltip
+                    :text="
+                      fieldItem.lang == 'en' ? $t('body_en') : $t('body_ar')
+                    "
+                    location="top"
+                  >
                     <template v-slot:activator="{ props }">
                       <div v-bind="props">
-                        <quill-editor :key="quill_d" :options="editorOptions" v-bind:style="tabs == 2 ? 'rt-input' : ''"
-                        v-bind:class="tabs == 2 ? 'arabclassquill' : ''"
-                          class="hide_quill_input" v-bind:id="quill_item == true
-                            ? 'quill_item'
-                            : 'quill_item_border'
-                            " v-model:value="fieldItem.template_body" @blur="onEditorBlur($event)"
-                          @focus="onEditorFocus($event)" @ready="onEditorReady($event)"
-                          @change="onEditorChange($event)" />
-                        <small v-if="quill_item" class="text-danger ml-5 required_item shake"><span v-if="tabs==2">{{ $t('field_required_ar') }}</span>
-                          <span v-else>{{ $t('field_required') }}</span>
+                        <quill-editor
+                          :key="quill_d"
+                          :options="editorOptions"
+                          v-bind:style="tabs == 2 ? 'rt-input' : ''"
+                          v-bind:class="tabs == 2 ? 'arabclassquill' : ''"
+                          class="hide_quill_input"
+                          v-bind:id="
+                            quill_item == true
+                              ? 'quill_item'
+                              : 'quill_item_border'
+                          "
+                          v-model:value="fieldItem.template_body"
+                          @blur="onEditorBlur($event)"
+                          @focus="onEditorFocus($event)"
+                          @ready="onEditorReady($event)"
+                          @change="onEditorChange($event)"
+                        />
+                        <small
+                          v-if="quill_item"
+                          class="text-danger ml-5 required_item shake"
+                          ><span v-if="tabs == 2">{{
+                            $t("field_required_ar")
+                          }}</span>
+                          <span v-else>{{ $t("field_required") }}</span>
                         </small>
                       </div>
                     </template>
@@ -91,24 +184,58 @@
                 </v-col>
               </v-row>
               <v-row class="px-6 mb-2">
-                <v-col cols="12" md="12" lg="12" sm="12" v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''">
-                  <v-card-title v-bind:class="fieldItem.lang == 'ar' ? 'text-right' : 'text-left'"
-                    style="font-size: 17px">
-                    <span v-if="fieldItem.lang == 'ar'">{{ $t('signature_ar') }}</span> <span v-else>{{ $t("signature_en")
+                <v-col
+                  cols="12"
+                  md="12"
+                  lg="12"
+                  sm="12"
+                  v-bind:class="fieldItem.lang == 'ar' ? 'arabclass' : ''"
+                >
+                  <v-card-title
+                    v-bind:class="
+                      fieldItem.lang == 'ar' ? 'text-right' : 'text-left'
+                    "
+                    style="font-size: 17px"
+                  >
+                    <span v-if="fieldItem.lang == 'ar'">{{
+                      $t("signature_ar")
                     }}</span>
+                    <span v-else>{{ $t("signature_en") }}</span>
                   </v-card-title>
-                  <v-tooltip :text="fieldItem.lang == 'en' ? $t('signature_en') : $t('signature_ar')" location="top">
+                  <v-tooltip
+                    :text="
+                      fieldItem.lang == 'en'
+                        ? $t('signature_en')
+                        : $t('signature_ar')
+                    "
+                    location="top"
+                  >
                     <template v-slot:activator="{ props }">
                       <div v-bind="props">
-                        <quill-editor :key="quill_key" :options="editorOptions" v-bind:style="tabs == 2 ? 'rt-input' : ''"
-                        v-bind:class="tabs == 2 ? 'arabclassquill' : ''"
-                          class="hide_quill_input" v-bind:id="quill_sign == true
-                            ? 'quill_item1'
-                            : 'quill_item_border1'
-                            " v-model:value="fieldItem.template_signature" v-bind:label="$t('body')"
-                          @change="onEditorChangeSignature($event)" @blur="onEditorBlurSign($event)" />
-                        <small v-if="quill_sign" class="text-danger ml-3 required_item shake"><span v-if="tabs==2">{{ $t('field_required_ar') }}</span>
-                          <span v-else>{{ $t('field_required') }}</span></small>
+                        <quill-editor
+                          :key="quill_key"
+                          :options="editorOptions"
+                          v-bind:style="tabs == 2 ? 'rt-input' : ''"
+                          v-bind:class="tabs == 2 ? 'arabclassquill' : ''"
+                          class="hide_quill_input"
+                          v-bind:id="
+                            quill_sign == true
+                              ? 'quill_item1'
+                              : 'quill_item_border1'
+                          "
+                          v-model:value="fieldItem.template_signature"
+                          v-bind:label="$t('body')"
+                          @change="onEditorChangeSignature($event)"
+                          @blur="onEditorBlurSign($event)"
+                        />
+                        <small
+                          v-if="quill_sign"
+                          class="text-danger ml-3 required_item shake"
+                          ><span v-if="tabs == 2">{{
+                            $t("field_required_ar")
+                          }}</span>
+                          <span v-else>{{ $t("field_required") }}</span></small
+                        >
                         <!-- <QuillEditor theme="snow" v-model:content="fieldItem.template_signature"
                     contentType="html" name="template_body" v-bind:label="$t('body')" />-->
                       </div>
@@ -124,7 +251,14 @@
         <v-tooltip :text="$t('cancel')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block mr-2">
-              <v-btn v-bind="props" size="small" @click="cancel()" :disabled="loading" class="ma-1" color="cancel">
+              <v-btn
+                v-bind="props"
+                size="small"
+                @click="cancel()"
+                :disabled="loading"
+                class="ma-1"
+                color="cancel"
+              >
                 {{ $t("cancel") }}
               </v-btn>
             </div>
@@ -133,10 +267,22 @@
         <v-tooltip :text="$t('submit')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block">
-              <v-btn :disabled="isDisabled" @click="submit" size="small" class="mr-2" color="success">
+              <v-btn
+                :disabled="isDisabled"
+                @click="submit"
+                size="small"
+                class="mr-2"
+                color="success"
+              >
                 {{ $t("submit") }}
-                <v-progress-circular v-if="isDisabled" indeterminate width="1" color="cancel" size="x-small"
-                  class="ml-2"></v-progress-circular>
+                <v-progress-circular
+                  v-if="isDisabled"
+                  indeterminate
+                  width="1"
+                  color="cancel"
+                  size="x-small"
+                  class="ml-2"
+                ></v-progress-circular>
               </v-btn>
             </div>
           </template>
@@ -173,7 +319,7 @@ export default {
     return { onEditorReady, onEditorFocus, onEditorFocusAR, onEditorReadyAR };
   },
   data: () => ({
-    quill_key : 0,
+    quill_key: 0,
     quill_item: false,
     quill_sign: false,
     tabs: 1,
@@ -235,7 +381,6 @@ export default {
   }),
 
   computed: {
-  
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
     },
@@ -247,8 +392,8 @@ export default {
   created() {
     this.fetchLookup();
   },
-  mounted() { 
-    this.editorOptions.placeholder = this.$t('enter_the_content_here_en');
+  mounted() {
+    this.editorOptions.placeholder = this.$t("enter_the_content_here_en");
   },
   watch: {
     tabs(newVal) {
@@ -256,16 +401,16 @@ export default {
         this.editorOptions.direction = "rtl";
         this.quill_key++;
         this.quill_d++;
-        this.editorOptions.placeholder = this.$t('enter_the_content_here_ar');
+        this.editorOptions.placeholder = this.$t("enter_the_content_here_ar");
       } else {
         this.editorOptions.direction = "ltr";
         this.quill_d++;
         this.quill_key++;
-        this.editorOptions.placeholder = this.$t('enter_the_content_here_en');
+        this.editorOptions.placeholder = this.$t("enter_the_content_here_en");
       }
     },
-    '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
         this.is_arabic = true;
       } else {
         this.is_arabic = false;
@@ -280,8 +425,8 @@ export default {
           this.$axios
             .get(
               process.env.VUE_APP_API_URL_ADMIN +
-              "emailtemplates/" +
-              this.$route.query.slug
+                "emailtemplates/" +
+                this.$route.query.slug
             )
             .then((res) => {
               this.loader = false;
@@ -411,8 +556,8 @@ export default {
           this.$axios
             .patch(
               process.env.VUE_APP_API_URL_ADMIN +
-              "emailtemplates/" +
-              this.template_slug,
+                "emailtemplates/" +
+                this.template_slug,
               this.fieldItem
             )
             .then((res) => {
@@ -480,7 +625,7 @@ export default {
   display: none !important;
 }
 
-.hide_quill_input>>>input {
+.hide_quill_input >>> input {
   display: none !important;
 }
 
@@ -500,14 +645,13 @@ export default {
 .arabclass {
   direction: rtl !important;
 }
-.arabclassquill .ql-editor{
-  text-align: justify ;
+.arabclassquill .ql-editor {
+  text-align: justify;
 }
-.arabclass  .v-messages__message {
+.arabclass .v-messages__message {
   text-align: right !important;
 }
 @keyframes shake {
-
   10%,
   90% {
     transform: translate3d(-1px, 0, 0);

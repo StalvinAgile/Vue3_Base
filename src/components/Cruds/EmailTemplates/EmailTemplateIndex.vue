@@ -1,13 +1,18 @@
 <template>
   <div class="main-20">
-    <div flat color="white" class="row py-5 pl-5 align-items-center component_app_bar position-relative" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '',]">
+    <div
+      flat
+      color="white"
+      class="row py-5 pl-5 align-items-center component_app_bar position-relative"
+      v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
+    >
       <page-title
         class="col-md-4"
         :heading="$t('email_templates')"
         :google_icon="google_icon"
       ></page-title>
 
-       <div class="col-md-4">
+      <div class="col-md-4">
         <v-tooltip :text="this.$t('search')" location="bottom">
           <template v-slot:activator="{ props }">
             <v-text-field
@@ -58,8 +63,7 @@
           :search="search"
           :loading="initval"
           v-bind:no-data-text="$t('no_data_available')"
-                :items-per-page-text="$t('rows_per_page_en')"
-
+          :items-per-page-text="$t('rows_per_page_en')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -74,7 +78,7 @@
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="top">
+                  <v-tooltip :text="this.$t('edit_en')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -83,17 +87,17 @@
                         >mdi-pencil-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("edit") }}</span>
+                    <span>{{ $t("edit_en") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span @click="deleteItem(props.item.selectable.id)">
-                  <v-tooltip :text="this.$t('delete')" location="top">
+                  <v-tooltip :text="this.$t('delete_en')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
                         >mdi-trash-can-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("delete") }}</span>
+                    <span>{{ $t("delete_en") }}</span>
                   </v-tooltip>
                 </span>
               </td>
@@ -109,9 +113,9 @@
           :items="email_templates"
           :search="search"
           :loading="initval"
-          v-bind:no-data-text="$t('no_data_available')"
-              :items-per-page-text="$t('rows_per_page_ar')"
-
+          class="rtl-direction"
+          :items-per-page-text="$t('rows_per_page_ar')"
+          :no-data-text="$t('no_data_available_ar')"
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
@@ -126,7 +130,7 @@
                     query: { slug: props.item.selectable.slug },
                   }"
                 >
-                  <v-tooltip :text="this.$t('edit')" location="top">
+                  <v-tooltip :text="this.$t('edit_ar')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon
                         v-bind="props"
@@ -135,17 +139,17 @@
                         >mdi-pencil-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("edit") }}</span>
+                    <span>{{ $t("edit_ar") }}</span>
                   </v-tooltip>
                 </router-link>
                 <span @click="deleteItem(props.item.selectable.id)">
-                  <v-tooltip :text="this.$t('delete')" location="top">
+                  <v-tooltip :text="this.$t('delete_ar')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
                         >mdi-trash-can-outline</v-icon
                       >
                     </template>
-                    <span>{{ $t("delete") }}</span>
+                    <span>{{ $t("delete_ar") }}</span>
                   </v-tooltip>
                 </span>
               </td>
@@ -186,7 +190,7 @@ export default {
       color: "google_icon_gradient",
       icon: "material-symbols-outlined",
     },
-    sel_lang:""
+    sel_lang: "",
   }),
 
   computed: {
@@ -254,13 +258,14 @@ export default {
     dialog(val) {
       val || this.close();
     },
-   '$i18n.locale'(newLocale) {
-      if (newLocale === 'ar') {
-        this.sel_lang = 'ar';
-      } else {''
-        this.sel_lang = 'en';
+    "$i18n.locale"(newLocale) {
+      if (newLocale === "ar") {
+        this.sel_lang = "ar";
+      } else {
+        ("");
+        this.sel_lang = "en";
       }
-    }
+    },
   },
 
   created() {},

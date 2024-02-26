@@ -233,8 +233,6 @@ export default {
       immediate: true,
       handler() {
         if (this.$route.query.countryslug) {
-          this.valid = true;
-          this.validAR = true;
           this.loader = true;
           this.$axios
             .get(
@@ -259,6 +257,8 @@ export default {
       immediate: true,
       handler() {
         if (this.$route.query.slug) {
+          this.valid = true;
+          this.validAR = true;
           this.loader = true;
           this.$axios
             .get(
@@ -293,7 +293,8 @@ export default {
     presubmitvalidation() {
       if (this.tabs == 1) {
         if (
-          this.$refs.form.validate() & (this.valid == true) &&
+          this.$refs.form.validate() &&
+          this.valid == true &&
           this.validAR == true
         ) {
           this.error_valid = false;
