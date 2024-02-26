@@ -3,7 +3,7 @@
     <div class="my-3 p-0" v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']">
       <page-title class="col-md-4 ml-2" :heading="$t('create_amend_home_slider')" :google_icon="google_icon"></page-title>
     </div>
-    <div class="mb-3 mx-auto">
+   <div class="mb-3 mx-auto">
       <div class="card-body">
         <content-loader v-if="loader"></content-loader>
         <v-tabs v-model="tabs" color="blue" @update:modelValue="have_noimage = false">
@@ -474,6 +474,8 @@ export default {
     },
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
     valid: false,
+    quill_item: false,
+    quill_item_ar: false,
     error_valid: false,
     validAR: false,
     successmessage: "",
