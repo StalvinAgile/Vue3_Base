@@ -898,7 +898,7 @@ export default {
         image: "",
         m_image: "",
         action: "",
-        blank: "",
+        target: "",
         header_id: 0,
         media_type: "",
         video: "",
@@ -1127,8 +1127,10 @@ export default {
         }
       } else {
         if (this.image_upload_from == "website") {
+          this.have_noimage = false;
           this.home_slider[1].image = img_src;
         } else {
+          this.have_noimage = false;
           this.home_slider[1].m_image = img_src;
         }
       }
@@ -1262,8 +1264,8 @@ export default {
           this.$refs.form.validate() &&
           this.valid == true &&
           this.have_noimage == false &&
-          this.quill_item == false &&
-          this.quill_item_ar == false &&
+          // this.quill_item == false &&
+          // this.quill_item_ar == false &&
           this.validAR == true
         ) {
           this.error_valid = false;
@@ -1271,8 +1273,8 @@ export default {
         } else {
           if (
             this.valid == true &&
-            this.have_noimage == false &&
-            this.quill_item == false
+            this.have_noimage == false
+            // && this.quill_item == false
           ) {
             this.error_valid = true;
             this.tabs = 2;
@@ -1303,8 +1305,8 @@ export default {
           this.$refs.form.validate() &&
           this.validAR == true &&
           this.have_noimage == false &&
-          this.quill_item_ar == false &&
-          this.quill_item == false &&
+          // this.quill_item_ar == false &&
+          // this.quill_item == false &&
           this.valid == true
         ) {
           this.error_valid = false;
@@ -1312,8 +1314,8 @@ export default {
         } else {
           if (
             this.validAR == true &&
-            this.have_noimage == false &&
-            this.quill_item_ar == false
+            this.have_noimage == false
+            // && this.quill_item_ar == false
           ) {
             this.error_valid = true;
             this.tabs = 1;
@@ -1323,18 +1325,18 @@ export default {
     },
     submit() {
       if (this.selected_media_type == "Image") {
-        if (
-          this.home_slider[0].description == "" ||
-          this.home_slider[0].description == null
-        ) {
-          this.quill_item = true;
-        }
-        if (
-          this.home_slider[1].description == "" ||
-          this.home_slider[1].description == null
-        ) {
-          this.quill_item_ar = true;
-        }
+        // if (
+        //   this.home_slider[0].description == "" ||
+        //   this.home_slider[0].description == null
+        // ) {
+        //   this.quill_item = true;
+        // }
+        // if (
+        //   this.home_slider[1].description == "" ||
+        //   this.home_slider[1].description == null
+        // ) {
+        //   this.quill_item_ar = true;
+        // }
         if (
           this.valid == true &&
           ((this.tabs == 1 &&
@@ -1344,14 +1346,14 @@ export default {
               this.home_slider[1].image != "" &&
               this.home_slider[1].image != null))
         ) {
-          if (
-            this.home_slider[0].description == "" ||
-            this.home_slider[0].description == null ||
-            this.home_slider[1].description == "" ||
-            this.home_slider[1].description == null
-          ) {
-            return;
-          }
+          // if (
+          //   this.home_slider[0].description == "" ||
+          //   this.home_slider[0].description == null ||
+          //   this.home_slider[1].description == "" ||
+          //   this.home_slider[1].description == null
+          // ) {
+          //   return;
+          // }
           this.have_noimage = false;
           this.isDisabled = true;
           this.isBtnLoading = true;
@@ -1400,27 +1402,27 @@ export default {
           }
         }
       } else {
-        if (
-          this.home_slider[0].description == "" ||
-          this.home_slider[0].description == null
-        ) {
-          this.quill_item = true;
-        }
-        if (
-          this.home_slider[1].description == "" ||
-          this.home_slider[1].description == null
-        ) {
-          this.quill_item_ar = true;
-        }
+        // if (
+        //   this.home_slider[0].description == "" ||
+        //   this.home_slider[0].description == null
+        // ) {
+        //   this.quill_item = true;
+        // }
+        // if (
+        //   this.home_slider[1].description == "" ||
+        //   this.home_slider[1].description == null
+        // ) {
+        //   this.quill_item_ar = true;
+        // }
         if (this.valid == true) {
-          if (
-            this.home_slider[0].description == "" ||
-            this.home_slider[0].description == null ||
-            this.home_slider[1].description == "" ||
-            this.home_slider[1].description == null
-          ) {
-            return;
-          }
+          // if (
+          //   this.home_slider[0].description == "" ||
+          //   this.home_slider[0].description == null ||
+          //   this.home_slider[1].description == "" ||
+          //   this.home_slider[1].description == null
+          // ) {
+          //   return;
+          // }
           this.isDisabled = true;
           this.isBtnLoading = true;
           this.$axios

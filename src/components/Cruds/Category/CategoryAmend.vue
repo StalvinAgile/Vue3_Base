@@ -1182,7 +1182,7 @@ export default {
     cancel() {
       this.$router.push({
         name: "categories",
-        query: { s_tab: this.$route.query.s_tab },
+        query: { s_tab: this.tabs },
       });
     },
   },

@@ -33,7 +33,10 @@
       <div class="add_new_button">
         <v-tooltip :text="this.$t('add_new')" location="bottom">
           <template v-slot:activator="{ props }">
-            <router-link :to="{ name: 'lookups_amend' }" style="color: white">
+            <router-link
+              :to="{ name: 'lookups_amend', query: { s_tab: tabs } }"
+              style="color: white"
+            >
               <v-btn size="small" class="mb-2 green_btn_color" v-bind="props">{{
                 $t("add_new")
               }}</v-btn>
@@ -108,7 +111,7 @@
                   small
                   :to="{
                     name: 'lookups_amend',
-                    query: { slug: props.item.selectable.slug },
+                    query: { slug: props.item.selectable.slug, s_tab: tabs },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit_en')" location="bottom">
@@ -130,6 +133,7 @@
                     name: 'child_lookup',
                     query: {
                       slug: props.item.selectable.slug,
+                      s_tab: tabs,
                       parentname: props.item.selectable.shortname,
                     },
                   }"
@@ -228,7 +232,7 @@
                   small
                   :to="{
                     name: 'lookups_amend',
-                    query: { slug: props.item.selectable.slug },
+                    query: { slug: props.item.selectable.slug, s_tab: tabs },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit_ar')" location="bottom">
@@ -250,6 +254,7 @@
                     name: 'child_lookup',
                     query: {
                       slug: props.item.selectable.slug,
+                      s_tab: tabs,
                       parentname: props.item.selectable.shortname,
                     },
                   }"
@@ -360,6 +365,9 @@ export default {
   }),
   mounted() {
     this.initialize();
+    if (this.$route.query.s_tab) {
+      this.tabs = this.$route.query.s_tab == 1 ? 1 : 2;
+    }
   },
   watch: {
     "$i18n.locale"(newLocale) {
