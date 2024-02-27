@@ -150,7 +150,7 @@
                         density="compact"
                         :items="malls_en"
                         item-title="name"
-                        item-value="id"
+                        item-value="header_id"
                         :rules="fieldRules"
                         class="required_field"
                       ></v-autocomplete>
@@ -175,7 +175,7 @@
                         density="compact"
                         :items="stores_en"
                         item-title="name"
-                        item-value="id"
+                        item-value="header_id"
                         :rules="fieldRules"
                         class="required_field"
                       ></v-autocomplete>
@@ -485,7 +485,7 @@
     </div>
   </div>
 </template>
-  
+
 <script>
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import DatePicker from "../../CustomComponents/DatePicker.vue";
@@ -532,9 +532,9 @@ export default {
       mobile_code: null,
       store_id: null,
     },
+    user:"",
     role_array_view_profile: [],
     uploadfile: false,
-    user: "",
     phonelength: "10",
     role_array: [],
     salutation_array_en: [],
@@ -754,12 +754,18 @@ export default {
         .then((response) => {
           this.role_array_view_profile = response.data.roles;
           this.role_array = response.data.roles;
+          if (this.user.rolename=='SuperUser') {
+            this.role_array_view_profile = this.role_array.filter((ele) => {
 
-          this.role_array = this.role_array.filter((ele) => {
-            if (ele.rolename == "Admin" && this.from_page == "") {
-              this.profile_details.role_id = ele.id;
-            }
-          });
+             return ele.rolename!='SuperUser' &&  ele.rolename!='MallAdmin'
+            });
+          }
+          if (this.user.rolename=='MallAdmin') {
+            this.role_array_view_profile = this.role_array.filter((ele) => {
+
+             return ele.rolename!='SuperUser' &&  ele.rolename!='MallAdmin'
+            });
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -854,4 +860,3 @@ export default {
   bottom: 70px;
 }
 </style>
-  
