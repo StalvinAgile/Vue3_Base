@@ -632,17 +632,15 @@
         <v-tooltip :text="this.$t('cancel')" location="bottom">
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-inline-block mr-2">
-              <router-link :to="{ name: 'categories' }">
-                <v-btn
-                  v-bind="props"
-                  size="small"
-                  @click="cancel()"
-                  :disabled="loading"
-                  class="ma-1"
-                  color="cancel"
-                  >{{ $t("cancel") }}</v-btn
-                >
-              </router-link>
+              <v-btn
+                v-bind="props"
+                size="small"
+                @click="cancel()"
+                :disabled="loading"
+                class="ma-1"
+                color="cancel"
+                >{{ $t("cancel") }}</v-btn
+              >
             </div>
           </template>
         </v-tooltip>
@@ -851,10 +849,12 @@ export default {
     "$route.query.s_tab": {
       immediate: true,
       handler() {
-        if (this.$route.query.s_tab == 1) {
-          this.tabs = 1;
-        } else {
-          this.tabs = 2;
+        if (this.$route.query.s_tab) {
+          if (this.$route.query.s_tab == 1) {
+            this.tabs = 1;
+          } else {
+            this.tabs = 2;
+          }
         }
       },
     },
@@ -1028,7 +1028,8 @@ export default {
       }
     },
     submit() {
-      if (this.valid == true &&
+      if (
+        this.valid == true &&
         this.quill_item == false &&
         this.validAR == true &&
         this.quill_item_ar == false
@@ -1053,6 +1054,7 @@ export default {
               this.message = res.data.message;
               this.$router.push({
                 name: "categories",
+                query: { s_tab: this.$route.query.s_tab },
               });
             } else {
               this.$toast.error(this.array_data);
@@ -1180,6 +1182,7 @@ export default {
     cancel() {
       this.$router.push({
         name: "categories",
+        query: { s_tab: this.$route.query.s_tab },
       });
     },
   },
