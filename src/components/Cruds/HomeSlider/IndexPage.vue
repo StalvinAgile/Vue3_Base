@@ -130,7 +130,7 @@
                     <span>{{ $t("edit") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
@@ -223,7 +223,7 @@
                     <span>{{ $t("edit") }}</span>
                   </v-tooltip>
                 </router-link>
-                <span @click="deleteItem(props.item.selectable.id)">
+                <span @click="deleteItem(props.item.selectable.header_id)">
                   <v-tooltip :text="this.$t('delete')" location="top">
                     <template v-slot:activator="{ props }">
                       <v-icon color="error" type="button" v-bind="props" small
