@@ -5,19 +5,21 @@
 
       <v-card>
         <div class="d-flex justify-content-between">
-        <div>
-        <v-card-title>{{ $t("crop_image") }} </v-card-title>
+          <div>
+            <v-card-title>{{ $t("crop_image") }} </v-card-title>
+          </div>
+          <div class="btn_margin">
+            <v-btn color="success" @click="cropImage">{{ $t("upload") }}</v-btn>
+            <v-btn color="error" @click="cancelCrop" class="ml-2">{{
+              $t("cancel")
+            }}</v-btn>
+          </div>
         </div>
-        <div class="btn_margin">
-         <v-btn color="success" @click="cropImage">{{ $t("upload") }}</v-btn>
-          <v-btn color="error" @click="cancelCrop" class="ml-2">{{ $t("cancel") }}</v-btn>
-          </div>
-          </div>
         <v-card-text>
           <div class="cropper-container" ref="cropperContainer">
             <!-- Below one is porp can be used where we can define all the props in data and pass like below one -->
             <!-- :options="cropperOptions" -->
-              <!-- :min-container-width="250"
+            <!-- :min-container-width="250"
               :min-container-height="180" -->
             <VueCropper
               ref="cropper"
@@ -165,6 +167,7 @@ export default {
         console.log("Extension => " + ext);
         this.extension = ext;
         this.dialogVisible = true;
+        event.target.value = "";
       } else {
         this.selectedFile = null;
         this.dialogVisible = false;
@@ -229,9 +232,7 @@ export default {
   min-width: 200px !important; /* Set your desired minimum width here */
   min-height: 10px !important; /* Set your desired minimum width here */
 }
-.btn_margin{
+.btn_margin {
   margin: 10px 26px 0px 0px;
 }
-
-
 </style>
