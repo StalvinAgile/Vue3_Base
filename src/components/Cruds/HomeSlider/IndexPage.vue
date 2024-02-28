@@ -76,10 +76,14 @@
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
-              <td>{{ props.item.selectable.title }}</td>
-              <td>{{ props.item.selectable.action }}</td>
-              <td>{{ props.item.selectable.target }}</td>
-              <td>{{ props.item.selectable.seq }}</td>
+              <td v-if="props.item.selectable.title">{{ props.item.selectable.title }}</td>
+              <td v-else>{{ $t("not_applicable") }}</td>
+              <td v-if="props.item.selectable.action">{{ props.item.selectable.action }}</td>
+              <td v-else>{{ $t("not_applicable") }}</td>
+              <td v-if="props.item.selectable.target">{{ props.item.selectable.target }}</td>
+              <td v-else>{{ $t("not_applicable") }}</td>
+              <td v-if="props.item.selectable.seq">{{ props.item.selectable.seq }}</td>
+              <td v-else>{{ $t("not_applicable") }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -169,10 +173,14 @@
         >
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
-              <td>{{ props.item.selectable.title }}</td>
-              <td>{{ props.item.selectable.action }}</td>
-              <td>{{ props.item.selectable.target }}</td>
-              <td>{{ props.item.selectable.seq }}</td>
+             <td v-if="props.item.selectable.title">{{ props.item.selectable.title }}</td>
+              <td v-else>{{ $t("not_applicable") }}</td>
+              <td v-if="props.item.selectable.action">{{ props.item.selectable.action }}</td>
+              <td v-else>{{ $t("not_applicable") }}</td>
+              <td v-if="props.item.selectable.target">{{ props.item.selectable.target }}</td>
+              <td v-else>{{ $t("not_applicable") }}</td>
+              <td v-if="props.item.selectable.seq">{{ props.item.selectable.seq }}</td>
+              <td v-else>{{ $t("not_applicable") }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
