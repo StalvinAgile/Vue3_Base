@@ -1639,12 +1639,12 @@ export default {
       if (this.user.rolename == "StoreAdmin") {
         this.$router.push({
           name: "my_stores",
-          query: { s_tab: this.$route.query.s_tab },
+          query: { s_tab: this.tabs },
         });
       } else {
         this.$router.push({
           name: "stores",
-          query: { s_tab: this.$route.query.s_tab },
+          query: { s_tab: this.tabs },
         });
       }
     },
@@ -1948,12 +1948,12 @@ export default {
               if (this.user.rolename == "StoreAdmin") {
                 this.$router.push({
                   name: "my_stores",
-                  query: { s_tab: this.$route.query.s_tab },
+                  query: { s_tab: this.tabs },
                 });
               } else {
                 this.$router.push({
                   name: "stores",
-                  query: { s_tab: this.$route.query.s_tab },
+                  query: { s_tab: this.tabs },
                 });
               }
             } else {
