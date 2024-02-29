@@ -138,6 +138,7 @@
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
                           <quill-editor
+                            :options="editorOptions_en"
                             class="hide_quill_input"
                             v-model:value="home_slider[0].description"
                             @blur="onEditorBlur($event)"
@@ -498,15 +499,17 @@
                       $t("description_ar")
                     }}</v-card-title>
                     <!-- v-bind:id="quill_item_ar == true ? 'quill_item': 'quill_item_border'" -->
+                    <!-- @ready="onEditorReadyAR($event)" -->
                     <v-tooltip :text="$t('description_ar')" location="top">
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
                           <quill-editor
-                            class="hide_quill_input"
+                            :options="editorOptions"
+                            class="arabclassquill"
                             v-model:value="home_slider[1].description"
                             @blur="onEditorBlurAR($event)"
                             @focus="onEditorFocusAR($event)"
-                            @ready="onEditorReadyAR($event)"
+                            @ready="setRtlDirection"
                             @change="onEditorChangeAR($event)"
                           />
                           <!-- <small
@@ -882,6 +885,16 @@ export default {
     stores_ar: [],
     mediatype_en: [],
     mediatype_ar: [],
+    editorOptions: {
+      theme: "snow",
+      direction: "rtl",
+      placeholder: "أدخل المحتوى هنا",
+    },
+    editorOptions_en: {
+      theme: "snow",
+      direction: "ltr",
+      placeholder: "Enter the content here",
+    },
     home_slider: [
       {
         id: 0,
@@ -1181,6 +1194,18 @@ export default {
           }
         }
       }
+    },
+    setRtlDirection(quill) {
+      quill.on("text-change", () => {
+        const text = quill.getText();
+        const rtlChar = /[\u0590-\u05FF\u0600-\u06FF]/;
+        console.log("rtl char ", rtlChar);
+        if (rtlChar.test(text)) {
+          quill.root.setAttribute("dir", "rtl");
+        } else {
+          quill.root.setAttribute("dir", "ltr");
+        }
+      });
     },
     //
     // if (this.selected_media_type == "Image") {
@@ -1671,7 +1696,9 @@ export default {
 #quill_item_border {
   border: 1px solid #d1d5db;
 }
-
+.arabclassquill /deep/ .ql-editor {
+  text-align: right !important;
+}
 input.larger {
   width: 20px;
   height: 20px;

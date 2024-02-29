@@ -160,7 +160,7 @@
                   <template v-slot:activator="{ props }">
                     <div v-bind="props">
                       <quill-editor
-                        style="direction: ltr"
+                        :options="editorOptions_en"
                         class="hide_quill_input"
                         v-bind:id="
                           quill_item == true
@@ -455,7 +455,7 @@
                       <quill-editor
                         ref="quill_editor_ref"
                         :options="editorOptions"
-                        class="hide_quill_input rtl"
+                        class="arabclassquill"
                         v-bind:id="
                           quill_item_ar == true
                             ? 'quill_item'
@@ -711,6 +711,11 @@ export default {
       direction: "rtl",
       placeholder: "أدخل المحتوى هنا",
     },
+    editorOptions_en: {
+      theme: "snow",
+      direction: "ltr",
+      placeholder: "Enter the content here",
+    },
     labelText: "Mall",
     label_text_ar: "مجمع تجاري",
     tabs: 1,
@@ -869,6 +874,18 @@ export default {
       this.events[1].store_id = null;
       this.events[0].store_id = null;
       this.assignType(stor_type);
+    },
+    setRtlDirection(quill) {
+      quill.on("text-change", () => {
+        const text = quill.getText();
+        const rtlChar = /[\u0590-\u05FF\u0600-\u06FF]/;
+        console.log("rtl char ", rtlChar);
+        if (rtlChar.test(text)) {
+          quill.root.setAttribute("dir", "rtl");
+        } else {
+          quill.root.setAttribute("dir", "ltr");
+        }
+      });
     },
     assignType(stor_type) {
       setTimeout(() => {
@@ -1284,6 +1301,10 @@ input.larger {
 
 .arabdirection /deep/ .v-field {
   direction: rtl !important;
+}
+
+.arabclassquill /deep/ .ql-editor {
+  text-align: right !important;
 }
 
 .arabdirection /deep/ .v-input {

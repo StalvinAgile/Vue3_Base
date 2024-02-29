@@ -159,7 +159,6 @@
                       $t("description_en")
                     }}</v-card-title>
                     <v-tooltip :text="$t('description_en')" location="top">
-                      <!-- style="direction: ltr" -->
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
                           <quill-editor
@@ -452,7 +451,6 @@
                     <v-tooltip :text="$t('description_ar')" location="top">
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
-                          <!-- @ready="setRtlDirection" -->
                           <quill-editor
                             :options="editorOptions"
                             class="arabclassquill"
@@ -707,7 +705,7 @@ export default {
     },
     editorOptions_en: {
       theme: "snow",
-      direction: "rtl",
+      direction: "ltr",
       placeholder: "Enter the content here",
     },
 

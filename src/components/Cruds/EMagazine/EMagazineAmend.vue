@@ -148,6 +148,7 @@
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
                           <quill-editor
+                            :options="editorOptions_en"
                             class="hide_quill_input"
                             v-bind:id="
                               quill_item == true
@@ -454,7 +455,8 @@
                       <template v-slot:activator="{ props }">
                         <div v-bind="props">
                           <quill-editor
-                            class="hide_quill_input"
+                            :options="editorOptions"
+                            class="arabclassquill"
                             v-bind:id="
                               quill_item_ar == true
                                 ? 'quill_item'
@@ -463,7 +465,7 @@
                             maxlength="2000"
                             v-model:value="e_magazine[1].description"
                             @focus="onEditorFocus($event)"
-                            @ready="onEditorReady($event)"
+                            @ready="setRtlDirection"
                             @change="onEditorChangeAR($event)"
                           />
                           <small
@@ -806,6 +808,16 @@ export default {
     stores_data_en: [],
     mal_data_en: [],
     mal_data_ar: [],
+    editorOptions: {
+      theme: "snow",
+      direction: "rtl",
+      placeholder: "أدخل المحتوى هنا",
+    },
+    editorOptions_en: {
+      theme: "snow",
+      direction: "ltr",
+      placeholder: "Enter the content here",
+    },
   }),
 
   computed: {
@@ -1152,6 +1164,18 @@ export default {
           console.log("this error -> " + err);
         });
     },
+    setRtlDirection(quill) {
+      quill.on("text-change", () => {
+        const text = quill.getText();
+        const rtlChar = /[\u0590-\u05FF\u0600-\u06FF]/;
+        console.log("rtl char ", rtlChar);
+        if (rtlChar.test(text)) {
+          quill.root.setAttribute("dir", "rtl");
+        } else {
+          quill.root.setAttribute("dir", "ltr");
+        }
+      });
+    },
     presubmitvalidation() {
       if (this.tabs == 1) {
         if (
@@ -1292,7 +1316,9 @@ input.larger {
   border: 5px double black;
   border-radius: 3px;
 }
-
+.arabclassquill /deep/ .ql-editor {
+  text-align: right !important;
+}
 .camera-icon {
   position: absolute;
   bottom: 35px;
