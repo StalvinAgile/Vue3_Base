@@ -23,9 +23,14 @@ export default {
       immediate: true,
       deep: true,
       handler(newParams) {
-        console.log(newParams);
-        this.webpath =
-          this.web_url + "/" + newParams.lang + "/" + newParams.page + "preview";
+        if (newParams.page) {
+          this.webpath =
+          this.web_url + "/" + newParams.lang + "/" + newParams.page + "/preview";
+        }else{
+          this.webpath =
+          this.web_url + "/" + newParams.lang + "/preview";
+        }
+        
       },
     },
   },
