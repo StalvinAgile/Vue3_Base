@@ -230,7 +230,7 @@
                               v-else
                               :src="envImagePath + home_slider[0].image"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />
@@ -319,7 +319,7 @@
                               v-else
                               :src="envImagePath + home_slider[0].m_image"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />
@@ -595,7 +595,7 @@
                               v-else
                               :src="envImagePath + home_slider[1].image"
                               width="100"
-                              height="65"
+                              height="85"
                               alt
                             />
                             <div v-show="isHovering" class="camera-icon">
@@ -684,7 +684,7 @@
                               v-else
                               :src="envImagePath + home_slider[1].m_image"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />
@@ -1471,7 +1471,7 @@ export default {
                 this.message = res.data.message;
                 this.$router.push({
                   name: "home-sliders",
-                  query: { s_tab: this.tabs }
+                  query: { s_tab: this.tabs },
                 });
               } else {
                 this.$toast.error(this.array_data);

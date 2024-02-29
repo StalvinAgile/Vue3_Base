@@ -99,7 +99,7 @@
                           v-if="lookup[0].icon != '' && lookup[0].icon != null"
                           :src="envImagePath + lookup[0].icon"
                           width="100"
-                          height="65
+                          height="85
                           "
                           alt
                         />
@@ -239,7 +239,7 @@
                           v-if="lookup[1].icon != '' && lookup[1].icon != null"
                           :src="envImagePath + lookup[1].icon"
                           width="100"
-                          height="65
+                          height="85
                           "
                           alt
                         />

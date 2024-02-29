@@ -248,7 +248,7 @@
                               v-if="category[0].image_path != null"
                               :src="envImagePath + category[0].image_path"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />
@@ -526,7 +526,7 @@
                             v-if="category[1].image_path != null"
                             :src="envImagePath + category[1].image_path"
                             width="100"
-                            height="65
+                            height="85
                           "
                             alt
                           />

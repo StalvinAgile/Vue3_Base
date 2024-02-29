@@ -20,13 +20,25 @@
           <span>{{ $t("arabic") }}</span>
         </v-tab>
       </v-tabs>
-      <v-alert closable close-label="Close Alert" density="compact" color="rgb(var(--v-theme-error))" v-if="error_valid"
-        variant="tonal" @click:close="error_valid = false" class="my-3"
-        v-bind:class="[tabs == 1 ? '' : 'arabdirectionalert']" :title="tabs == 1 ? $t('validation_error_en') : $t('validation_error_ar')
-          " :text="tabs == 1
-    ? $t('please_fill_required_fields_en')
-    : $t('please_fill_required_fields_ar')
-    "></v-alert>
+      <v-alert
+        closable
+        close-label="Close Alert"
+        density="compact"
+        color="rgb(var(--v-theme-error))"
+        v-if="error_valid"
+        variant="tonal"
+        @click:close="error_valid = false"
+        class="my-3"
+        v-bind:class="[tabs == 1 ? '' : 'arabdirectionalert']"
+        :title="
+          tabs == 1 ? $t('validation_error_en') : $t('validation_error_ar')
+        "
+        :text="
+          tabs == 1
+            ? $t('please_fill_required_fields_en')
+            : $t('please_fill_required_fields_ar')
+        "
+      ></v-alert>
       <v-window v-model="tabs">
         <!-- ENGLISH TAB STARTS -->
         <v-window-item :value="1">
@@ -232,7 +244,7 @@
                     "
                     :src="envImagePath + img_en"
                     width="100"
-                    height="65"
+                    height="85"
                     alt
                   />
                 </div>
@@ -480,7 +492,7 @@
                     "
                     :src="envImagePath + img_ar"
                     width="100"
-                    height="65"
+                    height="85"
                     alt
                   />
                 </div>
@@ -891,7 +903,7 @@ export default {
     cancel() {
       this.$router.push({
         name: "products",
-        query: { 's_tab': this.tabs },
+        query: { s_tab: this.tabs },
       });
     },
     get_stores() {
@@ -965,7 +977,11 @@ export default {
     },
     presubmitvalidation() {
       if (this.tabs == 1) {
-        if (this.$refs.form.validate() && this.valid == true && this.validAR == true) {
+        if (
+          this.$refs.form.validate() &&
+          this.valid == true &&
+          this.validAR == true
+        ) {
           this.error_valid = false;
           this.submit();
         } else {
@@ -975,7 +991,11 @@ export default {
           }
         }
       } else {
-        if (this.$refs.form.validate() && this.validAR == true && this.valid == true) {
+        if (
+          this.$refs.form.validate() &&
+          this.validAR == true &&
+          this.valid == true
+        ) {
           this.error_valid = false;
           this.submit();
         } else {

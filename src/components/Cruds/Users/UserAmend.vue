@@ -383,7 +383,7 @@
                           v-else
                           :src="envImagePath + profile_details.image_url"
                           width="100"
-                          height="100"
+                          height="85"
                           alt
                         />
                         <div v-show="isHovering" class="camera-icon">
@@ -532,7 +532,7 @@ export default {
       mobile_code: null,
       store_id: null,
     },
-    user:"",
+    user: "",
     role_array_view_profile: [],
     uploadfile: false,
     phonelength: "10",
@@ -754,16 +754,14 @@ export default {
         .then((response) => {
           this.role_array_view_profile = response.data.roles;
           this.role_array = response.data.roles;
-          if (this.user.rolename=='SuperUser') {
+          if (this.user.rolename == "SuperUser") {
             this.role_array_view_profile = this.role_array.filter((ele) => {
-
-             return ele.rolename!='SuperUser' &&  ele.rolename!='MallAdmin'
+              return ele.rolename != "SuperUser" && ele.rolename != "MallAdmin";
             });
           }
-          if (this.user.rolename=='MallAdmin') {
+          if (this.user.rolename == "MallAdmin") {
             this.role_array_view_profile = this.role_array.filter((ele) => {
-
-             return ele.rolename!='SuperUser' &&  ele.rolename!='MallAdmin'
+              return ele.rolename != "SuperUser" && ele.rolename != "MallAdmin";
             });
           }
         })

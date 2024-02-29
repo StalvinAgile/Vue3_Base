@@ -276,7 +276,7 @@
                               v-if="e_magazine[0].image_path != null"
                               :src="envImagePath + e_magazine[0].image_path"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />
@@ -584,7 +584,7 @@
                               v-if="e_magazine[1].image_path != null"
                               :src="envImagePath + e_magazine[1].image_path"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />

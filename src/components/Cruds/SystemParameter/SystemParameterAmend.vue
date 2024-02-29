@@ -86,7 +86,7 @@
                         v-if="system_params.parameter_value != null"
                         :src="envImagePath + system_params.parameter_value"
                         width="100"
-                        height="65
+                        height="85
                           "
                         alt
                       />

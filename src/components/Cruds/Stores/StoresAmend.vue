@@ -497,7 +497,7 @@
                               v-if="stores[0].icon != null"
                               :src="envImagePath + stores[0].icon"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />
@@ -575,7 +575,7 @@
                               v-if="stores[0].background_image != null"
                               :src="envImagePath + stores[0].background_image"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />
@@ -1103,7 +1103,7 @@
                               v-if="stores[1].icon != null"
                               :src="envImagePath + stores[1].icon"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />
@@ -1182,7 +1182,7 @@
                               v-if="stores[1].background_image != null"
                               :src="envImagePath + stores[1].background_image"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />

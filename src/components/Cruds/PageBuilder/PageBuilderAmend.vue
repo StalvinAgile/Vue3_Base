@@ -260,7 +260,7 @@
                               v-if="page_builder[0].image_path != null"
                               :src="envImagePath + page_builder[0].image_path"
                               width="100"
-                              height="65
+                              height="85
                           "
                               alt
                             />
@@ -550,7 +550,7 @@
                             v-if="page_builder[1].image_path != null"
                             :src="envImagePath + page_builder[1].image_path"
                             width="100"
-                            height="65
+                            height="85
                           "
                             alt
                           />

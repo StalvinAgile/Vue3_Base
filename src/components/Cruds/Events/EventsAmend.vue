@@ -274,7 +274,7 @@
                           v-else
                           :src="envImagePath + events[0].image_path"
                           width="100"
-                          height="65
+                          height="85
                           "
                           alt
                         />
@@ -572,7 +572,7 @@
                           v-else
                           :src="envImagePath + events[1].image_path"
                           width="100"
-                          height="65
+                          height="85
                           "
                           alt
                         />
