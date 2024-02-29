@@ -557,7 +557,13 @@ input::placeholder {
 }
 
 .preview-btn {
-  background: #444 !important;
-  color: #78ece1 !important;
+  background: #282828 !important;
+  color: white !important;
+}
+
+.dimension_text {
+  color: rgb(109, 109, 109);
+  font-size: 14px;
+  margin-top: -25px !important;
 }
 //keyframes end

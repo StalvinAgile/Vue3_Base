@@ -284,6 +284,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
+                    <div class="dimension_text">600 : 300</div>
                   </v-col>
                   <v-col
                     cols="12"
@@ -372,6 +373,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="upload_mob_file"
                     />
+                    <div class="dimension_text">500 : 300</div>
                   </v-col>
                   <v-col
                     cols="12"
