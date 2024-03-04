@@ -319,7 +319,12 @@ export default {
           this.allUsers = res.data.usersdata;
           this.allUsers = this.allUsers.filter((elem) => {
             console.log("dsaasd", this.user);
-            return elem.id !== this.user.id;
+            if (
+              elem.id !== this.user.id &&
+              elem.role.rolename !== "SuperUser"
+            ) {
+              return elem;
+            }
           });
           this.initval = false;
         })
