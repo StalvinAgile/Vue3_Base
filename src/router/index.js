@@ -525,11 +525,12 @@ router.beforeEach((to, from, next) => {
   const lang = localStorage.getItem("pref_lang") || "en";
   const isAuthenticated = store.getters["auth/authentication"];
 
-  if (to.matched.length === 0) {
-    const notFoundPath = `/${lang}/not-found`;
-    next(notFoundPath);
-    return;
-  }
+  // if (to.matched.length === 0) {
+  //   console.log('inside matched route length');
+  //   const notFoundPath = `/${lang}/not-found`;
+  //   next(notFoundPath);
+  //   return;
+  // }
   if (!to.params.lang) {
     if (isAuthenticated || to.name === "login") {
       if (!to.redirectedFrom) {
