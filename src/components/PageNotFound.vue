@@ -5,7 +5,7 @@
     <div class="not_found_p2">{{$t('not_found_p2')}}</div>
     <div class="not_found_p3">{{$t('not_found_p3')}}</div>
     <div class="d-flex justify-center mt-5">
-    <v-btn class="back-btn" @click="$router.go(-1)">{{$t('take_me_back')}}</v-btn>
+    <v-btn class="back-btn" @click="redirectBack()">{{$t('take_me_back')}}</v-btn>
     </div>
   </div>
 </template>
@@ -13,6 +13,11 @@
 <script>
 export default {
   name: "PageNotFound",
+  methods:{
+    redirectBack(){
+      this.$router.go(-2);
+    }
+  }
 };
 </script>
 
