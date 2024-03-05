@@ -109,9 +109,7 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
-                          @update:modelValue="
-                            (value) => updatePath(1, value)
-                          "
+                          @update:modelValue="(value) => updatePath(1, value)"
                           v-model="category[0].title"
                           v-bind:label="$t('path_en')"
                           variant="outlined"
@@ -230,13 +228,19 @@
                           maxlength="100"
                           counter
                           v-bind:label="$t('icon_en')"
-                          placeholder="fa fa-home"
+                          placeholder="Home"
                           required
                           variant="outlined"
                           density="compact"
                         ></v-text-field>
                       </template>
                     </v-tooltip>
+                    <a
+                      class="get_icons"
+                      target="_blank"
+                      href="https://mui.com/material-ui/material-icons/"
+                      >{{ $t("get_icons_en") }}</a
+                    >
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
                     <div>
@@ -390,10 +394,7 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
-                
-                          @update:modelValue="
-                            (value) => updatePath(0, value)
-                          "
+                          @update:modelValue="(value) => updatePath(0, value)"
                           v-model="category[1].title"
                           v-bind:label="$t('path_ar')"
                           variant="outlined"
@@ -511,13 +512,19 @@
                         v-model="category[1].icon"
                         maxlength="100"
                         v-bind:label="$t('icon_ar')"
-                        placeholder="fa fa-home"
+                        placeholder="Home"
                         required
                         variant="outlined"
                         density="compact"
                       ></v-text-field>
                     </template>
                   </v-tooltip>
+                  <a
+                    class="get_icons"
+                    href="https://mui.com/material-ui/material-icons/"
+                    target="_blank"
+                    >{{ $t("get_icons_ar") }}</a
+                  >
                 </v-col>
                 <v-col cols="12" sm="12" md="4">
                   <div>
@@ -778,8 +785,8 @@ export default {
     ],
     user_role: "",
     sel_lang: "",
-    cpaths_en:[],
-    cpaths_ar:[],
+    cpaths_en: [],
+    cpaths_ar: [],
   }),
 
   computed: {
@@ -869,7 +876,7 @@ export default {
   },
 
   methods: {
-    updatePath(index, value){
+    updatePath(index, value) {
       this.category[index].title = value;
     },
     fetchLookup() {
@@ -1298,5 +1305,9 @@ export default {
 .shake {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   transform: translate3d(0, 0, 0);
+}
+.get_icons{
+  font-size: 12px;
+  padding-left: 5px;
 }
 </style>
