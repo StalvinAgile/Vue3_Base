@@ -96,7 +96,12 @@
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-              <td>{{ props.item.selectable.title }}</td>
+              <td>
+                <span v-if="props.item.selectable.path_name.length > 0">
+                  {{ props.item.selectable.path_name[0].longname }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -206,7 +211,12 @@
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-              <td>{{ props.item.selectable.title }}</td>
+              <td>
+                <span v-if="props.item.selectable.path_name.length > 0">
+                  {{ props.item.selectable.path_name[0].longname }}</span
+                >
+                <span v-else>{{ $t("not_appllicable") }}</span>
+              </td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -362,7 +372,7 @@ export default {
       let headers = [
         { title: this.$t("name_en"), key: "name" },
         { title: this.$t("parent_category_en"), key: "parent_category.name" },
-        { title: this.$t("title_en"), key: "title" },
+        { title: this.$t("path_en"), key: "title" },
         { title: this.$t("status_en"), key: "status" },
         { title: this.$t("approval_en"), key: "approval_status" },
         { title: this.$t("action_en"), align: "center", key: "action" },
@@ -379,7 +389,7 @@ export default {
       let headers = [
         { title: this.$t("name_ar"), key: "name" },
         { title: this.$t("parent_category_ar"), key: "parent_category.name" },
-        { title: this.$t("title_ar"), key: "title" },
+        { title: this.$t("path_ar"), key: "title" },
         { title: this.$t("status_ar"), key: "status" },
         { title: this.$t("approval_ar"), key: "approval_status" },
         { title: this.$t("action_ar"), align: "center", key: "action" },

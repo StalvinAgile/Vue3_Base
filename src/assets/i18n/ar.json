@@ -547,6 +547,8 @@
   "slider_type_en": "Slider Type",
   "slider_type_ar": "نوع المنزلق",
   "action_slug_en": "Action Slug",
-  "action_slug_ar": "سبيكة العمل"
+  "action_slug_ar": "سبيكة العمل",
+  "path_en": "Path",
+  "path_ar": "طريق"
 
 }

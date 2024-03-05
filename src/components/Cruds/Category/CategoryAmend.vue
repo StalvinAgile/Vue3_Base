@@ -105,19 +105,21 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
-                    <v-tooltip :text="$t('title_en')" location="bottom">
+                    <v-tooltip :text="$t('path_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
+                        <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="
+                            (value) => updatePath(1, value)
+                          "
                           v-model="category[0].title"
-                          :rules="fieldRules"
-                          class="required_field"
-                          maxlength="100"
-                          v-bind:label="$t('title_en')"
-                          required
+                          v-bind:label="$t('path_en')"
                           variant="outlined"
                           density="compact"
-                        ></v-text-field>
+                          :items="cpaths_en"
+                          item-title="longname"
+                          item-value="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -384,19 +386,22 @@
                     </v-tooltip>
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
-                    <v-tooltip :text="$t('title_ar')" location="bottom">
+                    <v-tooltip :text="$t('path_ar')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
+                        <v-autocomplete
                           v-bind="props"
+                
+                          @update:modelValue="
+                            (value) => updatePath(0, value)
+                          "
                           v-model="category[1].title"
-                          :rules="fieldRulesAR"
-                          class="required_field rtl"
-                          maxlength="100"
-                          v-bind:label="$t('title_ar')"
-                          required
+                          v-bind:label="$t('path_ar')"
                           variant="outlined"
                           density="compact"
-                        ></v-text-field>
+                          :items="cpaths_ar"
+                          item-title="longname"
+                          item-value="shortname"
+                        ></v-autocomplete>
                       </template>
                     </v-tooltip>
                   </v-col>
@@ -591,7 +596,7 @@
           <!-- ARABIC TAB END -->
         </v-window>
       </div>
-      <v-layout>
+      <!-- <v-layout>
         <v-row class="mt-2 px-6" max-width="344">
           <v-col md="12">
             <div>
@@ -626,7 +631,7 @@
             </div>
           </v-col>
         </v-row>
-      </v-layout>
+      </v-layout> -->
       <div class="d-block mr-4 mt-3 pb-3 text-right">
         <v-tooltip :text="this.$t('cancel')" location="bottom">
           <template v-slot:activator="{ props }">
@@ -773,6 +778,8 @@ export default {
     ],
     user_role: "",
     sel_lang: "",
+    cpaths_en:[],
+    cpaths_ar:[],
   }),
 
   computed: {
@@ -792,6 +799,7 @@ export default {
 
   mounted() {
     this.fetchParentCategories();
+    this.fetchLookup();
     this.user_role = JSON.parse(localStorage.getItem("user_data")).rolename;
     const storeid = JSON.parse(localStorage.getItem("user_data")).store_id;
 
@@ -861,6 +869,25 @@ export default {
   },
 
   methods: {
+    updatePath(index, value){
+      this.category[index].title = value;
+    },
+    fetchLookup() {
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_lang_lookup", {
+          params: {
+            lookup_type: "CATEGORY_PATHS",
+          },
+        })
+        .then((response) => {
+          this.cpaths_en = response.data.lookup_en;
+          this.cpaths_ar = response.data.lookup_ar;
+        })
+        .catch((err) => {
+          this.$toast.error(this.$t("something_went_wrong"));
+          console.log(err);
+        });
+    },
     removeImage(index) {
       if (index == 1) {
         this.category[1].image_path = null;

@@ -593,5 +593,7 @@
   "events_en": "Events",
   "events_ar": "الأحداث",
   "promotions_offers_en": "Promotions/Offers",
-  "promotions_offers_ar": "الترقيات/العروض"
+  "promotions_offers_ar": "الترقيات/العروض",
+  "path_en": "Path",
+  "path_ar": "طريق"
 }

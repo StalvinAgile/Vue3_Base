@@ -69,7 +69,10 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("title_en") }}</div>
-                    <div>{{ category.title }}</div>
+                    <div v-if="category.path_name.length > 0">
+                      {{ category.path_name[0].longname }}
+                    </div>
+                    <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("parent_category_en") }}</div>
@@ -199,7 +202,10 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("title_ar") }}</div>
-                    <div>{{ category.title }}</div>
+                    <div v-if="category.path_name.length > 0">
+                      {{ category.path_name[0].longname }}
+                    </div>
+                    <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("parent_category_ar") }}</div>
