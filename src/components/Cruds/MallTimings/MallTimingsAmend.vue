@@ -53,10 +53,11 @@
                     >
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
+                          :disabled="fieldItem[0].id > 0"
                           v-bind="props"
                           v-model="fieldItem[0].mall_timing_categories"
                           @update:modelValue="
-                            (value) => updateCategories(value)
+                            (value) => updateCategories(1, value)
                           "
                           :rules="fieldRules"
                           v-bind:label="$t('mall_timing_categories_en')"
@@ -67,7 +68,7 @@
                           index="id"
                           :items="categories_en"
                           item-value="header_id"
-                          item-title="name"
+                          item-title="longname"
                         ></v-autocomplete>
                       </template>
                     </v-tooltip>
@@ -79,6 +80,9 @@
                           v-bind="props"
                           v-model="fieldItem[0].from_day"
                           :rules="fieldRules"
+                          @update:modelValue="
+                            (value) => updateFromDay(1, value)
+                          "
                           v-bind:label="$t('from_day_en')"
                           variant="outlined"
                           density="compact"
@@ -86,8 +90,8 @@
                           required
                           index="id"
                           :items="weekdays_en"
-                          item-value="shortname"
-                          item-title="shortname"
+                          item-value="header_id"
+                          item-title="longname"
                         ></v-autocomplete>
                       </template>
                     </v-tooltip>
@@ -97,6 +101,7 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="(value) => updateToDay(1, value)"
                           v-model="fieldItem[0].to_day"
                           :rules="fieldRules"
                           v-bind:label="$t('to_day_en')"
@@ -106,8 +111,8 @@
                           required
                           index="id"
                           :items="weekdays_en"
-                          item-value="shortname"
-                          item-title="shortname"
+                          item-value="header_id"
+                          item-title="longname"
                         ></v-autocomplete>
                       </template>
                     </v-tooltip>
@@ -120,6 +125,9 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="
+                            (value) => updateFromTime(1, value)
+                          "
                           v-model="fieldItem[0].from_time"
                           :rules="fieldRules"
                           v-bind:label="$t('from_time_en')"
@@ -143,6 +151,9 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="
+                            (value) => updateFromMeridiem(1, value)
+                          "
                           v-model="fieldItem[0].from_meridiem"
                           :rules="fieldRules"
                           variant="outlined"
@@ -162,6 +173,7 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="(value) => updateToTime(1, value)"
                           v-model="fieldItem[0].to_time"
                           :rules="fieldRules"
                           v-bind:label="$t('to_time_en')"
@@ -182,6 +194,9 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="
+                            (value) => updateToMeridiem(1, value)
+                          "
                           v-model="fieldItem[0].to_meridiem"
                           :rules="fieldRules"
                           variant="outlined"
@@ -223,8 +238,11 @@
               </v-layout>
             </v-form>
           </v-window-item>
+
           <!-- ENGLISH TAB END -->
           <!-- ARABIC TAB STARTS -->
+          <!-- {{categories_ar}} <br> -->
+          <!-- {{fieldItem}} -->
           <v-window-item :value="2">
             <v-form
               ref="form"
@@ -241,9 +259,10 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          :disabled="fieldItem[1].id > 0"
                           v-model="fieldItem[1].mall_timing_categories"
                           @update:modelValue="
-                            (value) => updateCategories(value)
+                            (value) => updateCategories(0, value)
                           "
                           :rules="fieldRulesAR"
                           v-bind:label="$t('mall_timing_categories_ar')"
@@ -254,7 +273,7 @@
                           index="id"
                           :items="categories_ar"
                           item-value="header_id"
-                          item-title="name"
+                          item-title="longname"
                         ></v-autocomplete>
                       </template>
                     </v-tooltip>
@@ -264,6 +283,9 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="
+                            (value) => updateFromDay(0, value)
+                          "
                           v-model="fieldItem[1].from_day"
                           :rules="fieldRulesAR"
                           v-bind:label="$t('from_day_ar')"
@@ -273,8 +295,8 @@
                           required
                           index="id"
                           :items="weekdays_ar"
-                          item-value="shortname"
-                          item-title="shortname"
+                          item-value="header_id"
+                          item-title="longname"
                         ></v-autocomplete>
                       </template>
                     </v-tooltip>
@@ -284,6 +306,7 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="(value) => updateToDay(0, value)"
                           v-model="fieldItem[1].to_day"
                           :rules="fieldRulesAR"
                           v-bind:label="$t('to_day_ar')"
@@ -293,8 +316,8 @@
                           required
                           index="id"
                           :items="weekdays_ar"
-                          item-value="shortname"
-                          item-title="shortname"
+                          item-value="header_id"
+                          item-title="longname"
                         ></v-autocomplete>
                       </template>
                     </v-tooltip>
@@ -307,6 +330,9 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="
+                            (value) => updateFromTime(0, value)
+                          "
                           v-model="fieldItem[1].from_time"
                           :rules="fieldRulesAR"
                           v-bind:label="$t('from_time_ar')"
@@ -330,6 +356,9 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="
+                            (value) => updateFromMeridiem(0, value)
+                          "
                           v-model="fieldItem[1].from_meridiem"
                           :rules="fieldRules"
                           variant="outlined"
@@ -337,7 +366,7 @@
                           v-bind:label="$t('from_meridiem_ar')"
                           required
                           index="id"
-                          :items="meridiem"
+                          :items="translatedMeridiem"
                           item-value="shortname"
                           item-title="shortname"
                         ></v-autocomplete>
@@ -349,6 +378,7 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="(value) => updateToTime(0, value)"
                           v-model="fieldItem[1].to_time"
                           :rules="fieldRulesAR"
                           v-bind:label="$t('to_time_ar')"
@@ -372,6 +402,9 @@
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          @update:modelValue="
+                            (value) => updateToMeridiem(0, value)
+                          "
                           v-model="fieldItem[1].to_meridiem"
                           :rules="fieldRules"
                           variant="outlined"
@@ -536,6 +569,13 @@ export default {
   }),
 
   computed: {
+    translatedMeridiem() {
+      return this.meridiem.map((item) => ({
+        ...item,
+        shortname: this.$t(item.shortname),
+      }));
+    },
+
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
     },
@@ -552,6 +592,7 @@ export default {
 
   created() {
     this.fetchWeekdaysAandTime();
+    this.fetchLookup();
   },
 
   watch: {
@@ -613,12 +654,42 @@ export default {
   },
 
   methods: {
-    updateCategories(categories) {
-      if (this.tabs == 1) {
-        this.fieldItem[1].mall_timing_categories = categories;
-      } else {
-        this.fieldItem[0].mall_timing_categories = categories;
-      }
+    fetchLookup() {
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_lang_lookup", {
+          params: {
+            lookup_type: "MALL_TIMINGS_CATEGORIES",
+          },
+        })
+        .then((response) => {
+          this.categories_en = response.data.lookup_en;
+          this.categories_ar = response.data.lookup_ar;
+        })
+        .catch((err) => {
+          this.$toast.error(this.$t("something_went_wrong"));
+          console.log(err);
+        });
+    },
+    updateCategories(index, value) {
+      this.fieldItem[index].mall_timing_categories = value;
+    },
+    updateFromDay(index, value) {
+      this.fieldItem[index].from_day = value;
+    },
+    updateToDay(index, value) {
+      this.fieldItem[index].to_day = value;
+    },
+    updateFromTime(index, value) {
+      this.fieldItem[index].from_time = value;
+    },
+    updateToTime(index, value) {
+      this.fieldItem[index].to_time = value;
+    },
+    updateFromMeridiem(index, value) {
+      this.fieldItem[index].from_meridiem = value;
+    },
+    updateToMeridiem(index, value) {
+      this.fieldItem[index].to_meridiem = value;
     },
     fetchWeekdaysAandTime() {
       this.$axios
@@ -628,8 +699,6 @@ export default {
           this.weekdays_ar = response.data.weekdays_ar;
           this.mall_time_en = response.data.mall_time_en;
           this.mall_time_ar = response.data.mall_time_ar;
-          this.categories_en = response.data.categories_en;
-          this.categories_ar = response.data.categories_ar;
         })
         .catch((err) => {
           this.$toast.error(this.$t("something_went_wrong"));

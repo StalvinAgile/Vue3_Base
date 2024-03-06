@@ -34,9 +34,12 @@
         <v-tooltip :text="this.$t('add_new')" location="bottom">
           <template v-slot:activator="{ props }">
             <router-link
-              :to="{ name: 'mall-timings-amend',query:{
-                's_tab': tabs
-              } }"
+              :to="{
+                name: 'mall-timings-amend',
+                query: {
+                  s_tab: tabs,
+                },
+              }"
               style="color: white"
             >
               <v-btn size="small" class="mb-2 green_btn_color" v-bind="props">{{
@@ -57,7 +60,6 @@
         <span>{{ $t("arabic") }}</span>
       </v-tab>
     </v-tabs>
-
     <v-window v-model="tabs">
       <!-- ENGLISH TAB STARTS -->
       <v-window-item :value="1">
@@ -74,13 +76,13 @@
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>
-                <span v-if="props.item.selectable.child_category">{{
-                  props.item.selectable.child_category.name
+                <span v-if="props.item.selectable.category">{{
+                  props.item.selectable.category.longname
                 }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-              <td>{{ props.item.selectable.from_day }}</td>
-              <td>{{ props.item.selectable.to_day }}</td>
+              <td>{{ props.item.selectable.from_day.longname }}</td>
+              <td>{{ props.item.selectable.to_day.longname }}</td>
               <td>
                 {{ props.item.selectable.from_time }}
                 {{ props.item.selectable.from_meridiem }}
@@ -116,7 +118,7 @@
                   small
                   :to="{
                     name: 'mall-timings-amend',
-                    query: { slug: props.item.selectable.slug,'s_tab': tabs },
+                    query: { slug: props.item.selectable.slug, s_tab: tabs },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit')" location="top">
@@ -161,13 +163,13 @@
           <template v-slot:item="props">
             <tr class="vdatatable_tbody">
               <td>
-                <span v-if="props.item.selectable.child_category_ar">{{
-                  props.item.selectable.child_category_ar[0].name
+                <span v-if="props.item.selectable.category">{{
+                  props.item.selectable.category.longname
                 }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-              <td>{{ changeArWeekday(props.item.selectable.from_day) }}</td>
-              <td>{{ changeArWeekday(props.item.selectable.to_day) }}</td>
+              <td>{{ props.item.selectable.from_day.longname }}</td>
+              <td>{{ props.item.selectable.to_day.longname }}</td>
               <td>
                 {{ props.item.selectable.from_time }}
                 {{ changeArMeridian(props.item.selectable.from_meridiem) }}
@@ -203,7 +205,7 @@
                   small
                   :to="{
                     name: 'mall-timings-amend',
-                    query: { slug: props.item.selectable.slug,'s_tab': tabs },
+                    query: { slug: props.item.selectable.slug, s_tab: tabs },
                   }"
                 >
                   <v-tooltip :text="this.$t('edit')" location="top">
@@ -359,15 +361,14 @@ export default {
       } else {
         this.sel_lang = "en";
       }
-      
     },
   },
 
   created() {},
   mounted() {
     if (this.$route.query.s_tab) {
-    this.tabs = this.$route.query.s_tab == 1 ? 1 : 2;
-  }
+      this.tabs = this.$route.query.s_tab == 1 ? 1 : 2;
+    }
     this.fetchMallTimings();
   },
 
