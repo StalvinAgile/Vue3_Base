@@ -81,8 +81,14 @@
                 }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-              <td>{{ props.item.selectable.from_day.longname }}</td>
-              <td>{{ props.item.selectable.to_day.longname }}</td>
+              <td>
+                <span v-if="props.item.selectable.from_day">{{ props.item.selectable.from_day.longname }}</span> 
+                <span v-else>{{ $t("not_applicable") }}</span>
+              </td>
+              <td>
+               <span v-if="props.item.selectable.to_day">{{ props.item.selectable.to_day.longname }}</span> 
+                <span v-else>{{ $t("not_applicable") }}</span>
+              </td>
               <td>
                 {{ props.item.selectable.from_time }}
                 {{ props.item.selectable.from_meridiem }}
@@ -168,8 +174,14 @@
                 }}</span>
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-              <td>{{ props.item.selectable.from_day.longname }}</td>
-              <td>{{ props.item.selectable.to_day.longname }}</td>
+              <td>
+                <span v-if="props.item.selectable.from_day">{{ props.item.selectable.from_day.longname }}</span> 
+                <span v-else>{{ $t("not_applicable") }}</span>
+              </td>
+              <td>
+               <span v-if="props.item.selectable.to_day">{{ props.item.selectable.to_day.longname }}</span> 
+                <span v-else>{{ $t("not_applicable") }}</span>
+              </td>
               <td>
                 {{ props.item.selectable.from_time }}
                 {{ changeArMeridian(props.item.selectable.from_meridiem) }}
