@@ -446,7 +446,7 @@
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="12" md="12">
-                <v-card-title class="text-left" style="font-size: 17px">{{
+                <v-card-title class="text-right" style="font-size: 17px">{{
                   $t("description_ar")
                 }}</v-card-title>
                 <v-tooltip :text="this.$t('description_ar')" location="bottom">

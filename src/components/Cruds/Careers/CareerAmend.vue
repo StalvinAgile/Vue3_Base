@@ -71,9 +71,9 @@
             </v-layout>
             <v-row class="mx-auto mt-2" max-width="344">
               <v-col
-                cols="4"
+                cols="3"
                 sm="12"
-                md="4"
+                md="3"
                 v-if="user.rolename != 'StoreAdmin'"
               >
                 <v-tooltip :text="labelText" location="bottom">
@@ -99,7 +99,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -117,7 +117,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('vacancy')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -137,7 +137,7 @@
                   <span>{{ $t("vacancy") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('meta_title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -155,7 +155,8 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col :md="user.rolename === 'StoreAdmin' ? 12 : 8">
+              <!-- <v-col :md="user.rolename === 'StoreAdmin' ? 12 : 8"> -->
+              <v-col cols="12" sm="12" md="12">
                 <v-tooltip
                   :text="this.$t('meta_description')"
                   location="bottom"
@@ -178,22 +179,33 @@
                   <span>{{ $t("vacancy") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col md="12">
-                <v-tooltip :text="this.$t('description')" location="bottom">
+              <v-col cols="12" sm="12" md="12">
+                <v-card-title class="text-left" style="font-size: 17px">{{
+                  $t("description_en")
+                }}</v-card-title>
+                <v-tooltip :text="this.$t('description_en')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-textarea
-                      v-on="on"
-                      rows="2"
-                      v-model="careers[0].description"
-                      :rules="fieldRules"
-                      maxlength="2000"
-                      v-bind="props"
-                      v-bind:label="$t('description')"
-                      required
-                      class="required_field"
-                      variant="outlined"
-                      counter="true"
-                    ></v-textarea>
+                    <div v-bind="props">
+                      <quill-editor
+                        :options="editorOptions_en"
+                        class="hide_quill_input"
+                        v-bind:id="
+                          quill_item == true
+                            ? 'quill_item'
+                            : 'quill_item_border'
+                        "
+                        v-model:value="careers[0].description"
+                        @blur="onEditorBlur($event)"
+                        @focus="onEditorFocus($event)"
+                        @ready="onEditorReady($event)"
+                        @change="onEditorChange($event)"
+                      />
+                      <small
+                        v-if="quill_item"
+                        class="text-danger ml-5 required_item shake"
+                        >Field Required</small
+                      >
+                    </div>
                   </template>
                 </v-tooltip>
               </v-col>
@@ -308,9 +320,9 @@
             </v-layout>
             <v-row class="mx-auto mt-2 arabdirection" max-width="344">
               <v-col
-                cols="4"
+                cols="3"
                 sm="12"
-                md="4"
+                md="3"
                 v-if="user.rolename != 'StoreAdmin'"
               >
                 <v-tooltip :text="label_text_ar" location="bottom">
@@ -336,7 +348,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('title_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -354,7 +366,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('vacancy_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -374,7 +386,7 @@
                   <span>{{ $t("vacancy_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="4" sm="12" md="4">
+              <v-col cols="3" sm="12" md="3">
                 <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -392,8 +404,8 @@
                   </template>
                 </v-tooltip>
               </v-col>
-
-              <v-col :md="user.rolename === 'StoreAdmin' ? 12 : 8">
+              <!-- <v-col :md="user.rolename === 'StoreAdmin' ? 12 : 8"> -->
+              <v-col cols="12" sm="12" md="12">
                 <v-tooltip
                   :text="this.$t('meta_description_ar')"
                   location="bottom"
@@ -416,22 +428,34 @@
                   <span>{{ $t("meta_description_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col md="12">
+              <v-col cols="12" sm="12" md="12">
+                <v-card-title class="text-right" style="font-size: 17px">{{
+                  $t("description_ar")
+                }}</v-card-title>
                 <v-tooltip :text="this.$t('description_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-textarea
-                      v-on="on"
-                      rows="2"
-                      v-model="careers[1].description"
-                      :rules="fieldRulesAR"
-                      maxlength="2000"
-                      v-bind="props"
-                      v-bind:label="$t('description_ar')"
-                      required
-                      class="required_field rtl"
-                      variant="outlined"
-                      counter="true"
-                    ></v-textarea>
+                    <div v-bind="props">
+                      <quill-editor
+                        ref="quill_editor_ref"
+                        :options="editorOptions"
+                        class="arabclassquill"
+                        v-bind:id="
+                          quill_item_ar == true
+                            ? 'quill_item'
+                            : 'quill_item_border'
+                        "
+                        v-model:value="careers[1].description"
+                        @blur="onEditorBlurAR($event)"
+                        @focus="onEditorFocusAR($event)"
+                        @ready="setRtlDirection"
+                        @change="onEditorChangeAR($event)"
+                      />
+                      <small
+                        v-if="quill_item_ar"
+                        class="text-danger ml-5 required_item shake"
+                        >Field Required</small
+                      >
+                    </div>
                   </template>
                 </v-tooltip>
               </v-col>
@@ -560,8 +584,25 @@
 
 <script>
 import Imageupload from "../../CustomComponents/ImageUpload.vue";
+import { quillEditor } from "vue3-quill";
 export default {
-  components: { Imageupload },
+  components: { Imageupload, quillEditor },
+  setup() {
+    const onEditorFocus = () => {
+      // console.log("editor focus!", quill);
+    };
+    const onEditorFocusAR = () => {
+      // console.log("editor focus!", quill);
+    };
+    const onEditorReady = () => {
+      // console.log("editor ready!", quill);
+    };
+    const onEditorReadyAR = () => {
+      // console.log("editor ready!", quill);
+    };
+
+    return { onEditorReady, onEditorFocus, onEditorFocusAR, onEditorReadyAR };
+  },
   data: () => ({
     google_icon: {
       icon_name: "edit_note",
@@ -628,6 +669,18 @@ export default {
     user: "",
     uploadfile: false,
     uploadfilear: false,
+    editorOptions: {
+      theme: "snow",
+      direction: "rtl",
+      placeholder: "أدخل المحتوى هنا",
+    },
+    editorOptions_en: {
+      theme: "snow",
+      direction: "ltr",
+      placeholder: "Enter the content here",
+    },
+    quill_item: false,
+    quill_item_ar: false,
   }),
   mounted() {
     this.get_stores();
@@ -830,6 +883,45 @@ export default {
         this.careers[0].store_id = stor_type;
       }
     },
+    onEditorChange(careers) {
+      console.log(careers);
+      if (careers.text.length == 1) {
+        this.quill_item = true;
+      } else {
+        this.quill_item = false;
+      }
+    },
+    onEditorChangeAR(careers) {
+      if (careers.text.length == 1) {
+        this.quill_item_ar = true;
+      } else {
+        this.quill_item_ar = false;
+      }
+    },
+    onEditorBlur() {
+      // console.log(event.options);
+      if (this.careers.description == "") {
+        this.quill_item = true;
+      }
+    },
+    onEditorBlurAR(careers) {
+      console.log(careers.options);
+      if (this.careers.description_ar == "") {
+        this.quill_item_ar = true;
+      }
+    },
+    setRtlDirection(quill) {
+      quill.on("text-change", () => {
+        const text = quill.getText();
+        const rtlChar = /[\u0590-\u05FF\u0600-\u06FF]/;
+        console.log("rtl char ", rtlChar);
+        if (rtlChar.test(text)) {
+          quill.root.setAttribute("dir", "rtl");
+        } else {
+          quill.root.setAttribute("dir", "ltr");
+        }
+      });
+    },
     fetchRoles() {
       this.loader = true;
       this.$axios
@@ -944,9 +1036,19 @@ export default {
     presubmitvalidation() {
       if (this.tabs == 1) {
         if (
+          this.events[0].description == "" ||
+          this.events[0].description == null
+        ) {
+          this.quill_item = true;
+        } else {
+          this.quill_item = false;
+        }
+        if (
           this.$refs.form.validate() &&
           this.valid == true &&
-          this.validAR == true
+          this.quill_item == false &&
+          this.validAR == true &&
+          this.quill_item_ar == false
         ) {
           this.error_valid = false;
           this.submit();
@@ -958,9 +1060,19 @@ export default {
         }
       } else {
         if (
+          this.events[1].description == "" ||
+          this.events[1].description == null
+        ) {
+          this.quill_item_ar = true;
+        } else {
+          this.quill_item_ar = false;
+        }
+        if (
           this.$refs.form.validate() &&
           this.validAR == true &&
-          this.valid == true
+          this.quill_item_ar == false &&
+          this.valid == true &&
+          this.quill_item == false
         ) {
           this.error_valid = false;
           this.submit();
@@ -973,7 +1085,12 @@ export default {
       }
     },
     submit() {
-      if (this.validAR == true && this.valid == true) {
+      if (
+        this.validAR == true &&
+        this.valid == true &&
+        this.quill_item_ar == false &&
+        this.quill_item == false
+      ) {
         this.isDisabled = true;
         this.isBtnLoading = true;
         this.loader = true;
@@ -1075,5 +1192,15 @@ input.larger {
   position: relative;
   bottom: 45px;
   right: 110px;
+}
+.arabclassquill /deep/ .ql-editor {
+  text-align: right !important;
+}
+#quill_item {
+  border: 1px solid #b00020;
+}
+
+#quill_item_border {
+  border: 1px solid #d1d5db;
 }
 </style>
