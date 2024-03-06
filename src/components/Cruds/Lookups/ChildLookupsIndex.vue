@@ -111,6 +111,7 @@
                   {{ props.item.selectable.longname }}
                 </div>
               </td>
+              <td>{{ props.item.selectable.seq }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -205,6 +206,7 @@
                   }}
                 </div>
               </td>
+              <td>{{ props.item.selectable.seq }}</td>
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -334,6 +336,12 @@ export default {
           key: "longname",
         },
         {
+          title: this.$t("sequence_en"),
+          align: "left",
+          sortable: false,
+          key: "seq",
+        },
+        {
           title: this.$t("status_en"),
           align: "left",
           sortable: false,
@@ -360,6 +368,12 @@ export default {
           align: "left",
           sortable: false,
           key: "longname",
+        },
+        {
+          title: this.$t("sequence_ar"),
+          align: "left",
+          sortable: false,
+          key: "seq",
         },
         {
           title: this.$t("status_ar"),

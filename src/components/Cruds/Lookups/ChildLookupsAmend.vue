@@ -30,6 +30,7 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
+                      :readonly="lookup[0].id > 0"
                       v-model="lookup[0].shortname"
                       v-bind="props"
                       :rules="fieldRules"
@@ -81,6 +82,23 @@
                         maxlength="100"
                         counter="true"
                       ></v-textarea>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="12" sm="12" md="2">
+                  <v-tooltip :text="$t('sequence_en')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-bind="props"
+                        v-model="lookup[0].seq"
+                        @update:modelValue="(value) => updateSeq(value, 1)"
+                        maxlength="5"
+                        v-bind:label="$t('sequence_en')"
+                        required
+                        variant="outlined"
+                        density="compact"
+                        v-on:keypress="NumbersOnly"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
@@ -162,13 +180,14 @@
         <!-- ENGLISH TAB STOPS -->
         <!-- ARABIC TAB STARTS -->
         <v-window-item :value="2">
-          <v-form ref="form" v-model="valid">
+          <v-form ref="form" v-model="valid" style="direction: rtl">
             <v-row class="mx-auto mt-2" max-width="344">
               <v-col md="6">
                 <v-tooltip :text="this.$t('shortname_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-on="on"
+                      :readonly="lookup[1].id > 0"
                       v-model="lookup[1].shortname"
                       v-bind="props"
                       :rules="fieldRules"
@@ -221,6 +240,23 @@
                         maxlength="100"
                         counter="true"
                       ></v-textarea>
+                    </template>
+                  </v-tooltip>
+                </v-col>
+                <v-col cols="12" sm="12" md="2">
+                  <v-tooltip :text="$t('sequence_ar')" location="bottom">
+                    <template v-slot:activator="{ props }">
+                      <v-text-field
+                        v-bind="props"
+                        v-model="lookup[1].seq"
+                        @update:modelValue="(value) => updateSeq(value, 0)"
+                        maxlength="5"
+                        v-bind:label="$t('sequence_ar')"
+                        required
+                        variant="outlined"
+                        density="compact"
+                        v-on:keypress="NumbersOnly"
+                      ></v-text-field>
                     </template>
                   </v-tooltip>
                 </v-col>
@@ -472,6 +508,22 @@ export default {
     },
   },
   methods: {
+    updateSeq(value, index){
+      this.lookup[index].seq = value;
+    },
+    NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
     checkUploadImage() {
       this.enable_upload_image = this.tabs;
     },
