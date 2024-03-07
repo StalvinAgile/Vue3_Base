@@ -314,6 +314,60 @@
                   </div>
                 </v-col>
               </v-row>
+
+              <v-layout>
+                <v-row class="headings">
+                  <v-col xs="12" md="12" lg="12">
+                    <h6 class="m-4">
+                      <b>{{ $t("services_slots_ar") }}</b>
+                    </h6>
+                  </v-col>
+                </v-row>
+              </v-layout>
+              <div
+                v-for="(service, sindex) in service_slots"
+                :key="sindex"
+                class="service-container"
+              >
+                <v-layout>
+                  <v-row class="px-6 mt-2 ml-4">
+                    <v-col cols="12" sm="12" md="2">
+                      <div class="d-label">
+                        <h4>{{ service.weekday }}</h4>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </v-layout>
+                <v-layout>
+                  <v-row class="px-6 mt-2 ml-4">
+                    <v-col cols="12" sm="12" md="4">
+                      <div class="d-label">{{ $t("from_time_ar") }}</div>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="4">
+                      <div class="d-label">{{ $t("to_time_ar") }}</div>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="4">
+                      <div class="d-label">{{ $t("slots_ar") }}</div>
+                    </v-col>
+                  </v-row>
+                </v-layout>
+                <div v-for="(slot, cindex) in service.slot" :key="cindex">
+                  <v-layout>
+                    <v-row class="px-6 mt-2 ml-4 mb-3">
+                      <v-col cols="12" sm="12" md="4">
+                        <div>{{ slot.from_time }} {{ slot.from_meridiem }}</div>
+                      </v-col>
+                      <v-col cols="12" sm="12" md="4">
+                        <div>{{ slot.to_time }} {{ slot.to_meridiem }}</div>
+                      </v-col>
+                      <v-col cols="12" sm="12" md="4">
+                        <div>{{ slot.slots }}</div>
+                      </v-col>
+                    </v-row>
+                  </v-layout>
+                </div>
+              </div>
+
               <div
                 class="d-flex justify-content-end"
                 v-if="
