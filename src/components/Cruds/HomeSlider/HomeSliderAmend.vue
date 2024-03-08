@@ -1310,7 +1310,7 @@ export default {
             this.uploadfile = false;
           }
         } else {
-          this.resizewidth = 500;
+          this.resizewidth = 600;
           this.resizeheight = 300;
           if (this.upload_mob_file == false) {
             this.upload_mob_file = true;
