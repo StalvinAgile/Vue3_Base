@@ -129,8 +129,7 @@
                   </div>
                 </v-col>
               </v-row>
-
-              <v-layout>
+              <v-layout v-if="service_slots.length > 0">
                 <v-row class="headings">
                   <v-col xs="12" md="12" lg="12">
                     <h6 class="m-4">
@@ -315,7 +314,7 @@
                 </v-col>
               </v-row>
 
-              <v-layout>
+              <v-layout v-if="service_slots.length > 0">
                 <v-row class="headings">
                   <v-col xs="12" md="12" lg="12">
                     <h6 class="m-4">
