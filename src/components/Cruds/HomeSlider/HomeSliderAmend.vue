@@ -1302,8 +1302,8 @@ export default {
       if (this.tabs == 1) {
         this.image_upload_from = img_type;
         if (img_type == "website") {
-          this.resizewidth = 600;
-          this.resizeheight = 300;
+          this.resizewidth = 900;
+          this.resizeheight = 320;
           if (this.uploadfile == false) {
             this.uploadfile = true;
           } else {
