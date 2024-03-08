@@ -652,19 +652,26 @@
             </div>
           </v-form>
         </v-window-item>
+        <!-- SERVICE SLOT TAB STARTS -->
         <div v-if="service_type == 'Services'">
           <v-form ref="form" v-model="slotvalid">
-            <v-layout>
+            <v-layout v-bind:class="tabs == 2 ? 'arabclass' : ''">
               <v-row class="headings">
                 <v-col xs="12" md="12" lg="12">
-                  <h5 class="m-4">
+                  <h5 class="m-4" v-if="tabs == 1">
                     <b>{{ $t("services_slots_en") }}</b>
+                  </h5>
+                  <h5 class="m-4 arabdirection" v-else>
+                    <b>{{ $t("services_slots_ar") }}</b>
                   </h5>
                 </v-col>
               </v-row>
             </v-layout>
-            <div class="mx-5">
-              <v-tooltip :text="this.$t('add_weekday_en')" location="bottom">
+            <div class="mx-5" v-bind:class="tabs == 2 ? 'arabclass' : ''">
+              <v-tooltip
+                :text="tabs == 1 ? $t('add_weekday_en') : $t('add_weekday_ar')"
+                location="bottom"
+              >
                 <template v-slot:activator="{ props }">
                   <v-btn
                     size="small"
@@ -674,7 +681,10 @@
                     v-bind="props"
                     @click="addWeekday()"
                   >
-                    {{ $t("add_weekday_en") }}
+                    <span v-if="tabs == 1">
+                      {{ $t("add_weekday_en") }}
+                    </span>
+                    <span v-else> {{ $t("add_weekday_ar") }}</span>
                   </v-btn>
                 </template>
               </v-tooltip>
@@ -685,18 +695,27 @@
               class="service-container"
             >
               <v-layout>
-                <v-row class="px-6 mt-2 ml-4">
+                <v-row
+                  class="px-6 mt-2 ml-8"
+                  v-bind:class="tabs == 2 ? 'arabclass mr-8' : ''"
+                >
                   <v-col cols="12" sm="12" md="2">
-                    <v-tooltip :text="this.$t('week_day')" location="bottom">
+                    <v-tooltip
+                      :text="tabs == 1 ? $t('week_day_en') : $t('week_day_ar')"
+                      location="bottom"
+                    >
                       <template v-slot:activator="{ props }">
                         <v-autocomplete
                           v-bind="props"
+                          v-bind:class="tabs == 2 ? 'arabclass' : ''"
                           v-model="service.weekday"
-                          :label="this.$t('week_day')"
+                          v-bind:label="
+                            tabs == 1 ? $t('week_day_en') : $t('week_day_ar')
+                          "
                           variant="outlined"
                           density="compact"
-                          :items="weekdays_en"
-                          :rules="fieldRules"
+                          :items="tabs == 1 ? weekdays_en : weekdays_ar"
+                          :rules="getWeekdayRules(sindex)"
                           item-title="shortname"
                           item-value="header_id"
                           class="required_field"
@@ -704,124 +723,211 @@
                       </template>
                     </v-tooltip>
                   </v-col>
+                  <div
+                    v-bind:class="
+                      tabs == 2 ? 'delete_weekday_ar' : 'delete_weekday_en'
+                    "
+                    v-if="sindex != 0"
+                  >
+                    <v-tooltip
+                      :text="
+                        tabs == 1
+                          ? $t('delete_slots_en')
+                          : $t('delete_slots_ar')
+                      "
+                      location="bottom"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <v-btn
+                          v-bind="props"
+                          color="error"
+                          variant="icon"
+                          icon="mdi-delete"
+                          @click="deleteWeekday(sindex)"
+                        >
+                        </v-btn>
+                      </template>
+                    </v-tooltip>
+                  </div>
                 </v-row>
               </v-layout>
               <div v-for="(slot, cindex) in service.slot" :key="cindex">
-                <v-layout>
+                <v-layout v-bind:class="tabs == 2 ? 'arabclass mr-4' : 'ml-4'">
+                  <div class="mt-7" style="width: 30px">
+                    <v-tooltip
+                      :text="
+                        tabs == 1 ? $t('add_slots_en') : $t('add_slots_ar')
+                      "
+                      location="bottom"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <v-icon
+                          v-if="cindex == 0"
+                          v-bind="props"
+                          @click="addSlots(sindex)"
+                          color="error"
+                          icon="mdi-plus"
+                          size="x-large"
+                        ></v-icon>
+                      </template>
+                    </v-tooltip>
+                  </div>
                   <v-row class="px-6 mt-2">
-                    <div class="mt-5" style="width: 30px">
-                      <v-tooltip
-                        :text="this.$t('add_slots_en')"
-                        location="bottom"
-                      >
-                        <template v-slot:activator="{ props }">
-                          <v-icon
-                            v-if="cindex == 0"
-                            v-bind="props"
-                            @click="addSlots(sindex)"
-                            color="error"
-                            icon="mdi-plus"
-                            size="x-large"
-                          ></v-icon>
-                        </template>
-                      </v-tooltip>
-                    </div>
-
                     <v-col cols="12" sm="12" md="2">
                       <v-tooltip
-                        :text="this.$t('from_time_en')"
+                        :text="
+                          tabs == 1 ? $t('from_time_en') : $t('from_time_ar')
+                        "
                         location="bottom"
                       >
                         <template v-slot:activator="{ props }">
                           <v-autocomplete
                             v-bind="props"
+                            v-bind:class="tabs == 2 ? 'arabclass' : ''"
                             v-model="slot.from_time"
-                            :label="this.$t('from_time_en')"
+                            v-bind:label="
+                              tabs == 1
+                                ? $t('from_time_en')
+                                : $t('from_time_ar')
+                            "
                             variant="outlined"
                             density="compact"
                             :items="service_time"
                             :rules="fieldRules"
                             item-title="shortname"
                             item-value="shortname"
-                            class="required_field"
+                            class="rtl-dir required_field"
                           ></v-autocomplete>
                         </template>
                       </v-tooltip>
                     </v-col>
                     <v-col cols="12" sm="12" md="2">
                       <v-tooltip
-                        :text="this.$t('from_meridiem')"
+                        :text="
+                          tabs == 1
+                            ? $t('from_meridiem_en')
+                            : $t('from_meridiem_ar')
+                        "
                         location="bottom"
                       >
                         <template v-slot:activator="{ props }">
                           <v-autocomplete
                             v-bind="props"
+                            v-bind:class="tabs == 2 ? 'arabclass' : ''"
                             v-model="slot.from_meridiem"
-                            :label="this.$t('from_meridiem')"
+                            v-bind:label="
+                              tabs == 1
+                                ? $t('from_meridiem_en')
+                                : $t('from_meridiem_ar')
+                            "
                             variant="outlined"
                             density="compact"
+                            class="rtl-dir required_field"
                             :items="meridiem"
                             :rules="fieldRules"
                             item-title="shortname"
                             item-value="shortname"
-                            class="required_field"
                           ></v-autocomplete>
                         </template>
                       </v-tooltip>
                     </v-col>
                     <v-col cols="12" sm="12" md="2">
                       <v-tooltip
-                        :text="this.$t('to_time_en')"
+                        :text="tabs == 1 ? $t('to_time_en') : $t('to_time_ar')"
                         location="bottom"
                       >
                         <template v-slot:activator="{ props }">
                           <v-autocomplete
                             v-bind="props"
                             v-model="slot.to_time"
-                            :label="this.$t('to_time_en')"
+                            class="rtl-dir required_field"
+                            v-bind:class="tabs == 2 ? 'arabclass' : ''"
+                            v-bind:label="
+                              tabs == 1 ? $t('to_time_en') : $t('to_time_ar')
+                            "
                             variant="outlined"
                             density="compact"
                             :items="service_time"
                             :rules="fieldRules"
                             item-title="shortname"
                             item-value="shortname"
-                            class="required_field"
                           ></v-autocomplete>
                         </template>
                       </v-tooltip>
                     </v-col>
                     <v-col cols="12" sm="12" md="2">
                       <v-tooltip
-                        :text="this.$t('to_meridiem')"
+                        :text="
+                          tabs == 1
+                            ? $t('to_meridiem_en')
+                            : $t('to_meridiem_ar')
+                        "
                         location="bottom"
                       >
                         <template v-slot:activator="{ props }">
                           <v-autocomplete
                             v-bind="props"
+                            class="rtl-dir required_field"
+                            v-bind:class="tabs == 2 ? 'arabclass' : ''"
                             v-model="slot.to_meridiem"
-                            :label="this.$t('to_meridiem')"
+                            v-bind:label="
+                              tabs == 1
+                                ? $t('to_meridiem_en')
+                                : $t('to_meridiem_ar')
+                            "
                             variant="outlined"
                             density="compact"
                             :items="meridiem"
                             :rules="fieldRules"
                             item-title="shortname"
                             item-value="shortname"
-                            class="required_field"
                           ></v-autocomplete>
                         </template>
                       </v-tooltip>
                     </v-col>
                     <v-col cols="12" sm="12" md="1">
-                      <v-tooltip :text="$t('slots_en')" location="bottom">
+                      <v-tooltip
+                        :text="tabs == 1 ? $t('slots_en') : $t('slots_ar')"
+                        location="bottom"
+                      >
                         <template v-slot:activator="{ props }">
                           <v-text-field
                             v-bind="props"
                             v-model="slot.slots"
                             maxlength="5"
-                            v-bind:label="$t('slots_en')"
+                            v-bind:label="
+                              tabs == 1 ? $t('slots_en') : $t('slots_ar')
+                            "
                             required
                             variant="outlined"
                             class="rtl"
+                            density="compact"
+                            v-on:keypress="NumbersOnly"
+                          ></v-text-field>
+                        </template>
+                      </v-tooltip>
+                    </v-col>
+                    <v-col cols="12" sm="12" md="2">
+                      <v-tooltip
+                        :text="
+                          tabs == 1
+                            ? $t('max_reservation_en')
+                            : $t('max_reservation_ar')
+                        "
+                        location="bottom"
+                      >
+                        <template v-slot:activator="{ props }">
+                          <v-text-field
+                            v-bind="props"
+                            v-model="slot.max_reservation"
+                            maxlength="5"
+                            v-bind:label="
+                              tabs == 1
+                                ? $t('max_reservation_en')
+                                : $t('max_reservation_ar')
+                            "
+                            required
+                            variant="outlined"
                             density="compact"
                             v-on:keypress="NumbersOnly"
                           ></v-text-field>
@@ -836,17 +942,22 @@
                       v-if="cindex != 0"
                     >
                       <v-tooltip
-                        :text="this.$t('delete_slots_en')"
+                        :text="
+                          tabs == 1
+                            ? $t('delete_slots_en')
+                            : $t('delete_slots_ar')
+                        "
                         location="bottom"
                       >
                         <template v-slot:activator="{ props }">
-                          <v-icon
+                          <v-btn
                             v-bind="props"
-                            @click="deleteSlots(cindex, sindex)"
                             color="error"
+                            variant="icon"
                             icon="mdi-delete"
-                            size="large"
-                          ></v-icon>
+                            @click="deleteSlots(cindex, sindex)"
+                          >
+                          </v-btn>
                         </template>
                       </v-tooltip>
                     </v-col>
@@ -856,6 +967,7 @@
             </div>
           </v-form>
         </div>
+        <!-- SERVICE SLOT TAB END -->
       </v-window>
     </div>
     <div class="d-block mr-4 mt-3 pb-3 text-right">
@@ -945,6 +1057,7 @@ export default {
             from_meridiem: "AM",
             to_time: "",
             to_meridiem: "AM",
+            max_reservation: 1,
             slots: null,
           },
         ],
@@ -1004,6 +1117,8 @@ export default {
         shortname: "PM",
       },
     ],
+    show_er_msg: null,
+    temp_slot: [],
   }),
 
   computed: {
@@ -1096,6 +1211,18 @@ export default {
   },
 
   methods: {
+    getWeekdayRules(sindex) {
+      return [
+        (value) => !!value || this.$t("weekday_required"),
+        (value) => this.isUniqueWeekday(value, sindex),
+      ];
+    },
+    isUniqueWeekday(value, index) {
+      const duplicate = this.service_slots.some(
+        (service, idx) => service.weekday === value && idx !== index
+      );
+      return !duplicate || this.$t("weekday_unique");
+    },
     addWeekday() {
       this.service_slots.push({
         weekday: null,
@@ -1104,6 +1231,7 @@ export default {
             id: 0,
             from_time: "",
             from_meridiem: "AM",
+            max_reservation: 1,
             to_time: "",
             to_meridiem: "AM",
             slots: null,
@@ -1114,6 +1242,9 @@ export default {
     deleteSlots(cindex, sindex) {
       this.service_slots[sindex].slot.splice(cindex, 1);
     },
+    deleteWeekday(sindex) {
+      this.service_slots.splice(sindex, 1);
+    },
     get_weekdays() {
       this.initval = true;
       this.loader = true;
@@ -1122,6 +1253,7 @@ export default {
         .then((response) => {
           this.service_time = response.data.store_time_en;
           this.weekdays_en = response.data.weekdays_en;
+          this.weekdays_ar = response.data.weekdays_ar;
           this.initval = false;
           if (this.page_type == "add") {
             this.initializeTimingArray();
@@ -1144,6 +1276,7 @@ export default {
         id: 0,
         from_time: "",
         from_meridiem: "AM",
+        max_reservation: 1,
         to_time: "",
         to_meridiem: "AM",
         slots: null,
@@ -1573,5 +1706,34 @@ input.larger {
 .get_icons {
   font-size: 12px;
   padding-left: 5px;
+}
+.wd-message {
+  color: #b10525;
+  top: -20px;
+  position: relative;
+  font-size: 14px;
+}
+.arabclass .v-field {
+  direction: rtl !important;
+}
+
+.arabclass {
+  direction: rtl !important;
+}
+.delete_weekday_ar {
+  position: absolute;
+  left: 20px;
+  top: 16px;
+}
+.delete_weekday_en {
+  position: absolute;
+  right: 20px;
+  top: 16px;
+}
+.arabclassquill .ql-editor {
+  text-align: justify;
+}
+.arabclass .v-messages__message {
+  text-align: right !important;
 }
 </style>
