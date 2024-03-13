@@ -299,15 +299,15 @@ export default {
       return [
         {
           title: this.$t("mall_timing_categories_en"),
-          key: "mall_timing_categories",
+          key: "category.longname",
         },
         {
           title: this.$t("from_day_en"),
-          key: "from_day",
+          key: "from_day.longname",
         },
         {
           title: this.$t("to_day_en"),
-          key: "to_day",
+          key: "to_day.longname",
         },
         {
           title: this.$t("from_time_en"),
@@ -332,15 +332,15 @@ export default {
       return [
         {
           title: this.$t("mall_timing_categories_ar"),
-          key: "mall_timing_categories",
+          key: "category.longname",
         },
         {
           title: this.$t("from_day_ar"),
-          key: "from_day",
+          key: "from_day.longname",
         },
         {
           title: this.$t("to_day_ar"),
-          key: "to_day",
+          key: "to_day.longname",
         },
         {
           title: this.$t("from_time_ar"),
@@ -367,6 +367,7 @@ export default {
     dialog(val) {
       val || this.close();
     },
+    
     "$i18n.locale"(newLocale) {
       if (newLocale === "ar") {
         this.sel_lang = "ar";
