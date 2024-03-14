@@ -1036,8 +1036,8 @@ export default {
     presubmitvalidation() {
       if (this.tabs == 1) {
         if (
-          this.events[0].description == "" ||
-          this.events[0].description == null
+          this.careers[0].description == "" ||
+          this.careers[0].description == null
         ) {
           this.quill_item = true;
         } else {
@@ -1060,8 +1060,8 @@ export default {
         }
       } else {
         if (
-          this.events[1].description == "" ||
-          this.events[1].description == null
+          this.careers[1].description == "" ||
+          this.careers[1].description == null
         ) {
           this.quill_item_ar = true;
         } else {
