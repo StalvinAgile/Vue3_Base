@@ -624,5 +624,7 @@
   "claims": "Claims",
   "available": "Available",
   "total_slots_ar": "إجمالي الفتحات",
-  "copy_to_next_date_ar": "نسخ إلى التاريخ التالي"
+  "copy_to_next_date_ar": "نسخ إلى التاريخ التالي",
+  "date_en":"Date",
+  "date_ar":"تاريخ"
 }

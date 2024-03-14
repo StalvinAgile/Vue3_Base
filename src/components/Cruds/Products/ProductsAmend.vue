@@ -706,13 +706,13 @@
                     v-if="service_type == 'Services'"
                   >
                     <v-tooltip
-                      :text="this.$t('start_date_en')"
+                      :text="tabs == 1 ? $t('date_en') : $t('date_ar')"
                       location="bottom"
                     >
                       <template v-slot:activator="{ props }">
                         <DatePicker
                           v-bind="props"
-                          :label="$t('start_date_en')"
+                          :label="tabs == 1 ? $t('date_en') : $t('date_ar')"
                           :min="
                             min_slot_date[sindex]
                               ? min_slot_date[sindex]
@@ -730,7 +730,10 @@
                           v-on="on"
                         />
                       </template>
-                      <span>{{ $t("start_date_en") }}</span>
+                      <span v-if="tabs == 1">
+                        {{ $t("date_en") }}
+                      </span>
+                      <span v-else> {{ $t("date_ar") }}</span>
                     </v-tooltip>
                   </v-col>
                   <!-- @change="getDay(sindex)" -->
@@ -818,6 +821,13 @@
                 </v-row>
               </v-layout>
               <div v-for="(slot, cindex) in service.slot" :key="cindex">
+                <div
+                  class="error-message"
+                  v-if="slotErrors[sindex] && slotErrors[sindex][cindex]"
+                >
+                  {{ slotErrors[sindex][cindex] }}
+                </div>
+
                 <v-layout v-bind:class="tabs == 2 ? 'arabclass mr-4' : 'ml-4'">
                   <div class="mt-7" style="width: 30px">
                     <v-tooltip
@@ -858,6 +868,9 @@
                             "
                             variant="outlined"
                             density="compact"
+                            @update:model-value="
+                              checkValidation(sindex, cindex)
+                            "
                             :items="service_time"
                             :rules="fieldRules"
                             item-title="shortname"
@@ -881,6 +894,9 @@
                             v-bind="props"
                             v-bind:class="tabs == 2 ? 'arabclass' : ''"
                             v-model="slot.from_meridiem"
+                            @update:model-value="
+                              checkValidation(sindex, cindex)
+                            "
                             v-bind:label="
                               tabs == 1
                                 ? $t('from_meridiem_en')
@@ -915,6 +931,9 @@
                             density="compact"
                             :items="service_time"
                             :rules="fieldRules"
+                            @update:model-value="
+                              checkValidation(sindex, cindex)
+                            "
                             item-title="shortname"
                             item-value="shortname"
                           ></v-autocomplete>
@@ -942,6 +961,9 @@
                                 : $t('to_meridiem_ar')
                             "
                             variant="outlined"
+                            @update:model-value="
+                              checkValidation(sindex, cindex)
+                            "
                             density="compact"
                             :items="meridiem"
                             :rules="fieldRules"
@@ -1132,6 +1154,7 @@ export default {
         ],
       },
     ],
+    slotErrors: {},
     products: [
       {
         id: 0,
@@ -1297,6 +1320,81 @@ export default {
   },
 
   methods: {
+    checkValidation(week_index, slot_index) {
+      let isValid = true;
+      const currentSlot = this.service_slots[week_index].slot[slot_index];
+      console.log("current_slot", currentSlot);
+      const formatTime = (time, meridiem) =>
+        moment(time + " " + meridiem, "hh:mm A");
+
+      const currentFromTime = formatTime(
+        currentSlot.from_time,
+        currentSlot.from_meridiem
+      );
+      const currentToTime = formatTime(
+        currentSlot.to_time,
+        currentSlot.to_meridiem
+      );
+
+      let errorMessage = "";
+      // Ensure "to time" is after "from time"
+      if (
+        !currentToTime.isSameOrAfter(currentFromTime) &&
+        currentSlot.to_time
+      ) {
+        isValid = false;
+        errorMessage = "The 'to time' must be later than the 'from time'.";
+      }
+
+      this.service_slots[week_index].slot.forEach((slot_data, index) => {
+        if (isValid && slot_index !== index) {
+          const comparingFromTime = formatTime(
+            slot_data.from_time,
+            slot_data.from_meridiem
+          );
+          const comparingToTime = formatTime(
+            slot_data.to_time,
+            slot_data.to_meridiem
+          );
+
+          if (
+            currentSlot.from_time === slot_data.from_time &&
+            currentSlot.to_time === slot_data.to_time &&
+            currentSlot.from_meridiem === slot_data.from_meridiem &&
+            currentSlot.to_meridiem === slot_data.to_meridiem
+          ) {
+            isValid = false;
+            errorMessage = "This slot timing is duplicated.";
+          }
+
+          // Check for overlapping times
+          if (
+            currentFromTime.isBefore(comparingToTime) &&
+            currentToTime.isAfter(comparingFromTime)
+          ) {
+            isValid = false;
+            errorMessage = "This slot timing overlaps with another slot.";
+          }
+        }
+      });
+
+      if (!isValid) {
+        if (!this.slotErrors[week_index]) {
+          this.slotErrors[week_index] = {};
+        }
+        this.slotErrors[week_index][slot_index] = errorMessage;
+      } else {
+        if (
+          this.slotErrors[week_index] &&
+          this.slotErrors[week_index][slot_index]
+        ) {
+          this.slotErrors[week_index][slot_index] = "";
+        }
+      }
+
+      return isValid;
+    },
+
     copyNextDate(service_data, index) {
       const newServiceData = JSON.parse(JSON.stringify(service_data));
 
@@ -1307,7 +1405,9 @@ export default {
       var formatted_day = moment(nextDay).format("dddd");
       newServiceData.slot_date = nextDay;
       if (this.$route.query.slug) {
-      newServiceData.slot[0].id = null;
+        newServiceData.slot.forEach(slot => {
+      slot.id = 0; 
+    });
       }
       if (this.tabs == 1) {
         this.weekdays_en.filter((day) => {
@@ -1897,5 +1997,10 @@ input.larger {
 }
 .arabclass .v-messages__message {
   text-align: right !important;
+}
+.error-message {
+  color: #b10525;
+  margin-top: 4px;
+  font-size: 0.9em;
 }
 </style>

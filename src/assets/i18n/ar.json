@@ -576,5 +576,7 @@
   "total_claims_ar": "إجمالي المطالبات",
   "booked": "حجز",
   "claims": "المطالبات",
-  "available": "متاح"
+  "available": "متاح",
+  "date_en":"Date",
+  "date_ar":"تاريخ"
 }
