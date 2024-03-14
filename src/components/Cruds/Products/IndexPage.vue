@@ -83,8 +83,8 @@
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-             
-              <td>
+
+              <!-- <td>
                 <span v-if="props.item.selectable.meta_title">
                   {{ props.item.selectable.meta_title }}</span
                 >
@@ -95,7 +95,7 @@
                   {{ props.item.selectable.meta_description }}</span
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
-              </td>
+              </td> -->
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -214,8 +214,8 @@
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-             
-              <td>
+
+              <!-- <td>
                 <span v-if="props.item.selectable.meta_title">
                   {{ props.item.selectable.meta_title }}</span
                 >
@@ -226,7 +226,7 @@
                   {{ props.item.selectable.meta_description }}</span
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
-              </td>
+              </td> -->
               <td>
                 <v-btn
                   class="hover_shine btn mr-2"
@@ -384,15 +384,15 @@ export default {
           align: "left",
           key: "title",
         },
-        {
-          title: this.$t("meta_title_en"),
-          key: "meta_title",
-        },
+        // {
+        //   title: this.$t("meta_title_en"),
+        //   key: "meta_title",
+        // },
 
-        {
-          title: this.$t("meta_description_en"),
-          key: "meta_description",
-        },
+        // {
+        //   title: this.$t("meta_description_en"),
+        //   key: "meta_description",
+        // },
         {
           title: this.$t("status_en"),
           align: "left",
@@ -435,16 +435,16 @@ export default {
           align: "left",
           key: "title",
         },
-       
-        {
-          title: this.$t("meta_title_ar"),
-          key: "meta_title",
-        },
 
-        {
-          title: this.$t("meta_description_ar"),
-          key: "meta_description",
-        },
+        // {
+        //   title: this.$t("meta_title_ar"),
+        //   key: "meta_title",
+        // },
+
+        // {
+        //   title: this.$t("meta_description_ar"),
+        //   key: "meta_description",
+        // },
         {
           title: this.$t("status_ar"),
           align: "left",
