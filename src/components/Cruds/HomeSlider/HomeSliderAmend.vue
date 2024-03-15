@@ -339,6 +339,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
+                    <div class="dimension_text">1200 : 420</div>
                   </v-col>
                   <v-col
                     cols="12"
@@ -427,7 +428,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="upload_mob_file"
                     />
-                    <!-- <div class="dimension_text">500 : 300</div> -->
+                    <div class="dimension_text">600 : 300</div>
                   </v-col>
                   <v-col
                     cols="12"
@@ -759,6 +760,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="upload_file_ar"
                     />
+                    <div class="dimension_text">1200 : 420</div>
                   </v-col>
                   <v-col
                     cols="12"
@@ -847,6 +849,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="upload_file_mob_ar"
                     />
+                    <div class="dimension_text">600 : 300</div>
                   </v-col>
                   <v-col
                     cols="12"
@@ -1321,15 +1324,15 @@ export default {
       } else {
         this.image_upload_from = img_type;
         if (img_type == "website") {
-          this.resizewidth = 600;
-          this.resizeheight = 300;
+          this.resizewidth = 1200;
+          this.resizeheight = 450;
           if (this.upload_file_ar == false) {
             this.upload_file_ar = true;
           } else {
             this.upload_file_ar = false;
           }
         } else {
-          this.resizewidth = 500;
+          this.resizewidth = 600;
           this.resizeheight = 300;
           if (this.upload_file_mob_ar == false) {
             this.upload_file_mob_ar = true;
@@ -1969,5 +1972,9 @@ input.larger {
 
 .videourlclass /deep/ .v-field__input {
   color: blue !important;
+}
+
+.dimension_text {
+  text-align-last: start;
 }
 </style>

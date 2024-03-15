@@ -173,6 +173,7 @@
                   @uploaded_image="uploaded_image"
                   :upload_profile="uploadfile"
                 />
+                <div class="dimension_text">200 : 200</div>
               </v-col>
             </v-row>
           </v-form>
@@ -331,6 +332,7 @@
                   @uploaded_image="uploaded_image_ar"
                   :upload_profile="uploadfile_ar"
                 />
+                <div class="dimension_text">200 : 200</div>
               </v-col>
             </v-row>
           </v-form>
@@ -510,7 +512,7 @@ export default {
     },
   },
   methods: {
-    updateSeq(value, index){
+    updateSeq(value, index) {
       this.lookup[index].seq = value;
     },
     NumbersOnly(evt) {
@@ -683,5 +685,9 @@ input.larger {
   position: relative;
   bottom: 45px;
   right: 110px;
+}
+
+.dimension_text {
+  text-align-last: start;
 }
 </style>

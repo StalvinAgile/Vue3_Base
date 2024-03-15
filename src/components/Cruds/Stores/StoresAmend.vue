@@ -561,6 +561,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
+                    <div class="dimension_text">250 : 250</div>
                   </v-col>
                   <v-col cols="12" xs="12" sm="12" md="4">
                     <div>
@@ -641,6 +642,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="upload_bi_file"
                     />
+                    <div class="dimension_text">500 : 300</div>
                   </v-col>
                 </v-row>
               </v-layout>
@@ -1168,6 +1170,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfilear"
                     />
+                    <div class="dimension_text">250 : 250</div>
                   </v-col>
                   <v-col cols="12" xs="12" sm="12" md="4">
                     <div>
@@ -1248,6 +1251,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="upload_bi_file_ar"
                     />
+                    <div class="dimension_text">500 : 300</div>
                   </v-col>
                 </v-row>
               </v-layout>
@@ -2067,5 +2071,8 @@ input.larger {
   position: relative;
   bottom: 45px;
   right: 88px;
+}
+.dimension_text {
+  text-align-last: start;
 }
 </style>

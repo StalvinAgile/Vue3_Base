@@ -290,6 +290,7 @@
                   @uploaded_image="uploaded_image"
                   :upload_profile="uploadfile"
                 />
+                <div class="dimension_text">200 : 200</div>
               </v-col>
             </v-row>
             <div class="mx-auto d-flex" max-width="344">
@@ -597,11 +598,12 @@
                 <br />
                 <Imageupload
                   :folder="'products'"
-                  :resizewidth="0.4"
-                  :resizeheight="0.1"
+                  :resizewidth="200"
+                  :resizeheight="200"
                   @uploaded_image="uploaded_image"
                   :upload_profile="uploadfilear"
                 />
+                <div class="dimension_text">200 : 200</div>
               </v-col>
             </v-row>
             <div class="mx-auto d-flex" max-width="344">
@@ -1968,7 +1970,9 @@ input.larger {
 .arabclass .v-field {
   direction: rtl !important;
 }
-
+.dimension_text {
+  text-align-last: start;
+}
 .arabclass {
   direction: rtl !important;
 }

@@ -317,6 +317,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
+                    <div class="dimension_text">150 : 100</div>
                   </v-col>
                 </v-row>
               </v-layout>
@@ -591,11 +592,12 @@
                   <br />
                   <Imageupload
                     :folder="'category'"
-                    :resizewidth="0.4"
-                    :resizeheight="0.1"
+                    :resizewidth="150"
+                    :resizeheight="100"
                     @uploaded_image="uploaded_image"
                     :upload_profile="uploadfilear"
                   />
+                  <div class="dimension_text">150 : 100</div>
                 </v-col>
               </v-row>
             </v-form>
@@ -1306,7 +1308,7 @@ export default {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   transform: translate3d(0, 0, 0);
 }
-.get_icons{
+.get_icons {
   font-size: 12px;
   padding-left: 5px;
 }

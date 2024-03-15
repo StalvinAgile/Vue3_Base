@@ -325,6 +325,9 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
+                    <div class="dimension_text">
+                      {{ resizewidth }} : {{ resizeheight }}
+                    </div>
                   </v-col>
                 </v-row>
               </v-layout>
@@ -608,6 +611,9 @@
                     @uploaded_image="uploaded_image"
                     :upload_profile="uploadfilear"
                   />
+                  <div class="dimension_text">
+                    {{ resizewidth }} : {{ resizeheight }}
+                  </div>
                 </v-col>
               </v-row>
             </v-form>
@@ -961,6 +967,13 @@ export default {
       }
     },
     updateParent(lang, value) {
+      if (this.page_builder[0].parent_id == null) {
+        this.resizewidth = 650;
+        this.resizeheight = 350;
+      } else {
+        this.resizewidth = 400;
+        this.resizeheight = 400;
+      }
       if (lang == "en") {
         this.page_builder[1].parent_id = value;
       } else {
@@ -1216,5 +1229,8 @@ export default {
 .shake {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   transform: translate3d(0, 0, 0);
+}
+.dimension_text {
+  text-align-last: start;
 }
 </style>
