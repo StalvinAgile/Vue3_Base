@@ -147,6 +147,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="promotions[0].phone"
+                      @update:modelValue="(value) => updatePOPhone(value, 1)"
                       v-bind:label="$t('phone_en')"
                       :rules="[...fieldRules, ...phoneRules]"
                       v-bind="props"
@@ -166,6 +167,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="promotions[0].email"
+                      @update:modelValue="(value) => updatePOEmail(value, 1)"
                       :rules="emailRules"
                       v-bind:label="$t('email_en')"
                       v-bind="props"
@@ -501,6 +503,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="promotions[1].phone"
+                      @update:modelValue="(value) => updatePOPhone(value, 0)"
                       v-bind:label="$t('phone_ar')"
                       :rules="[...fieldRulesAr, ...phoneRules]"
                       v-bind="props"
@@ -520,6 +523,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="promotions[1].email"
+                      @update:modelValue="(value) => updatePOEmail(value, 0)"
                       :rules="emailRulesAr"
                       v-bind:label="$t('email_ar')"
                       v-bind="props"
@@ -644,7 +648,7 @@
                       counter="true"
                     ></v-textarea>
                   </template>
-                  <span>{{ $t("vacancy") }}</span>
+                  <span>{{ $t("meta_description_ar") }}</span>
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="4" md="4">
@@ -991,6 +995,9 @@ export default {
     updatePromotionType(value, index) {
       this.promotions[index].type = value;
     },
+    updatePOEmail(value, index) {
+      this.promotions[index].email = value;
+    },
     changeRoleName(role_name) {
       switch (role_name) {
         case "MallAdmin":
@@ -1087,6 +1094,9 @@ export default {
       this.promotions[1].store_id = null;
       this.promotions[0].store_id = null;
       this.assignType(stor_type);
+    },
+    updatePOPhone(value, index) {
+      this.promotions[index].phone = value;
     },
     assignType(stor_type) {
       this.store_loader = true;

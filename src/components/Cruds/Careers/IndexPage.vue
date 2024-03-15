@@ -85,12 +85,12 @@
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-              <td>
+              <!-- <td>
                 <span v-if="props.item.selectable.description">
                   {{ props.item.selectable.description }}</span
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
-              </td>
+              </td> -->
               <td>
                 <span v-if="props.item.selectable.vacancy">
                   {{ props.item.selectable.vacancy }}</span
@@ -225,12 +225,12 @@
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
               </td>
-              <td>
+              <!-- <td>
                 <span v-if="props.item.selectable.description">
                   {{ props.item.selectable.description }}</span
                 >
                 <span v-else>{{ $t("not_appllicable") }}</span>
-              </td>
+              </td> -->
               <td>
                 <span v-if="props.item.selectable.vacancy">
                   {{ props.item.selectable.vacancy }}</span
@@ -428,10 +428,10 @@ export default {
           align: "left",
           key: "title",
         },
-        {
-          title: this.$t("description_en"),
-          key: "description",
-        },
+        // {
+        //   title: this.$t("description_en"),
+        //   key: "description",
+        // },
         {
           title: this.$t("vacancy_en"),
           key: "vacancy",
@@ -476,10 +476,10 @@ export default {
           align: "left",
           key: "title",
         },
-        {
-          title: this.$t("description_ar"),
-          key: "description",
-        },
+        // {
+        //   title: this.$t("description_ar"),
+        //   key: "description",
+        // },
         {
           title: this.$t("vacancy_ar"),
           key: "vacancy",
