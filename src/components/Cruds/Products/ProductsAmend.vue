@@ -69,27 +69,7 @@
               </v-row>
             </v-layout>
             <v-row class="mx-auto mt-2" max-width="344">
-              <v-col cols="12" sm="12" md="3">
-                <v-tooltip :text="this.$t('type_en')" location="bottom">
-                  <template v-slot:activator="{ props }">
-                    <v-autocomplete
-                      v-bind="props"
-                      v-model="products[0].type"
-                      :label="this.$t('type_en')"
-                      variant="outlined"
-                      density="compact"
-                      :disabled="$route.query.slug"
-                      :items="types_en"
-                      :rules="fieldRules"
-                      item-title="shortname"
-                      @update:modelValue="(value) => updateTypes(value)"
-                      item-value="header_id"
-                      class="required_field"
-                    ></v-autocomplete>
-                  </template>
-                </v-tooltip>
-              </v-col>
-              <v-col
+                <v-col
                 cols="12"
                 sm="12"
                 md="3"
@@ -104,9 +84,33 @@
                       variant="outlined"
                       density="compact"
                       :items="stores_en"
+                      :disabled="
+                        user.rolename == 'MallAdmin' &&
+                        products[0].stor_type == 'MallAdmin'
+                      "
                       :rules="fieldRules"
                       item-title="name"
                       @update:modelValue="(value) => updateStore(value)"
+                      item-value="header_id"
+                      class="required_field"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" sm="12" md="3">
+                <v-tooltip :text="this.$t('type_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="products[0].type"
+                      :label="this.$t('type_en')"
+                      variant="outlined"
+                      density="compact"
+                      :disabled="$route.query.slug"
+                      :items="types_en"
+                      :rules="fieldRules"
+                      item-title="shortname"
+                      @update:modelValue="(value) => updateTypes(value)"
                       item-value="header_id"
                       class="required_field"
                     ></v-autocomplete>
@@ -377,6 +381,34 @@
               </v-row>
             </v-layout>
             <v-row class="mx-auto mt-2 arabdirection" max-width="344">
+                  <v-col
+                cols="12"
+                sm="12"
+                md="3"
+                v-if="user.rolename != 'StoreAdmin'"
+              >
+                <v-tooltip :text="label_text_ar" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind="props"
+                      v-model="products[1].store_id"
+                      :label="label_text_ar"
+                      variant="outlined"
+                      density="compact"
+                       :disabled="
+                        user.rolename == 'MallAdmin' &&
+                        products[0].stor_type == 'MallAdmin'
+                      "
+                      :rules="fieldRulesAR"
+                      :items="stores_ar"
+                      @update:modelValue="(value) => updateStore(value)"
+                      item-title="name"
+                      class="required_field rtl"
+                      item-value="header_id"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('type_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
@@ -397,30 +429,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col
-                cols="12"
-                sm="12"
-                md="3"
-                v-if="user.rolename != 'StoreAdmin'"
-              >
-                <v-tooltip :text="label_text_ar" location="bottom">
-                  <template v-slot:activator="{ props }">
-                    <v-autocomplete
-                      v-bind="props"
-                      v-model="products[1].store_id"
-                      :label="label_text_ar"
-                      variant="outlined"
-                      density="compact"
-                      :rules="fieldRulesAR"
-                      :items="stores_ar"
-                      @update:modelValue="(value) => updateStore(value)"
-                      item-title="name"
-                      class="required_field rtl"
-                      item-value="header_id"
-                    ></v-autocomplete>
-                  </template>
-                </v-tooltip>
-              </v-col>
+          
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="this.$t('title_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
@@ -1550,21 +1559,42 @@ export default {
       setTimeout(() => {
         if (this.tabs == 1) {
           this.products[1].stor_type = stor_type;
-          if (stor_type == "MallAdmin") {
+          if (stor_type == "MallAdmin" && this.user.rolename == "MallAdmin") {
+            this.labelText = this.$t("mall");
+            this.label_text_ar = this.$t("mall_ar");
+
+            if (!this.$route.query.slug) {
+              this.products[1].store_id = this.mall_id;
+              this.products[0].store_id = this.mall_id;
+            }
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else if (stor_type == "MallAdmin") {
             this.labelText = this.$t("mall");
             this.label_text_ar = this.$t("mall_ar");
             this.stores_en = this.mal_data_en;
             this.stores_ar = this.mal_data_ar;
           } else {
+            // alert("sadasd");
             this.labelText = this.$t("store");
             this.label_text_ar = this.$t("store_ar");
             this.stores_en = this.stores_data_en;
             this.stores_ar = this.stores_data_ar;
-            // console.log("asdasd", this.stores_data_en);
           }
         } else {
           this.products[0].stor_type = stor_type;
-          if (stor_type == "MallAdmin") {
+          if (stor_type == "MallAdmin" && this.user.rolename == "MallAdmin") {
+            if (!this.$route.query.slug) {
+              this.products[1].store_id = this.mall_id;
+              this.products[0].store_id = this.mall_id;
+            }
+            this.labelText = this.$t("mall");
+            this.label_text_ar = this.$t("mall_ar");
+            this.stores_en = this.mal_data_en;
+            this.stores_ar = this.mal_data_ar;
+          } else if (stor_type == "MallAdmin") {
+            // this.products[1].store_id = this.mall_id;
+            // this.products[0].store_id = this.mall_id;
             this.labelText = this.$t("mall");
             this.label_text_ar = this.$t("mall_ar");
             this.stores_en = this.mal_data_en;
@@ -1593,9 +1623,9 @@ export default {
             this.user.rolename === "MallAdmin" &&
             !this.$route.query.slug
           ) {
-            this.role_array = response.data.roles.filter(
-              (role) => role.rolename == "StoreAdmin"
-            );
+            // this.role_array = response.data.roles.filter(
+            //   (role) => role.rolename == "StoreAdmin"
+            // );
             this.products[0].stor_type = this.role_array[0].rolename;
             this.products[1].stor_type = this.role_array[0].rolename;
             this.updateType(this.products[0].stor_type);
@@ -1633,15 +1663,22 @@ export default {
           console.log(err);
         });
     },
-    fetchMall() {
-      this.initval = true;
+     fetchMall() {
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch-malls")
         .then((response) => {
           console.log(response);
           this.mal_data_en = response.data.malls_en;
           this.mal_data_ar = response.data.malls_ar;
-          this.initval = false;
+           if (this.user.rolename == "MallAdmin" && !this.$route.query.slug) {
+            this.mal_data_en.filter((ele) => {
+              if (ele.header_id === this.user.store_id) {
+                this.products[0].store_id = ele.header_id;
+                this.products[1].store_id = ele.header_id;
+                this.mall_id = ele.header_id;
+              }
+            });
+          }
         })
         .catch((err) => {
           console.log(err);
