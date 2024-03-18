@@ -108,9 +108,10 @@
                       v-if="enurl != null"
                       width="400"
                       height="250"
-                      :src="getVideoIdFromUrlEn(event.video)"
+                      :src="event.video"
                       frameborder="1"
                     ></iframe>
+                    <!-- :src="getVideoIdFromUrlEn(event.video)" -->
 
                     <img
                       v-bind:style="
@@ -291,7 +292,7 @@
                       v-if="arurl != null"
                       width="400"
                       height="250"
-                      :src="getVideoIdFromUrlAr(event.video)"
+                      :src="event.video"
                       frameborder="1"
                     ></iframe>
                     <img
