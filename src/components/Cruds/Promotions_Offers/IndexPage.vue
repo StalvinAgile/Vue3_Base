@@ -156,7 +156,7 @@
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
                   size="small"
-                  @click="changeStatus(props.item.selectable.id)"
+                  @click="changeStatus(props.item.selectable.header_id)"
                   v-bind:color="[
                     props.item.selectable.status == 1 ? 'success' : 'warning',
                   ]"
@@ -312,7 +312,7 @@
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
                   size="small"
-                  @click="changeStatus(props.item.selectable.id)"
+                  @click="changeStatus(props.item.selectable.header_id)"
                   v-bind:color="[
                     props.item.selectable.status == 1 ? 'success' : 'warning',
                   ]"
@@ -742,7 +742,7 @@ export default {
             this.initval = true;
             this.fetchPromotions();
           } else if (res.data.status == "E") {
-            this.$toast.success(this.$t("something_went_wrong"));
+            this.$toast.error(this.$t("something_went_wrong"));
           } else {
             this.$toast.error(this.array_data);
             this.initval = true;
