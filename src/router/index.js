@@ -203,19 +203,7 @@ const routes = [
     meta: { layout: "userpages" },
     component: () => import("../Admin/UserPages/OtpValidation.vue"),
   },
-  //memberlist
-  {
-    path: "/:lang?/memberlist",
-    name: "memberlist",
-    beforeEnter: guardMyroute,
-    component: () => import("../components/Cruds/MemberList/IndexPage.vue"),
-  },
-  {
-    path: "/:lang?/view-licenses",
-    name: "view-licenses",
-    beforeEnter: guardMyroute,
-    component: () => import("../components/Cruds/MemberList/ViewPage.vue"),
-  },
+ 
   //frontend user profile page
   {
     path: "/:lang?/view-my-profile",
