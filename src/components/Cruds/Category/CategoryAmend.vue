@@ -228,6 +228,9 @@
                         <v-text-field
                           v-bind="props"
                           v-model="category[0].icon"
+                          @update:modelValue="
+                            (value) => updateCategoryIcon(value, 1)
+                          "
                           maxlength="100"
                           counter
                           v-bind:label="$t('icon_en')"
@@ -517,6 +520,9 @@
                       <v-text-field
                         v-bind="props"
                         v-model="category[1].icon"
+                        @update:modelValue="
+                            (value) => updateCategoryIcon(value, 0)
+                          "
                         maxlength="100"
                         v-bind:label="$t('icon_ar')"
                         placeholder="Home"
@@ -893,6 +899,7 @@ export default {
     updatePath(index, value) {
       this.category[index].title = value;
     },
+    
     fetchLookup() {
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_lang_lookup", {
@@ -977,6 +984,9 @@ export default {
     },
     updateCategorySequence(value, index) {
       this.category[index].seq = value;
+    },
+    updateCategoryIcon(value, index) {
+      this.category[index].icon = value;
     },
     uploadFile() {
       if (this.tabs == 1) {
