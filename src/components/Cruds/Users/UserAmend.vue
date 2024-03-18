@@ -574,7 +574,6 @@ export default {
 
   created() {
     this.fetchlookup();
-    this.fetchRoles();
     this.get_countries();
     this.user = JSON.parse(localStorage.getItem("user_data"));
   },
@@ -582,6 +581,7 @@ export default {
     this.sel_lang = this.$i18n.locale;
     this.get_stores();
     this.get_malls();
+    this.fetchRoles();
   },
   watch: {
     "$i18n.locale"(newVal) {
@@ -755,9 +755,9 @@ export default {
         .then((response) => {
           this.role_array_view_profile = response.data.roles;
           this.role_array = response.data.roles;
-          if (this.user.rolename == "SuperUser") {
+          if (this.user.rolename == "SuperUser" && this.profile_details.id == 0) {
             this.role_array_view_profile = this.role_array.filter((ele) => {
-              return ele.rolename != "SuperUser" && ele.rolename != "MallAdmin";
+              return ele.rolename != "SuperUser";
             });
           }
           if (this.user.rolename == "MallAdmin") {
