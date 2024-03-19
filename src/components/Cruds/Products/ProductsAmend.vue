@@ -1685,9 +1685,9 @@ export default {
             this.user.rolename === "MallAdmin" &&
             this.$route.query.slug
           ) {
-            this.role_array = response.data.roles.filter(
-              (role) => role.rolename == "StoreAdmin"
-            );
+            // this.role_array = response.data.roles.filter(
+            //   (role) => role.rolename == "StoreAdmin"
+            // );
             this.assignType(this.products[0].stor_type);
           }
           // if (!this.$route.query.slug) {
