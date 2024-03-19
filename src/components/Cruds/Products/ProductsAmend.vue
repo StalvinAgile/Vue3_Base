@@ -212,25 +212,38 @@
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="$t('icon_en')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-text-field
+                    <v-autocomplete
                       v-bind="props"
                       v-model="products[0].icon"
-                      maxlength="100"
-                      counter
-                      v-bind:label="$t('icon_en')"
-                      placeholder="Home"
-                      required
-                      variant="outlined"
                       density="compact"
-                    ></v-text-field>
+                      @update:modelValue="
+                        (value) => updateProductsIcon(value, 1)
+                      "
+                      v-bind:label="$t('icon_en')"
+                      variant="outlined"
+                      :items="icons"
+                      item-title="name"
+                      item-value="name"
+                    >
+                      <template v-slot:chip="{ props, item }">
+                        <v-chip
+                          variant="text"
+                          v-bind="props"
+                          :prepend-icon="item.raw.icon"
+                          :text="item.raw.name"
+                        ></v-chip>
+                      </template>
+                      <template v-slot:item="{ props, item }">
+                        <v-list-item
+                          v-bind="props"
+                          :prepend-icon="item.raw.icon"
+                          :subtitle="item.raw.group"
+                          :title="item.raw.name"
+                        ></v-list-item>
+                      </template>
+                    </v-autocomplete>
                   </template>
                 </v-tooltip>
-                <a
-                  class="get_icons"
-                  target="_blank"
-                  href="https://mui.com/material-ui/material-icons/"
-                  >{{ $t("get_icons_en") }}</a
-                >
               </v-col>
               <v-col cols="12" sm="12" md="12">
                 <v-tooltip :text="this.$t('description_en')" location="bottom">
@@ -533,25 +546,38 @@
               <v-col cols="12" sm="12" md="3">
                 <v-tooltip :text="$t('icon_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
-                    <v-text-field
+                    <v-autocomplete
                       v-bind="props"
                       v-model="products[1].icon"
-                      maxlength="100"
-                      counter
-                      v-bind:label="$t('icon_ar')"
-                      placeholder="Home"
-                      required
-                      variant="outlined"
                       density="compact"
-                    ></v-text-field>
+                      @update:modelValue="
+                        (value) => updateProductsIcon(value, 0)
+                      "
+                      v-bind:label="$t('icon_ar')"
+                      variant="outlined"
+                      :items="icons"
+                      item-title="name"
+                      item-value="name"
+                    >
+                      <template v-slot:chip="{ props, item }">
+                        <v-chip
+                          variant="text"
+                          v-bind="props"
+                          :prepend-icon="item.raw.icon"
+                          :text="item.raw.name"
+                        ></v-chip>
+                      </template>
+                      <template v-slot:item="{ props, item }">
+                        <v-list-item
+                          v-bind="props"
+                          :prepend-icon="item.raw.icon"
+                          :subtitle="item.raw.group"
+                          :title="item.raw.name"
+                        ></v-list-item>
+                      </template>
+                    </v-autocomplete>
                   </template>
                 </v-tooltip>
-                <a
-                  class="get_icons"
-                  target="_blank"
-                  href="https://mui.com/material-ui/material-icons/"
-                  >{{ $t("get_icons_ar") }}</a
-                >
               </v-col>
               <v-col cols="12" sm="12" md="12">
                 <v-tooltip :text="this.$t('description_ar')" location="bottom">
@@ -1133,9 +1159,11 @@
 import DatePicker from "../../CustomComponents/DatePicker.vue";
 import Imageupload from "../../CustomComponents/ImageUpload.vue";
 import moment from "moment";
+import icons from "@/assets/mdi_icons/icons.json";
 export default {
   components: { Imageupload, DatePicker },
   data: () => ({
+    icons,
     google_icon: {
       icon_name: "edit_note",
       color: "google_icon_gradient",
@@ -1198,7 +1226,7 @@ export default {
         meta_description: "",
         lang: "en",
         seq: null,
-        icon: "",
+        icon: "mdi-home",
         stor_type: "",
       },
       {
@@ -1213,7 +1241,7 @@ export default {
         meta_description: "",
         lang: "ar",
         seq: null,
-        icon: "",
+        icon: "mdi-home",
         stor_type: "",
       },
     ],
@@ -1503,6 +1531,9 @@ export default {
     },
     updateSeq(value, index) {
       this.products[index].seq = value;
+    },
+    updateProductsIcon(value, index) {
+      this.products[index].icon = value;
     },
     get_weekdays() {
       this.initval = true;

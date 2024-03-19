@@ -225,28 +225,38 @@
                   <v-col cols="12" sm="12" md="3">
                     <v-tooltip :text="$t('icon_en')" location="bottom">
                       <template v-slot:activator="{ props }">
-                        <v-text-field
+                        <v-autocomplete
                           v-bind="props"
                           v-model="category[0].icon"
                           @update:modelValue="
                             (value) => updateCategoryIcon(value, 1)
                           "
-                          maxlength="100"
-                          counter
                           v-bind:label="$t('icon_en')"
-                          placeholder="Home"
-                          required
                           variant="outlined"
                           density="compact"
-                        ></v-text-field>
+                          :items="icons"
+                          item-title="name"
+                          item-value="name"
+                        >
+                          <template v-slot:chip="{ props, item }">
+                            <v-chip
+                              variant="text"
+                              v-bind="props"
+                              :prepend-icon="item.raw.icon"
+                              :text="item.raw.name"
+                            ></v-chip>
+                          </template>
+                          <template v-slot:item="{ props, item }">
+                            <v-list-item
+                              v-bind="props"
+                              :prepend-icon="item.raw.icon"
+                              :subtitle="item.raw.group"
+                              :title="item.raw.name"
+                            ></v-list-item>
+                          </template>
+                        </v-autocomplete>
                       </template>
                     </v-tooltip>
-                    <a
-                      class="get_icons"
-                      target="_blank"
-                      href="https://mui.com/material-ui/material-icons/"
-                      >{{ $t("get_icons_en") }}</a
-                    >
                   </v-col>
                   <v-col cols="12" sm="12" md="4">
                     <div>
@@ -517,27 +527,38 @@
                 <v-col cols="12" sm="12" md="3">
                   <v-tooltip :text="$t('icon_ar')" location="bottom">
                     <template v-slot:activator="{ props }">
-                      <v-text-field
+                      <v-autocomplete
                         v-bind="props"
                         v-model="category[1].icon"
                         @update:modelValue="
-                            (value) => updateCategoryIcon(value, 0)
-                          "
-                        maxlength="100"
+                          (value) => updateCategoryIcon(value, 0)
+                        "
                         v-bind:label="$t('icon_ar')"
-                        placeholder="Home"
-                        required
                         variant="outlined"
                         density="compact"
-                      ></v-text-field>
+                        :items="icons"
+                        item-title="name"
+                        item-value="name"
+                      >
+                        <template v-slot:chip="{ props, item }">
+                          <v-chip
+                            variant="text"
+                            v-bind="props"
+                            :prepend-icon="item.raw.icon"
+                            :text="item.raw.name"
+                          ></v-chip>
+                        </template>
+                        <template v-slot:item="{ props, item }">
+                          <v-list-item
+                            v-bind="props"
+                            :prepend-icon="item.raw.icon"
+                            :subtitle="item.raw.group"
+                            :title="item.raw.name"
+                          ></v-list-item>
+                        </template>
+                      </v-autocomplete>
                     </template>
                   </v-tooltip>
-                  <a
-                    class="get_icons"
-                    href="https://mui.com/material-ui/material-icons/"
-                    target="_blank"
-                    >{{ $t("get_icons_ar") }}</a
-                  >
                 </v-col>
                 <v-col cols="12" sm="12" md="4">
                   <div>
@@ -703,6 +724,7 @@ import PageTitle from "../../CustomComponents/PageTitle.vue";
 import { quillEditor } from "vue3-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import "vue3-icon-picker/dist/style.css";
+import icons from "@/assets/mdi_icons/icons.json";
 export default {
   components: {
     PageTitle,
@@ -726,6 +748,7 @@ export default {
     return { onEditorReady, onEditorFocus, onEditorFocusAR, onEditorReadyAR };
   },
   data: () => ({
+    icons,
     malls_en: [],
     malls_ar: [],
     error_valid: false,
@@ -772,7 +795,7 @@ export default {
         meta_title: "",
         image_path: null,
         seq: "",
-        icon: "",
+        icon: "mdi-home",
         meta_description: "",
         display_header_menu: 0,
         header_id: 0,
@@ -788,7 +811,7 @@ export default {
         meta_title: "",
         image_path: null,
         seq: "",
-        icon: "",
+        icon: "mdi-home",
         meta_description: "",
         display_header_menu: 0,
         header_id: 0,
@@ -899,7 +922,7 @@ export default {
     updatePath(index, value) {
       this.category[index].title = value;
     },
-    
+
     fetchLookup() {
       this.$axios
         .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_lang_lookup", {
