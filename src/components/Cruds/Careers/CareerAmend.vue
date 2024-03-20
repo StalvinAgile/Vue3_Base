@@ -73,7 +73,7 @@
               <v-col
                 cols="3"
                 sm="12"
-                md="3"
+                md="4"
                 v-if="user.rolename != 'StoreAdmin'"
               >
                 <v-tooltip :text="labelText" location="bottom">
@@ -99,7 +99,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="12" md="3">
+              <v-col cols="3" sm="12" md="4">
                 <v-tooltip :text="this.$t('title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -117,7 +117,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="12" md="3">
+              <v-col cols="3" sm="12" md="4">
                 <v-tooltip :text="this.$t('vacancy')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -137,7 +137,67 @@
                   <span>{{ $t("vacancy") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="12" md="3">
+              <v-col cols="12" xs="12" sm="2" md="4">
+                <v-tooltip :text="this.$t('email_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="careers[0].email"
+                      @update:modelValue="(value) => updateEmail(value, 1)"
+                      :rules="emailRules"
+                      v-bind:label="$t('email_en')"
+                      v-bind="props"
+                      required
+                      class="required_field"
+                      variant="outlined"
+                      density="compact"
+                      maxlength="500"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" xs="12" sm="2" md="1">
+                <v-tooltip :text="$t('mobile_code_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind:label="$t('mobile_code_en')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      :rules="fieldRules"
+                      class="required_field"
+                      required
+                      index="id"
+                      item-key="header_id"
+                      item-value="mobile_code"
+                      item-title="mobile_code"
+                      v-model="careers[0].mobile_code"
+                      @update:modelValue="(value) => updateMobileCode(value, 1)"
+                      :items="country_array_en"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" xs="12" sm="4" md="3">
+                <v-tooltip :text="$t('mobile_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-bind="props"
+                      @update:modelValue="(value) => updateMallMobile(value, 1)"
+                      v-model="careers[0].mobile"
+                      :rules="phoneRules"
+                      v-on:keypress="NumbersOnly"
+                      maxlength="12"
+                      v-bind:label="$t('mobile_en')"
+                      required
+                      class="required_field"
+                      variant="outlined"
+                      density="compact"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="3" sm="12" md="4">
                 <v-tooltip :text="this.$t('meta_title')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -322,7 +382,7 @@
               <v-col
                 cols="3"
                 sm="12"
-                md="3"
+                md="4"
                 v-if="user.rolename != 'StoreAdmin'"
               >
                 <v-tooltip :text="label_text_ar" location="bottom">
@@ -348,7 +408,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="12" md="3">
+              <v-col cols="3" sm="12" md="4">
                 <v-tooltip :text="this.$t('title_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -366,7 +426,7 @@
                   </template>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="12" md="3">
+              <v-col cols="3" sm="12" md="4">
                 <v-tooltip :text="this.$t('vacancy_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -386,7 +446,67 @@
                   <span>{{ $t("vacancy_ar") }}</span>
                 </v-tooltip>
               </v-col>
-              <v-col cols="3" sm="12" md="3">
+              <v-col cols="12" xs="12" sm="2" md="4">
+                <v-tooltip :text="this.$t('email_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="careers[1].email"
+                      @update:modelValue="(value) => updateEmail(value, 0)"
+                      :rules="emailRulesAr"
+                      v-bind:label="$t('email_ar')"
+                      v-bind="props"
+                      required
+                      class="required_field rtl"
+                      variant="outlined"
+                      density="compact"
+                      maxlength="500"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" xs="12" sm="2" md="1">
+                <v-tooltip :text="$t('mobile_code_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind:label="$t('mobile_code_ar')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      :rules="fieldRules"
+                      class="required_field"
+                      required
+                      index="id"
+                      item-key="header_id"
+                      item-value="mobile_code"
+                      item-title="mobile_code"
+                      v-model="careers[1].mobile_code"
+                      @update:modelValue="(value) => updateMobileCode(value, 0)"
+                      :items="country_array_en"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" xs="12" sm="4" md="3">
+                <v-tooltip :text="$t('mobile_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-bind="props"
+                      @update:modelValue="(value) => updateMallMobile(value, 0)"
+                      v-model="careers[1].mobile"
+                      :rules="phoneRules"
+                      v-on:keypress="NumbersOnly"
+                      maxlength="12"
+                      v-bind:label="$t('mobile_ar')"
+                      required
+                      class="required_field"
+                      variant="outlined"
+                      density="compact"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="3" sm="12" md="4">
                 <v-tooltip :text="this.$t('meta_title_ar')" location="bottom">
                   <template v-slot:activator="{ props }">
                     <v-text-field
@@ -623,6 +743,8 @@ export default {
     checkbox_value: false,
     careers_en: [],
     careers_ar: [],
+    country_array_en: [],
+    country_array_ar: [],
     labelText: "Mall",
     label_text_ar: "مجمع تجاري",
     mall_id: null,
@@ -632,11 +754,13 @@ export default {
         title: "",
         description: "",
         vacancy: "",
+        email: "",
         image_path: "",
         seq: "",
         meta_title: "",
         meta_description: "",
         stor_type: "",
+        mobile_code: null,
         lang: "en",
         store_id: null,
       },
@@ -645,11 +769,13 @@ export default {
         title: "",
         description: "",
         vacancy: "",
+        email: "",
         image_path: "",
         seq: "",
         meta_title: "",
         meta_description: "",
         stor_type: "",
+        mobile_code: null,
         lang: "ar",
         store_id: null,
       },
@@ -703,10 +829,29 @@ export default {
     vacancyRulesAR() {
       return [(v) => (v >= 0 && v <= 9999) || this.$t("number_required_ar")];
     },
+    emailRules() {
+      return [
+        (v) => !!v || this.$t("email_required"),
+        (v) =>
+          !v ||
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          this.$t("email_valid"),
+      ];
+    },
+    emailRulesAr() {
+      return [
+        (v) => !!v || this.$t("email_required_ar"),
+        (v) =>
+          !v ||
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          this.$t("email_valid"),
+      ];
+    },
   },
 
   created() {
     this.fetchRoles();
+    this.get_countries();
     this.user = JSON.parse(localStorage.getItem("user_data"));
   },
   watch: {
@@ -756,6 +901,19 @@ export default {
     },
   },
   methods: {
+    NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
     uploadFile() {
       if (this.tabs == 1) {
         if (this.uploadfile == false) {
@@ -790,6 +948,15 @@ export default {
     },
     updateVac(value, index) {
       this.careers[index].vacancy = value;
+    },
+    updateMobileCode(value, index) {
+      this.careers[index].mobile_code = value;
+    },
+    updateMallMobile(value, index) {
+      this.careers[index].mobile = value;
+    },
+    updateEmail(value, index) {
+      this.careers[index].email = value;
     },
     changeRoleName(role_name) {
       switch (role_name) {
@@ -980,6 +1147,20 @@ export default {
             });
           }
           // this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    get_countries() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_countries")
+        .then((response) => {
+          console.log(response);
+          this.country_array_en = response.data.countries_en;
+          this.country_array_ar = response.data.countries_ar;
+          this.initval = false;
         })
         .catch((err) => {
           console.log(err);
@@ -1203,7 +1384,7 @@ input.larger {
 #quill_item_border {
   border: 1px solid #d1d5db;
 }
-.dimension_text{
+.dimension_text {
   text-align-last: start;
 }
 </style>

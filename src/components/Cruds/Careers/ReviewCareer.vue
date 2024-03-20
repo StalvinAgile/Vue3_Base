@@ -76,6 +76,20 @@
                     <div>{{ career.vacancy }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">
+                      {{ $t("email_en") }}
+                    </div>
+                    <div v-if="career.email != null">{{ career.email }}</div>
+                    <div v-else>{{ $t("not_applicable") }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">{{ $t("mobile_en") }}</div>
+                    <div v-if="career.mobile != null">
+                      {{ career.mobile_code }} {{ career.mobile }}
+                    </div>
+                    <div v-else>{{ $t("not_applicable") }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("meta_title_en") }}</div>
                     <div>{{ career.meta_title }}</div>
                   </v-col>
@@ -199,6 +213,20 @@
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("vacancy_ar") }}</div>
                     <div>{{ career.vacancy }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">
+                      {{ $t("email_ar") }}
+                    </div>
+                    <div v-if="career.email != null">{{ career.email }}</div>
+                    <div v-else>{{ $t("not_applicable") }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <div class="d-label">{{ $t("mobile_ar") }}</div>
+                    <div v-if="career.mobile != null">
+                      {{ career.mobile_code }} {{ career.mobile }}
+                    </div>
+                    <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <div class="d-label">{{ $t("meta_title_ar") }}</div>

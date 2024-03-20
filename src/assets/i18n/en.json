@@ -108,6 +108,8 @@
   "view_profile": "View Profile Picture",
   "address": "Address",
   "mobile": "Mobile",
+  "mobile_en": "Mobile",
+  "mobile_ar": "متحرك",
   "countries": "Countries",
   "states": "States",
   "file_upload": "click here to file upload",
