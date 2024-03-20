@@ -723,7 +723,7 @@
                   <v-btn
                     size="small"
                     elevation="0"
-                    color="blue"
+                    color="green"
                     rounded
                     v-bind="props"
                     @click="addWeekday()"
@@ -2070,7 +2070,7 @@ input.larger {
   background: #fff;
 }
 .headings {
-  color: #2196f3;
+  color: #614f38;
 }
 .service-container {
   margin: 10px 20px;

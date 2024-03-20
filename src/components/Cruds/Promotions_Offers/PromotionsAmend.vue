@@ -128,6 +128,9 @@
                     <v-autocomplete
                       v-bind:label="$t('mobile_code_en')"
                       v-bind="props"
+                      :rules="fieldRules"
+                      class="required_field"
+                      required
                       variant="outlined"
                       density="compact"
                       index="id"
@@ -488,6 +491,9 @@
                       v-bind="props"
                       variant="outlined"
                       density="compact"
+                      :rules="fieldRulesAr"
+                      class="required_field"
+                      required
                       index="id"
                       item-key="mobile_code"
                       item-value="mobile_code"
