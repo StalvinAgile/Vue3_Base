@@ -152,6 +152,68 @@
                   <span>{{ $t("end_date_en") }}</span>
                 </v-tooltip>
               </v-col>
+              <v-col cols="12" xs="12" sm="2" md="3">
+                <v-tooltip :text="this.$t('email_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="events[0].email"
+                      @update:modelValue="(value) => updateEmail(value, 1)"
+                      :rules="emailRules"
+                      v-bind:label="$t('email_en')"
+                      v-bind="props"
+                      required
+                      class="required_field"
+                      variant="outlined"
+                      density="compact"
+                      maxlength="500"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" xs="12" sm="2" md="1">
+                <v-tooltip :text="$t('mobile_code_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind:label="$t('mobile_code_en')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      :rules="fieldRules"
+                      class="required_field"
+                      required
+                      index="id"
+                      item-key="header_id"
+                      item-value="mobile_code"
+                      item-title="mobile_code"
+                      v-model="events[0].mobile_code"
+                      @update:modelValue="(value) => updateMobileCode(value, 1)"
+                      :items="country_array_en"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" xs="12" sm="4" md="2">
+                <v-tooltip :text="$t('mobile_en')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-bind="props"
+                      @update:modelValue="
+                        (value) => updateEventsMobile(value, 1)
+                      "
+                      v-model="events[0].mobile"
+                      :rules="phoneRules"
+                      v-on:keypress="NumbersOnly"
+                      maxlength="12"
+                      v-bind:label="$t('mobile_en')"
+                      required
+                      class="required_field"
+                      variant="outlined"
+                      density="compact"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
               <v-col cols="12" sm="12" md="12">
                 <v-card-title class="text-left" style="font-size: 17px">{{
                   $t("description_en")
@@ -386,7 +448,7 @@
                       :items="stores_ar"
                       item-title="name"
                       item-value="header_id"
-                      :rules="fieldRulesAr"
+                      :rules="fieldRulesAR"
                       class="required_field rtl"
                     ></v-autocomplete>
                   </template>
@@ -398,7 +460,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="events[1].title"
-                      :rules="fieldRulesAr"
+                      :rules="fieldRulesAR"
                       v-bind:label="$t('title_ar')"
                       v-bind="props"
                       required
@@ -422,7 +484,7 @@
                       dense
                       :translation="'arabic'"
                       :class_required="'RequiredField rtl'"
-                      :rules="fieldRulesAr"
+                      :rules="fieldRulesAR"
                       v-on="on"
                     />
                   </template>
@@ -435,7 +497,7 @@
                     <DatePicker
                       v-bind="props"
                       :label="$t('end_date_ar')"
-                      :rules="fieldRulesAr"
+                      :rules="fieldRulesAR"
                       :translation="'arabic'"
                       :min="new Date().toISOString().substr(0, 10)"
                       :stored_date="events[1].end_date"
@@ -447,6 +509,68 @@
                     />
                   </template>
                   <span>{{ $t("end_date_ar") }}</span>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" xs="12" sm="2" md="3">
+                <v-tooltip :text="this.$t('email_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-on="on"
+                      v-model="events[1].email"
+                      @update:modelValue="(value) => updateEmail(value, 0)"
+                      :rules="emailRulesAr"
+                      v-bind:label="$t('email_ar')"
+                      v-bind="props"
+                      required
+                      class="required_field rtl"
+                      variant="outlined"
+                      density="compact"
+                      maxlength="500"
+                    ></v-text-field>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" xs="12" sm="2" md="1">
+                <v-tooltip :text="$t('mobile_code_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-autocomplete
+                      v-bind:label="$t('mobile_code_ar')"
+                      v-bind="props"
+                      variant="outlined"
+                      density="compact"
+                      :rules="fieldRulesAR"
+                      class="required_field"
+                      required
+                      index="id"
+                      item-key="header_id"
+                      item-value="mobile_code"
+                      item-title="mobile_code"
+                      v-model="events[1].mobile_code"
+                      @update:modelValue="(value) => updateMobileCode(value, 0)"
+                      :items="country_array_en"
+                    ></v-autocomplete>
+                  </template>
+                </v-tooltip>
+              </v-col>
+              <v-col cols="12" xs="12" sm="4" md="2">
+                <v-tooltip :text="$t('mobile_ar')" location="bottom">
+                  <template v-slot:activator="{ props }">
+                    <v-text-field
+                      v-bind="props"
+                      @update:modelValue="
+                        (value) => updateEventsMobile(value, 0)
+                      "
+                      v-model="events[1].mobile"
+                      :rules="phoneRules"
+                      v-on:keypress="NumbersOnly"
+                      maxlength="12"
+                      v-bind:label="$t('mobile_ar')"
+                      required
+                      class="required_field"
+                      variant="outlined"
+                      density="compact"
+                    ></v-text-field>
+                  </template>
                 </v-tooltip>
               </v-col>
               <v-col cols="12" sm="12" md="12">
@@ -486,7 +610,7 @@
                     <v-text-field
                       v-on="on"
                       v-model="events[1].meta_title"
-                      :rules="fieldRulesAr"
+                      :rules="fieldRulesAR"
                       v-bind:label="$t('meta_title_ar')"
                       v-bind="props"
                       required
@@ -508,7 +632,7 @@
                       v-on="on"
                       rows="2"
                       v-model="events[1].meta_description"
-                      :rules="fieldRulesAr"
+                      :rules="fieldRulesAR"
                       maxlength="2000"
                       v-bind="props"
                       v-bind:label="$t('meta_description_ar')"
@@ -748,6 +872,7 @@ export default {
     events_ar: [],
     stores_en: [],
     stores_ar: [],
+    country_array_en: [],
     user: "",
     events: [
       {
@@ -757,6 +882,9 @@ export default {
         start_date: "",
         end_date: "",
         image_path: "",
+        email: "",
+        mobile_code: null,
+        mobile: "",
         seq: "",
         meta_title: "",
         meta_description: "",
@@ -772,6 +900,9 @@ export default {
         start_date: "",
         end_date: "",
         image_path: "",
+        email: "",
+        mobile_code: null,
+        mobile: "",
         seq: "",
         meta_title: "",
         meta_description: "",
@@ -814,8 +945,17 @@ export default {
     fieldRules() {
       return [(v) => !!v || this.$t("field_required")];
     },
-    fieldRulesAr() {
+    fieldRulesAR() {
       return [(v) => !!v || this.$t("field_required_ar")];
+    },
+    emailRulesAr() {
+      return [
+        (v) => !!v || this.$t("email_required_ar"),
+        (v) =>
+          !v ||
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          this.$t("email_valid"),
+      ];
     },
   },
   mounted() {
@@ -823,6 +963,7 @@ export default {
     this.fetchMall();
   },
   created() {
+    this.get_countries();
     this.fetchRoles();
     this.user = JSON.parse(localStorage.getItem("user_data"));
     // if (this.user.store_id && this.user.rolename == "StoreAdmin") {
@@ -898,6 +1039,20 @@ export default {
           quill.root.setAttribute("dir", "ltr");
         }
       });
+    },
+    get_countries() {
+      this.initval = true;
+      this.$axios
+        .get(process.env.VUE_APP_API_URL_ADMIN + "fetch_countries")
+        .then((response) => {
+          console.log(response);
+          this.country_array_en = response.data.countries_en;
+          this.country_array_ar = response.data.countries_ar;
+          this.initval = false;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     assignType(stor_type) {
       setTimeout(() => {
@@ -1272,6 +1427,15 @@ export default {
     },
     clear() {
       this.$refs.form.reset();
+    },
+    updateMobileCode(value, index) {
+      this.events[index].mobile_code = value;
+    },
+    updateEventsMobile(value, index) {
+      this.events[index].mobile = value;
+    },
+    updateEmail(value, index) {
+      this.events[index].email = value;
     },
     removeImage(index) {
       if (index == 1) {

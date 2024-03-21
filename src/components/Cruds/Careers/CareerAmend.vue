@@ -183,7 +183,9 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-bind="props"
-                      @update:modelValue="(value) => updateMallMobile(value, 1)"
+                      @update:modelValue="
+                        (value) => updateCareersMobile(value, 1)
+                      "
                       v-model="careers[0].mobile"
                       :rules="phoneRules"
                       v-on:keypress="NumbersOnly"
@@ -473,7 +475,7 @@
                       v-bind="props"
                       variant="outlined"
                       density="compact"
-                      :rules="fieldRules"
+                      :rules="fieldRulesAR"
                       class="required_field"
                       required
                       index="id"
@@ -492,7 +494,9 @@
                   <template v-slot:activator="{ props }">
                     <v-text-field
                       v-bind="props"
-                      @update:modelValue="(value) => updateMallMobile(value, 0)"
+                      @update:modelValue="
+                        (value) => updateCareersMobile(value, 0)
+                      "
                       v-model="careers[1].mobile"
                       :rules="phoneRules"
                       v-on:keypress="NumbersOnly"
@@ -755,12 +759,13 @@ export default {
         description: "",
         vacancy: "",
         email: "",
+        mobile_code: null,
+        mobile: "",
         image_path: "",
         seq: "",
         meta_title: "",
         meta_description: "",
         stor_type: "",
-        mobile_code: null,
         lang: "en",
         store_id: null,
       },
@@ -770,12 +775,13 @@ export default {
         description: "",
         vacancy: "",
         email: "",
+        mobile_code: null,
+        mobile: "",
         image_path: "",
         seq: "",
         meta_title: "",
         meta_description: "",
         stor_type: "",
-        mobile_code: null,
         lang: "ar",
         store_id: null,
       },
@@ -952,7 +958,7 @@ export default {
     updateMobileCode(value, index) {
       this.careers[index].mobile_code = value;
     },
-    updateMallMobile(value, index) {
+    updateCareersMobile(value, index) {
       this.careers[index].mobile = value;
     },
     updateEmail(value, index) {

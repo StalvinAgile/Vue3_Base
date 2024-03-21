@@ -35,15 +35,19 @@
             >
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="3">
                     <div class="d-label">{{ $t("title_en") }}</div>
                     <div>{{ event.title }}</div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <div class="d-label">{{ $t("description_en") }}</div>
-                    <div v-html="event.description"></div>
+                  <v-col cols="12" sm="6" md="3">
+                    <div class="d-label">{{ $t("email_en") }}</div>
+                    <div>{{ event.email }}</div>
                   </v-col>
-                  <v-col cols="12" sm="12" md="2">
+                  <v-col cols="12" sm="6" md="3">
+                    <div class="d-label">{{ $t("mobile_en") }}</div>
+                    <div>{{ event.mobile_code }} {{ event.mobile }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="3">
                     <div class="d-label">{{ $t("image_preview_en") }}</div>
                     <div>
                       <img
@@ -67,23 +71,23 @@
                       />
                     </div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="3">
                     <div class="d-label">{{ $t("meta_title_en") }}</div>
                     <div>{{ event.meta_title }}</div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="3">
                     <div class="d-label">{{ $t("meta_title_en") }}</div>
                     <div>{{ event.meta_description }}</div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="3">
                     <div class="d-label">{{ $t("start_date_en") }}</div>
                     <div>{{ formatDate(event.start_date) }}</div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="3">
                     <div class="d-label">{{ $t("end_date_en") }}</div>
                     <div>{{ formatDate(event.end_date) }}</div>
                   </v-col>
-                  <!-- <v-col cols="12" sm="6" md="4">
+                  <!-- <v-col cols="12" sm="6" md="3">
                     <div class="d-label">{{ $t("parent_event_en") }}</div>
                     <div v-if="event.parent_event">
                       {{ event.parent_event }}
@@ -91,7 +95,7 @@
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col> -->
 
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="3">
                     <div
                       class="d-label"
                       v-if="event.approval_status == 'Rejected'"
@@ -104,7 +108,7 @@
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="3">
                     <div class="d-label">{{ $t("approval_status_en") }}</div>
                     <div>
                       <v-chip
@@ -130,6 +134,10 @@
                       {{ event.review_comment }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="12">
+                    <div class="d-label">{{ $t("description_en") }}</div>
+                    <div v-html="event.description"></div>
                   </v-col>
                 </v-row>
               </v-layout>
@@ -173,15 +181,19 @@
             >
               <v-layout>
                 <v-row class="px-6 mt-2">
-                  <v-col cols="12" sm="6" md="4">
+                  <v-col cols="12" sm="6" md="3">
                     <div class="d-label">{{ $t("title_ar") }}</div>
                     <div>{{ event.title }}</div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <div class="d-label">{{ $t("description_ar") }}</div>
-                    <div v-html="event.description"></div>
+                  <v-col cols="12" sm="6" md="3">
+                    <div class="d-label">{{ $t("email_ar") }}</div>
+                    <div>{{ event.email }}</div>
                   </v-col>
-                  <v-col cols="12" sm="12" md="2">
+                  <v-col cols="12" sm="6" md="3">
+                    <div class="d-label">{{ $t("mobile_ar") }}</div>
+                    <div>{{ event.mobile_code }} {{ event.mobile }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="3">
                     <div class="d-label">{{ $t("image_preview_ar") }}</div>
                     <div>
                       <img
@@ -265,6 +277,10 @@
                       {{ event.review_comment }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="12">
+                    <div class="d-label">{{ $t("description_ar") }}</div>
+                    <div v-html="event.description"></div>
                   </v-col>
                 </v-row>
                 <v-row class="px-6 mt-2"> </v-row>
@@ -515,7 +531,7 @@ export default {
     cancel() {
       this.$router.push({
         name: "events",
-        query: { 's_tab': this.$route.query.s_tab },
+        query: { s_tab: this.$route.query.s_tab },
       });
     },
     closeReviewComment() {
