@@ -99,14 +99,6 @@
               <td>{{ props.item.selectable.phone }}</td>
               <td>{{ props.item.selectable.seq }}</td>
               <td>
-                <v-chip
-                  :color="getStatusColor(props.item.selectable.approval_status)"
-                  variant="outlined"
-                >
-                  {{ props.item.selectable.approval_status }}
-                </v-chip>
-              </td>
-              <td>
                 <v-btn
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
@@ -127,6 +119,14 @@
                     >{{ $t("inactive") }}</span
                   >
                 </v-btn>
+              </td>
+              <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ props.item.selectable.approval_status }}
+                </v-chip>
               </td>
               <td class="text-center">
                 <router-link
@@ -201,14 +201,6 @@
               <td>{{ props.item.selectable.phone }}</td>
               <td>{{ props.item.selectable.seq }}</td>
               <td>
-                <v-chip
-                  :color="getStatusColor(props.item.selectable.approval_status)"
-                  variant="outlined"
-                >
-                  {{ changeStatusAr(props.item.selectable.approval_status) }}
-                </v-chip>
-              </td>
-              <td>
                 <v-btn
                   class="hover_shine btn mr-2"
                   :disabled="isDisabled"
@@ -229,6 +221,14 @@
                     >{{ $t("inactive_ar") }}</span
                   >
                 </v-btn>
+              </td>
+              <td>
+                <v-chip
+                  :color="getStatusColor(props.item.selectable.approval_status)"
+                  variant="outlined"
+                >
+                  {{ changeStatusAr(props.item.selectable.approval_status) }}
+                </v-chip>
               </td>
               <td class="text-center">
                 <router-link
@@ -371,12 +371,12 @@ export default {
           key: "seq",
         },
         {
-          title: this.$t("approval_en"),
-          key: "approval_status",
-        },
-        {
           title: this.$t("status_en"),
           key: "status",
+        },
+        {
+          title: this.$t("approval_en"),
+          key: "approval_status",
         },
         {
           title: this.$t("action_en"),
@@ -412,12 +412,12 @@ export default {
           key: "seq",
         },
         {
-          title: this.$t("approval_ar"),
-          key: "approval_status",
-        },
-        {
           title: this.$t("status_ar"),
           key: "status",
+        },
+        {
+          title: this.$t("approval_ar"),
+          key: "approval_status",
         },
         {
           title: this.$t("action_ar"),
