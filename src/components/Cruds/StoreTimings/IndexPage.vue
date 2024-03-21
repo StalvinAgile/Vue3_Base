@@ -29,7 +29,7 @@
           </template>
         </v-tooltip>
       </div>
-      <div class="add_new_button" v-if="user.rolename != 'StoreAdmin'">
+      <div class="add_new_button" v-if="store_timings.length == 0 || user.rolename != 'StoreAdmin'">
         <v-tooltip :text="this.$t('add_new')" location="bottom">
           <template v-slot:activator="{ props }">
             <router-link

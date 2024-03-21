@@ -10,7 +10,6 @@
         :google_icon="google_icon"
       ></page-title>
     </div>
-    <!-- {{store_timings}} -->
     <content-loader v-if="loader"></content-loader>
     <div class="mb-3 mx-auto">
       <div class="card-body">
@@ -19,8 +18,9 @@
           v-model="valid"
           v-bind:style="sel_lang == 'ar' ? 'direction:rtl' : ''"
         >
+          <!-- v-if="user.rolename != 'StoreAdmin'" -->
           <v-layout>
-            <v-row class="px-6">
+            <v-row class="px-6 pt-1">
               <v-col cols="12" sm="12" md="4">
                 <v-tooltip :text="$t('store_name')" location="bottom">
                   <template v-slot:activator="{ props }">
@@ -34,7 +34,7 @@
                       density="compact"
                       index="id"
                       :items="sel_lang == 'en' ? stores_en : stores_ar"
-                      :disabled="$route.query.slug"
+                      :disabled="$route.query.slug || user.rolename == 'StoreAdmin'"
                       item-value="header_id"
                       item-title="name"
                       :error="v_store"
@@ -299,6 +299,7 @@ export default {
       },
     ],
     v_store: false,
+    user: "",
   }),
 
   computed: {
@@ -354,7 +355,7 @@ export default {
             .then((res) => {
               this.get_weekdays();
               this.store_timings = res.data.store_timings;
-              // console.log(res.data.store_timings[0].store_id);
+
               this.store_timing_id = res.data.store_timings[0].store_id;
               this.getAllStores();
             });
@@ -430,9 +431,9 @@ export default {
       }
       return [(v) => !!v || this.$t("field_required")];
     },
-    updateStoreId(strore_id) {
+    updateStoreId(store_id) {
       this.store_timings.forEach((element) => {
-        element.store_id = strore_id;
+        element.store_id = store_id;
       });
     },
     getNewStores() {
@@ -474,6 +475,12 @@ export default {
           this.initval = false;
           if (this.page_type == "add") {
             this.initializeTimingArray();
+
+            this.user = JSON.parse(localStorage.getItem("user_data"));
+            if (this.user.rolename == "StoreAdmin") {
+              this.updateStoreId(this.user.store_id);
+              this.store_timing_id = this.user.store_id;
+            }
           }
           this.loader = false;
         })
