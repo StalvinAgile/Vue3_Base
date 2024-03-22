@@ -34,7 +34,9 @@
                       density="compact"
                       index="id"
                       :items="sel_lang == 'en' ? stores_en : stores_ar"
-                      :disabled="$route.query.slug || user.rolename == 'StoreAdmin'"
+                      :disabled="
+                        $route.query.slug || user.rolename == 'StoreAdmin'
+                      "
                       item-value="header_id"
                       item-title="name"
                       :error="v_store"
@@ -56,7 +58,7 @@
             <v-row class="px-6 day-container">
               <v-col cols="12" sm="12" md="12" class="py-0">
                 <v-row>
-                  <v-col cols="12" sm="6" md="2">
+                  <v-col cols="12" sm="4" md="2">
                     <div class="day-label">
                       <span v-if="sel_lang == 'ar'">{{
                         changeArWeekday(store_timings[day_index].week_day)
@@ -66,7 +68,8 @@
                       }}</span>
                     </div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="2">
+                  <!-- {{day}} -->
+                  <v-col cols="12" sm="4" md="2">
                     <v-checkbox
                       v-bind:class="[sel_lang == 'ar' ? 'rtl-page-title' : '']"
                       v-model="store_timings[day_index].is_holiday"
@@ -76,6 +79,34 @@
                       hide-details
                       @update:modelValue="updateTimingRules(day_index)"
                     ></v-checkbox>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="4"
+                    md="2"
+                    class="mt-3"
+                    v-if="day_index != 6"
+                  >
+                    <v-tooltip
+                      :text="this.$t('copy_next_weekday')"
+                      location="bottom"
+                    >
+                      <template v-slot:activator="{ props }">
+                        <v-btn
+                          v-bind="props"
+                          :disabled="
+                            !store_timings[day_index].from_time ||
+                            !store_timings[day_index].to_time
+                          "
+                          elevation="0"
+                          rounded="4"
+                          size="small"
+                          class="ml-2"
+                          @click="copyToNext(day_index)"
+                          >Copy Next</v-btn
+                        >
+                      </template>
+                    </v-tooltip>
                   </v-col>
                 </v-row>
               </v-col>
@@ -369,6 +400,20 @@ export default {
     },
   },
   methods: {
+    copyToNext(index) {
+      const sel_time = this.store_timings[index];
+      console.log(this.store_timings[index + 1]);
+      this.store_timings[index + 1].is_holiday = sel_time.is_holiday;
+      this.store_timings[index + 1].from_time = sel_time.from_time;
+      this.store_timings[index + 1].from_meridiem = sel_time.from_meridiem;
+      this.store_timings[index + 1].to_time = sel_time.to_time;
+      this.store_timings[index + 1].to_meridiem = sel_time.to_meridiem;
+      this.store_timings[index + 1].seq = sel_time.seq;
+      this.$toast.success(
+        this.$t("copied_successfully_to") +
+          this.store_timings[index + 1].week_day
+      );
+    },
     changeArWeekday(day) {
       switch (day) {
         case "Monday":

@@ -642,5 +642,7 @@
   "shop_name": "Shop Name",
   "review_details": "Review Details",
   "expired_en": "Expired",
-  "expired_ar": "منتهي الصلاحية"
+  "expired_ar": "منتهي الصلاحية",
+  "copy_next_weekday":"Copy to next weekday",
+  "copied_successfully_to":"Copied successfully to "
 }
