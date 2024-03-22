@@ -55,6 +55,12 @@
             {{ $t("fetch_data_wait") }}
           </div>
           <v-layout v-for="(day, day_index) in weekdays_en" :key="day_index">
+            <!-- <content-loader v-if="loader_b"></content-loader> -->
+            <VueElementLoading
+              :active="loader_b"
+              spinner="bar-fade-scale"
+              color="var(--primary)"
+            />
             <v-row class="px-6 day-container">
               <v-col cols="12" sm="12" md="12" class="py-0">
                 <v-row>
@@ -103,7 +109,7 @@
                           size="small"
                           class="ml-2"
                           @click="copyToNext(day_index)"
-                          >{{$t('copy_to_next')}}</v-btn
+                          >{{ $t("copy_to_next") }}</v-btn
                         >
                       </template>
                     </v-tooltip>
@@ -115,7 +121,10 @@
                     class="mt-3"
                     v-if="day_index == 0"
                   >
-                    <v-tooltip :text="this.$t('copy_all_weekdays')" location="bottom">
+                    <v-tooltip
+                      :text="this.$t('copy_all_weekdays')"
+                      location="bottom"
+                    >
                       <template v-slot:activator="{ props }">
                         <v-btn
                           v-bind="props"
@@ -128,7 +137,7 @@
                           size="small"
                           class="ml-2"
                           @click="copyToAll(day_index)"
-                          >{{$t('copy_to_all')}}</v-btn
+                          >{{ $t("copy_to_all") }}</v-btn
                         >
                       </template>
                     </v-tooltip>
@@ -330,6 +339,7 @@ export default {
     envImagePath: process.env.VUE_APP_IMAGE_PATH,
     valid: false,
     loader: false,
+    data_loader: false,
     file: "",
     sel_lang: "",
     isBtnLoading: false,
@@ -426,22 +436,24 @@ export default {
   },
   methods: {
     copyToNext(index) {
+      this.data_loader = true;
       const sel_time = this.store_timings[index];
-      console.log(this.store_timings[index + 1]);
       this.store_timings[index + 1].is_holiday = sel_time.is_holiday;
       this.store_timings[index + 1].from_time = sel_time.from_time;
       this.store_timings[index + 1].from_meridiem = sel_time.from_meridiem;
       this.store_timings[index + 1].to_time = sel_time.to_time;
       this.store_timings[index + 1].to_meridiem = sel_time.to_meridiem;
-      this.store_timings[index + 1].seq = sel_time.seq;
+      this.store_timings[index + 1].seq =
+        (parseInt(sel_time.seq) ? parseInt(sel_time.seq) : 0) + 1;
       this.$toast.success(
         this.$t("copied_successfully_to") +
           this.store_timings[index + 1].week_day
       );
+      this.data_loader = false;
     },
     copyToAll(index) {
+      this.data_loader = true;
       const sel_time = this.store_timings[index];
-
       for (let index = 1; index < this.store_timings.length; index++) {
         this.store_timings[index].is_holiday = sel_time.is_holiday;
         this.store_timings[index].from_time = sel_time.from_time;
@@ -450,8 +462,8 @@ export default {
         this.store_timings[index].to_meridiem = sel_time.to_meridiem;
         this.store_timings[index].seq = sel_time.seq;
       }
-
       this.$toast.success(this.$t("copied_successfully"));
+      this.data_loader = false;
     },
     changeArWeekday(day) {
       switch (day) {
