@@ -116,6 +116,28 @@
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
                   </v-col>
+                  <v-col cols="6" sm="6" md="4" class="image-preview">
+                    <div class="d-label">{{ $t("image_preview_en") }}</div>
+                    <img
+                      v-bind:style="
+                        isHovering == true ? 'filter: blur(1px);' : ''
+                      "
+                      v-if="promotion.image_path == null"
+                      src="@/assets/images/no_image.png"
+                      width="100"
+                    />
+                    <img
+                      v-bind:style="
+                        isHovering == true ? 'filter: blur(1px);' : ''
+                      "
+                      v-else
+                      :src="envImagePath + promotion.image_path"
+                      width="100"
+                      height="65
+                          "
+                      alt
+                    />
+                  </v-col>
                 </v-row>
               </v-layout>
               <div
@@ -236,6 +258,28 @@
                       {{ promotion.review_comment }}
                     </div>
                     <div v-else>{{ $t("not_applicable") }}</div>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4" class="image-preview">
+                    <div class="d-label">{{ $t("image_preview_ar") }}</div>
+                    <img
+                      v-bind:style="
+                        isHovering == true ? 'filter: blur(1px);' : ''
+                      "
+                      v-if="promotion.image_path == null"
+                      src="@/assets/images/no_image.png"
+                      width="100"
+                    />
+                    <img
+                      v-bind:style="
+                        isHovering == true ? 'filter: blur(1px);' : ''
+                      "
+                      v-else
+                      :src="envImagePath + promotion.image_path"
+                      width="100"
+                      height="65
+                          "
+                      alt
+                    />
                   </v-col>
                 </v-row>
               </v-layout>
@@ -484,7 +528,7 @@ export default {
     cancel() {
       this.$router.push({
         name: "promotions_offers",
-        query: { 's_tab': this.$route.query.s_tab },
+        query: { s_tab: this.$route.query.s_tab },
       });
     },
     closeReviewComment() {
