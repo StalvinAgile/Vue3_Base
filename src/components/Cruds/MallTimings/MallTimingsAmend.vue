@@ -287,12 +287,12 @@
                     <br />
                     <Imageupload
                       :folder="'mall_timings'"
-                      :resizewidth="300"
+                      :resizewidth="400"
                       :resizeheight="400"
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
-                    <div class="dimension_text">300 : 400</div>
+                    <div class="dimension_text">400 : 400</div>
                   </v-col>
                 </v-row>
               </v-layout>
@@ -582,7 +582,7 @@
                     <br />
                     <Imageupload
                       :folder="'mall_timings'"
-                      :resizewidth="300"
+                      :resizewidth="400"
                       :resizeheight="400"
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfilear"
@@ -591,7 +591,7 @@
                       class="dimension_text"
                       style="direction: rtl; text-align: start"
                     >
-                      300 : 400
+                      400 : 400
                     </div>
                   </v-col>
                 </v-row>
