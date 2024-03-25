@@ -740,6 +740,7 @@
               v-for="(service, sindex) in service_slots"
               :key="sindex"
               class="service-container"
+              v-bind:class="tabs == 2 ? 'arabdirection' : ''"
             >
               <div
                 v-bind:class="[tabs == 1 ? '' : 'rtl']"
