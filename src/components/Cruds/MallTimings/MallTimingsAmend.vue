@@ -582,8 +582,8 @@
                     <br />
                     <Imageupload
                       :folder="'mall_timings'"
-                      :resizewidth="300"
-                      :resizeheight="400"
+                      :resizewidth="400"
+                      :resizeheight="300"
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfilear"
                     />
