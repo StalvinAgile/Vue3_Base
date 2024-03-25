@@ -926,7 +926,7 @@
                               checkValidation(sindex, cindex)
                             "
                             :items="service_time"
-                            :rules="fieldRules"
+                            v-bind:rules="tabs == 2 ? fieldRulesAR : fieldRules"
                             item-title="shortname"
                             item-value="shortname"
                             class="rtl-dir required_field"
@@ -960,7 +960,7 @@
                             density="compact"
                             class="rtl-dir required_field"
                             :items="meridiem"
-                            :rules="fieldRules"
+                            v-bind:rules="tabs == 2 ? fieldRulesAR : fieldRules"
                             item-title="shortname"
                             item-value="shortname"
                           ></v-autocomplete>
@@ -984,7 +984,7 @@
                             variant="outlined"
                             density="compact"
                             :items="service_time"
-                            :rules="fieldRules"
+                            v-bind:rules="tabs == 2 ? fieldRulesAR : fieldRules"
                             @update:model-value="
                               checkValidation(sindex, cindex)
                             "
@@ -1006,7 +1006,7 @@
                         <template v-slot:activator="{ props }">
                           <v-autocomplete
                             v-bind="props"
-                            class="rtl-dir required_field"
+                            class="required_field"
                             v-bind:class="tabs == 2 ? 'arabclass' : ''"
                             v-model="slot.to_meridiem"
                             v-bind:label="
@@ -1020,7 +1020,7 @@
                             "
                             density="compact"
                             :items="meridiem"
-                            :rules="fieldRules"
+                            v-bind:rules="tabs == 2 ? fieldRulesAR : fieldRules"
                             item-title="shortname"
                             item-value="shortname"
                           ></v-autocomplete>
@@ -1037,12 +1037,14 @@
                             v-bind="props"
                             v-model="slot.slots"
                             maxlength="5"
+                            v-bind:rules="tabs == 2 ? fieldRulesAR : fieldRules"
                             v-bind:label="
                               tabs == 1 ? $t('slots_en') : $t('slots_ar')
                             "
                             required
                             variant="outlined"
-                            class="rtl"
+                            v-bind:class="tabs == 2 ? 'arabclass rtl' : ''"
+                            class="required_field"
                             density="compact"
                             v-on:keypress="NumbersOnly"
                           ></v-text-field>
@@ -1063,6 +1065,11 @@
                             v-bind="props"
                             v-model="slot.max_reservation"
                             maxlength="5"
+                            v-bind:rules="
+                              tabs == 2
+                                ? [...fieldRulesAR, ...maxRRulesAR]
+                                : [...fieldRules, ...maxRRules]
+                            "
                             v-bind:label="
                               tabs == 1
                                 ? $t('max_reservation_en')
@@ -1071,6 +1078,8 @@
                             required
                             variant="outlined"
                             density="compact"
+                            class="required_field"
+                            v-bind:class="tabs == 2 ? 'arabclass rtl' : ''"
                             v-on:keypress="NumbersOnly"
                           ></v-text-field>
                         </template>
@@ -1277,6 +1286,12 @@ export default {
     },
     seqRulesAR() {
       return [(v) => (v >= 0 && v <= 9999999) || this.$t("number_required_ar")];
+    },
+    maxRRules() {
+      return [(v) => v != 0 || this.$t("valid_number_required")];
+    },
+    maxRRulesAR() {
+      return [(v) => v != 0 || this.$t("valid_number_required_ar")];
     },
     canCopyServiceSlot() {
       return this.service_slots.every((service) => {
