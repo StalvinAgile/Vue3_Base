@@ -106,21 +106,26 @@ export default {
     },
   },
   methods: {
-      handleCrop() {
-  this.$nextTick(() => {
-    const croppedCanvas = this.$refs.cropper.getCroppedCanvas();
-    if (croppedCanvas) {
-      const canvas = document.createElement("canvas");
-      canvas.width = this.resizewidth; 
-      canvas.height = this.resizeheight;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(croppedCanvas, 0, 0, this.resizewidth, this.resizeheight);
-      this.imagedata = canvas.toDataURL(); 
-      // console.log("Cropped image data: ", this.imagedata);
-    }
-  });
-},
-
+    handleCrop() {
+      this.$nextTick(() => {
+        const croppedCanvas = this.$refs.cropper.getCroppedCanvas();
+        if (croppedCanvas) {
+          const canvas = document.createElement("canvas");
+          canvas.width = this.resizewidth;
+          canvas.height = this.resizeheight;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(
+            croppedCanvas,
+            0,
+            0,
+            this.resizewidth,
+            this.resizeheight
+          );
+          this.imagedata = canvas.toDataURL();
+          // console.log("Cropped image data: ", this.imagedata);
+        }
+      });
+    },
 
     cropperReady() {
       this.$nextTick(() => {
@@ -182,8 +187,11 @@ export default {
         );
         this.loader = false;
       } else if (file.size == 6 * 1024 * 1024) {
-        this.compressAndLoadImage(file);
+        alert("The file size is too large.");
+        // this.compressAndLoadImage(file);
       } else {
+        // alert("Uploaded successfully");
+        console.log('uploaded successfully');
         this.loadImageDirectly(file);
       }
 
@@ -216,7 +224,7 @@ export default {
     },
 
     cropImage() {
-      console.log(this.imagedata)
+      console.log(this.imagedata);
       if (this.imagedata) {
         this.upload(this.imagedata);
       }

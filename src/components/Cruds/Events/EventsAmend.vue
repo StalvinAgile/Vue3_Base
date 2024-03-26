@@ -382,12 +382,12 @@
                 <br />
                 <Imageupload
                   :folder="'events'"
-                  :resizewidth="200"
-                  :resizeheight="200"
+                  :resizewidth="500"
+                  :resizeheight="500"
                   @uploaded_image="uploaded_image"
                   :upload_profile="uploadfile"
                 />
-                <div class="dimension_text">200 : 200</div>
+                <div class="dimension_text">500 : 500</div>
               </v-col>
             </v-row>
           </v-form>
@@ -747,12 +747,12 @@
                 <br />
                 <Imageupload
                   :folder="'events'"
-                  :resizewidth="200"
-                  :resizeheight="200"
+                  :resizewidth="500"
+                  :resizeheight="500"
                   @uploaded_image="uploaded_image"
                   :upload_profile="uploadfilear"
                 />
-                <div class="dimension_text">200 : 200</div>
+                <div class="dimension_text">500 : 500</div>
               </v-col>
             </v-row>
           </v-form>
