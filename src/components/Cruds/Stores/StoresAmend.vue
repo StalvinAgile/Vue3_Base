@@ -564,7 +564,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfile"
                     />
-                    <div class="dimension_text">250 : 250</div>
+                    <div class="dimension_text">500 : 500</div>
                   </v-col>
                   <v-col cols="12" xs="12" sm="12" md="4">
                     <div>
@@ -645,7 +645,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="upload_bi_file"
                     />
-                    <div class="dimension_text">500 : 300</div>
+                    <div class="dimension_text">1400 : 400</div>
                   </v-col>
                 </v-row>
               </v-layout>
@@ -1175,7 +1175,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="uploadfilear"
                     />
-                    <div class="dimension_text">250 : 250</div>
+                    <div class="dimension_text">500 : 500</div>
                   </v-col>
                   <v-col cols="12" xs="12" sm="12" md="4">
                     <div>
@@ -1256,7 +1256,7 @@
                       @uploaded_image="uploaded_image"
                       :upload_profile="upload_bi_file_ar"
                     />
-                    <div class="dimension_text">500 : 300</div>
+                    <div class="dimension_text">1400 : 400</div>
                   </v-col>
                 </v-row>
               </v-layout>
@@ -1878,8 +1878,8 @@ export default {
             this.uploadfile = false;
           }
         } else {
-          this.resizewidth = 500;
-          this.resizeheight = 300;
+          this.resizewidth = 1400;
+          this.resizeheight = 400;
           if (this.upload_bi_file == false) {
             this.upload_bi_file = true;
           } else {
@@ -1897,8 +1897,8 @@ export default {
             this.uploadfilear = false;
           }
         } else {
-          this.resizewidth = 500;
-          this.resizeheight = 300;
+          this.resizewidth = 1400;
+          this.resizeheight = 400;
           if (this.upload_bi_file_ar == false) {
             this.upload_bi_file_ar = true;
           } else {

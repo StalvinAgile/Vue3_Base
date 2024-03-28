@@ -1,7 +1,7 @@
 <template>
   <div>
     <content-loader v-if="loader"></content-loader>
-    <v-dialog v-model="dialogVisible" :max-width="1000" persistent>
+    <v-dialog v-model="dialogVisible" :max-width="1600" persistent>
       <content-loader v-if="loader"></content-loader>
 
       <v-card>
