@@ -340,7 +340,6 @@
                       <template v-slot:activator="{ props }">
                         <v-text-field
                           v-bind:label="$t('postcode_en')"
-                          :rules="postcodeRules"
                           v-on:keypress="AlphanumericAndArabic"
                           v-bind="props"
                           variant="outlined"

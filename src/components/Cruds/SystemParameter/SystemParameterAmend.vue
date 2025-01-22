@@ -14,7 +14,13 @@
     <div class="mb-3 mx-auto">
       <div class="card-body">
         <v-form ref="form" v-model="valid">
-          <v-row class="px-6" v-if="system_params.parameter_name == 'APP_LOGO'">
+          <v-row
+            class="px-6"
+            v-if="
+              system_params.parameter_name == 'APP_LOGO' ||
+              system_params.parameter_name == 'MALL_LOGO'
+            "
+          >
             <!-- :value="system_params.is_file_upload" -->
             <v-col md="6">
               <!-- <v-checkbox
@@ -71,8 +77,9 @@
             <v-col
               md="6"
               v-if="
-                system_params.is_file_upload == true &&
-                system_params.parameter_name == 'APP_LOGO'
+                (system_params.is_file_upload == true &&
+                  system_params.parameter_name == 'APP_LOGO') ||
+                system_params.parameter_name == 'MALL_LOGO'
               "
             >
               <div>
@@ -110,9 +117,10 @@
                       <span
                         ><v-icon
                           v-if="
-                            system_params.parameter_value &&
-                            system_params.parameter_name == 'APP_LOGO' &&
-                            system_params.is_file_upload == true
+                            (system_params.parameter_value &&
+                              system_params.parameter_name == 'APP_LOGO') ||
+                            (system_params.parameter_name == 'MALL_LOGO' &&
+                              system_params.is_file_upload == true)
                           "
                           v-bind="props"
                           class="mr-2"
@@ -125,9 +133,10 @@
                 </v-tooltip>
                 <span
                   v-if="
-                    system_params.parameter_value &&
-                    system_params.parameter_name == 'APP_LOGO' &&
-                    system_params.is_file_upload == true
+                    (system_params.parameter_value &&
+                      system_params.parameter_name == 'APP_LOGO') ||
+                    (system_params.parameter_name == 'MALL_LOGO' &&
+                      system_params.is_file_upload == true)
                   "
                 >
                   <v-tooltip :text="this.$t('delete')" location="bottom">
@@ -326,7 +335,7 @@ export default {
           .then((res) => {
             this.btnloading = false;
             let app_image_url = res.data.systemparameter.image_full_url;
-            if (app_image_url) {
+            if (app_image_url && res.data.systemparameter.parameter_name && res.data.systemparameter.parameter_name == 'APP_LOGO') {
               localStorageWrapper.setItem("App_Image_Url", app_image_url);
               this.emitter.emit("app_image_update");
             }
