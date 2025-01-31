@@ -607,5 +607,22 @@
   "image_upload":"تحميل الصورة",
   "manual_entry":"الإدخال اليدوي",
   "delete_slot":"حذف الفتحة",
-  "add_slot":"إضافة فتحة"
+  "add_slot":"إضافة فتحة",
+  "shop_code":"متجر سمك القد",
+  "floor_no":"رقم الطابق",
+  "altitude":"ارتفاع",
+  "latitude":"خط العرض",
+  "longitude":"خط الطول",
+  "s_store_code": "رمز المتجر",
+  "amend_store_code": "تعديل رمز المتجر",
+  "leasing": "تأجير",
+  "enquiry": "سؤال",
+  "company_name": "اسم الشركة",
+  "contact_person": "اتصال",
+  "brand_name": "ماركة",
+  "notes": "ملحوظات",
+  "num_of_stores": "عدد المتاجر",
+  "leasing_details": "تفاصيل التأجير",
+  "website": "موقع إلكتروني"
+
 }

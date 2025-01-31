@@ -654,5 +654,20 @@
   "image_upload":"Image Upload",
   "manual_entry":"Manual Entry",
   "delete_slot":"Delete Slot",
-  "add_slot":"Add Slot"
+  "add_slot":"Add Slot",
+  "shop_code":"Shop Code",
+  "floor_no":"Floor No",
+  "altitude":"Altitude",
+  "latitude":"Latitude",
+  "longitude":"Longitude",
+  "s_store_code": "Store Code",
+  "amend_store_code": "Amend Store Code",
+  "leasing": "Leasing",
+  "enquiry": "Enquiry",
+  "company_name": "Company Name",
+  "contact_person": "Contact Person",
+  "brand_name": "Brand Name",
+  "num_of_stores": "Num Of Stores",
+  "notes": "Notes",
+  "leasing_details": "Leasing Details"
 }

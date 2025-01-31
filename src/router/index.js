@@ -510,6 +510,34 @@ const routes = [
     meta: { layout: "userpages" },
     component: () => import("../../src/components/PageNotFound.vue"),
   },
+  {
+    path: "/:lang?/store-code",
+    name: "store-code",
+    beforeEnter: guardMyroute,
+    component: () =>
+      import("../components/Cruds/StoreCode/IndexPage.vue"),
+  },
+  {
+    path: "/:lang?/store-code-amend",
+    name: "store-code-amend",
+    beforeEnter: guardMyroute,
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/StoreCode/StoreCodeAmend.vue"),
+  },
+  {
+    path: "/:lang?/leasing",
+    name: "leasing",
+    beforeEnter: guardMyroute,
+    component: () =>
+      import("../components/Cruds/Leasing/IndexPage.vue"),
+  },
+  {
+    path: "/:lang?/leasing-amend",
+    name: "leasing-amend",
+    beforeEnter: guardMyroute,
+    // meta: { layout: "userpages" },
+    component: () => import("../components/Cruds/Leasing/LeasingAmend.vue"),
+  },
 ];
 
 const router = createRouter({
