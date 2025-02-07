@@ -1585,10 +1585,20 @@ export default {
               response.data.social_media_en.forEach((element) => {
                 if (this.social_media.store_id > 0) {
                   this.social_media.longname = element.longname;
+                }else{
+                  this.social_media.push({
+                    id: 0,
+                    store_id: null,
+                    lookup_id: element.header_id,
+                    longname: element.longname,
+                    link: "",
+                    description: "",
+                    seq: 1,
+                  });
                 }
               });
-              console.log("social_media");
-              console.log(this.social_media);
+              // console.log("social_media");
+              // console.log(this.social_media);
               this.initval = false;
             })
             .catch((err) => {

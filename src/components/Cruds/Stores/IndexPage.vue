@@ -67,7 +67,10 @@
         </v-tooltip>
       </div>
     </div>
-
+    <storeexcelupload
+      @ExcellRecieved="ExcellRecieved"
+      :response_data="response_data"
+    ></storeexcelupload>
     <v-tabs v-model="tabs" color="blue">
       <v-tab :value="1">
         <span>{{ $t("english") }}</span>
@@ -304,10 +307,11 @@
 </template>
 
 <script>
+import storeexcelupload from "../../CustomComponents/StoreExcelUpload.vue";
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import ConfirmDialog from "../../CustomComponents/ConfirmDialog.vue";
 export default {
-  components: { PageTitle, ConfirmDialog },
+  components: { PageTitle, ConfirmDialog, storeexcelupload },
   data: () => ({
     search: "",
     showConfirmDialog: false,
@@ -316,6 +320,7 @@ export default {
     stores_en: [],
     stores_ar: [],
     initval: true,
+    response_data: "",
     google_icon: {
       icon_name: "storefront",
       color: "google_icon_gradient",
@@ -607,6 +612,27 @@ export default {
         });
       this.loader = false;
     },
+    ExcellRecieved(file) {
+      this.uploaded_file = file;
+      if (this.uploaded_file) {
+        this.$axios
+          .post("/insert-store-details", {
+            file: this.uploaded_file,
+          })
+          .then((res) => {
+            this.response_data = res.data;
+            if (res.data.status == "S") {
+              this.fetchStores();
+              this.loader = false;
+            } else {
+              // this.fetchStores();
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    },
   },
 };
 </script>
@@ -614,5 +640,4 @@ export default {
 .list_item {
   cursor: pointer;
 }
-
 </style>
