@@ -79,9 +79,16 @@
       <v-tab :value="2">
         <span>{{ $t("arabic") }}</span>
       </v-tab>
+      <v-btn class="green_btn_color" icon @click="downloadExcel">
+        <v-icon size="30">mdi-file-excel-outline</v-icon>
+      </v-btn>
+
+      <!-- <v-btn icon class="red_btn_color ml-2" @click="downloadPDF">
+        <v-icon size="34">mdi-file-pdf-box</v-icon>
+      </v-btn> -->
     </v-tabs>
 
-    <v-window v-model="tabs">
+    <v-window v-model="tabs" class="mt-5">
       <!-- ENGLISH TAB STARTS -->
       <v-window-item :value="1">
         <v-data-table
@@ -310,6 +317,10 @@
 import storeexcelupload from "../../CustomComponents/StoreExcelUpload.vue";
 import PageTitle from "../../CustomComponents/PageTitle.vue";
 import ConfirmDialog from "../../CustomComponents/ConfirmDialog.vue";
+import * as XLSX from "xlsx";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 export default {
   components: { PageTitle, ConfirmDialog, storeexcelupload },
   data: () => ({
@@ -460,6 +471,104 @@ export default {
   },
 
   methods: {
+    downloadExcel() {
+      let filteredData;
+      if (this.tabs !== 1) {
+        filteredData = this.stores_ar.map(
+          ({
+            stor_type,
+            name,
+            email,
+            phone,
+            seq,
+            status,
+            approval_status,
+          }) => ({
+            نوعالمخزن: this.arType(stor_type),
+            اسم: name,
+            بريدإلكتروني: email,
+            هاتف: phone,
+            تسلسل: seq,
+            حالة: status == 1 ? this.$t("active_ar") : this.$t("inactive_ar"),
+            حالةالموافقة: this.changeStatusAr(approval_status),
+          })
+        );
+      } else {
+        filteredData = this.stores_en.map(
+          ({
+            stor_type,
+            name,
+            email,
+            phone,
+            seq,
+            status,
+            approval_status,
+          }) => ({
+            Stor_Type: stor_type,
+            Name: name,
+            Email: email,
+            Phone: phone,
+            Sequence: seq,
+            Status: status == 1 ? this.$t("active") : this.$t("inactive"),
+            Approval_Status: approval_status,
+          })
+        );
+      }
+
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Stores Data");
+
+      // Create and trigger download
+      const excelBuffer = XLSX.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+
+      const blob = new Blob([excelBuffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "StoresData.xlsx";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+
+    // Method to download PDF file
+    downloadPDF() {
+      const doc = new jsPDF();
+      doc.text(this.$t("stores_report"), 10, 10);
+      const storeDetails = this.tabs !== 1 ? this.stores_ar : this.stores_en;
+      // Table headers and data
+      const headers = [
+        [
+          this.$t("store_type"),
+          this.$t("name_en"),
+          this.$t("email_en"),
+          this.$t("phone_en"),
+          this.$t("sequence_en"),
+          this.$t("status_en"),
+          this.$t("approval_en"),
+        ],
+      ];
+      const data = storeDetails.map((store) => [
+        store.stor_type,
+        store.name,
+        store.email,
+        store.phone,
+        store.seq,
+        store.status == 1 ? this.$t("active") : this.$t("inactive"),
+        store.approval_status,
+      ]);
+
+      doc.autoTable({ head: headers, body: data });
+
+      // Save PDF
+      doc.save("StoresData.pdf");
+    },
     previewPage() {
       var lang = this.tabs === 1 ? "en" : "ar";
 
@@ -639,5 +748,13 @@ export default {
 <style scoped>
 .list_item {
   cursor: pointer;
+}
+.red_btn_color {
+  color: #cd0202 !important;
+  background: #ffffff !important;
+}
+.green_btn_color {
+  background: white !important;
+  color: green !important;
 }
 </style>
